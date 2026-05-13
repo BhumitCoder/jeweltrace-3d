@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { AdminShell, AdminTopBar } from "@/components/AdminShell";
 import { useEffect, useState } from "react";
-import { isAdminAuthed, saveBlogPost, getBlogPost, slugify, type BlogPost } from "@/lib/store";
+import { isAdminAuthed, saveBlogPost, getBlogPostById, slugify, type BlogPost } from "@/lib/store";
 import { ArrowLeft, Save, Upload, Eye } from "lucide-react";
 
 export const Route = createFileRoute("/admin/blog/$id")({
@@ -21,11 +21,7 @@ function BlogEditor() {
 
   const [post, setPost] = useState<BlogPost>(() => {
     if (!isNew && typeof window !== "undefined") {
-      const found =
-        getBlogPost(id) ||
-        (JSON.parse(localStorage.getItem("jr_blog_posts_v1") || "[]") as BlogPost[]).find(
-          (p) => p.id === id
-        );
+      const found = getBlogPostById(id);
       if (found) return found;
     }
     return {

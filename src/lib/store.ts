@@ -102,6 +102,9 @@ export const getBlogPosts = (): BlogPost[] =>
 export const getBlogPost = (slug: string): BlogPost | undefined =>
   read<BlogPost[]>(BLOG_KEY, []).find((p) => p.slug === slug);
 
+export const getBlogPostById = (id: string): BlogPost | undefined =>
+  read<BlogPost[]>(BLOG_KEY, []).find((p) => p.id === id);
+
 export const saveBlogPost = (post: BlogPost) => {
   const all = read<BlogPost[]>(BLOG_KEY, []);
   const idx = all.findIndex((p) => p.id === post.id);

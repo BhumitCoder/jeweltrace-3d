@@ -12,4 +12,13 @@ export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
+  vite: {
+    server: {
+      port: 5000,
+      allowedHosts: true,
+      watch: {
+        ignored: ["**/.cache/**", "**/node_modules/**"],
+      },
+    },
+  },
 });

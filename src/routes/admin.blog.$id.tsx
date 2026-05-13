@@ -20,9 +20,8 @@ function BlogEditor() {
   }, [navigate]);
 
   const [post, setPost] = useState<BlogPost>(() => {
-    if (!isNew) {
-      const all = JSON.parse(localStorage.getItem("jr_blog_posts_v1") || "[]") as BlogPost[];
-      const found = all.find((p) => p.id === id);
+    if (!isNew && typeof window !== "undefined") {
+      const found = getBlogPost(id) || (JSON.parse(localStorage.getItem("jr_blog_posts_v1") || "[]") as BlogPost[]).find((p) => p.id === id);
       if (found) return found;
     }
     return {

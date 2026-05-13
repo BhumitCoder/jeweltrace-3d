@@ -129,12 +129,12 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
         ["Cut", cert.cut || "—"],
       ]
     : [
-        ["Type", "Lab Grown"],
-        ["Shape", "Round"],
-        ["Carat", "—"],
-        ["Color", "—"],
-        ["Clarity", "—"],
-        ["Cut", "—"],
+        ["Type", "Lab Grown Diamond"],
+        ["Shape", "Round Brilliant"],
+        ["Carat", "1.52 ct"],
+        ["Color", "E"],
+        ["Clarity", "VS1"],
+        ["Cut", "Excellent"],
       ];
 
   return (
@@ -259,7 +259,7 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
             Issue Date
           </div>
           <div style={{ color: "#E8C56A", fontSize: w * 0.028 }}>
-            {cert ? cert.issueDate : "—"}
+            {cert ? cert.issueDate : "13 May 2026"}
           </div>
           <div
             className="text-white/50 mt-1"
@@ -293,12 +293,12 @@ function BackContent({ w, cert }: { w: number; h?: number; cert: Certificate | n
         ["Issued", cert.issueDate || "—"],
       ]
     : [
-        ["Measurements", "—"],
-        ["Polish", "—"],
-        ["Symmetry", "—"],
-        ["Fluorescence", "—"],
-        ["Origin", "—"],
-        ["Issued", "—"],
+        ["Measurements", "7.31 × 7.34 × 4.52 mm"],
+        ["Polish", "Excellent"],
+        ["Symmetry", "Excellent"],
+        ["Fluorescence", "None"],
+        ["Origin", "Laboratory Grown"],
+        ["Issued", "13 May 2026"],
       ];
 
   return (
@@ -311,7 +311,7 @@ function BackContent({ w, cert }: { w: number; h?: number; cert: Certificate | n
             fontSize: w * 0.05,
           }}
         >
-          {cert ? cert.itemName || "Certificate Details" : "Certificate Details"}
+          {cert ? cert.itemName || "Certificate Details" : "Round Brilliant Diamond"}
         </div>
         <div
           className="h-px mx-auto mt-1.5"

@@ -79,7 +79,7 @@ function HomePage() {
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
               JewelReport delivers world-class grading and authentication for diamonds,
-              gemstones and fine jewellery — issued on a secure, PAN-card-sized PVC certificate.
+              gemstones and fine jewellery — issued on a secure, tamper-proof PVC certificate.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link

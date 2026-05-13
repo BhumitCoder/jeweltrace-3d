@@ -78,7 +78,7 @@ function AboutPage() {
               JewelReport Certification Lab is an independent gemological institute serving manufacturers,
               jewellers, traders and collectors across the world. Our reports are recognised in major
               diamond hubs and trusted by retailers in over 30 countries — issued on a secure,
-              PAN-card-sized PVC certificate built to last a lifetime.
+              tamper-proof PVC certificate built to last a lifetime.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link

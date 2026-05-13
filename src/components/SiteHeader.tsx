@@ -24,30 +24,20 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 pt-3 px-3 sm:px-6">
+    <header className="fixed top-0 left-0 right-0 z-[100] pt-3 px-3 sm:px-6">
       <div
-        className={`mx-auto flex items-center justify-between max-w-6xl h-16 px-4 sm:px-6 rounded-full border bg-background/80 backdrop-blur-2xl transition-shadow duration-500 ${
+        className={`mx-auto flex items-center justify-between max-w-6xl h-16 px-5 sm:px-7 rounded-full border bg-background/85 backdrop-blur-2xl transition-all duration-500 ${
           scrolled
-            ? "border-primary/40 shadow-[0_10px_40px_-15px_rgba(212,175,55,0.45),0_0_0_1px_rgba(212,175,55,0.18)_inset]"
+            ? "max-w-5xl border-primary/45 shadow-[0_12px_45px_-12px_rgba(212,175,55,0.5),0_0_0_1px_rgba(212,175,55,0.2)_inset]"
             : "border-primary/20 shadow-[0_8px_30px_-15px_rgba(0,0,0,0.5)]"
         }`}
       >
         <Link to="/" className="flex items-center gap-2.5 group shrink-0">
-          <span
-            className="flex items-center justify-center rounded-full h-10 w-10 shrink-0"
-            style={{
-              background:
-                "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.95), rgba(232,197,106,0.85))",
-              boxShadow:
-                "0 0 18px rgba(212,175,55,0.55), inset 0 0 0 1px rgba(212,175,55,0.6)",
-            }}
-          >
-            <img
-              src={logo}
-              alt="JewelReport"
-              className="h-8 w-8 object-contain transition-transform duration-500 group-hover:scale-110"
-            />
-          </span>
+          <img
+            src={logo}
+            alt="JewelReport"
+            className="h-9 w-9 object-contain drop-shadow-[0_0_10px_rgba(232,197,106,0.55)] transition-transform duration-500 group-hover:scale-110"
+          />
           <div className="leading-tight">
             <div className="font-display tracking-tight text-base sm:text-lg">
               <span className="text-foreground">Jewel</span>

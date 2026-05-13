@@ -9,7 +9,7 @@ import {
 import {
   Plus, FileText, Newspaper,
   Trash2, Edit3, Eye, Gem, LayoutDashboard,
-  Users, Search, Phone, Mail,
+  Users, Search, Phone, Mail, X,
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin/")({
@@ -25,6 +25,7 @@ function Dashboard() {
   const [certSearch, setCertSearch]     = useState("");
   const [clientSearch, setClientSearch] = useState("");
   const [blogSearch, setBlogSearch]     = useState("");
+  const [clientFilter, setClientFilter] = useState<Client | null>(null);
 
   const refresh = () => {
     setCerts(getCertificates());
@@ -45,6 +46,9 @@ function Dashboard() {
   });
 
   const filteredCerts = certs.filter((c) => {
+    if (clientFilter) {
+      return (c.clientId === clientFilter.id) || (c.clientName === clientFilter.name);
+    }
     const q = certSearch.toLowerCase();
     return (
       c.reportNo.toLowerCase().includes(q) ||
@@ -168,7 +172,7 @@ function Dashboard() {
                         <div className="flex justify-end gap-1">
                           <ActionBtn
                             title="View Certificates"
-                            onClick={() => { setTab("certs"); setCertSearch(cl.name); }}
+                            onClick={() => { setClientFilter(cl); setCertSearch(""); setTab("certs"); }}
                           >
                             <Gem className="w-4 h-4" />
                           </ActionBtn>
@@ -206,6 +210,20 @@ function Dashboard() {
       {/* ── CERTIFICATES ── */}
       {tab === "certs" && (
         <div>
+          {clientFilter && (
+            <div className="flex items-center gap-3 mb-4 px-4 py-2.5 rounded-xl border border-primary/30 bg-primary/5 text-sm">
+              <Gem className="w-4 h-4 text-primary shrink-0" />
+              <span className="text-foreground/80">
+                Showing reports for <span className="font-semibold text-foreground">{clientFilter.name}</span>
+              </span>
+              <button
+                onClick={() => setClientFilter(null)}
+                className="ml-auto flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="w-3.5 h-3.5" /> Show all
+              </button>
+            </div>
+          )}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
             <h2 className="font-display text-xl">
               Certificates
@@ -214,7 +232,7 @@ function Dashboard() {
               </span>
             </h2>
             <div className="flex items-center gap-3">
-              <SearchBox value={certSearch} onChange={setCertSearch} placeholder="Search certificates…" />
+              {!clientFilter && <SearchBox value={certSearch} onChange={setCertSearch} placeholder="Search certificates…" />}
               <Link
                 to="/admin/cert/$id"
                 params={{ id: "new" }}

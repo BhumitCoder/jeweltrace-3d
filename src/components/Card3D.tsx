@@ -116,7 +116,9 @@ function CardFace({
 }
 
 function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate | null }) {
-  const pad = w * 0.05;
+  const pad = Math.round(w * 0.042);
+  const imgSize = Math.round(h * 0.36);
+  const qrSize = Math.round(h * 0.28);
   const verifyUrl = `/verify?id=${encodeURIComponent(cert?.reportNo ?? "")}`;
 
   const specs = cert
@@ -143,19 +145,19 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
       style={{ padding: pad }}
     >
       {/* Header */}
-      <div className="flex items-start justify-between">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <img
             src={logo}
             alt=""
-            style={{ width: w * 0.09, height: w * 0.09 }}
+            style={{ width: h * 0.13, height: h * 0.13 }}
             className="object-contain"
           />
           <div>
             <div
               style={{
                 fontFamily: "Playfair Display, serif",
-                fontSize: w * 0.05,
+                fontSize: w * 0.048,
                 lineHeight: 1,
               }}
             >
@@ -163,8 +165,8 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
               <span style={{ color: "#E8C56A" }}>Report</span>
             </div>
             <div
-              style={{ fontSize: w * 0.018, letterSpacing: "0.3em" }}
-              className="uppercase text-white/60 mt-1"
+              style={{ fontSize: w * 0.016, letterSpacing: "0.28em" }}
+              className="uppercase text-white/60 mt-0.5"
             >
               Certification Lab
             </div>
@@ -172,33 +174,33 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
         </div>
         <div className="text-right">
           <div
-            style={{ fontSize: w * 0.018, letterSpacing: "0.25em" }}
+            style={{ fontSize: w * 0.016, letterSpacing: "0.25em" }}
             className="uppercase text-white/60"
           >
             Report No.
           </div>
           <div
             className="font-mono"
-            style={{ fontSize: w * 0.034, color: "#E8C56A", letterSpacing: "0.06em" }}
+            style={{ fontSize: w * 0.032, color: "#E8C56A", letterSpacing: "0.06em" }}
           >
             {cert ? cert.reportNo : "SAMPLE"}
           </div>
           {!cert && (
-            <div style={{ fontSize: w * 0.016, color: "#E8C56A66" }}>
-              Issue a certificate to see live data
+            <div style={{ fontSize: w * 0.014, color: "#E8C56A66" }}>
+              Issue a cert to see live data
             </div>
           )}
         </div>
       </div>
 
       {/* Body */}
-      <div className="flex-1 mt-3 flex gap-3">
+      <div className="flex-1 mt-2 flex gap-3 min-h-0">
         {/* Image / Diamond visual */}
         <div
           className="rounded-lg overflow-hidden flex items-center justify-center shrink-0"
           style={{
-            width: w * 0.26,
-            height: w * 0.26,
+            width: imgSize,
+            height: imgSize,
             background:
               "linear-gradient(135deg, rgba(212,175,55,0.18), rgba(255,255,255,0.05))",
             border: "1px solid rgba(212,175,55,0.45)",
@@ -232,18 +234,18 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
 
         {/* Specs */}
         <div
-          className="flex-1 grid grid-cols-2 gap-x-3 gap-y-1.5"
-          style={{ fontSize: w * 0.026 }}
+          className="flex-1 grid grid-cols-2 gap-x-3 gap-y-1 content-start"
+          style={{ fontSize: w * 0.024 }}
         >
           {specs.map(([l, v]) => (
             <div key={l} className="border-b border-white/10 pb-0.5">
               <div
                 className="uppercase text-white/55"
-                style={{ fontSize: w * 0.017, letterSpacing: "0.2em" }}
+                style={{ fontSize: w * 0.015, letterSpacing: "0.18em" }}
               >
                 {l}
               </div>
-              <div className="text-white truncate">{v}</div>
+              <div className="text-white truncate" style={{ fontSize: w * 0.024 }}>{v}</div>
             </div>
           ))}
         </div>
@@ -254,24 +256,24 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
         <div>
           <div
             className="uppercase text-white/60"
-            style={{ fontSize: w * 0.018, letterSpacing: "0.25em" }}
+            style={{ fontSize: w * 0.016, letterSpacing: "0.22em" }}
           >
             Issue Date
           </div>
-          <div style={{ color: "#E8C56A", fontSize: w * 0.028 }}>
+          <div style={{ color: "#E8C56A", fontSize: w * 0.026 }}>
             {cert ? cert.issueDate : "13 May 2026"}
           </div>
           <div
-            className="text-white/50 mt-1"
-            style={{ fontSize: w * 0.016, letterSpacing: "0.25em" }}
+            className="text-white/50 mt-0.5"
+            style={{ fontSize: w * 0.014, letterSpacing: "0.22em" }}
           >
             SCAN TO VERIFY
           </div>
         </div>
-        <div className="bg-white p-1.5 rounded">
+        <div className="bg-white p-1 rounded">
           <QRCodeSVG
             value={cert ? verifyUrl : (typeof window !== "undefined" ? window.location.origin : "https://jewelreport.com")}
-            size={Math.round(w * 0.16)}
+            size={qrSize}
             level="M"
           />
         </div>

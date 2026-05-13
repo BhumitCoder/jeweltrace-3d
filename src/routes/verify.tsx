@@ -118,10 +118,9 @@ function CardPreview({ cert }: { cert: Certificate }) {
 
   return (
     <div>
-      {/* Two card previews side by side, scaled to fit screen */}
-      <div className="flex flex-col lg:flex-row items-center justify-center gap-10">
-        <ScaledCard cert={cert} side="front" />
-        <ScaledCard cert={cert} side="back"  />
+      {/* Only back side shown on screen; front appears only in print */}
+      <div className="flex justify-center">
+        <ScaledCard cert={cert} side="back" />
       </div>
 
       {/* Single print button */}

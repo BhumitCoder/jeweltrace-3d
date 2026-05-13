@@ -185,36 +185,58 @@
   .animate-fade-up { animation: fade-up 0.7s ease-out both; }
 }
 
-/* ── Print: show only the two card sides, nothing else ── */
+/* ── Screen: hide print sheet ── */
 .print-only { display: none; }
 
+/* ── Print: ONLY the two card sides, nothing else ── */
 @media print {
-  /* Hide everything on the page */
-  body > * { display: none !important; }
-
-  /* Show only our print sheet */
-  body .print-only { display: block !important; }
-
-  .no-print { display: none !important; }
-
-  /* Each card gets its own page, sized to PAN card exactly */
-  .print-card-page {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 85.6mm;
-    height: 53.98mm;
-    page-break-after: always;
-    break-after: page;
-    overflow: hidden;
+  /*
+   * visibility:hidden on body collapses everything.
+   * Children can then set visibility:visible to reappear
+   * (unlike display:none which can never be overridden by descendants).
+   */
+  body {
+    visibility: hidden !important;
+    background: white !important;
   }
 
-  /* Scale the 856×540 px card down to exactly 85.6×53.98 mm */
+  /* Reveal only the print sheet and all its descendants */
+  .print-only {
+    display: block !important;
+    visibility: visible !important;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: white;
+  }
+
+  .print-only * {
+    visibility: visible !important;
+  }
+
+  /* Each card fills one page exactly */
+  .print-card-page {
+    display: block !important;
+    visibility: visible !important;
+    position: relative;
+    width: 85.6mm;
+    height: 53.98mm;
+    overflow: hidden;
+    page-break-after: always;
+    break-after: page;
+    background: white;
+  }
+
+  /*
+   * The card is 856×540 px. At 96 dpi, 1 px = 0.264583 mm.
+   * 856 px = 226.5 mm. To fit in 85.6 mm: scale = 85.6 / 226.5 = 0.378
+   */
   .print-card-page > div {
-    transform: scale(0.1);
+    transform: scale(0.378);
     transform-origin: top left;
-    width: 856px;
-    height: 540px;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   @page {

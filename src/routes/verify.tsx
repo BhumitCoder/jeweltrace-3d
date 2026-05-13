@@ -1,5 +1,5 @@
 import { createFileRoute, useSearch } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Layout } from "@/components/Layout";
 import { CertificateCard, CARD_W, CARD_H } from "@/components/CertificateCard";
 import { getCertificate, type Certificate } from "@/lib/store";
@@ -98,133 +98,26 @@ function VerifyPage() {
 
 /* ─── Card preview + print ───────────────────────────────────────────────────── */
 function CardPreview({ cert }: { cert: Certificate }) {
-  const frontRef = useRef<HTMLDivElement>(null);
-  const backRef  = useRef<HTMLDivElement>(null);
-  const [printing, setPrinting] = useState(false);
-
-  const printCards = async () => {
-    if (!frontRef.current || !backRef.current) return;
-    setPrinting(true);
-    try {
-      // html-to-image handles oklch and modern CSS natively
-      const { toPng } = await import("html-to-image");
-      const opts = {
-        pixelRatio: 2,
-        backgroundColor: "#ffffff",
-        skipFonts: false,
-      };
-
-      const [frontUrl, backUrl] = await Promise.all([
-        toPng(frontRef.current, opts),
-        toPng(backRef.current, opts),
-      ]);
-
-      // Open a popup sized to PAN/CR80 card — exactly 2 pages
-      const win = window.open("", "_blank");
-      if (!win) { alert("Please allow popups to print the card."); return; }
-
-      win.document.write(`<!DOCTYPE html>
-<html>
-<head>
-  <title>JewelReport — ${cert.reportNo}</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    /* Single landscape page that fits both cards side by side */
-    @page { size: A4 landscape; margin: 8mm; }
-    body { background: #fff; }
-    .sheet {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: 10mm;
-      width: 100%;
-      height: 100%;
-    }
-    .card-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3mm;
-    }
-    .card-wrap img {
-      width: 85.6mm;
-      height: 53.98mm;
-      display: block;
-    }
-    .label {
-      font-family: system-ui;
-      font-size: 8pt;
-      color: #666;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-    @media screen {
-      body {
-        background: #f3f4f6;
-        display: flex; flex-direction: column;
-        align-items: center; justify-content: center;
-        min-height: 100vh; gap: 20px; padding: 28px;
-      }
-      .sheet { gap: 24px; }
-      .card-wrap img { border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.18); }
-      .btn {
-        padding: 10px 28px; border-radius: 999px;
-        background: linear-gradient(135deg,#C9A84C,#e8c96b);
-        color: #1a1a2e; font-weight: 700; font-size: 14px;
-        border: none; cursor: pointer; font-family: system-ui;
-        box-shadow: 0 4px 12px rgba(201,168,76,0.4);
-      }
-    }
-    @media print { .btn { display: none !important; } }
-  </style>
-</head>
-<body>
-  <div class="sheet">
-    <div class="card-wrap">
-      <img src="${frontUrl}" />
-      <span class="label">Front</span>
-    </div>
-    <div class="card-wrap">
-      <img src="${backUrl}" />
-      <span class="label">Back</span>
-    </div>
-  </div>
-  <button class="btn" onclick="window.print()">🖨️ Print</button>
-  <script>
-    window.onload = function() { setTimeout(() => window.print(), 400); };
-  <\/script>
-</body>
-</html>`);
-      win.document.close();
-    } catch (err) {
-      console.error("Print error:", err);
-      alert("Could not prepare card for printing. Please try again.");
-    } finally {
-      setPrinting(false);
-    }
-  };
-
   const SCALE = 0.52;
 
   return (
     <div>
-      {/* Off-screen front — invisible but rendered so html-to-image can capture it */}
-      <div style={{ position: "absolute", left: -99999, top: 0, pointerEvents: "none", zIndex: -1 }}>
-        <div ref={frontRef}>
-          <CertificateCard cert={cert} side="front" />
+      {/* Hidden print sheet — shown only during window.print() via CSS */}
+      <div className="print-only">
+        <div className="print-card-page">
+          <div><CertificateCard cert={cert} side="front" /></div>
+        </div>
+        <div className="print-card-page">
+          <div><CertificateCard cert={cert} side="back" /></div>
         </div>
       </div>
 
-      {/* On-screen: back side only — no outer border, just the card itself */}
+      {/* On-screen card preview (back side) */}
       <div className="flex justify-center">
         <div className="flex flex-col items-center gap-3">
-          {/* Exact clipped wrapper so no overflow shows */}
           <div style={{ width: CARD_W * SCALE, height: CARD_H * SCALE, overflow: "hidden", borderRadius: 10, boxShadow: "0 8px 40px -8px rgba(0,0,0,0.3)" }}>
             <div style={{ transform: `scale(${SCALE})`, transformOrigin: "top left", width: CARD_W, height: CARD_H }}>
-              <div ref={backRef}>
-                <CertificateCard cert={cert} side="back" />
-              </div>
+              <CertificateCard cert={cert} side="back" />
             </div>
           </div>
           <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">Back Side</p>
@@ -234,12 +127,11 @@ function CardPreview({ cert }: { cert: Certificate }) {
       {/* Print button */}
       <div className="mt-8 flex justify-center">
         <button
-          onClick={printCards}
-          disabled={printing}
-          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-gold text-gold-foreground font-semibold shadow-gold hover:scale-105 transition-transform disabled:opacity-60 disabled:cursor-not-allowed text-base"
+          onClick={() => window.print()}
+          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-gold text-gold-foreground font-semibold shadow-gold hover:scale-105 transition-transform text-base"
         >
           <Printer className="w-4 h-4" />
-          {printing ? "Preparing card…" : "Print Card (Front + Back)"}
+          Print Card (Front + Back)
         </button>
       </div>
     </div>

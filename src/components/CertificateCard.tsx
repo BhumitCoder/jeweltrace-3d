@@ -72,24 +72,34 @@ function FrontSide() {
 
 /* ─── BACK — GIA-style layout ────────────────────────────────────────────────── */
 function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string }) {
-  const fields: [string, string | undefined][] = [
-    ["Jewelry Report Number", cert.reportNo],
-    ["Report Type",           cert.type],
-    ["Item",                  cert.itemName],
-    ["Shape",                 cert.shape],
-    ["Total Carat Weight",    cert.caratWeight ? `${cert.caratWeight} carat` : undefined],
-    ["Measurements",          cert.measurements],
-    ["Color",                 cert.color],
-    ["Clarity",               cert.clarity],
-    ["Cut Grade",             cert.cut],
-    ["Polish",                cert.polish],
-    ["Symmetry",              cert.symmetry],
-    ["Fluorescence",          cert.fluorescence],
-    ["Origin",                cert.origin],
-    ["Metal Tested",          cert.metal],
-    ["Item Weight",           cert.totalWeight],
-    ["Client",                cert.clientName],
-  ].filter(([, v]) => v) as [string, string][];
+  const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery";
+
+  const fields: [string, string | undefined][] = isJewellery
+    ? [
+        ["Jewellery Report Number", cert.reportNo],
+        ["Item",                    cert.itemName],
+        ["Metal Tested",            cert.metal],
+        ["Metal Description",       cert.metalDescription],
+        ["Total Weight",            cert.totalWeight],
+        ["Origin",                  cert.origin],
+        ["Client",                  cert.clientName],
+      ].filter(([, v]) => v) as [string, string][]
+    : [
+        ["Jewelry Report Number", cert.reportNo],
+        ["Report Type",           cert.type],
+        ["Item",                  cert.itemName],
+        ["Shape",                 cert.shape],
+        ["Total Carat Weight",    cert.caratWeight ? `${cert.caratWeight} carat` : undefined],
+        ["Measurements",          cert.measurements],
+        ["Color",                 cert.color],
+        ["Clarity",               cert.clarity],
+        ["Cut Grade",             cert.cut],
+        ["Polish",                cert.polish],
+        ["Symmetry",              cert.symmetry],
+        ["Fluorescence",          cert.fluorescence],
+        ["Origin",                cert.origin],
+        ["Client",                cert.clientName],
+      ].filter(([, v]) => v) as [string, string][];
 
   return (
     <>
@@ -163,6 +173,32 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
               </span>
             </div>
           ))}
+
+          {/* Diamond Details block — jewellery only */}
+          {isJewellery && (cert.diamondShape || cert.diamondWeight || cert.diamondColor || cert.diamondClarity) && (
+            <div style={{ marginTop: 6 }}>
+              {/* Section header */}
+              <div style={{
+                fontSize: 9, fontWeight: 700, letterSpacing: "0.2em",
+                textTransform: "uppercase", color: "#B8922A",
+                borderBottom: "1px solid #D4C9A8", paddingBottom: 3, marginBottom: 4,
+              }}>
+                Diamond Details
+              </div>
+              {[
+                ["Shape and Cut",       cert.diamondShape],
+                ["Total Est. Weight",   cert.diamondWeight ? `${cert.diamondWeight} CT` : undefined],
+                ["Color",               cert.diamondColor],
+                ["Clarity",             cert.diamondClarity],
+              ].filter(([, v]) => v).map(([label, value]) => (
+                <div key={label} style={{ display: "flex", alignItems: "flex-end", gap: 0 }}>
+                  <span style={{ fontSize: 11.5, color: "#222", whiteSpace: "nowrap", lineHeight: 1.4 }}>{label}</span>
+                  <span style={{ flex: 1, borderBottom: "1.5px dotted #999", margin: "0 5px 3px", minWidth: 20 }} />
+                  <span style={{ fontSize: 11.5, fontWeight: 700, color: "#111", whiteSpace: "nowrap", lineHeight: 1.4 }}>{value}</span>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Remarks inline if present */}
           {cert.remarks && (

@@ -27,7 +27,9 @@ function makeCert(type: ReportType = "Lab Grown Diamond"): Certificate {
     issueDate: new Date().toISOString().slice(0, 10),
     itemName: "", shape: "", caratWeight: "", measurements: "",
     color: "", clarity: "", cut: "", polish: "", symmetry: "",
-    fluorescence: "", origin: "", metal: "", totalWeight: "", remarks: "",
+    fluorescence: "", origin: "", metal: "", metalDescription: "",
+    totalWeight: "", diamondShape: "", diamondWeight: "",
+    diamondColor: "", diamondClarity: "", remarks: "",
     clientId: "", clientName: "",
     createdAt: Date.now(),
   };
@@ -184,24 +186,46 @@ function CertEditor() {
           </div>
         </Card>
 
-        {/* Grading */}
-        <Card title="Grading Details" sub="Laboratory measurements and grades">
-          <div className="grid sm:grid-cols-2 gap-5">
-            <F label="Carat Weight"><input value={cert.caratWeight} onChange={(e) => set("caratWeight", e.target.value)} className={ic} placeholder="1.05 ct" /></F>
-            <F label="Measurements"><input value={cert.measurements} onChange={(e) => set("measurements", e.target.value)} className={ic} placeholder="6.52 × 6.55 × 4.01 mm" /></F>
-            <F label="Color"><input value={cert.color} onChange={(e) => set("color", e.target.value)} className={ic} placeholder="D" /></F>
-            <F label="Clarity"><input value={cert.clarity} onChange={(e) => set("clarity", e.target.value)} className={ic} placeholder="VVS1" /></F>
-            <F label="Cut Grade"><input value={cert.cut} onChange={(e) => set("cut", e.target.value)} className={ic} placeholder="Excellent" /></F>
-            <F label="Polish"><input value={cert.polish} onChange={(e) => set("polish", e.target.value)} className={ic} placeholder="Excellent" /></F>
-            <F label="Symmetry"><input value={cert.symmetry} onChange={(e) => set("symmetry", e.target.value)} className={ic} placeholder="Excellent" /></F>
-            <F label="Fluorescence"><input value={cert.fluorescence} onChange={(e) => set("fluorescence", e.target.value)} className={ic} placeholder="None" /></F>
-            <F label="Origin"><input value={cert.origin} onChange={(e) => set("origin", e.target.value)} className={ic} placeholder={isJewellery ? "Natural / Lab Grown" : "Lab Grown (CVD)"} /></F>
-            {isJewellery && <>
-              <F label="Metal"><input value={cert.metal || ""} onChange={(e) => set("metal", e.target.value)} className={ic} placeholder="18K Yellow Gold" /></F>
+        {/* Grading — non-jewellery only */}
+        {!isJewellery && (
+          <Card title="Grading Details" sub="Laboratory measurements and grades">
+            <div className="grid sm:grid-cols-2 gap-5">
+              <F label="Carat Weight"><input value={cert.caratWeight} onChange={(e) => set("caratWeight", e.target.value)} className={ic} placeholder="1.05 ct" /></F>
+              <F label="Measurements"><input value={cert.measurements} onChange={(e) => set("measurements", e.target.value)} className={ic} placeholder="6.52 × 6.55 × 4.01 mm" /></F>
+              <F label="Color"><input value={cert.color} onChange={(e) => set("color", e.target.value)} className={ic} placeholder="D" /></F>
+              <F label="Clarity"><input value={cert.clarity} onChange={(e) => set("clarity", e.target.value)} className={ic} placeholder="VVS1" /></F>
+              <F label="Cut Grade"><input value={cert.cut} onChange={(e) => set("cut", e.target.value)} className={ic} placeholder="Excellent" /></F>
+              <F label="Polish"><input value={cert.polish} onChange={(e) => set("polish", e.target.value)} className={ic} placeholder="Excellent" /></F>
+              <F label="Symmetry"><input value={cert.symmetry} onChange={(e) => set("symmetry", e.target.value)} className={ic} placeholder="Excellent" /></F>
+              <F label="Fluorescence"><input value={cert.fluorescence} onChange={(e) => set("fluorescence", e.target.value)} className={ic} placeholder="None" /></F>
+              <F label="Origin"><input value={cert.origin} onChange={(e) => set("origin", e.target.value)} className={ic} placeholder="Lab Grown (CVD)" /></F>
+            </div>
+          </Card>
+        )}
+
+        {/* Jewellery — Metal */}
+        {isJewellery && (
+          <Card title="Metal Details" sub="Metal type and description for this jewellery piece">
+            <div className="grid sm:grid-cols-2 gap-5">
+              <F label="Metal Tested"><input value={cert.metal || ""} onChange={(e) => set("metal", e.target.value)} className={ic} placeholder="18K Yellow Gold" /></F>
+              <F label="Metal Description"><input value={cert.metalDescription || ""} onChange={(e) => set("metalDescription", e.target.value)} className={ic} placeholder="e.g. 18K Yellow Gold Necklace" /></F>
               <F label="Total Weight"><input value={cert.totalWeight || ""} onChange={(e) => set("totalWeight", e.target.value)} className={ic} placeholder="4.20 g" /></F>
-            </>}
-          </div>
-        </Card>
+              <F label="Origin"><input value={cert.origin} onChange={(e) => set("origin", e.target.value)} className={ic} placeholder="Natural / Lab Grown" /></F>
+            </div>
+          </Card>
+        )}
+
+        {/* Jewellery — Diamond Details */}
+        {isJewellery && (
+          <Card title="Diamond Details" sub="Details of diamonds set in this jewellery piece">
+            <div className="grid sm:grid-cols-2 gap-5">
+              <F label="Shape and Cut"><input value={cert.diamondShape || ""} onChange={(e) => set("diamondShape", e.target.value)} className={ic} placeholder="Round" /></F>
+              <F label="Total Est. Weight (CT)"><input value={cert.diamondWeight || ""} onChange={(e) => set("diamondWeight", e.target.value)} className={ic} placeholder="25.00" /></F>
+              <F label="Color"><input value={cert.diamondColor || ""} onChange={(e) => set("diamondColor", e.target.value)} className={ic} placeholder="E-F" /></F>
+              <F label="Clarity"><input value={cert.diamondClarity || ""} onChange={(e) => set("diamondClarity", e.target.value)} className={ic} placeholder="VVS" /></F>
+            </div>
+          </Card>
+        )}
 
         {/* Media */}
         <Card title="Media & Notes" sub="Item photo and any additional remarks">

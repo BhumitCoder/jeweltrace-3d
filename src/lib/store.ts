@@ -40,7 +40,13 @@ export interface Certificate {
   fluorescence: string;
   origin: string;
   metal?: string;
+  metalDescription?: string;
   totalWeight?: string;
+  // Jewellery-specific diamond details
+  diamondShape?: string;
+  diamondWeight?: string;
+  diamondColor?: string;
+  diamondClarity?: string;
   remarks?: string;
   imageDataUrl?: string;     // base64 image for the gem/jewellery
   clientId?: string;

@@ -1,0 +1,6 @@
+{
+  "runtime": "nodejs20.x",
+  "handler": "vercel-entry.js",
+  "launcherType": "Nodejs",
+  "shouldAddHelpers": true
+}

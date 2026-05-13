@@ -1,0 +1,6 @@
+{
+  "buildCommand": "bun run build && bun run scripts/vercel-postbuild.js",
+  "outputDirectory": ".vercel/output",
+  "installCommand": "bun install",
+  "framework": null
+}

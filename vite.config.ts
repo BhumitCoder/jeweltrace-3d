@@ -17,7 +17,12 @@ export default defineConfig({
       port: 5000,
       allowedHosts: true,
       watch: {
-        ignored: ["**/.cache/**", "**/node_modules/**"],
+        ignored: [
+          "**/.cache/**",
+          "**/node_modules/**",
+          "**/.local/**",
+          "**/.git/**",
+        ],
       },
     },
   },

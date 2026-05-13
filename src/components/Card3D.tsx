@@ -117,10 +117,7 @@ function CardFace({
 
 function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate | null }) {
   const pad = w * 0.05;
-  const verifyUrl =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/verify?id=${encodeURIComponent(cert?.reportNo ?? "")}`
-      : "/verify";
+  const verifyUrl = `/verify?id=${encodeURIComponent(cert?.reportNo ?? "")}`;
 
   const specs = cert
     ? [

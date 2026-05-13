@@ -15,6 +15,7 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminCertIdRouteImport } from './routes/admin.cert.$id'
 import { Route as AdminBlogIdRouteImport } from './routes/admin.blog.$id'
@@ -49,6 +50,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -73,17 +79,18 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/verify': typeof VerifyRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/admin/blog/$id': typeof AdminBlogIdRoute
   '/admin/cert/$id': typeof AdminCertIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/admin': typeof AdminRouteWithChildren
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/verify': typeof VerifyRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/admin': typeof AdminIndexRoute
   '/admin/blog/$id': typeof AdminBlogIdRoute
   '/admin/cert/$id': typeof AdminCertIdRoute
 }
@@ -96,6 +103,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/verify': typeof VerifyRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/admin/blog/$id': typeof AdminBlogIdRoute
   '/admin/cert/$id': typeof AdminCertIdRoute
 }
@@ -109,17 +117,18 @@ export interface FileRouteTypes {
     | '/contact'
     | '/verify'
     | '/blog/$slug'
+    | '/admin/'
     | '/admin/blog/$id'
     | '/admin/cert/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/admin'
     | '/blog'
     | '/contact'
     | '/verify'
     | '/blog/$slug'
+    | '/admin'
     | '/admin/blog/$id'
     | '/admin/cert/$id'
   id:
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/verify'
     | '/blog/$slug'
+    | '/admin/'
     | '/admin/blog/$id'
     | '/admin/cert/$id'
   fileRoutesById: FileRoutesById
@@ -188,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/$slug'
@@ -213,11 +230,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
   AdminBlogIdRoute: typeof AdminBlogIdRoute
   AdminCertIdRoute: typeof AdminCertIdRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
   AdminBlogIdRoute: AdminBlogIdRoute,
   AdminCertIdRoute: AdminCertIdRoute,
 }

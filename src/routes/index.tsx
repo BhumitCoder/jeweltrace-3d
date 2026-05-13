@@ -211,10 +211,8 @@ function HomePage() {
               ))}
             </ul>
           </div>
-          <div className="relative">
-            <div className="aspect-[4/5] max-w-md mx-auto rounded-3xl bg-card/40 border border-primary/20 backdrop-blur-sm shadow-3d p-10 flex items-center justify-center">
-              <Card3D width={320} />
-            </div>
+          <div className="relative flex items-center justify-center">
+            <Card3D width={380} />
           </div>
         </div>
       </section>

@@ -105,23 +105,27 @@ function CardPreview({ cert }: { cert: Certificate }) {
       {/* Hidden print sheet — shown only during window.print() via CSS */}
       <div className="print-only">
         <div className="print-card-page">
-          <div><CertificateCard cert={cert} side="front" /></div>
+          <div><div><CertificateCard cert={cert} side="front" /></div></div>
+          <span className="print-card-label">Front</span>
         </div>
         <div className="print-card-page">
-          <div><CertificateCard cert={cert} side="back" /></div>
+          <div><div><CertificateCard cert={cert} side="back" /></div></div>
+          <span className="print-card-label">Back</span>
         </div>
       </div>
 
-      {/* On-screen card preview (back side) */}
-      <div className="flex justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div style={{ width: CARD_W * SCALE, height: CARD_H * SCALE, overflow: "hidden", borderRadius: 10, boxShadow: "0 8px 40px -8px rgba(0,0,0,0.3)" }}>
-            <div style={{ transform: `scale(${SCALE})`, transformOrigin: "top left", width: CARD_W, height: CARD_H }}>
-              <CertificateCard cert={cert} side="back" />
+      {/* On-screen preview — both front and back side by side */}
+      <div className="flex flex-wrap justify-center gap-6">
+        {(["front", "back"] as const).map((side) => (
+          <div key={side} className="flex flex-col items-center gap-3">
+            <div style={{ width: CARD_W * SCALE, height: CARD_H * SCALE, overflow: "hidden", borderRadius: 10, border: "1.5px solid rgba(201,168,76,0.45)", boxShadow: "0 8px 40px -8px rgba(0,0,0,0.5), 0 0 0 3px rgba(201,168,76,0.1)" }}>
+              <div style={{ transform: `scale(${SCALE})`, transformOrigin: "top left", width: CARD_W, height: CARD_H }}>
+                <CertificateCard cert={cert} side={side} />
+              </div>
             </div>
+            <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">{side === "front" ? "Front Side" : "Back Side"}</p>
           </div>
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">Back Side</p>
-        </div>
+        ))}
       </div>
 
       {/* Print button */}

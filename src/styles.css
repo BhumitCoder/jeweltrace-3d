@@ -188,59 +188,63 @@
 /* ── Screen: hide print sheet ── */
 .print-only { display: none; }
 
-/* ── Print: ONLY the two card sides, nothing else ── */
+/* ── Print: both cards side-by-side on one landscape page ── */
 @media print {
-  /*
-   * visibility:hidden on body collapses everything.
-   * Children can then set visibility:visible to reappear
-   * (unlike display:none which can never be overridden by descendants).
-   */
-  body {
-    visibility: hidden !important;
-    background: white !important;
-  }
+  @page { size: A4 landscape; margin: 12mm; }
 
-  /* Reveal only the print sheet and all its descendants */
+  body { visibility: hidden !important; background: white !important; }
+
   .print-only {
-    display: block !important;
+    display: flex !important;
     visibility: visible !important;
     position: fixed;
     inset: 0;
     z-index: 99999;
     background: white;
+    align-items: center;
+    justify-content: center;
+    gap: 14mm;
+    flex-direction: row;
   }
 
-  .print-only * {
-    visibility: visible !important;
-  }
+  .print-only * { visibility: visible !important; }
 
-  /* Each card fills one page exactly */
+  /* Each card: CR80 = 85.6 × 53.98 mm */
   .print-card-page {
-    display: block !important;
-    visibility: visible !important;
-    position: relative;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 4mm;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  .print-card-page > div {
     width: 85.6mm;
     height: 53.98mm;
     overflow: hidden;
-    page-break-after: always;
-    break-after: page;
-    background: white;
+    border-radius: 3.5mm;
+    border: 0.4mm solid #C9A84C;
+    box-shadow: 0 0 0 0.8mm rgba(201,168,76,0.18);
+    position: relative;
   }
 
-  /*
-   * The card is 856×540 px. At 96 dpi, 1 px = 0.264583 mm.
-   * 856 px = 226.5 mm. To fit in 85.6 mm: scale = 85.6 / 226.5 = 0.378
-   */
-  .print-card-page > div {
+  /* scale the 856×540px card down to 85.6×53.98mm */
+  .print-card-page > div > div {
     transform: scale(0.378);
     transform-origin: top left;
     position: absolute;
     top: 0;
     left: 0;
+    width: 856px;
+    height: 540px;
   }
 
-  @page {
-    size: 85.6mm 53.98mm landscape;
-    margin: 0;
+  .print-card-label {
+    font-family: system-ui, sans-serif;
+    font-size: 7pt;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #999;
   }
 }

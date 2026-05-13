@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   generateReportNo, saveCertificate, getCertificate, getClients,
   type Certificate, type ReportType, type Client,
@@ -322,13 +323,15 @@ function ClientPicker({
               <span className="block font-medium text-foreground truncate">{selected.name}</span>
               <span className="block text-xs text-muted-foreground truncate">{selected.phone}</span>
             </span>
-            <button
-              type="button"
+            <span
+              role="button"
+              tabIndex={0}
               onClick={(e) => { e.stopPropagation(); pick(""); }}
-              className="p-1 rounded-lg hover:bg-destructive/10 hover:text-destructive text-muted-foreground transition-colors shrink-0"
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.stopPropagation(); pick(""); } }}
+              className="p-1 rounded-lg hover:bg-destructive/10 hover:text-destructive text-muted-foreground transition-colors shrink-0 cursor-pointer"
             >
               <X className="w-3.5 h-3.5" />
-            </button>
+            </span>
           </>
         ) : (
           <>
@@ -341,8 +344,8 @@ function ClientPicker({
         )}
       </button>
 
-      {/* Dropdown — rendered at fixed position to escape overflow:hidden parents */}
-      {open && (
+      {/* Dropdown — portalled into body to escape all stacking contexts */}
+      {open && createPortal(
         <div ref={ref} style={dropStyle} className="rounded-2xl border border-border bg-card shadow-[0_8px_40px_-4px_rgba(0,0,0,0.7)] overflow-hidden">
           {/* Search */}
           <div className="p-2 border-b border-border">
@@ -390,7 +393,7 @@ function ClientPicker({
             )}
           </div>
         </div>
-      )}
+      , document.body)}
     </div>
   );
 }

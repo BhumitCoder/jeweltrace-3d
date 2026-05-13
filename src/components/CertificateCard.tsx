@@ -40,14 +40,6 @@ function FrontSide() {
       alignItems: "center", justifyContent: "center",
       background: "#F4F2EE", position: "relative",
     }}>
-      {/* Corner brackets */}
-      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }} viewBox="0 0 856 540">
-        <path d="M30,4 L4,4 L4,30"         fill="none" stroke="#B8922A" strokeWidth="4" strokeLinecap="round" />
-        <path d="M826,4 L852,4 L852,30"     fill="none" stroke="#B8922A" strokeWidth="4" strokeLinecap="round" />
-        <path d="M4,510 L4,536 L30,536"     fill="none" stroke="#B8922A" strokeWidth="4" strokeLinecap="round" />
-        <path d="M852,510 L852,536 L826,536" fill="none" stroke="#B8922A" strokeWidth="4" strokeLinecap="round" />
-      </svg>
-
       {/* Watermark */}
       <img src={logo} alt="" crossOrigin="anonymous" style={{
         position: "absolute", width: 300, height: 300, objectFit: "contain",

@@ -135,33 +135,45 @@ function CardPreview({ cert }: { cert: Certificate }) {
   <title>JewelReport — ${cert.reportNo}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    @page { size: 85.6mm 53.98mm landscape; margin: 0; }
+    /* Single landscape page that fits both cards side by side */
+    @page { size: A4 landscape; margin: 8mm; }
     body { background: #fff; }
-    .page {
+    .sheet {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 10mm;
+      width: 100%;
+      height: 100%;
+    }
+    .card-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3mm;
+    }
+    .card-wrap img {
       width: 85.6mm;
       height: 53.98mm;
-      overflow: hidden;
-      page-break-after: always;
-      break-after: page;
+      display: block;
     }
-    .page:last-of-type {
-      page-break-after: avoid;
-      break-after: avoid;
+    .label {
+      font-family: system-ui;
+      font-size: 8pt;
+      color: #666;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
     }
-    img { width: 85.6mm; height: 53.98mm; display: block; }
     @media screen {
       body {
+        background: #f3f4f6;
         display: flex; flex-direction: column;
-        align-items: center; gap: 20px;
-        padding: 28px; background: #f3f4f6;
-        min-height: 100vh;
+        align-items: center; justify-content: center;
+        min-height: 100vh; gap: 20px; padding: 28px;
       }
-      .page { border-radius: 10px; box-shadow: 0 4px 24px rgba(0,0,0,0.15); overflow: hidden; }
-      img { border-radius: 10px; }
-      .actions {
-        display: flex; gap: 12px;
-        margin-top: 4px;
-      }
+      .sheet { gap: 24px; }
+      .card-wrap img { border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.18); }
       .btn {
         padding: 10px 28px; border-radius: 999px;
         background: linear-gradient(135deg,#C9A84C,#e8c96b);
@@ -170,15 +182,21 @@ function CardPreview({ cert }: { cert: Certificate }) {
         box-shadow: 0 4px 12px rgba(201,168,76,0.4);
       }
     }
-    @media print { .actions { display: none !important; } }
+    @media print { .btn { display: none !important; } }
   </style>
 </head>
 <body>
-  <div class="page"><img src="${frontUrl}" /></div>
-  <div class="page"><img src="${backUrl}"  /></div>
-  <div class="actions">
-    <button class="btn" onclick="window.print()">🖨️ Print Both Sides</button>
+  <div class="sheet">
+    <div class="card-wrap">
+      <img src="${frontUrl}" />
+      <span class="label">Front</span>
+    </div>
+    <div class="card-wrap">
+      <img src="${backUrl}" />
+      <span class="label">Back</span>
+    </div>
   </div>
+  <button class="btn" onclick="window.print()">🖨️ Print</button>
   <script>
     window.onload = function() { setTimeout(() => window.print(), 400); };
   <\/script>

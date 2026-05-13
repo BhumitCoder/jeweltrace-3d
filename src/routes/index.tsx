@@ -48,12 +48,12 @@ const whyUs = [
 
 const testimonials = [
   { name: "Aarav Mehta", role: "Diamond Wholesaler, Surat", text: "JewelReport cards have become our default. Buyers trust the holographic finish and the QR works every time." },
-  { name: "Priya Shah", role: "Jewellery Retailer, Mumbai", text: "The PVC card size makes it effortless to hand to customers — feels premium, like a passport for the stone." },
+  { name: "Priya Shah", role: "Jewellery Retailer, Mumbai", text: "The PVC certificate feels premium in hand — like a passport for the stone. Customers love it." },
   { name: "Daniel Roy", role: "Independent Appraiser", text: "Reports are precise, the verification flow is fast, and turnaround is the best I have used." },
 ];
 
 const faqs = [
-  { q: "What size is the certificate card?", a: "Every report is issued on a PVC card the size of a PAN / credit card (85.6 × 53.98 mm)." },
+  { q: "What format is the certificate?", a: "Every report is issued on a secure, tamper-proof PVC certificate with holographic foil and a unique QR code." },
   { q: "How do I verify a card?", a: "Scan the QR on the card, or enter the report number on the Verify page — full details appear instantly." },
   { q: "Can the card be forged?", a: "Each card carries holographic foil, guilloché micro-pattern and a unique server-verified report number." },
   { q: "How long does grading take?", a: "Standard turnaround is 3 business days. Express service is available on request." },
@@ -79,7 +79,7 @@ function HomePage() {
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
               JewelReport delivers world-class grading and authentication for diamonds,
-              gemstones and fine jewellery — issued on a secure, PAN-card-sized PVC certificate.
+              gemstones and fine jewellery — issued on a secure, tamper-proof PVC certificate.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link

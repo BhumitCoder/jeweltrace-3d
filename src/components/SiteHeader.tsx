@@ -24,40 +24,38 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header
-      className={`sticky top-0 z-50 transition-all duration-500 ease-out ${
-        scrolled ? "pt-3 px-3 sm:px-6" : "pt-0 px-0"
-      }`}
-    >
+    <header className="sticky top-0 z-50 pt-3 px-3 sm:px-6">
       <div
-        className={`mx-auto flex items-center justify-between transition-all duration-500 ease-out ${
+        className={`mx-auto flex items-center justify-between max-w-6xl h-16 px-4 sm:px-6 rounded-full border bg-background/80 backdrop-blur-2xl transition-shadow duration-500 ${
           scrolled
-            ? "max-w-5xl h-14 px-4 sm:px-6 rounded-full border border-primary/30 bg-background/70 backdrop-blur-2xl shadow-[0_10px_40px_-15px_rgba(212,175,55,0.35),0_0_0_1px_rgba(212,175,55,0.15)_inset]"
-            : "max-w-7xl h-20 px-6 rounded-none border-b border-border bg-background/70 backdrop-blur-xl"
+            ? "border-primary/40 shadow-[0_10px_40px_-15px_rgba(212,175,55,0.45),0_0_0_1px_rgba(212,175,55,0.18)_inset]"
+            : "border-primary/20 shadow-[0_8px_30px_-15px_rgba(0,0,0,0.5)]"
         }`}
       >
-        <Link to="/" className="flex items-center gap-3 group shrink-0">
-          <img
-            src={logo}
-            alt="JewelReport"
-            className={`object-contain drop-shadow-[0_0_15px_rgba(212,175,55,0.4)] transition-all duration-500 group-hover:scale-105 ${
-              scrolled ? "h-8 w-8" : "h-12 w-12"
-            }`}
-          />
+        <Link to="/" className="flex items-center gap-2.5 group shrink-0">
+          <span
+            className="flex items-center justify-center rounded-full h-10 w-10 shrink-0"
+            style={{
+              background:
+                "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.95), rgba(232,197,106,0.85))",
+              boxShadow:
+                "0 0 18px rgba(212,175,55,0.55), inset 0 0 0 1px rgba(212,175,55,0.6)",
+            }}
+          >
+            <img
+              src={logo}
+              alt="JewelReport"
+              className="h-8 w-8 object-contain transition-transform duration-500 group-hover:scale-110"
+            />
+          </span>
           <div className="leading-tight">
-            <div
-              className={`font-display tracking-tight transition-all duration-500 ${
-                scrolled ? "text-base" : "text-xl"
-              }`}
-            >
+            <div className="font-display tracking-tight text-base sm:text-lg">
               <span className="text-foreground">Jewel</span>
               <span className="text-gradient-gold">Report</span>
             </div>
-            {!scrolled && (
-              <div className="text-[10px] tracking-[0.3em] text-muted-foreground uppercase">
-                Certification Lab
-              </div>
-            )}
+            <div className="hidden sm:block text-[9px] tracking-[0.3em] text-muted-foreground uppercase">
+              Certification Lab
+            </div>
           </div>
         </Link>
 
@@ -81,9 +79,7 @@ export function SiteHeader() {
           })}
           <Link
             to="/verify"
-            className={`inline-flex items-center gap-1.5 rounded-full bg-gradient-gold text-gold-foreground font-medium shadow-gold hover:scale-105 transition-all duration-500 ${
-              scrolled ? "px-4 py-1.5 text-xs" : "px-5 py-2.5 text-sm"
-            }`}
+            className="inline-flex items-center gap-1.5 rounded-full bg-gradient-gold text-gold-foreground font-medium shadow-gold hover:scale-105 transition-transform px-4 py-1.5 text-xs"
           >
             Verify
             <ArrowRight className="w-3.5 h-3.5" />

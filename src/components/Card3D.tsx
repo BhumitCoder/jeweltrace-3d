@@ -270,7 +270,7 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
         </div>
         <div className="bg-white p-1.5 rounded">
           <QRCodeSVG
-            value={cert ? verifyUrl : window?.location?.origin ?? "https://jewelreport.com"}
+            value={cert ? verifyUrl : (typeof window !== "undefined" ? window.location.origin : "https://jewelreport.com")}
             size={Math.round(w * 0.16)}
             level="M"
           />

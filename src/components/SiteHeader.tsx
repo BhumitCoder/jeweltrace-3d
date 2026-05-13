@@ -79,9 +79,7 @@ export function SiteHeader() {
           })}
           <Link
             to="/verify"
-            className={`inline-flex items-center gap-1.5 rounded-full bg-gradient-gold text-gold-foreground font-medium shadow-gold hover:scale-105 transition-all duration-500 ${
-              scrolled ? "px-4 py-1.5 text-xs" : "px-5 py-2.5 text-sm"
-            }`}
+            className="inline-flex items-center gap-1.5 rounded-full bg-gradient-gold text-gold-foreground font-medium shadow-gold hover:scale-105 transition-transform px-4 py-1.5 text-xs"
           >
             Verify
             <ArrowRight className="w-3.5 h-3.5" />

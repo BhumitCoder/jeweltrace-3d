@@ -37,6 +37,7 @@ const services = [
   { title: "Gemstone Reports", desc: "Identification & authenticity for sapphire, ruby, emerald and more.", icon: Microscope },
   { title: "Jewellery Reports", desc: "Full appraisal of finished jewellery with metal & stone detailing.", icon: ShieldCheck },
   { title: "Lab Grown Jewellery", desc: "Mounted lab-grown stones graded on the finished piece.", icon: Gem },
+  { title: "Fancy Colour Diamond Reports", desc: "Specialised grading of colour origin, intensity and distribution for fancy diamonds.", icon: Star },
 ];
 
 const whyUs = [
@@ -131,7 +132,7 @@ function HomePage() {
           <div className="text-center max-w-2xl mx-auto">
             <p className="text-xs uppercase tracking-[0.35em] text-primary">Our Reports</p>
             <h2 className="mt-3 font-display text-4xl md:text-5xl">
-              Five pillars of <span className="text-gradient-gold">authenticity</span>
+              Six pillars of <span className="text-gradient-gold">authenticity</span>
             </h2>
             <p className="mt-4 text-muted-foreground">
               Every report is a meticulous record — the result of advanced spectroscopy, microscopy and master appraisal.

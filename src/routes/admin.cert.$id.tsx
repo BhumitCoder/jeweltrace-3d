@@ -254,6 +254,8 @@ function ClientPicker({
 }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [dropStyle, setDropStyle] = useState<React.CSSProperties>({});
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const ref = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -270,13 +272,26 @@ function ClientPicker({
 
   useEffect(() => {
     function handler(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (
+        ref.current && !ref.current.contains(e.target as Node) &&
+        triggerRef.current && !triggerRef.current.contains(e.target as Node)
+      ) setOpen(false);
     }
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   const toggle = () => {
+    if (!open && triggerRef.current) {
+      const r = triggerRef.current.getBoundingClientRect();
+      setDropStyle({
+        position: "fixed",
+        top: r.bottom + 8,
+        left: r.left,
+        width: r.width,
+        zIndex: 9999,
+      });
+    }
     setOpen((o) => !o);
     if (!open) setTimeout(() => inputRef.current?.focus(), 50);
   };
@@ -288,9 +303,10 @@ function ClientPicker({
   };
 
   return (
-    <div ref={ref} className="relative">
+    <div className="relative">
       {/* Trigger */}
       <button
+        ref={triggerRef}
         type="button"
         onClick={toggle}
         className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl border transition-all text-sm text-left ${
@@ -325,9 +341,9 @@ function ClientPicker({
         )}
       </button>
 
-      {/* Dropdown */}
+      {/* Dropdown — rendered at fixed position to escape overflow:hidden parents */}
       {open && (
-        <div className="absolute z-50 mt-2 w-full rounded-2xl border border-border bg-card shadow-[0_8px_32px_-8px_rgba(0,0,0,0.6)] overflow-hidden">
+        <div ref={ref} style={dropStyle} className="rounded-2xl border border-border bg-card shadow-[0_8px_40px_-4px_rgba(0,0,0,0.7)] overflow-hidden">
           {/* Search */}
           <div className="p-2 border-b border-border">
             <div className="relative">

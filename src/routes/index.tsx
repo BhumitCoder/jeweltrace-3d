@@ -32,12 +32,10 @@ export const Route = createFileRoute("/")({
 });
 
 const services = [
-  { title: "Lab Grown Diamond Reports", desc: "Comprehensive grading for CVD & HPHT diamonds with full origin disclosure.", icon: Sparkles },
-  { title: "Natural Diamond Reports", desc: "International standard 4Cs grading and precise measurement analysis.", icon: Award },
-  { title: "Gemstone Reports", desc: "Identification & authenticity for sapphire, ruby, emerald and more.", icon: Microscope },
-  { title: "Jewellery Reports", desc: "Full appraisal of finished jewellery with metal & stone detailing.", icon: ShieldCheck },
-  { title: "Lab Grown Jewellery", desc: "Mounted lab-grown stones graded on the finished piece.", icon: Gem },
-  { title: "Fancy Colour Diamond Reports", desc: "Specialised grading of colour origin, intensity and distribution for fancy diamonds.", icon: Star },
+  { title: "Lab Grown Diamond Reports", desc: "Comprehensive grading for CVD & HPHT diamonds with full origin disclosure and 4Cs analysis.", icon: Sparkles },
+  { title: "Jewellery Reports", desc: "Full appraisal of finished jewellery pieces with complete metal, stone and setting detailing.", icon: ShieldCheck },
+  { title: "Gemstone Reports", desc: "Scientific identification & authenticity verification for sapphire, ruby, emerald and all coloured stones.", icon: Microscope },
+  { title: "Lab Grown Jewellery Reports", desc: "Mounted lab-grown stones graded on the finished piece — origin disclosed with full transparency.", icon: Gem },
 ];
 
 const whyUs = [
@@ -132,14 +130,14 @@ function HomePage() {
           <div className="text-center max-w-2xl mx-auto">
             <p className="text-xs uppercase tracking-[0.35em] text-primary">Our Reports</p>
             <h2 className="mt-3 font-display text-4xl md:text-5xl">
-              Six pillars of <span className="text-gradient-gold">authenticity</span>
+              Four pillars of <span className="text-gradient-gold">authenticity</span>
             </h2>
             <p className="mt-4 text-muted-foreground">
               Every report is a meticulous record — the result of advanced spectroscopy, microscopy and master appraisal.
             </p>
           </div>
 
-          <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((s, i) => (
               <motion.div
                 key={s.title}

@@ -1,7 +1,6 @@
 // LocalStorage-backed data store for certificates and blog posts
 export type ReportType =
   | "Lab Grown Diamond"
-  | "Natural Diamond"
   | "Jewellery"
   | "Gemstone"
   | "Lab Grown Jewellery";
@@ -86,7 +85,6 @@ export const deleteCertificate = (id: string) => {
 export const generateReportNo = (type: ReportType): string => {
   const prefixMap: Record<ReportType, string> = {
     "Lab Grown Diamond": "LGD",
-    "Natural Diamond": "NDR",
     Jewellery: "JWR",
     Gemstone: "GSR",
     "Lab Grown Jewellery": "LGJ",

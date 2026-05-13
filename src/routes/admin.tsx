@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { AdminShell, AdminTopBar } from "@/components/AdminShell";
 import { useEffect, useState } from "react";
 import {
   ADMIN_PASS, ADMIN_USER,
@@ -27,17 +28,6 @@ function AdminPage() {
     : <Login onLogin={() => setAuthed(true)} />;
 }
 
-/* ── Standalone admin shell (no public nav/footer) ── */
-function AdminShell({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
-      <div className="pointer-events-none fixed -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-radial-gold blur-3xl opacity-30" />
-      <div className="pointer-events-none fixed bottom-0 right-0 h-[400px] w-[400px] rounded-full bg-radial-gold blur-3xl opacity-20" />
-      <main className="flex-1 relative z-10">{children}</main>
-    </div>
-  );
-}
-
 /* ── Login ── */
 function Login({ onLogin }: { onLogin: () => void }) {
   const [u, setU] = useState("");
@@ -58,7 +48,7 @@ function Login({ onLogin }: { onLogin: () => void }) {
       <div className="min-h-screen flex flex-col items-center justify-center px-6">
         <div className="mb-8 flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-gradient-gold flex items-center justify-center shadow-gold">
-            <Gem className="w-4.5 h-4.5 text-gold-foreground" />
+            <Gem className="w-4 h-4 text-gold-foreground" />
           </div>
           <span className="font-display text-xl tracking-wide">JewelReport</span>
           <span className="text-xs uppercase tracking-[0.25em] text-muted-foreground border border-border rounded-full px-2.5 py-0.5 ml-1">Admin</span>
@@ -127,11 +117,8 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
               Admin
             </span>
           </div>
-          <div className="flex items-center gap-3">
-            <Link
-              to="/"
-              className="hidden sm:inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-            >
+          <div className="flex items-center gap-4">
+            <Link to="/" className="hidden sm:inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors">
               View site
             </Link>
             <button
@@ -157,7 +144,7 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
           {[
             { label: "Certificates", value: certs.length, icon: FileText },
             { label: "Blog Posts", value: posts.length, icon: Newspaper },
-            { label: "Report Types", value: 5, icon: Gem },
+            { label: "Report Types", value: 4, icon: Gem },
             { label: "Status", value: "Live", icon: Eye },
           ].map((s) => (
             <div key={s.label} className="p-4 rounded-xl border border-border bg-card/60 backdrop-blur-sm shadow-elegant">
@@ -309,8 +296,8 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
                               {p.coverDataUrl && <img src={p.coverDataUrl} alt="" className="w-full h-full object-cover" />}
                             </div>
                             <div className="min-w-0">
-                              <div className="font-medium truncate max-w-[200px] md:max-w-xs">{p.title}</div>
-                              <div className="text-xs text-muted-foreground mt-0.5 truncate max-w-[200px] md:max-w-xs">{p.excerpt}</div>
+                              <div className="font-medium truncate max-w-[180px] md:max-w-xs">{p.title}</div>
+                              <div className="text-xs text-muted-foreground mt-0.5 truncate max-w-[180px] md:max-w-xs">{p.excerpt}</div>
                             </div>
                           </div>
                         </td>

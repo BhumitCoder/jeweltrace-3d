@@ -10,7 +10,7 @@ export const Route = createFileRoute("/verify")({
   head: () => ({
     meta: [
       { title: "Verify Report — JewelReport" },
-      { name: "description", content: "Enter your JewelReport number to verify the authenticity of your diamond, gemstone or jewellery certificate." },
+      { name: "description", content: "Verify the authenticity of your JewelReport certificate." },
     ],
   }),
   validateSearch: (s: Record<string, unknown>) => ({ id: typeof s.id === "string" ? s.id : "" }),
@@ -38,7 +38,6 @@ function VerifyPage() {
 
   return (
     <Layout>
-      {/* Search hero */}
       <section className="px-6 pt-20 pb-12">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs uppercase tracking-[0.35em] text-primary">Authenticity Check</p>
@@ -48,7 +47,6 @@ function VerifyPage() {
           <p className="mt-5 text-muted-foreground">
             Enter the report number printed on your certificate card to confirm its details.
           </p>
-
           <form onSubmit={onSearch} className="mt-10 flex gap-3 p-2 rounded-full bg-card border border-border shadow-elegant max-w-xl mx-auto">
             <input
               value={query}
@@ -66,16 +64,13 @@ function VerifyPage() {
         </div>
       </section>
 
-      {/* Results */}
       <section className="px-6 pb-32">
         <div className="mx-auto max-w-6xl">
           <AnimatePresence mode="wait">
             {searched && !cert && (
               <motion.div
                 key="notfound"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                 className="max-w-xl mx-auto p-8 rounded-2xl border border-destructive/40 bg-destructive/10 text-center"
               >
                 <AlertCircle className="w-10 h-10 text-destructive mx-auto" />
@@ -89,15 +84,13 @@ function VerifyPage() {
             {cert && (
               <motion.div
                 key={cert.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
                 className="space-y-10"
               >
                 <div className="flex items-center justify-center gap-2 text-primary">
                   <ShieldCheck className="w-6 h-6" />
                   <span className="uppercase tracking-[0.3em] text-sm">Authentic — Verified</span>
                 </div>
-
                 <CardPreview cert={cert} />
                 <FullDetails cert={cert} />
               </motion.div>
@@ -119,26 +112,27 @@ function CardPreview({ cert }: { cert: Certificate }) {
     if (!frontRef.current || !backRef.current) return;
     setPrinting(true);
     try {
-      const html2canvas = (await import("html2canvas")).default;
+      // html-to-image handles oklch and modern CSS natively
+      const { toPng } = await import("html-to-image");
+      const opts = {
+        pixelRatio: 2,
+        backgroundColor: "#ffffff",
+        skipFonts: false,
+      };
 
-      // Capture both sides at 2× resolution for crisp print
-      const opts = { scale: 2, useCORS: true, backgroundColor: "#ffffff", logging: false };
-      const [frontCanvas, backCanvas] = await Promise.all([
-        html2canvas(frontRef.current, opts),
-        html2canvas(backRef.current, opts),
+      const [frontUrl, backUrl] = await Promise.all([
+        toPng(frontRef.current, opts),
+        toPng(backRef.current, opts),
       ]);
 
-      const frontDataUrl = frontCanvas.toDataURL("image/png");
-      const backDataUrl  = backCanvas.toDataURL("image/png");
-
-      // Open a tiny window sized exactly to the card (landscape PAN/CR80)
+      // Open a popup sized to PAN/CR80 card — exactly 2 pages
       const win = window.open("", "_blank", "width=900,height=700");
       if (!win) { alert("Please allow popups to print the card."); return; }
 
       win.document.write(`<!DOCTYPE html>
 <html>
 <head>
-  <title>JewelReport Card — ${cert.reportNo}</title>
+  <title>JewelReport — ${cert.reportNo}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     @page { size: 85.6mm 53.98mm landscape; margin: 0; }
@@ -150,59 +144,79 @@ function CardPreview({ cert }: { cert: Certificate }) {
       page-break-after: always;
       break-after: page;
     }
-    .page:last-child {
+    .page:last-of-type {
       page-break-after: avoid;
       break-after: avoid;
     }
     img { width: 85.6mm; height: 53.98mm; display: block; }
     @media screen {
-      body { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 24px; background: #f3f4f6; }
-      .page { box-shadow: 0 4px 20px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; }
-      img { border-radius: 8px; }
-      .print-btn {
-        display: inline-flex; align-items: center; gap: 8px;
+      body {
+        display: flex; flex-direction: column;
+        align-items: center; gap: 20px;
+        padding: 28px; background: #f3f4f6;
+        min-height: 100vh;
+      }
+      .page { border-radius: 10px; box-shadow: 0 4px 24px rgba(0,0,0,0.15); overflow: hidden; }
+      img { border-radius: 10px; }
+      .actions {
+        display: flex; gap: 12px;
+        margin-top: 4px;
+      }
+      .btn {
         padding: 10px 28px; border-radius: 999px;
         background: linear-gradient(135deg,#C9A84C,#e8c96b);
-        color: #1a1a2e; font-weight: 600; font-size: 14px;
+        color: #1a1a2e; font-weight: 700; font-size: 14px;
         border: none; cursor: pointer; font-family: system-ui;
+        box-shadow: 0 4px 12px rgba(201,168,76,0.4);
       }
     }
-    @media print { .print-btn { display: none !important; } }
+    @media print { .actions { display: none !important; } }
   </style>
 </head>
 <body>
-  <div class="page"><img src="${frontDataUrl}" /></div>
-  <div class="page"><img src="${backDataUrl}"  /></div>
-  <button class="print-btn" onclick="window.print()">🖨️ Print</button>
-  <script>window.onload = () => window.print();<\/script>
+  <div class="page"><img src="${frontUrl}" /></div>
+  <div class="page"><img src="${backUrl}"  /></div>
+  <div class="actions">
+    <button class="btn" onclick="window.print()">🖨️ Print Both Sides</button>
+  </div>
+  <script>
+    window.onload = function() { setTimeout(() => window.print(), 400); };
+  <\/script>
 </body>
 </html>`);
       win.document.close();
+    } catch (err) {
+      console.error("Print error:", err);
+      alert("Could not prepare card for printing. Please try again.");
     } finally {
       setPrinting(false);
     }
   };
 
+  const SCALE = 0.52;
+
   return (
     <div>
-      {/* Off-screen front card — not visible, but rendered so html2canvas can capture it */}
-      <div
-        style={{
-          position: "absolute",
-          left: -9999,
-          top: 0,
-          pointerEvents: "none",
-          visibility: "hidden",
-        }}
-      >
+      {/* Off-screen front — invisible but rendered so html-to-image can capture it */}
+      <div style={{ position: "absolute", left: -99999, top: 0, pointerEvents: "none", zIndex: -1 }}>
         <div ref={frontRef}>
           <CertificateCard cert={cert} side="front" />
         </div>
       </div>
 
-      {/* On-screen: back side only */}
+      {/* On-screen: back side only — no outer border, just the card itself */}
       <div className="flex justify-center">
-        <ScaledCard innerRef={backRef} cert={cert} side="back" label="Back" />
+        <div className="flex flex-col items-center gap-3">
+          {/* Exact clipped wrapper so no overflow shows */}
+          <div style={{ width: CARD_W * SCALE, height: CARD_H * SCALE, overflow: "hidden", borderRadius: 10, boxShadow: "0 8px 40px -8px rgba(0,0,0,0.3)" }}>
+            <div style={{ transform: `scale(${SCALE})`, transformOrigin: "top left", width: CARD_W, height: CARD_H }}>
+              <div ref={backRef}>
+                <CertificateCard cert={cert} side="back" />
+              </div>
+            </div>
+          </div>
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">Back Side</p>
+        </div>
       </div>
 
       {/* Print button */}
@@ -213,40 +227,9 @@ function CardPreview({ cert }: { cert: Certificate }) {
           className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-gold text-gold-foreground font-semibold shadow-gold hover:scale-105 transition-transform disabled:opacity-60 disabled:cursor-not-allowed text-base"
         >
           <Printer className="w-4 h-4" />
-          {printing ? "Preparing…" : "Print Card"}
+          {printing ? "Preparing card…" : "Print Card (Front + Back)"}
         </button>
       </div>
-    </div>
-  );
-}
-
-interface ScaledCardProps {
-  cert: Certificate;
-  side: "front" | "back";
-  label: string;
-  innerRef?: React.RefObject<HTMLDivElement | null>;
-}
-
-function ScaledCard({ cert, side, label, innerRef }: ScaledCardProps) {
-  const scale = 0.52;
-  return (
-    <div className="flex flex-col items-center gap-3">
-      <div
-        style={{
-          width: CARD_W * scale,
-          height: CARD_H * scale,
-          overflow: "hidden",
-          borderRadius: 12,
-          flexShrink: 0,
-        }}
-      >
-        <div style={{ transform: `scale(${scale})`, transformOrigin: "top left", width: CARD_W, height: CARD_H }}>
-          <div ref={innerRef}>
-            <CertificateCard cert={cert} side={side} />
-          </div>
-        </div>
-      </div>
-      <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">{label}</p>
     </div>
   );
 }

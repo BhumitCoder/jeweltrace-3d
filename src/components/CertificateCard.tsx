@@ -25,46 +25,15 @@ export const CertificateCard = forwardRef<HTMLDivElement, Props>(
         style={{
           width: CARD_W,
           height: CARD_H,
-          borderRadius: 20,
           background: "#FFFFFF",
-          border: "1.5px solid rgba(201,168,76,0.45)",
           position: "relative",
           overflow: "hidden",
-          fontFamily: "system-ui, -apple-system, sans-serif",
+          fontFamily: "'Segoe UI', system-ui, -apple-system, sans-serif",
           flexShrink: 0,
           boxSizing: "border-box",
         }}
       >
-        {/* Corner bracket accents */}
-        <svg
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 2 }}
-          viewBox="0 0 856 540"
-        >
-          <path d="M26,4 L4,4 L4,26"           fill="none" stroke="#C9A84C" strokeWidth="4" strokeLinecap="round" />
-          <path d="M830,4 L852,4 L852,26"       fill="none" stroke="#C9A84C" strokeWidth="4" strokeLinecap="round" />
-          <path d="M4,514 L4,536 L26,536"       fill="none" stroke="#C9A84C" strokeWidth="4" strokeLinecap="round" />
-          <path d="M852,514 L852,536 L830,536"  fill="none" stroke="#C9A84C" strokeWidth="4" strokeLinecap="round" />
-          <rect x="14" y="14" width="828" height="512" rx="12" fill="none" stroke="#C9A84C" strokeWidth="0.8" opacity="0.25" />
-        </svg>
-
-        {/* Subtle grid watermark */}
-        <svg
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", opacity: 0.04, zIndex: 1 }}
-          viewBox="0 0 856 540"
-        >
-          <defs>
-            <pattern id="gcp" width="22" height="22" patternUnits="userSpaceOnUse">
-              <path d="M22 0L0 0 0 22" fill="none" stroke="#8B6914" strokeWidth="0.5" />
-            </pattern>
-          </defs>
-          <rect width="856" height="540" fill="url(#gcp)" />
-          <circle cx="428" cy="270" r="210" fill="none" stroke="#8B6914" strokeWidth="1.2" />
-          <circle cx="428" cy="270" r="155" fill="none" stroke="#8B6914" strokeWidth="0.6" />
-        </svg>
-
-        <div style={{ position: "relative", zIndex: 3, height: "100%", width: "100%" }}>
-          {side === "front" ? <FrontSide /> : <BackSide cert={cert} verifyUrl={verifyUrl} />}
-        </div>
+        {side === "front" ? <FrontSide /> : <BackSide cert={cert} verifyUrl={verifyUrl} />}
       </div>
     );
   }
@@ -77,31 +46,33 @@ function FrontSide() {
       height: "100%", width: "100%",
       display: "flex", flexDirection: "column",
       alignItems: "center", justifyContent: "center",
+      background: "#fff",
       position: "relative",
     }}>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18 }}>
-        <img
-          src={logo}
-          alt="JewelReport"
-          crossOrigin="anonymous"
-          style={{ height: 130, width: 130, objectFit: "contain" }}
-        />
-        <div style={{
-          fontFamily: "Playfair Display, Georgia, serif",
-          fontSize: 44, lineHeight: 1,
-          color: "#1a1a2e", letterSpacing: "0.02em",
-        }}>
+      {/* Corner brackets */}
+      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} viewBox="0 0 856 540">
+        <path d="M28,4 L4,4 L4,28"           fill="none" stroke="#C9A84C" strokeWidth="4" strokeLinecap="round" />
+        <path d="M828,4 L852,4 L852,28"       fill="none" stroke="#C9A84C" strokeWidth="4" strokeLinecap="round" />
+        <path d="M4,512 L4,536 L28,536"       fill="none" stroke="#C9A84C" strokeWidth="4" strokeLinecap="round" />
+        <path d="M852,512 L852,536 L828,536"  fill="none" stroke="#C9A84C" strokeWidth="4" strokeLinecap="round" />
+      </svg>
+
+      {/* Centre block */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20, position: "relative", zIndex: 1 }}>
+        <img src={logo} alt="JewelReport" crossOrigin="anonymous"
+          style={{ height: 130, width: 130, objectFit: "contain" }} />
+        <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 46, lineHeight: 1, color: "#1a1a2e", letterSpacing: "0.02em" }}>
           Jewel<span style={{ color: "#C9A84C" }}>Report</span>
         </div>
-        <div style={{ fontSize: 11.5, letterSpacing: "0.55em", textTransform: "uppercase", color: "#9CA3AF" }}>
+        <div style={{ fontSize: 12, letterSpacing: "0.55em", textTransform: "uppercase", color: "#9CA3AF" }}>
           Certification Lab
         </div>
-        <div style={{ width: 140, height: 1.5, background: "linear-gradient(90deg,transparent,#C9A84C,transparent)" }} />
+        <div style={{ width: 150, height: 1.5, background: "linear-gradient(90deg,transparent,#C9A84C,transparent)" }} />
       </div>
 
-      {/* URL at bottom */}
-      <div style={{ position: "absolute", bottom: 28, left: 0, right: 0, textAlign: "center" }}>
-        <span style={{ fontSize: 9.5, letterSpacing: "0.45em", textTransform: "uppercase", color: "#C9A84C" }}>
+      {/* URL at very bottom */}
+      <div style={{ position: "absolute", bottom: 28, left: 0, right: 0, textAlign: "center", zIndex: 1 }}>
+        <span style={{ fontSize: 10, letterSpacing: "0.45em", textTransform: "uppercase", color: "#C9A84C" }}>
           JEWELREPORT.COM
         </span>
       </div>
@@ -109,9 +80,9 @@ function FrontSide() {
   );
 }
 
-// ─── BACK: ALL details — logo top-right, QR bottom-right ─────────────────────
+// ─── BACK: full layout — logo top-right, QR bottom-right ─────────────────────
 function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string }) {
-  const specs: [string, string][] = ([
+  const leftSpecs: [string, string][] = ([
     ["Report No.",   cert.reportNo],
     ["Type",         cert.type],
     ["Item",         cert.itemName],
@@ -119,120 +90,146 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
     ["Shape",        cert.shape],
     ["Carat Weight", cert.caratWeight],
     ["Measurements", cert.measurements],
+    ["Origin",       cert.origin],
+  ] as [string, string | undefined][]).filter(([, v]) => !!v) as [string, string][];
+
+  const rightSpecs: [string, string][] = ([
     ["Color",        cert.color],
     ["Clarity",      cert.clarity],
     ["Cut Grade",    cert.cut],
     ["Polish",       cert.polish],
     ["Symmetry",     cert.symmetry],
     ["Fluorescence", cert.fluorescence],
-    ["Origin",       cert.origin],
     cert.metal        ? ["Metal",        cert.metal]        : null,
     cert.totalWeight  ? ["Total Weight", cert.totalWeight]  : null,
     cert.clientName   ? ["Client",       cert.clientName]   : null,
-  ] as ([string, string | undefined] | null)[]).filter(
-    (r): r is [string, string] => r !== null && !!r[1]
-  );
+  ] as ([string, string] | null)[]).filter((r): r is [string, string] => r !== null && !!r[1]);
 
   return (
-    <div style={{
-      height: "100%", width: "100%",
-      display: "flex", flexDirection: "column",
-      padding: "18px 26px 16px",
-      position: "relative",
-      boxSizing: "border-box",
-    }}>
+    <div style={{ height: "100%", width: "100%", display: "flex", background: "#fff" }}>
 
-      {/* ── Top bar: title left · logo+name top-right ── */}
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 12 }}>
-        <div>
-          <div style={{ fontFamily: "Playfair Display, Georgia, serif", fontSize: 19, color: "#1a1a2e", letterSpacing: "0.04em" }}>
-            Certificate Details
-          </div>
-          <div style={{ height: 2, width: 90, background: "linear-gradient(90deg,#C9A84C,transparent)", marginTop: 6 }} />
-        </div>
-
-        {/* Logo + brand — top-right */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <img src={logo} alt="" crossOrigin="anonymous" style={{ height: 32, width: 32, objectFit: "contain" }} />
-          <div style={{ fontFamily: "Playfair Display, Georgia, serif", fontSize: 14, color: "#1a1a2e", lineHeight: 1 }}>
-            Jewel<span style={{ color: "#C9A84C" }}>Report</span>
-            <div style={{ fontSize: 7.5, letterSpacing: "0.3em", textTransform: "uppercase", color: "#9CA3AF", marginTop: 3 }}>
-              Certification Lab
+      {/* ── Left image column ── */}
+      <div style={{
+        width: 170, flexShrink: 0,
+        display: "flex", flexDirection: "column",
+        borderRight: "1.5px solid #F0E4C0",
+        background: "linear-gradient(180deg, #FFFDF5 0%, #FEF6E4 100%)",
+      }}>
+        {/* Image */}
+        <div style={{ flex: 1, overflow: "hidden", position: "relative" }}>
+          {cert.imageDataUrl ? (
+            <img src={cert.imageDataUrl} alt="" crossOrigin="anonymous"
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          ) : (
+            <div style={{
+              width: "100%", height: "100%",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              background: "linear-gradient(135deg,#FEF9EE,#FAF0D7)",
+            }}>
+              <img src={logo} alt="" crossOrigin="anonymous"
+                style={{ height: 64, width: 64, objectFit: "contain", opacity: 0.2 }} />
             </div>
-          </div>
+          )}
+        </div>
+        {/* Gold accent bar below image */}
+        <div style={{ height: 6, background: "linear-gradient(90deg,#C9A84C,#E8C96B,#C9A84C)" }} />
+        {/* Report no vertically */}
+        <div style={{
+          padding: "14px 0", display: "flex", alignItems: "center", justifyContent: "center",
+          background: "#1a1a2e",
+        }}>
+          <span style={{
+            fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase",
+            color: "#C9A84C", fontWeight: 600,
+            writingMode: "horizontal-tb",
+            textAlign: "center",
+          }}>
+            {cert.reportNo || "JEWELREPORT.COM"}
+          </span>
         </div>
       </div>
 
-      {/* ── Image + specs ── */}
-      <div style={{ display: "flex", gap: 18, flex: 1, minHeight: 0 }}>
+      {/* ── Right content area ── */}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "18px 22px 16px", minWidth: 0 }}>
 
-        {/* Square image */}
-        {cert.imageDataUrl ? (
-          <div style={{
-            width: 114, height: 114,
-            flexShrink: 0, borderRadius: 10, overflow: "hidden",
-            border: "1px solid rgba(201,168,76,0.4)",
-          }}>
-            <img
-              src={cert.imageDataUrl}
-              alt=""
-              crossOrigin="anonymous"
-              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-            />
+        {/* Top row: title + logo */}
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 14 }}>
+          <div>
+            <div style={{ fontSize: 11, letterSpacing: "0.35em", textTransform: "uppercase", color: "#9CA3AF", marginBottom: 4 }}>
+              Gemological Certificate
+            </div>
+            <div style={{ fontFamily: "Georgia, serif", fontSize: 22, color: "#1a1a2e", lineHeight: 1 }}>
+              Certificate Details
+            </div>
+            <div style={{ height: 2, width: 100, background: "linear-gradient(90deg,#C9A84C,transparent)", marginTop: 7 }} />
           </div>
-        ) : (
-          /* Placeholder box so layout doesn't collapse when no image */
-          <div style={{
-            width: 114, height: 114, flexShrink: 0, borderRadius: 10,
-            border: "1px dashed rgba(201,168,76,0.3)",
-            background: "linear-gradient(135deg,#FEF9EE,#FAF0D7)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}>
-            <img src={logo} alt="" crossOrigin="anonymous" style={{ height: 48, width: 48, objectFit: "contain", opacity: 0.3 }} />
+          {/* Logo — top right */}
+          <div style={{ display: "flex", alignItems: "center", gap: 7, flexShrink: 0 }}>
+            <img src={logo} alt="" crossOrigin="anonymous" style={{ height: 34, width: 34, objectFit: "contain" }} />
+            <div>
+              <div style={{ fontFamily: "Georgia, serif", fontSize: 15, color: "#1a1a2e", lineHeight: 1 }}>
+                Jewel<span style={{ color: "#C9A84C" }}>Report</span>
+              </div>
+              <div style={{ fontSize: 7.5, letterSpacing: "0.3em", textTransform: "uppercase", color: "#9CA3AF", marginTop: 3 }}>
+                Certification Lab
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div style={{ height: 1, background: "#F0E4C0", marginBottom: 14 }} />
+
+        {/* Two-column spec grid */}
+        <div style={{ flex: 1, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 28px", alignContent: "start" }}>
+          {/* Left specs */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {leftSpecs.map(([label, value]) => (
+              <div key={label} style={{ borderBottom: "1px solid #F3F4F6", paddingBottom: 6 }}>
+                <div style={{ fontSize: 7.5, letterSpacing: "0.28em", textTransform: "uppercase", color: "#9CA3AF" }}>{label}</div>
+                <div style={{ fontSize: 11.5, color: "#111827", fontWeight: 600, marginTop: 2 }}>{value}</div>
+              </div>
+            ))}
+          </div>
+          {/* Right specs */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {rightSpecs.map(([label, value]) => (
+              <div key={label} style={{ borderBottom: "1px solid #F3F4F6", paddingBottom: 6 }}>
+                <div style={{ fontSize: 7.5, letterSpacing: "0.28em", textTransform: "uppercase", color: "#9CA3AF" }}>{label}</div>
+                <div style={{ fontSize: 11.5, color: "#111827", fontWeight: 600, marginTop: 2 }}>{value}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Remarks */}
+        {cert.remarks && (
+          <div style={{ marginTop: 10, paddingTop: 8, borderTop: "1px solid #F0E4C0" }}>
+            <div style={{ fontSize: 7.5, letterSpacing: "0.28em", textTransform: "uppercase", color: "#9CA3AF" }}>Remarks</div>
+            <p style={{ fontSize: 10, color: "#374151", marginTop: 2, lineHeight: 1.45 }}>{cert.remarks}</p>
           </div>
         )}
 
-        {/* Specs 2-col grid */}
-        <div style={{ flex: 1, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5px 20px", alignContent: "start" }}>
-          {specs.map(([label, value]) => (
-            <div key={label} style={{ borderBottom: "1px solid rgba(0,0,0,0.08)", paddingBottom: 4 }}>
-              <div style={{ fontSize: 7.5, letterSpacing: "0.26em", textTransform: "uppercase", color: "#9CA3AF" }}>
-                {label}
-              </div>
-              <div style={{ fontSize: 11, color: "#111827", fontWeight: 600, marginTop: 2 }}>
-                {value}
-              </div>
+        {/* Footer: text left · QR bottom-right */}
+        <div style={{
+          display: "flex", alignItems: "flex-end", justifyContent: "space-between",
+          marginTop: 12, paddingTop: 10, borderTop: "1.5px solid #F0E4C0",
+        }}>
+          <div>
+            <div style={{ fontSize: 7.5, color: "#9CA3AF", letterSpacing: "0.1em", marginBottom: 3 }}>
+              Property of JewelReport Certification Lab
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Remarks */}
-      {cert.remarks && (
-        <div style={{ marginTop: 8, paddingTop: 6, borderTop: "1px solid rgba(0,0,0,0.08)" }}>
-          <div style={{ fontSize: 7.5, letterSpacing: "0.26em", textTransform: "uppercase", color: "#9CA3AF" }}>Remarks</div>
-          <p style={{ fontSize: 9.5, color: "#374151", marginTop: 2, lineHeight: 1.45 }}>{cert.remarks}</p>
-        </div>
-      )}
-
-      {/* ── Footer: scan text left · QR bottom-right ── */}
-      <div style={{
-        display: "flex", alignItems: "flex-end", justifyContent: "space-between",
-        marginTop: 8, paddingTop: 8,
-        borderTop: "1px solid rgba(201,168,76,0.3)",
-      }}>
-        <div>
-          <div style={{ fontSize: 7.5, color: "#9CA3AF", letterSpacing: "0.1em", marginBottom: 2 }}>
-            Property of JewelReport Certification Lab
+            <div style={{ fontSize: 8.5, color: "#C9A84C", letterSpacing: "0.35em", textTransform: "uppercase" }}>
+              JEWELREPORT.COM
+            </div>
+            <div style={{ fontSize: 7.5, color: "#9CA3AF", marginTop: 3 }}>
+              Scan QR code to verify authenticity
+            </div>
           </div>
-          <div style={{ fontSize: 8, color: "#C9A84C", letterSpacing: "0.35em", textTransform: "uppercase" }}>
-            JEWELREPORT.COM
+          {/* QR — bottom right */}
+          <div style={{ padding: 5, background: "#fff", border: "1.5px solid rgba(201,168,76,0.5)", borderRadius: 8, flexShrink: 0 }}>
+            <QRCodeSVG value={verifyUrl} size={64} level="M" />
           </div>
-        </div>
-
-        {/* QR code — bottom-right */}
-        <div style={{ padding: 4, background: "#fff", border: "1px solid rgba(201,168,76,0.5)", borderRadius: 7 }}>
-          <QRCodeSVG value={verifyUrl} size={62} level="M" />
         </div>
       </div>
     </div>

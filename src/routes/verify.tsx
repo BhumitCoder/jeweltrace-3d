@@ -1,9 +1,9 @@
 import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Layout } from "@/components/Layout";
-import { CertificateCard } from "@/components/CertificateCard";
+import { CertificateCard, CARD_W, CARD_H } from "@/components/CertificateCard";
 import { getCertificate, type Certificate } from "@/lib/store";
-import { Search, ShieldCheck, AlertCircle, Download, Printer } from "lucide-react";
+import { Search, ShieldCheck, AlertCircle, Printer } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const Route = createFileRoute("/verify")({
@@ -18,29 +18,28 @@ export const Route = createFileRoute("/verify")({
 });
 
 function VerifyPage() {
-  const search = useSearch({ from: "/verify" });
-  const [query, setQuery] = useState(search.id || "");
+  const search  = useSearch({ from: "/verify" });
+  const [query, setQuery]     = useState(search.id || "");
   const [searched, setSearched] = useState(false);
-  const [cert, setCert] = useState<Certificate | undefined>();
+  const [cert, setCert]       = useState<Certificate | undefined>();
 
   useEffect(() => {
     if (search.id) {
-      const c = getCertificate(search.id);
-      setCert(c);
+      setCert(getCertificate(search.id));
       setSearched(true);
     }
   }, [search.id]);
 
   const onSearch = (e?: React.FormEvent) => {
     e?.preventDefault();
-    const c = getCertificate(query.trim());
-    setCert(c);
+    setCert(getCertificate(query.trim()));
     setSearched(true);
   };
 
   return (
     <Layout>
-      <section className="px-6 pt-20 pb-12">
+      {/* Search hero */}
+      <section className="px-6 pt-20 pb-12 no-print">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs uppercase tracking-[0.35em] text-primary">Authenticity Check</p>
           <h1 className="mt-3 font-display text-5xl md:text-6xl">
@@ -67,7 +66,8 @@ function VerifyPage() {
         </div>
       </section>
 
-      <section className="px-6 pb-32">
+      {/* Results */}
+      <section className="px-6 pb-32 no-print">
         <div className="mx-auto max-w-6xl">
           <AnimatePresence mode="wait">
             {searched && !cert && (
@@ -81,7 +81,7 @@ function VerifyPage() {
                 <AlertCircle className="w-10 h-10 text-destructive mx-auto" />
                 <h3 className="mt-4 font-display text-2xl">Report Not Found</h3>
                 <p className="mt-2 text-muted-foreground">
-                  No certificate matches “{query}”. Please double-check the report number on your card.
+                  No certificate matches "{query}". Please double-check the report number on your card.
                 </p>
               </motion.div>
             )}
@@ -97,6 +97,7 @@ function VerifyPage() {
                   <ShieldCheck className="w-6 h-6" />
                   <span className="uppercase tracking-[0.3em] text-sm">Authentic — Verified</span>
                 </div>
+
                 <CardPreview cert={cert} />
                 <FullDetails cert={cert} />
               </motion.div>
@@ -104,78 +105,107 @@ function VerifyPage() {
           </AnimatePresence>
         </div>
       </section>
+
+      {/* Print-only view — hidden on screen, shown only when printing */}
+      {cert && <PrintSheet cert={cert} />}
     </Layout>
   );
 }
 
+/* ── Card preview on screen ─────────────────────────────────────────────────── */
 function CardPreview({ cert }: { cert: Certificate }) {
-  const frontRef = useRef<HTMLDivElement>(null);
-  const backRef = useRef<HTMLDivElement>(null);
-
-  const downloadPdf = async () => {
-    const html2canvas = (await import("html2canvas")).default;
-    const { jsPDF } = await import("jspdf");
-    const opts = { backgroundColor: null, scale: 2, useCORS: true } as const;
-    const f = await html2canvas(frontRef.current!, opts);
-    const b = await html2canvas(backRef.current!, opts);
-    // CR80 size in mm: 85.6 × 53.98
-    const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: [85.6, 53.98] });
-    pdf.addImage(f.toDataURL("image/png"), "PNG", 0, 0, 85.6, 53.98);
-    pdf.addPage([85.6, 53.98], "landscape");
-    pdf.addImage(b.toDataURL("image/png"), "PNG", 0, 0, 85.6, 53.98);
-    pdf.save(`${cert.reportNo}.pdf`);
-  };
+  const printCards = () => window.print();
 
   return (
     <div>
-      <div className="grid lg:grid-cols-2 gap-8 justify-items-center">
-        <div className="origin-top-left scale-[0.55] sm:scale-[0.7] md:scale-[0.85] lg:scale-[0.65] xl:scale-[0.75]" style={{ width: "fit-content" }}>
-          <CertificateCard ref={frontRef} cert={cert} side="front" />
-        </div>
-        <div className="origin-top-left scale-[0.55] sm:scale-[0.7] md:scale-[0.85] lg:scale-[0.65] xl:scale-[0.75]" style={{ width: "fit-content" }}>
-          <CertificateCard ref={backRef} cert={cert} side="back" />
-        </div>
+      {/* Two card previews side by side, scaled to fit screen */}
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-10">
+        <ScaledCard cert={cert} side="front" />
+        <ScaledCard cert={cert} side="back"  />
       </div>
-      <div className="mt-6 flex justify-center gap-3">
+
+      {/* Single print button */}
+      <div className="mt-8 flex justify-center">
         <button
-          onClick={downloadPdf}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-gold text-gold-foreground font-medium shadow-gold hover:scale-105 transition-transform"
+          onClick={printCards}
+          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-gold text-gold-foreground font-medium shadow-gold hover:scale-105 transition-transform text-base"
         >
-          <Download className="w-4 h-4" /> Download PVC Card (PDF)
-        </button>
-        <button
-          onClick={() => window.print()}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border hover:border-primary hover:text-primary transition-colors"
-        >
-          <Printer className="w-4 h-4" /> Print
+          <Printer className="w-4 h-4" /> Print Card
         </button>
       </div>
     </div>
   );
 }
 
+function ScaledCard({ cert, side }: { cert: Certificate; side: "front" | "back" }) {
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <div
+        className="origin-top-left"
+        style={{
+          transform: "scale(0.52)",
+          width: CARD_W,
+          height: CARD_H,
+          marginBottom: -(CARD_H * 0.48),
+          marginRight: -(CARD_W * 0.48),
+        }}
+      >
+        <CertificateCard cert={cert} side={side} />
+      </div>
+      <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mt-1">
+        {side === "front" ? "Front" : "Back"}
+      </p>
+    </div>
+  );
+}
+
+/* ── Print sheet — only visible during window.print() ───────────────────────── */
+function PrintSheet({ cert }: { cert: Certificate }) {
+  const frontRef = useRef<HTMLDivElement>(null);
+  const backRef  = useRef<HTMLDivElement>(null);
+
+  return (
+    <div className="print-only">
+      {/* Front */}
+      <div className="print-card-page">
+        <div ref={frontRef}>
+          <CertificateCard cert={cert} side="front" />
+        </div>
+      </div>
+      {/* Back */}
+      <div className="print-card-page">
+        <div ref={backRef}>
+          <CertificateCard cert={cert} side="back" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Full details table below card on screen ─────────────────────────────────── */
 function FullDetails({ cert }: { cert: Certificate }) {
   const rows: Array<[string, string | undefined]> = [
     ["Report Number", cert.reportNo],
-    ["Report Type", cert.type],
-    ["Item", cert.itemName],
-    ["Issue Date", cert.issueDate],
-    ["Shape", cert.shape],
-    ["Carat Weight", cert.caratWeight],
-    ["Measurements", cert.measurements],
-    ["Color", cert.color],
-    ["Clarity", cert.clarity],
-    ["Cut Grade", cert.cut],
-    ["Polish", cert.polish],
-    ["Symmetry", cert.symmetry],
-    ["Fluorescence", cert.fluorescence],
-    ["Origin", cert.origin],
-    ["Metal", cert.metal],
-    ["Total Weight", cert.totalWeight],
+    ["Report Type",   cert.type],
+    ["Item",          cert.itemName],
+    ["Issue Date",    cert.issueDate],
+    ["Shape",         cert.shape],
+    ["Carat Weight",  cert.caratWeight],
+    ["Measurements",  cert.measurements],
+    ["Color",         cert.color],
+    ["Clarity",       cert.clarity],
+    ["Cut Grade",     cert.cut],
+    ["Polish",        cert.polish],
+    ["Symmetry",      cert.symmetry],
+    ["Fluorescence",  cert.fluorescence],
+    ["Origin",        cert.origin],
+    ["Metal",         cert.metal],
+    ["Total Weight",  cert.totalWeight],
+    ["Client",        cert.clientName],
   ].filter(([, v]) => v) as Array<[string, string]>;
 
   return (
-    <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm shadow-elegant overflow-hidden">
+    <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm shadow-elegant overflow-hidden no-print">
       <div className="px-8 py-6 border-b border-border bg-gradient-navy">
         <h3 className="font-display text-2xl">Full Certificate Details</h3>
       </div>

@@ -184,3 +184,41 @@
   }
   .animate-fade-up { animation: fade-up 0.7s ease-out both; }
 }
+
+/* ── Print: show only the two card sides, nothing else ── */
+.print-only { display: none; }
+
+@media print {
+  /* Hide everything on the page */
+  body > * { display: none !important; }
+
+  /* Show only our print sheet */
+  body .print-only { display: block !important; }
+
+  .no-print { display: none !important; }
+
+  /* Each card gets its own page, sized to PAN card exactly */
+  .print-card-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 85.6mm;
+    height: 53.98mm;
+    page-break-after: always;
+    break-after: page;
+    overflow: hidden;
+  }
+
+  /* Scale the 856×540 px card down to exactly 85.6×53.98 mm */
+  .print-card-page > div {
+    transform: scale(0.1);
+    transform-origin: top left;
+    width: 856px;
+    height: 540px;
+  }
+
+  @page {
+    size: 85.6mm 53.98mm landscape;
+    margin: 0;
+  }
+}

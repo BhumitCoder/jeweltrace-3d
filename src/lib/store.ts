@@ -1,9 +1,18 @@
 // LocalStorage-backed data store for clients, certificates and blog posts
 export type ReportType =
+  | "Natural Diamond"
   | "Lab Grown Diamond"
-  | "Jewellery"
   | "Gemstone"
-  | "Lab Grown Jewellery";
+  | "Lab Grown Jewellery"
+  | "Natural Jewellery";
+
+export const REPORT_TYPE_LABELS: Record<ReportType, string> = {
+  "Natural Diamond":     "NATURAL DIAMOND GRADING REPORT",
+  "Lab Grown Diamond":   "LAB GROWN DIAMOND GRADING REPORT",
+  "Gemstone":            "GEMSTONE GRADING REPORT",
+  "Lab Grown Jewellery": "LAB DIAM JEWELLERY REPORT",
+  "Natural Jewellery":   "NATURAL DIAM JEWELLERY REPORT",
+};
 
 export interface Client {
   id: string;
@@ -120,10 +129,11 @@ export const deleteCertificate = (id: string) => {
 
 export const generateReportNo = (type: ReportType): string => {
   const prefixMap: Record<ReportType, string> = {
+    "Natural Diamond":     "NDR",
     "Lab Grown Diamond":   "LGD",
-    Jewellery:             "JWR",
-    Gemstone:              "GSR",
+    "Gemstone":            "GSR",
     "Lab Grown Jewellery": "LGJ",
+    "Natural Jewellery":   "NJR",
   };
   const prefix = prefixMap[type];
   const yr = new Date().getFullYear().toString().slice(-2);

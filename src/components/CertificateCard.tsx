@@ -1,6 +1,7 @@
 import { QRCodeSVG } from "qrcode.react";
 import { forwardRef } from "react";
 import type { Certificate } from "@/lib/store";
+import { REPORT_TYPE_LABELS } from "@/lib/store";
 import logo from "@/assets/logo.png";
 
 // PAN card / CR80: 85.6 × 53.98 mm → rendered at 856 × 540 px (10 px/mm)
@@ -111,7 +112,7 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
       }}>
 
         {/* Logo row */}
-        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 10 }}>
           <img src={logo} alt="JewelReport" crossOrigin="anonymous" style={{ height: 52, width: 52, objectFit: "contain" }} />
           <div>
             <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 28, color: "#111", lineHeight: 1, letterSpacing: "-0.01em" }}>
@@ -121,6 +122,18 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
             <div style={{ fontSize: 8.5, letterSpacing: "0.35em", textTransform: "uppercase", color: "#888", marginTop: 4 }}>
               Certification Lab
             </div>
+          </div>
+        </div>
+
+        {/* Green line + Report type label */}
+        <div style={{ marginBottom: 12 }}>
+          <div style={{ height: 3, background: "#2E7D32", borderRadius: 2, marginBottom: 6 }} />
+          <div style={{
+            fontSize: 13, fontWeight: 800, letterSpacing: "0.06em",
+            textTransform: "uppercase", color: "#1B5E20",
+            lineHeight: 1.2,
+          }}>
+            {REPORT_TYPE_LABELS[cert.type] ?? cert.type}
           </div>
         </div>
 

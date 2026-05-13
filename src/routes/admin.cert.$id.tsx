@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
   generateReportNo, saveCertificate, getCertificate, getClients,
+  REPORT_TYPE_LABELS,
   type Certificate, type ReportType, type Client,
 } from "@/lib/store";
 import { ArrowLeft, Save, Upload, RefreshCw, Loader2, Users, Search, ChevronDown, X, Check } from "lucide-react";
@@ -12,10 +13,11 @@ export const Route = createFileRoute("/admin/cert/$id")({
 });
 
 const REPORT_TYPES: ReportType[] = [
+  "Natural Diamond",
   "Lab Grown Diamond",
-  "Jewellery",
   "Gemstone",
   "Lab Grown Jewellery",
+  "Natural Jewellery",
 ];
 
 function makeCert(type: ReportType = "Lab Grown Diamond"): Certificate {
@@ -88,7 +90,7 @@ function CertEditor() {
     navigate({ to: "/admin" });
   };
 
-  const isJewellery = cert.type === "Jewellery" || cert.type === "Lab Grown Jewellery";
+  const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery";
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-8">
@@ -137,15 +139,17 @@ function CertEditor() {
 
         {/* Report Type */}
         <Card title="Report Type" sub="Select the category for this certificate">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {REPORT_TYPES.map((t) => (
               <button key={t} type="button" onClick={() => changeType(t)}
-                className={`px-3 py-3 rounded-xl border text-sm text-center transition-all ${
+                className={`px-4 py-3 rounded-xl border text-left transition-all ${
                   cert.type === t
-                    ? "border-primary bg-primary/10 text-primary font-medium"
+                    ? "border-primary bg-primary/10 text-primary font-semibold"
                     : "border-border hover:border-primary/50 text-muted-foreground"
                 }`}>
-                {t}
+                <span className="block text-[11px] font-bold tracking-widest uppercase leading-tight">
+                  {REPORT_TYPE_LABELS[t]}
+                </span>
               </button>
             ))}
           </div>

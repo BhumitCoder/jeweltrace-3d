@@ -1,20 +1,30 @@
 import { QRCodeSVG } from "qrcode.react";
-import { useEffect, useState } from "react";
-import { getCertificates, type Certificate } from "@/lib/store";
 import logo from "@/assets/logo.png";
 
 // 3D rotating PVC/PAN-size certificate card (CR80 ratio 1.586:1)
-// Shows the most recent real certificate from localStorage, or a clean
-// "Sample" card if no certificates have been issued yet.
+// Always shows fixed sample data — never reads from the store.
+const DUMMY = {
+  reportNo: "LGD-26-004821",
+  type: "Lab Grown Diamond",
+  itemName: "Round Brilliant Diamond",
+  shape: "Round Brilliant",
+  caratWeight: "1.52 ct",
+  color: "E",
+  clarity: "VS1",
+  cut: "Excellent",
+  polish: "Excellent",
+  symmetry: "Excellent",
+  fluorescence: "None",
+  origin: "Lab Grown (CVD)",
+  measurements: "7.41 × 7.43 × 4.61 mm",
+  issueDate: "13 May 2026",
+  imageDataUrl: undefined as string | undefined,
+};
+
 export function Card3D({ width = 420 }: { width?: number }) {
   const w = width;
   const h = Math.round(w / 1.586);
-  const [cert, setCert] = useState<Certificate | null>(null);
-
-  useEffect(() => {
-    const all = getCertificates();
-    if (all.length > 0) setCert(all[0]);
-  }, []);
+  const cert = DUMMY;
 
   return (
     <div

@@ -18,16 +18,6 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: "About — JewelReport Certification Lab" },
-      {
-        name: "description",
-        content:
-          "Independent gemological lab serving the global jewellery trade with precision grading, master gemologists and tamper-proof PVC certificates.",
-      },
-    ],
-  }),
   component: AboutPage,
 });
 

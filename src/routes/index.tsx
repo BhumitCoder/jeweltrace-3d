@@ -18,16 +18,6 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "JewelReport — Premium Certification for Diamonds & Jewellery" },
-      {
-        name: "description",
-        content:
-          "Globally trusted gem & jewellery certification. Lab-grown diamonds, natural diamonds, gemstones and jewellery reports on a secure PVC card.",
-      },
-    ],
-  }),
   component: HomePage,
 });
 

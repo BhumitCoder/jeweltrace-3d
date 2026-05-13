@@ -7,12 +7,6 @@ import { Search, ShieldCheck, AlertCircle, Printer } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const Route = createFileRoute("/verify")({
-  head: () => ({
-    meta: [
-      { title: "Verify Report — JewelReport" },
-      { name: "description", content: "Verify the authenticity of your JewelReport certificate." },
-    ],
-  }),
   validateSearch: (s: Record<string, unknown>) => ({ id: typeof s.id === "string" ? s.id : "" }),
   component: VerifyPage,
 });

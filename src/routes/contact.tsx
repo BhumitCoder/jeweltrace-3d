@@ -4,12 +4,6 @@ import { Mail, MapPin, Phone, Send } from "lucide-react";
 import { useState } from "react";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact — JewelReport" },
-      { name: "description", content: "Get in touch with JewelReport Certification Lab for submissions, partnerships and inquiries." },
-    ],
-  }),
   component: ContactPage,
 });
 

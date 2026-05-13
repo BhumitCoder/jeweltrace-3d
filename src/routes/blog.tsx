@@ -6,12 +6,6 @@ import type { BlogPost } from "@/lib/store";
 import { Calendar, ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/blog")({
-  head: () => ({
-    meta: [
-      { title: "Blog — JewelReport" },
-      { name: "description", content: "Insights on diamonds, gemstones, lab-grown stones and the world of fine jewellery." },
-    ],
-  }),
   component: BlogPage,
 });
 

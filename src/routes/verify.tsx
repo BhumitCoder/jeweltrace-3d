@@ -120,7 +120,7 @@ function CardPreview({ cert }: { cert: Certificate }) {
       ]);
 
       // Open a popup sized to PAN/CR80 card — exactly 2 pages
-      const win = window.open("", "_blank", "width=900,height=700");
+      const win = window.open("", "_blank");
       if (!win) { alert("Please allow popups to print the card."); return; }
 
       win.document.write(`<!DOCTYPE html>

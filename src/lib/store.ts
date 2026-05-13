@@ -1,9 +1,18 @@
-// LocalStorage-backed data store for certificates and blog posts
+// LocalStorage-backed data store for clients, certificates and blog posts
 export type ReportType =
   | "Lab Grown Diamond"
   | "Jewellery"
   | "Gemstone"
   | "Lab Grown Jewellery";
+
+export interface Client {
+  id: string;
+  name: string;
+  phone: string;
+  email?: string;
+  address?: string;
+  createdAt: number;
+}
 
 export interface Certificate {
   id: string;                // also the report number
@@ -25,6 +34,8 @@ export interface Certificate {
   totalWeight?: string;
   remarks?: string;
   imageDataUrl?: string;     // base64 image for the gem/jewellery
+  clientId?: string;
+  clientName?: string;       // denormalised for display
   createdAt: number;
 }
 
@@ -40,9 +51,10 @@ export interface BlogPost {
   createdAt: number;
 }
 
-const CERT_KEY = "jr_certificates_v1";
-const BLOG_KEY = "jr_blog_posts_v1";
-const AUTH_KEY = "jr_admin_auth_v1";
+const CLIENT_KEY = "jr_clients_v1";
+const CERT_KEY   = "jr_certificates_v1";
+const BLOG_KEY   = "jr_blog_posts_v1";
+const AUTH_KEY   = "jr_admin_auth_v1";
 
 function read<T>(key: string, fallback: T): T {
   if (typeof window === "undefined") return fallback;
@@ -58,9 +70,33 @@ function write<T>(key: string, value: T) {
   localStorage.setItem(key, JSON.stringify(value));
 }
 
+// ----- Clients -----
+export const getClients = (): Client[] =>
+  read<Client[]>(CLIENT_KEY, []).sort((a, b) => b.createdAt - a.createdAt);
+
+export const getClient = (id: string): Client | undefined =>
+  read<Client[]>(CLIENT_KEY, []).find((c) => c.id === id);
+
+export const saveClient = (client: Client) => {
+  const all = read<Client[]>(CLIENT_KEY, []);
+  const idx = all.findIndex((c) => c.id === client.id);
+  if (idx >= 0) all[idx] = client;
+  else all.push(client);
+  write(CLIENT_KEY, all);
+};
+
+export const deleteClient = (id: string) => {
+  write(CLIENT_KEY, read<Client[]>(CLIENT_KEY, []).filter((c) => c.id !== id));
+};
+
 // ----- Certificates -----
 export const getCertificates = (): Certificate[] =>
   read<Certificate[]>(CERT_KEY, []).sort((a, b) => b.createdAt - a.createdAt);
+
+export const getCertificatesByClient = (clientId: string): Certificate[] =>
+  read<Certificate[]>(CERT_KEY, [])
+    .filter((c) => c.clientId === clientId)
+    .sort((a, b) => b.createdAt - a.createdAt);
 
 export const getCertificate = (id: string): Certificate | undefined =>
   read<Certificate[]>(CERT_KEY, []).find(
@@ -84,9 +120,9 @@ export const deleteCertificate = (id: string) => {
 
 export const generateReportNo = (type: ReportType): string => {
   const prefixMap: Record<ReportType, string> = {
-    "Lab Grown Diamond": "LGD",
-    Jewellery: "JWR",
-    Gemstone: "GSR",
+    "Lab Grown Diamond":   "LGD",
+    Jewellery:             "JWR",
+    Gemstone:              "GSR",
     "Lab Grown Jewellery": "LGJ",
   };
   const prefix = prefixMap[type];

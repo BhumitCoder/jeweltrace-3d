@@ -1,10 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
-  generateReportNo, saveCertificate, getCertificate,
-  type Certificate, type ReportType,
+  generateReportNo, saveCertificate, getCertificate, getClients,
+  type Certificate, type ReportType, type Client,
 } from "@/lib/store";
-import { ArrowLeft, Save, Upload, RefreshCw, Loader2 } from "lucide-react";
+import { ArrowLeft, Save, Upload, RefreshCw, Loader2, Users } from "lucide-react";
 
 export const Route = createFileRoute("/admin/cert/$id")({
   component: CertEditor,
@@ -25,19 +25,22 @@ function makeCert(type: ReportType = "Lab Grown Diamond"): Certificate {
     itemName: "", shape: "", caratWeight: "", measurements: "",
     color: "", clarity: "", cut: "", polish: "", symmetry: "",
     fluorescence: "", origin: "", metal: "", totalWeight: "", remarks: "",
+    clientId: "", clientName: "",
     createdAt: Date.now(),
   };
 }
 
 function CertEditor() {
-  const { id } = Route.useParams();
+  const { id }  = Route.useParams();
   const navigate = useNavigate();
-  const isNew = id === "new";
+  const isNew    = id === "new";
 
-  const [cert, setCert] = useState<Certificate | null>(null);
-  const [saving, setSaving] = useState(false);
+  const [cert, setCert]       = useState<Certificate | null>(null);
+  const [clients, setClients] = useState<Client[]>([]);
+  const [saving, setSaving]   = useState(false);
 
   useEffect(() => {
+    setClients(getClients());
     if (isNew) {
       setCert(makeCert());
     } else {
@@ -62,6 +65,11 @@ function CertEditor() {
   const changeType = (t: ReportType) => {
     const no = isNew ? generateReportNo(t) : cert.reportNo;
     setCert((c) => c ? { ...c, type: t, reportNo: no, id: no } : c);
+  };
+
+  const selectClient = (clientId: string) => {
+    const cl = clients.find((c) => c.id === clientId);
+    setCert((c) => c ? { ...c, clientId, clientName: cl?.name ?? "" } : c);
   };
 
   const onImage = (file?: File) => {
@@ -90,11 +98,51 @@ function CertEditor() {
       <div className="mt-6 mb-8">
         <h1 className="font-display text-3xl">{isNew ? "New Certificate" : "Edit Certificate"}</h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          Fill in all report details. The PVC card is auto-generated and can be downloaded from the Verify page.
+          Fill in all report details. The PVC card can be printed from the Verify page.
         </p>
       </div>
 
       <form onSubmit={submit} className="space-y-6">
+
+        {/* Client */}
+        <Card title="Client" sub="Select the client this certificate belongs to">
+          <div className="flex items-start gap-4">
+            <div className="flex-1">
+              {clients.length === 0 ? (
+                <div className="flex items-center gap-3 p-4 rounded-xl border border-dashed border-border text-sm text-muted-foreground">
+                  <Users className="w-4 h-4 shrink-0" />
+                  <span>No clients yet.&nbsp;</span>
+                  <Link to="/admin/clients/$id" params={{ id: "new" }} className="text-primary hover:underline">
+                    Create a client first
+                  </Link>
+                </div>
+              ) : (
+                <select
+                  value={cert.clientId || ""}
+                  onChange={(e) => selectClient(e.target.value)}
+                  className={ic}
+                >
+                  <option value="">— Select a client —</option>
+                  {clients.map((cl) => (
+                    <option key={cl.id} value={cl.id}>{cl.name} ({cl.phone})</option>
+                  ))}
+                </select>
+              )}
+            </div>
+            <Link
+              to="/admin/clients/$id"
+              params={{ id: "new" }}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border hover:border-primary text-sm transition-colors whitespace-nowrap text-muted-foreground hover:text-primary"
+            >
+              <Users className="w-4 h-4" /> New Client
+            </Link>
+          </div>
+          {cert.clientName && (
+            <p className="mt-2 text-xs text-primary">
+              ✓ Linked to <strong>{cert.clientName}</strong>
+            </p>
+          )}
+        </Card>
 
         {/* Report Type */}
         <Card title="Report Type" sub="Select the category for this certificate">
@@ -121,7 +169,8 @@ function CertEditor() {
                   onChange={(e) => { set("reportNo", e.target.value); set("id", e.target.value); }}
                   className={ic} required />
                 {isNew && (
-                  <button type="button" onClick={() => { const n = generateReportNo(cert.type); setCert(c => c ? { ...c, reportNo: n, id: n } : c); }}
+                  <button type="button"
+                    onClick={() => { const n = generateReportNo(cert.type); setCert(c => c ? { ...c, reportNo: n, id: n } : c); }}
                     className="px-3 rounded-xl border border-border hover:border-primary text-muted-foreground hover:text-primary transition-colors shrink-0" title="Regenerate">
                     <RefreshCw className="w-4 h-4" />
                   </button>
@@ -178,7 +227,7 @@ function CertEditor() {
               </div>
             </F>
             <F label="Remarks">
-              <textarea value={cert.remarks || ""} onChange={(e) => set("remarks", e.target.value)} rows={3} className={ic} placeholder="Any additional notes for this report..." />
+              <textarea value={cert.remarks || ""} onChange={(e) => set("remarks", e.target.value)} rows={3} className={ic} placeholder="Any additional notes for this report…" />
             </F>
           </div>
         </Card>

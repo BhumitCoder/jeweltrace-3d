@@ -1,10 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   generateReportNo, saveCertificate, getCertificate, getClients,
   type Certificate, type ReportType, type Client,
 } from "@/lib/store";
-import { ArrowLeft, Save, Upload, RefreshCw, Loader2, Users } from "lucide-react";
+import { ArrowLeft, Save, Upload, RefreshCw, Loader2, Users, Search, ChevronDown, X, Check } from "lucide-react";
 
 export const Route = createFileRoute("/admin/cert/$id")({
   component: CertEditor,
@@ -117,16 +117,11 @@ function CertEditor() {
                   </Link>
                 </div>
               ) : (
-                <select
-                  value={cert.clientId || ""}
-                  onChange={(e) => selectClient(e.target.value)}
-                  className={ic}
-                >
-                  <option value="">— Select a client —</option>
-                  {clients.map((cl) => (
-                    <option key={cl.id} value={cl.id}>{cl.name} ({cl.phone})</option>
-                  ))}
-                </select>
+                <ClientPicker
+                  clients={clients}
+                  selectedId={cert.clientId || ""}
+                  onChange={selectClient}
+                />
               )}
             </div>
             <Link
@@ -137,11 +132,6 @@ function CertEditor() {
               <Users className="w-4 h-4" /> New Client
             </Link>
           </div>
-          {cert.clientName && (
-            <p className="mt-2 text-xs text-primary">
-              ✓ Linked to <strong>{cert.clientName}</strong>
-            </p>
-          )}
         </Card>
 
         {/* Report Type */}
@@ -248,6 +238,146 @@ function CertEditor() {
 }
 
 const ic = "w-full bg-input/30 border border-border rounded-xl px-4 py-2.5 outline-none focus:border-primary transition-colors text-foreground text-sm";
+
+function clientInitials(name: string) {
+  return name.split(" ").slice(0, 2).map((w) => w[0]).join("").toUpperCase();
+}
+
+function ClientPicker({
+  clients,
+  selectedId,
+  onChange,
+}: {
+  clients: Client[];
+  selectedId: string;
+  onChange: (id: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const ref = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const selected = clients.find((c) => c.id === selectedId) ?? null;
+
+  const filtered = clients.filter((c) => {
+    const q = query.toLowerCase();
+    return (
+      c.name.toLowerCase().includes(q) ||
+      c.phone.toLowerCase().includes(q) ||
+      (c.email ?? "").toLowerCase().includes(q)
+    );
+  });
+
+  useEffect(() => {
+    function handler(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const toggle = () => {
+    setOpen((o) => !o);
+    if (!open) setTimeout(() => inputRef.current?.focus(), 50);
+  };
+
+  const pick = (id: string) => {
+    onChange(id);
+    setOpen(false);
+    setQuery("");
+  };
+
+  return (
+    <div ref={ref} className="relative">
+      {/* Trigger */}
+      <button
+        type="button"
+        onClick={toggle}
+        className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl border transition-all text-sm text-left ${
+          open ? "border-primary bg-primary/5" : "border-border bg-input/30 hover:border-primary/50"
+        }`}
+      >
+        {selected ? (
+          <>
+            <span className="w-8 h-8 rounded-full bg-gradient-gold flex items-center justify-center text-[11px] font-bold text-gold-foreground shrink-0">
+              {clientInitials(selected.name)}
+            </span>
+            <span className="flex-1 min-w-0">
+              <span className="block font-medium text-foreground truncate">{selected.name}</span>
+              <span className="block text-xs text-muted-foreground truncate">{selected.phone}</span>
+            </span>
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); pick(""); }}
+              className="p-1 rounded-lg hover:bg-destructive/10 hover:text-destructive text-muted-foreground transition-colors shrink-0"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </>
+        ) : (
+          <>
+            <span className="w-8 h-8 rounded-full border border-dashed border-border flex items-center justify-center shrink-0">
+              <Users className="w-3.5 h-3.5 text-muted-foreground" />
+            </span>
+            <span className="flex-1 text-muted-foreground">Select a client…</span>
+            <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform shrink-0 ${open ? "rotate-180" : ""}`} />
+          </>
+        )}
+      </button>
+
+      {/* Dropdown */}
+      {open && (
+        <div className="absolute z-50 mt-2 w-full rounded-2xl border border-border bg-card shadow-[0_8px_32px_-8px_rgba(0,0,0,0.6)] overflow-hidden">
+          {/* Search */}
+          <div className="p-2 border-b border-border">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground pointer-events-none" />
+              <input
+                ref={inputRef}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search by name, phone, email…"
+                className="w-full pl-9 pr-4 py-2 rounded-xl bg-input/40 border border-border text-sm outline-none focus:border-primary transition-colors text-foreground placeholder:text-muted-foreground"
+              />
+            </div>
+          </div>
+
+          {/* List */}
+          <div className="max-h-60 overflow-y-auto">
+            {filtered.length === 0 ? (
+              <div className="px-4 py-8 text-center text-sm text-muted-foreground">No clients match your search.</div>
+            ) : (
+              filtered.map((cl) => {
+                const isSelected = cl.id === selectedId;
+                return (
+                  <button
+                    key={cl.id}
+                    type="button"
+                    onClick={() => pick(cl.id)}
+                    className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
+                      isSelected ? "bg-primary/10" : "hover:bg-muted/30"
+                    }`}
+                  >
+                    <span className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                      isSelected ? "bg-gradient-gold text-gold-foreground" : "bg-muted/50 text-foreground/70"
+                    }`}>
+                      {clientInitials(cl.name)}
+                    </span>
+                    <span className="flex-1 min-w-0">
+                      <span className="block text-sm font-medium text-foreground truncate">{cl.name}</span>
+                      <span className="block text-xs text-muted-foreground truncate">{cl.phone}{cl.email ? ` · ${cl.email}` : ""}</span>
+                    </span>
+                    {isSelected && <Check className="w-4 h-4 text-primary shrink-0" />}
+                  </button>
+                );
+              })
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function Card({ title, sub, children }: { title: string; sub?: string; children: React.ReactNode }) {
   return (

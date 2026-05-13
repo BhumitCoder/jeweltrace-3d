@@ -17,19 +17,24 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 48);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+    setOpen(false);
+  }, [path]);
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-[100] pt-3 px-3 sm:px-6">
+    <header className="fixed top-0 left-0 right-0 z-[100]">
       <div
-        className={`mx-auto flex items-center justify-between max-w-6xl h-16 px-5 sm:px-7 rounded-full border bg-background/85 backdrop-blur-2xl transition-all duration-500 ${
+        className={`mx-auto flex items-center justify-between h-16 transition-all duration-500 ${
           scrolled
-            ? "max-w-5xl border-primary/45 shadow-[0_12px_45px_-12px_rgba(212,175,55,0.5),0_0_0_1px_rgba(212,175,55,0.2)_inset]"
-            : "border-primary/20 shadow-[0_8px_30px_-15px_rgba(0,0,0,0.5)]"
+            ? "mt-3 max-w-5xl px-5 sm:px-7 rounded-full border border-primary/40 bg-background/90 backdrop-blur-2xl shadow-[0_12px_45px_-12px_rgba(212,175,55,0.45),0_0_0_1px_rgba(212,175,55,0.15)_inset] mx-3 sm:mx-auto"
+            : "mt-0 max-w-none px-6 sm:px-10 rounded-none border-b border-transparent bg-transparent"
         }`}
       >
         <Link to="/" className="flex items-center gap-2.5 group shrink-0">
@@ -87,8 +92,8 @@ export function SiteHeader() {
 
       {open && (
         <div
-          className={`lg:hidden mx-auto mt-2 overflow-hidden bg-background/95 backdrop-blur-xl border border-border ${
-            scrolled ? "max-w-5xl rounded-2xl mx-3 sm:mx-auto" : "rounded-none border-x-0"
+          className={`lg:hidden mt-2 overflow-hidden bg-background/95 backdrop-blur-xl border border-border ${
+            scrolled ? "mx-3 sm:mx-auto max-w-5xl rounded-2xl" : "rounded-none border-x-0"
           }`}
         >
           <div className="px-6 py-4 flex flex-col gap-3">

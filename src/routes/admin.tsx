@@ -96,7 +96,7 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
           <div className="mt-10">
             <div className="flex justify-between items-center mb-6">
               <h2 className="font-display text-2xl">Certificates ({certs.length})</h2>
-              <Link to="/admin/cert/new" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-gold text-gold-foreground shadow-gold font-medium">
+              <Link to="/admin/cert/$id" params={{ id: "new" }} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-gold text-gold-foreground shadow-gold font-medium">
                 <Plus className="w-4 h-4" /> New Certificate
               </Link>
             </div>
@@ -141,7 +141,7 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
           <div className="mt-10">
             <div className="flex justify-between items-center mb-6">
               <h2 className="font-display text-2xl">Blog Posts ({posts.length})</h2>
-              <Link to="/admin/blog/new" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-gold text-gold-foreground shadow-gold font-medium">
+              <Link to="/admin/blog/$id" params={{ id: "new" }} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-gold text-gold-foreground shadow-gold font-medium">
                 <Plus className="w-4 h-4" /> New Post
               </Link>
             </div>

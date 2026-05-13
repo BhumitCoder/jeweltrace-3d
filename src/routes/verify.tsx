@@ -18,10 +18,10 @@ export const Route = createFileRoute("/verify")({
 });
 
 function VerifyPage() {
-  const search  = useSearch({ from: "/verify" });
-  const [query, setQuery]     = useState(search.id || "");
+  const search = useSearch({ from: "/verify" });
+  const [query, setQuery]       = useState(search.id || "");
   const [searched, setSearched] = useState(false);
-  const [cert, setCert]       = useState<Certificate | undefined>();
+  const [cert, setCert]         = useState<Certificate | undefined>();
 
   useEffect(() => {
     if (search.id) {
@@ -39,7 +39,7 @@ function VerifyPage() {
   return (
     <Layout>
       {/* Search hero */}
-      <section className="px-6 pt-20 pb-12 no-print">
+      <section className="px-6 pt-20 pb-12">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs uppercase tracking-[0.35em] text-primary">Authenticity Check</p>
           <h1 className="mt-3 font-display text-5xl md:text-6xl">
@@ -67,7 +67,7 @@ function VerifyPage() {
       </section>
 
       {/* Results */}
-      <section className="px-6 pb-32 no-print">
+      <section className="px-6 pb-32">
         <div className="mx-auto max-w-6xl">
           <AnimatePresence mode="wait">
             {searched && !cert && (
@@ -105,85 +105,155 @@ function VerifyPage() {
           </AnimatePresence>
         </div>
       </section>
-
-      {/* Print-only view — hidden on screen, shown only when printing */}
-      {cert && <PrintSheet cert={cert} />}
     </Layout>
   );
 }
 
-/* ── Card preview on screen ─────────────────────────────────────────────────── */
+/* ─── Card preview + print ───────────────────────────────────────────────────── */
 function CardPreview({ cert }: { cert: Certificate }) {
-  const printCards = () => window.print();
+  const frontRef = useRef<HTMLDivElement>(null);
+  const backRef  = useRef<HTMLDivElement>(null);
+  const [printing, setPrinting] = useState(false);
+
+  const printCards = async () => {
+    if (!frontRef.current || !backRef.current) return;
+    setPrinting(true);
+    try {
+      const html2canvas = (await import("html2canvas")).default;
+
+      // Capture both sides at 2× resolution for crisp print
+      const opts = { scale: 2, useCORS: true, backgroundColor: "#ffffff", logging: false };
+      const [frontCanvas, backCanvas] = await Promise.all([
+        html2canvas(frontRef.current, opts),
+        html2canvas(backRef.current, opts),
+      ]);
+
+      const frontDataUrl = frontCanvas.toDataURL("image/png");
+      const backDataUrl  = backCanvas.toDataURL("image/png");
+
+      // Open a tiny window sized exactly to the card (landscape PAN/CR80)
+      const win = window.open("", "_blank", "width=900,height=700");
+      if (!win) { alert("Please allow popups to print the card."); return; }
+
+      win.document.write(`<!DOCTYPE html>
+<html>
+<head>
+  <title>JewelReport Card — ${cert.reportNo}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    @page { size: 85.6mm 53.98mm landscape; margin: 0; }
+    body { background: #fff; }
+    .page {
+      width: 85.6mm;
+      height: 53.98mm;
+      overflow: hidden;
+      page-break-after: always;
+      break-after: page;
+    }
+    .page:last-child {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    img { width: 85.6mm; height: 53.98mm; display: block; }
+    @media screen {
+      body { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 24px; background: #f3f4f6; }
+      .page { box-shadow: 0 4px 20px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; }
+      img { border-radius: 8px; }
+      .print-btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 10px 28px; border-radius: 999px;
+        background: linear-gradient(135deg,#C9A84C,#e8c96b);
+        color: #1a1a2e; font-weight: 600; font-size: 14px;
+        border: none; cursor: pointer; font-family: system-ui;
+      }
+    }
+    @media print { .print-btn { display: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="page"><img src="${frontDataUrl}" /></div>
+  <div class="page"><img src="${backDataUrl}"  /></div>
+  <button class="print-btn" onclick="window.print()">🖨️ Print</button>
+  <script>window.onload = () => window.print();<\/script>
+</body>
+</html>`);
+      win.document.close();
+    } finally {
+      setPrinting(false);
+    }
+  };
 
   return (
     <div>
-      {/* Only back side shown on screen; front appears only in print */}
-      <div className="flex justify-center">
-        <ScaledCard cert={cert} side="back" />
+      {/* Off-screen front card — not visible, but rendered so html2canvas can capture it */}
+      <div
+        style={{
+          position: "absolute",
+          left: -9999,
+          top: 0,
+          pointerEvents: "none",
+          visibility: "hidden",
+        }}
+      >
+        <div ref={frontRef}>
+          <CertificateCard cert={cert} side="front" />
+        </div>
       </div>
 
-      {/* Single print button */}
+      {/* On-screen: back side only */}
+      <div className="flex justify-center">
+        <ScaledCard innerRef={backRef} cert={cert} side="back" label="Back" />
+      </div>
+
+      {/* Print button */}
       <div className="mt-8 flex justify-center">
         <button
           onClick={printCards}
-          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-gold text-gold-foreground font-medium shadow-gold hover:scale-105 transition-transform text-base"
+          disabled={printing}
+          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-gold text-gold-foreground font-semibold shadow-gold hover:scale-105 transition-transform disabled:opacity-60 disabled:cursor-not-allowed text-base"
         >
-          <Printer className="w-4 h-4" /> Print Card
+          <Printer className="w-4 h-4" />
+          {printing ? "Preparing…" : "Print Card"}
         </button>
       </div>
     </div>
   );
 }
 
-function ScaledCard({ cert, side }: { cert: Certificate; side: "front" | "back" }) {
+interface ScaledCardProps {
+  cert: Certificate;
+  side: "front" | "back";
+  label: string;
+  innerRef?: React.RefObject<HTMLDivElement | null>;
+}
+
+function ScaledCard({ cert, side, label, innerRef }: ScaledCardProps) {
+  const scale = 0.52;
   return (
     <div className="flex flex-col items-center gap-3">
       <div
-        className="origin-top-left"
         style={{
-          transform: "scale(0.52)",
-          width: CARD_W,
-          height: CARD_H,
-          marginBottom: -(CARD_H * 0.48),
-          marginRight: -(CARD_W * 0.48),
+          width: CARD_W * scale,
+          height: CARD_H * scale,
+          overflow: "hidden",
+          borderRadius: 12,
+          flexShrink: 0,
         }}
       >
-        <CertificateCard cert={cert} side={side} />
+        <div style={{ transform: `scale(${scale})`, transformOrigin: "top left", width: CARD_W, height: CARD_H }}>
+          <div ref={innerRef}>
+            <CertificateCard cert={cert} side={side} />
+          </div>
+        </div>
       </div>
-      <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mt-1">
-        {side === "front" ? "Front" : "Back"}
-      </p>
+      <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">{label}</p>
     </div>
   );
 }
 
-/* ── Print sheet — only visible during window.print() ───────────────────────── */
-function PrintSheet({ cert }: { cert: Certificate }) {
-  const frontRef = useRef<HTMLDivElement>(null);
-  const backRef  = useRef<HTMLDivElement>(null);
-
-  return (
-    <div className="print-only">
-      {/* Front */}
-      <div className="print-card-page">
-        <div ref={frontRef}>
-          <CertificateCard cert={cert} side="front" />
-        </div>
-      </div>
-      {/* Back */}
-      <div className="print-card-page">
-        <div ref={backRef}>
-          <CertificateCard cert={cert} side="back" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ── Full details table below card on screen ─────────────────────────────────── */
+/* ─── Full details table ─────────────────────────────────────────────────────── */
 function FullDetails({ cert }: { cert: Certificate }) {
-  const rows: Array<[string, string | undefined]> = [
+  const rows = ([
     ["Report Number", cert.reportNo],
     ["Report Type",   cert.type],
     ["Item",          cert.itemName],
@@ -201,10 +271,10 @@ function FullDetails({ cert }: { cert: Certificate }) {
     ["Metal",         cert.metal],
     ["Total Weight",  cert.totalWeight],
     ["Client",        cert.clientName],
-  ].filter(([, v]) => v) as Array<[string, string]>;
+  ] as [string, string | undefined][]).filter(([, v]) => v) as [string, string][];
 
   return (
-    <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm shadow-elegant overflow-hidden no-print">
+    <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm shadow-elegant overflow-hidden">
       <div className="px-8 py-6 border-b border-border bg-gradient-navy">
         <h3 className="font-display text-2xl">Full Certificate Details</h3>
       </div>

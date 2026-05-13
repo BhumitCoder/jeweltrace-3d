@@ -5,7 +5,7 @@ import {
   isAdminAuthed, generateReportNo, saveCertificate, getCertificate,
   type Certificate, type ReportType,
 } from "@/lib/store";
-import { ArrowLeft, Save, Upload, RefreshCw } from "lucide-react";
+import { ArrowLeft, Save, Upload, RefreshCw, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/admin/cert/$id")({
   component: CertEditor,
@@ -18,45 +18,76 @@ const REPORT_TYPES: ReportType[] = [
   "Lab Grown Jewellery",
 ];
 
+function makeCert(type: ReportType = "Lab Grown Diamond"): Certificate {
+  const reportNo = generateReportNo(type);
+  return {
+    id: reportNo, reportNo, type,
+    issueDate: new Date().toISOString().slice(0, 10),
+    itemName: "", shape: "", caratWeight: "", measurements: "",
+    color: "", clarity: "", cut: "", polish: "", symmetry: "",
+    fluorescence: "", origin: "", metal: "", totalWeight: "", remarks: "",
+    createdAt: Date.now(),
+  };
+}
+
 function CertEditor() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
   const isNew = id === "new";
 
-  const [authed, setAuthed] = useState(false);
+  const [cert, setCert] = useState<Certificate | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  // All localStorage access happens here — only runs on the client
   useEffect(() => {
-    if (!isAdminAuthed()) navigate({ to: "/admin" });
-    else setAuthed(true);
-  }, [navigate]);
-
-  const [cert, setCert] = useState<Certificate>(() => {
-    if (!isNew) {
-      const found = getCertificate(id);
-      if (found) return found;
+    if (!isAdminAuthed()) {
+      navigate({ to: "/admin" });
+      return;
     }
-    return blankCert("Lab Grown Diamond");
-  });
+    if (isNew) {
+      setCert(makeCert("Lab Grown Diamond"));
+    } else {
+      const found = getCertificate(id);
+      if (found) {
+        setCert(found);
+      } else {
+        // cert not found — go back to dashboard
+        navigate({ to: "/admin" });
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  if (!authed) return null;
+  if (!cert) {
+    return (
+      <AdminShell>
+        <AdminTopBar />
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <Loader2 className="w-6 h-6 animate-spin text-primary" />
+        </div>
+      </AdminShell>
+    );
+  }
 
   const update = <K extends keyof Certificate>(k: K, v: Certificate[K]) =>
-    setCert((c) => ({ ...c, [k]: v }));
+    setCert((c) => c ? { ...c, [k]: v } : c);
 
   const onTypeChange = (t: ReportType) => {
-    setCert((c) => ({
+    setCert((c) => c ? {
       ...c,
       type: t,
       reportNo: isNew ? generateReportNo(t) : c.reportNo,
       id: isNew ? generateReportNo(t) : c.id,
-    }));
+    } : c);
   };
 
   const regenerateReportNo = () => {
     const no = generateReportNo(cert.type);
-    setCert((c) => ({ ...c, reportNo: no, id: no }));
+    setCert((c) => c ? { ...c, reportNo: no, id: no } : c);
   };
 
-  const onImage = async (file?: File) => {
+  const onImage = (file?: File) => {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = () => update("imageDataUrl", reader.result as string);
@@ -65,8 +96,15 @@ function CertEditor() {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    saveCertificate({ ...cert, createdAt: cert.createdAt || Date.now() });
-    navigate({ to: "/admin" });
+    if (!cert) return;
+    setSaving(true);
+    try {
+      saveCertificate({ ...cert, createdAt: cert.createdAt || Date.now() });
+      setSaved(true);
+      setTimeout(() => navigate({ to: "/admin" }), 600);
+    } catch {
+      setSaving(false);
+    }
   };
 
   const isJewellery = cert.type === "Jewellery" || cert.type === "Lab Grown Jewellery";
@@ -75,46 +113,42 @@ function CertEditor() {
     <AdminShell>
       <AdminTopBar />
       <div className="mx-auto max-w-5xl px-6 py-8">
-        <Link
-          to="/admin"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Dashboard
+        <Link to="/admin" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+          <ArrowLeft className="w-4 h-4" /> Back to Dashboard
         </Link>
 
         <div className="mt-6 mb-8">
-          <h1 className="font-display text-3xl">
-            {isNew ? "New Certificate" : "Edit Certificate"}
-          </h1>
+          <h1 className="font-display text-3xl">{isNew ? "New Certificate" : "Edit Certificate"}</h1>
           <p className="text-muted-foreground mt-1.5 text-sm">
-            Fill in all report details. The PVC card is generated automatically and can be downloaded from the Verify page.
+            Fill in the report details below. The PVC card is generated automatically and can be downloaded from the Verify page.
           </p>
         </div>
 
         <form onSubmit={submit} className="space-y-6">
-          {/* Report Information */}
-          <Section title="Report Information" subtitle="Core identification details for this certificate">
-            <Field label="Report Type" required>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                {REPORT_TYPES.map((t) => (
-                  <button
-                    key={t}
-                    type="button"
-                    onClick={() => onTypeChange(t)}
-                    className={`px-3 py-2.5 rounded-xl border text-sm text-center transition-all ${
-                      cert.type === t
-                        ? "border-primary bg-primary/10 text-primary font-medium"
-                        : "border-border hover:border-primary/50 text-muted-foreground"
-                    }`}
-                  >
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </Field>
 
-            <div className="grid sm:grid-cols-2 gap-5 mt-4">
+          {/* Report Type */}
+          <Section title="Report Type" subtitle="Choose the type of report to issue">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {REPORT_TYPES.map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => onTypeChange(t)}
+                  className={`px-3 py-3 rounded-xl border text-sm text-center transition-all ${
+                    cert.type === t
+                      ? "border-primary bg-primary/10 text-primary font-medium"
+                      : "border-border hover:border-primary/50 text-muted-foreground"
+                  }`}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          </Section>
+
+          {/* Report Information */}
+          <Section title="Report Information" subtitle="Core identification details">
+            <div className="grid sm:grid-cols-2 gap-5">
               <Field label="Report Number" required>
                 <div className="flex gap-2">
                   <input
@@ -124,12 +158,9 @@ function CertEditor() {
                     required
                   />
                   {isNew && (
-                    <button
-                      type="button"
-                      onClick={regenerateReportNo}
+                    <button type="button" onClick={regenerateReportNo}
                       className="px-3 rounded-xl border border-border hover:border-primary text-muted-foreground hover:text-primary transition-colors shrink-0"
-                      title="Regenerate"
-                    >
+                      title="Generate new number">
                       <RefreshCw className="w-4 h-4" />
                     </button>
                   )}
@@ -148,7 +179,7 @@ function CertEditor() {
           </Section>
 
           {/* Grading */}
-          <Section title="Grading Details" subtitle="Technical specifications measured in the laboratory">
+          <Section title="Grading Details" subtitle="Laboratory measurements and grades">
             <div className="grid sm:grid-cols-2 gap-5">
               <Field label="Carat Weight">
                 <input value={cert.caratWeight} onChange={(e) => update("caratWeight", e.target.value)} className={ic} placeholder="1.05 ct" />
@@ -175,7 +206,8 @@ function CertEditor() {
                 <input value={cert.fluorescence} onChange={(e) => update("fluorescence", e.target.value)} className={ic} placeholder="None" />
               </Field>
               <Field label="Origin">
-                <input value={cert.origin} onChange={(e) => update("origin", e.target.value)} className={ic} placeholder={cert.type === "Lab Grown Diamond" ? "Lab Grown (CVD)" : "Natural"} />
+                <input value={cert.origin} onChange={(e) => update("origin", e.target.value)} className={ic}
+                  placeholder={cert.type === "Lab Grown Diamond" || cert.type === "Lab Grown Jewellery" ? "Lab Grown (CVD)" : "Natural"} />
               </Field>
               {isJewellery && (
                 <>
@@ -191,7 +223,7 @@ function CertEditor() {
           </Section>
 
           {/* Media & Notes */}
-          <Section title="Media & Notes" subtitle="Optional image and any additional remarks">
+          <Section title="Media & Notes" subtitle="Optional item image and any remarks">
             <div className="grid sm:grid-cols-2 gap-5">
               <Field label="Item Image">
                 <div className="flex items-center gap-4">
@@ -202,29 +234,31 @@ function CertEditor() {
                   {cert.imageDataUrl && (
                     <div className="relative">
                       <img src={cert.imageDataUrl} alt="" className="w-16 h-16 object-cover rounded-xl border border-border" />
-                      <button
-                        type="button"
-                        onClick={() => update("imageDataUrl", undefined)}
-                        className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-destructive text-white text-xs flex items-center justify-center"
-                      >×</button>
+                      <button type="button" onClick={() => update("imageDataUrl", undefined)}
+                        className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-destructive text-white text-xs flex items-center justify-center leading-none">
+                        ×
+                      </button>
                     </div>
                   )}
                 </div>
               </Field>
               <Field label="Remarks">
-                <textarea value={cert.remarks || ""} onChange={(e) => update("remarks", e.target.value)} rows={3} className={ic} placeholder="Any additional notes..." />
+                <textarea value={cert.remarks || ""} onChange={(e) => update("remarks", e.target.value)}
+                  rows={3} className={ic} placeholder="Any additional remarks..." />
               </Field>
             </div>
           </Section>
 
           <div className="flex gap-3 pt-2">
-            <button
-              type="submit"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-gold text-gold-foreground font-medium shadow-gold hover:scale-105 transition-transform"
-            >
-              <Save className="w-4 h-4" /> Save Certificate
+            <button type="submit" disabled={saving}
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-gold text-gold-foreground font-medium shadow-gold hover:scale-105 transition-transform disabled:opacity-70 disabled:scale-100">
+              {saving
+                ? <><Loader2 className="w-4 h-4 animate-spin" /> {saved ? "Saved!" : "Saving…"}</>
+                : <><Save className="w-4 h-4" /> Save Certificate</>
+              }
             </button>
-            <Link to="/admin" className="inline-flex items-center px-6 py-3 rounded-full border border-border hover:border-primary hover:text-primary transition-colors">
+            <Link to="/admin"
+              className="inline-flex items-center px-6 py-3 rounded-full border border-border hover:border-primary hover:text-primary transition-colors">
               Cancel
             </Link>
           </div>
@@ -240,7 +274,7 @@ function Section({ title, subtitle, children }: { title: string; subtitle?: stri
   return (
     <div className="p-6 rounded-2xl border border-border bg-card/60 backdrop-blur-sm shadow-elegant">
       <div className="mb-5">
-        <h2 className="font-display text-lg text-foreground">{title}</h2>
+        <h2 className="font-display text-lg">{title}</h2>
         {subtitle && <p className="text-xs text-muted-foreground mt-0.5">{subtitle}</p>}
       </div>
       {children}
@@ -257,16 +291,4 @@ function Field({ label, required, children }: { label: string; required?: boolea
       <div className="mt-2">{children}</div>
     </div>
   );
-}
-
-function blankCert(type: ReportType): Certificate {
-  const reportNo = generateReportNo(type);
-  return {
-    id: reportNo, reportNo, type,
-    issueDate: new Date().toISOString().slice(0, 10),
-    itemName: "", shape: "", caratWeight: "", measurements: "",
-    color: "", clarity: "", cut: "", polish: "", symmetry: "",
-    fluorescence: "", origin: "", metal: "", totalWeight: "", remarks: "",
-    createdAt: Date.now(),
-  };
 }

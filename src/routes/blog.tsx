@@ -18,7 +18,7 @@ function BlogPage() {
       <section className="px-6 pt-20 pb-10 text-center">
         <p className="text-xs uppercase tracking-[0.35em] text-primary">Journal</p>
         <h1 className="mt-3 font-display text-5xl md:text-6xl">
-          The <span className="text-gradient-gold">JewelReport</span> Journal
+          The <span className="text-gradient-gold">JewelsReport</span> Journal
         </h1>
         <p className="mt-5 text-muted-foreground max-w-2xl mx-auto">
           Stories, science and standards from the world of gem certification.

@@ -26,7 +26,7 @@ export function AdminTopBar({
           <div className="w-7 h-7 rounded-lg bg-gradient-gold flex items-center justify-center shadow-gold">
             <Gem className="w-3.5 h-3.5 text-gold-foreground" />
           </div>
-          <span className="font-display text-base tracking-wide">JewelReport</span>
+          <span className="font-display text-base tracking-wide">JewelsReport</span>
           <span className="hidden sm:inline-block text-xs uppercase tracking-[0.2em] text-muted-foreground border border-border rounded-full px-2.5 py-0.5">
             Admin
           </span>

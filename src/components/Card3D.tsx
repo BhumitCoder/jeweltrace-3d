@@ -172,7 +172,7 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
                 lineHeight: 1,
               }}
             >
-              <span className="text-white">Jewel</span>
+              <span className="text-white">Jewels</span>
               <span style={{ color: "#E8C56A" }}>Report</span>
             </div>
             <div
@@ -283,7 +283,7 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
         </div>
         <div className="bg-white p-1 rounded">
           <QRCodeSVG
-            value={cert ? verifyUrl : (typeof window !== "undefined" ? window.location.origin : "https://jewelreport.com")}
+            value={cert ? verifyUrl : (typeof window !== "undefined" ? window.location.origin : "https://jewelsreport.com")}
             size={qrSize}
             level="M"
           />
@@ -357,8 +357,8 @@ function BackContent({ w, cert }: { w: number; h?: number; cert: Certificate | n
         className="mt-2 pt-2 border-t border-white/10 flex items-center justify-between text-white/55"
         style={{ fontSize: w * 0.017 }}
       >
-        <span>Property of JewelReport Lab.</span>
-        <span style={{ color: "#E8C56A", letterSpacing: "0.2em" }}>JEWELREPORT.COM</span>
+        <span>Property of JewelsReport Lab.</span>
+        <span style={{ color: "#E8C56A", letterSpacing: "0.2em" }}>JEWELSREPORT.COM</span>
       </div>
     </div>
   );

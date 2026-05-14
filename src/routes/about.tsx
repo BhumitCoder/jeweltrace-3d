@@ -60,12 +60,12 @@ function AboutPage() {
       <section className="px-6 pt-20 pb-16">
         <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-16 items-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <p className="text-xs uppercase tracking-[0.35em] text-primary">About JewelReport</p>
+            <p className="text-xs uppercase tracking-[0.35em] text-primary">About JewelsReport</p>
             <h1 className="mt-3 font-display text-5xl md:text-6xl leading-tight">
               A new standard of <span className="text-gradient-gold">gemological trust</span>.
             </h1>
             <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-              JewelReport Certification Lab is an independent gemological institute serving manufacturers,
+              JewelsReport Certification Lab is an independent gemological institute serving manufacturers,
               jewellers, traders and collectors across the world. Our reports are recognised in major
               diamond hubs and trusted by retailers in over 30 countries — issued on a secure,
               tamper-proof PVC certificate built to last a lifetime.
@@ -160,7 +160,7 @@ function AboutPage() {
             <h2 className="mt-4 font-display text-3xl md:text-4xl">Our Mission</h2>
             <p className="mt-4 text-muted-foreground leading-relaxed">
               To protect both the trade and the consumer by blending rigorous science with the
-              craftsmanship of master gemologists — ensuring every JewelReport certificate stands
+              craftsmanship of master gemologists — ensuring every JewelsReport certificate stands
               up to the highest scrutiny anywhere in the world.
             </p>
           </motion.div>
@@ -323,7 +323,7 @@ function AboutPage() {
           <div className="text-center">
             <p className="text-xs uppercase tracking-[0.35em] text-primary">Our Promise</p>
             <h2 className="mt-3 font-display text-4xl md:text-5xl">
-              What every <span className="text-gradient-gold">JewelReport card</span> guarantees
+              What every <span className="text-gradient-gold">JewelsReport card</span> guarantees
             </h2>
           </div>
           <ul className="mt-12 grid md:grid-cols-2 gap-4">

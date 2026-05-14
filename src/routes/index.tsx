@@ -36,7 +36,7 @@ const whyUs = [
 ];
 
 const testimonials = [
-  { name: "Aarav Mehta", role: "Diamond Wholesaler, Surat", text: "JewelReport cards have become our default. Buyers trust the holographic finish and the QR works every time." },
+  { name: "Aarav Mehta", role: "Diamond Wholesaler, Surat", text: "JewelsReport cards have become our default. Buyers trust the holographic finish and the QR works every time." },
   { name: "Priya Shah", role: "Jewellery Retailer, Mumbai", text: "The PVC certificate feels premium in hand — like a passport for the stone. Customers love it." },
   { name: "Daniel Roy", role: "Independent Appraiser", text: "Reports are precise, the verification flow is fast, and turnaround is the best I have used." },
 ];
@@ -67,7 +67,7 @@ function HomePage() {
               <br />you can trust.
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
-              JewelReport delivers world-class grading and authentication for diamonds,
+              JewelsReport delivers world-class grading and authentication for diamonds,
               gemstones and fine jewellery — issued on a secure, tamper-proof PVC certificate.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
@@ -157,7 +157,7 @@ function HomePage() {
       <section className="px-6 py-24 bg-gradient-navy">
         <div className="mx-auto max-w-7xl">
           <div className="text-center max-w-2xl mx-auto">
-            <p className="text-xs uppercase tracking-[0.35em] text-primary">Why JewelReport</p>
+            <p className="text-xs uppercase tracking-[0.35em] text-primary">Why JewelsReport</p>
             <h2 className="mt-3 font-display text-4xl md:text-5xl">
               Built for <span className="text-gradient-gold">absolute trust</span>
             </h2>
@@ -323,7 +323,7 @@ function HomePage() {
           <div className="absolute inset-0 bg-radial-gold opacity-50" />
           <div className="relative">
             <h2 className="font-display text-4xl md:text-5xl">
-              Hold a JewelReport card?
+              Hold a JewelsReport card?
             </h2>
             <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
               Verify the authenticity of any certificate instantly using its report number.

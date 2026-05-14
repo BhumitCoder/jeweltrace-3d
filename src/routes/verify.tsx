@@ -36,7 +36,7 @@ function VerifyPage() {
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs uppercase tracking-[0.35em] text-primary">Authenticity Check</p>
           <h1 className="mt-3 font-display text-5xl md:text-6xl">
-            Verify your <span className="text-gradient-gold">JewelReport</span>
+            Verify your <span className="text-gradient-gold">JewelsReport</span>
           </h1>
           <p className="mt-5 text-muted-foreground">
             Enter the report number printed on your certificate card to confirm its details.

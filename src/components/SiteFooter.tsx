@@ -8,10 +8,10 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 py-16 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-2">
           <div className="flex items-center gap-3">
-            <img src={logo} alt="JewelReport" className="h-12 w-12 object-contain" />
+            <img src={logo} alt="JewelsReport" className="h-12 w-12 object-contain" />
             <div>
               <div className="font-display text-2xl">
-                <span>Jewel</span><span className="text-gradient-gold">Report</span>
+                <span>Jewels</span><span className="text-gradient-gold">Report</span>
               </div>
               <div className="text-[10px] tracking-[0.3em] text-muted-foreground uppercase">Certification Lab</div>
             </div>
@@ -43,7 +43,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-border">
         <div className="mx-auto max-w-7xl px-6 py-5 text-xs text-muted-foreground flex flex-wrap items-center justify-between gap-2">
-          <p>© {new Date().getFullYear()} JewelReport Certification Lab. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} JewelsReport Certification Lab. All rights reserved.</p>
           <p className="tracking-widest uppercase">Trust · Precision · Integrity</p>
         </div>
       </div>

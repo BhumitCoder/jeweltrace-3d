@@ -43,11 +43,11 @@ function FrontSide() {
     }}>
       {/* Centre content — logo only, no competing watermark */}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0, position: "relative", zIndex: 1 }}>
-        <img src={logo} alt="JewelReport" crossOrigin="anonymous"
+        <img src={logo} alt="JewelsReport" crossOrigin="anonymous"
           style={{ height: 160, width: 160, objectFit: "contain", marginBottom: 28 }} />
         <div style={{ width: 220, height: 1, background: "linear-gradient(90deg,transparent,#B8922A,transparent)", marginBottom: 22 }} />
         <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 54, lineHeight: 1, color: "#111", letterSpacing: "-0.01em", textAlign: "center" }}>
-          Jewel<span style={{ color: "#B8922A" }}>Report</span>
+          Jewels<span style={{ color: "#B8922A" }}>Report</span>
         </div>
         <div style={{ fontSize: 11, letterSpacing: "0.55em", textTransform: "uppercase", color: "#888", textAlign: "center", marginTop: 12 }}>
           Certification Lab
@@ -57,7 +57,7 @@ function FrontSide() {
 
       {/* Bottom URL */}
       <div style={{ position: "absolute", bottom: 26, left: 0, right: 0, textAlign: "center", zIndex: 1 }}>
-        <span style={{ fontSize: 10, letterSpacing: "0.45em", textTransform: "uppercase", color: "#B8922A" }}>JEWELREPORT.COM</span>
+        <span style={{ fontSize: 10, letterSpacing: "0.45em", textTransform: "uppercase", color: "#B8922A" }}>JEWELSREPORT.COM</span>
       </div>
     </div>
   );
@@ -114,10 +114,10 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
 
         {/* Logo row */}
         <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 10 }}>
-          <img src={logo} alt="JewelReport" crossOrigin="anonymous" style={{ height: 52, width: 52, objectFit: "contain" }} />
+          <img src={logo} alt="JewelsReport" crossOrigin="anonymous" style={{ height: 52, width: 52, objectFit: "contain" }} />
           <div>
             <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 28, color: "#111", lineHeight: 1, letterSpacing: "-0.01em" }}>
-              Jewel<span style={{ color: "#B8922A" }}>Report</span>
+              Jewels<span style={{ color: "#B8922A" }}>Report</span>
             </div>
             <div style={{ fontSize: 8.5, letterSpacing: "0.35em", textTransform: "uppercase", color: "#888", marginTop: 4 }}>
               Certification Lab
@@ -203,7 +203,7 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
         <div style={{ marginTop: 10 }}>
           <div style={{ height: 1.5, background: "linear-gradient(90deg,#B8922A,#D4A843,#B8922A)", marginBottom: 8 }} />
           <p style={{ fontSize: 8, color: "#666", lineHeight: 1.5 }}>
-            This report is issued by JewelReport Certification Lab and is based on the examination of the described article. Scan QR to verify online at JEWELREPORT.COM. The results documented refer only to the article described and were obtained using the techniques and equipment used by JewelReport at the time of examination. This report is not a guarantee or valuation.
+            This report is issued by JewelsReport Certification Lab and is based on the examination of the described article. Scan QR to verify online at JEWELSREPORT.COM. The results documented refer only to the article described and were obtained using the techniques and equipment used by JewelsReport at the time of examination. This report is not a guarantee or valuation.
           </p>
           <div style={{ height: 22 }} />
         </div>
@@ -246,7 +246,7 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
           gap: 8, flexShrink: 0,
         }}>
           <div style={{ fontSize: 9, color: "#B8922A", letterSpacing: "0.3em", textTransform: "uppercase", fontWeight: 600 }}>
-            JEWELREPORT.COM
+            JEWELSREPORT.COM
           </div>
           <div style={{ padding: 7, background: "#fff", border: "1.5px solid rgba(184,146,42,0.5)", borderRadius: 8 }}>
             <QRCodeSVG value={verifyUrl} size={108} level="M" />

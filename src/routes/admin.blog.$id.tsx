@@ -11,7 +11,7 @@ function makePost(): BlogPost {
   return {
     id: crypto.randomUUID(),
     title: "", slug: "", excerpt: "", content: "",
-    author: "JewelReport Editorial",
+    author: "JewelsReport Editorial",
     publishedAt: new Date().toISOString().slice(0, 10),
     createdAt: Date.now(),
   };
@@ -92,7 +92,7 @@ function BlogEditor() {
           <F label="Title" required>
             <input value={post.title}
               onChange={(e) => { set("title", e.target.value); if (isNew) set("slug", slugify(e.target.value)); }}
-              className={ic} placeholder="e.g. How to read your JewelReport certificate" required />
+              className={ic} placeholder="e.g. How to read your JewelsReport certificate" required />
           </F>
 
           <div className="grid sm:grid-cols-2 gap-5">

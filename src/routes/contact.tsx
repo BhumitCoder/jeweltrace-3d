@@ -22,9 +22,9 @@ function ContactPage() {
         <div className="mx-auto max-w-6xl grid lg:grid-cols-5 gap-10">
           <div className="lg:col-span-2 space-y-6">
             {[
-              { icon: MapPin, title: "Visit", lines: ["JewelReport Tower", "Diamond District, Mumbai 400001"] },
+              { icon: MapPin, title: "Visit", lines: ["JewelsReport Tower", "Diamond District, Mumbai 400001"] },
               { icon: Phone, title: "Call", lines: ["+91 22 1234 5678", "Mon – Sat, 10:00 – 19:00 IST"] },
-              { icon: Mail, title: "Email", lines: ["reports@jewelreport.com", "support@jewelreport.com"] },
+              { icon: Mail, title: "Email", lines: ["reports@jewelsreport.com", "support@jewelsreport.com"] },
             ].map((c) => (
               <div key={c.title} className="p-6 rounded-2xl border border-border bg-card shadow-elegant flex gap-4">
                 <div className="w-12 h-12 rounded-xl bg-gradient-gold flex items-center justify-center shrink-0 shadow-gold">

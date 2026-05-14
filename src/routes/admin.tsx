@@ -38,7 +38,7 @@ function AdminLayout() {
               <Gem className="w-3.5 h-3.5 text-gold-foreground" />
             </div>
             <Link to="/admin" className="font-display text-base tracking-wide hover:text-primary transition-colors">
-              JewelReport
+              JewelsReport
             </Link>
             <span className="hidden sm:inline-block text-xs uppercase tracking-[0.2em] text-muted-foreground border border-border rounded-full px-2.5 py-0.5">
               Admin
@@ -88,7 +88,7 @@ function Login({ onLogin }: { onLogin: () => void }) {
         <div className="w-9 h-9 rounded-xl bg-gradient-gold flex items-center justify-center shadow-gold">
           <Gem className="w-4 h-4 text-gold-foreground" />
         </div>
-        <span className="font-display text-xl tracking-wide">JewelReport</span>
+        <span className="font-display text-xl tracking-wide">JewelsReport</span>
         <span className="text-xs uppercase tracking-[0.25em] text-muted-foreground border border-border rounded-full px-2.5 py-0.5 ml-1">
           Admin
         </span>
@@ -103,7 +103,7 @@ function Login({ onLogin }: { onLogin: () => void }) {
         </div>
         <h1 className="font-display text-2xl text-center">Sign in</h1>
         <p className="mt-1 text-center text-sm text-muted-foreground">
-          JewelReport control panel
+          JewelsReport control panel
         </p>
 
         <div className="mt-7 space-y-3">

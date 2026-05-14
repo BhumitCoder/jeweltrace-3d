@@ -40,12 +40,12 @@ export function SiteHeader() {
         <Link to="/" className="flex items-center gap-2.5 group shrink-0">
           <img
             src={logo}
-            alt="JewelReport"
+            alt="JewelsReport"
             className="h-9 w-9 object-contain drop-shadow-[0_0_10px_rgba(232,197,106,0.55)] transition-transform duration-500 group-hover:scale-110"
           />
           <div className="leading-tight">
             <div className="font-display tracking-tight text-base sm:text-lg">
-              <span className="text-foreground">Jewel</span>
+              <span className="text-foreground">Jewels</span>
               <span className="text-gradient-gold">Report</span>
             </div>
             <div className="hidden sm:block text-[9px] tracking-[0.3em] text-muted-foreground uppercase">

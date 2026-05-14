@@ -41,25 +41,18 @@ function FrontSide() {
       alignItems: "center", justifyContent: "center",
       background: "#F4F2EE", position: "relative",
     }}>
-      {/* Watermark */}
-      <img src={logo} alt="" crossOrigin="anonymous" style={{
-        position: "absolute", width: 300, height: 300, objectFit: "contain",
-        opacity: 0.05, pointerEvents: "none", left: "50%", top: "50%",
-        transform: "translate(-50%,-50%)",
-      }} />
-
-      {/* Centre content */}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 22, position: "relative", zIndex: 1 }}>
-        <img src={logo} alt="JewelReport" crossOrigin="anonymous" style={{ height: 120, width: 120, objectFit: "contain" }} />
-        <div>
-          <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 52, lineHeight: 1, color: "#111", letterSpacing: "-0.01em", textAlign: "center" }}>
-            Jewel<span style={{ color: "#B8922A" }}>Report</span>
-          </div>
-          <div style={{ fontSize: 11, letterSpacing: "0.55em", textTransform: "uppercase", color: "#888", textAlign: "center", marginTop: 10 }}>
-            Certification Lab
-          </div>
+      {/* Centre content — logo only, no competing watermark */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0, position: "relative", zIndex: 1 }}>
+        <img src={logo} alt="JewelReport" crossOrigin="anonymous"
+          style={{ height: 160, width: 160, objectFit: "contain", marginBottom: 28 }} />
+        <div style={{ width: 220, height: 1, background: "linear-gradient(90deg,transparent,#B8922A,transparent)", marginBottom: 22 }} />
+        <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 54, lineHeight: 1, color: "#111", letterSpacing: "-0.01em", textAlign: "center" }}>
+          Jewel<span style={{ color: "#B8922A" }}>Report</span>
         </div>
-        <div style={{ width: 160, height: 1.5, background: "linear-gradient(90deg,transparent,#B8922A,transparent)" }} />
+        <div style={{ fontSize: 11, letterSpacing: "0.55em", textTransform: "uppercase", color: "#888", textAlign: "center", marginTop: 12 }}>
+          Certification Lab
+        </div>
+        <div style={{ width: 220, height: 1, background: "linear-gradient(90deg,transparent,#B8922A,transparent)", marginTop: 22 }} />
       </div>
 
       {/* Bottom URL */}

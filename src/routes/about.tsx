@@ -96,7 +96,7 @@ function AboutPage() {
       </section>
 
       {/* STATS STRIP */}
-      <section className="px-6 py-12 bg-[var(--section-warm)] border-y border-border">
+      <section className="px-6 py-12 border-y border-border/50">
         <div className="mx-auto max-w-6xl grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
             { k: "150K+", v: "Reports Issued" },
@@ -113,7 +113,7 @@ function AboutPage() {
       </section>
 
       {/* CREDENTIALS */}
-      <section className="px-6 py-20 bg-white">
+      <section className="px-6 py-20">
         <div className="mx-auto max-w-7xl">
           <div className="text-center max-w-2xl mx-auto">
             <p className="text-xs uppercase tracking-[0.35em] text-primary">Credentials</p>
@@ -148,7 +148,7 @@ function AboutPage() {
       </section>
 
       {/* MISSION & VISION */}
-      <section className="px-6 py-20 bg-white">
+      <section className="px-6 py-20">
         <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-10">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -209,7 +209,7 @@ function AboutPage() {
       </section>
 
       {/* TIMELINE */}
-      <section className="px-6 py-20 bg-[var(--section-warm)]">
+      <section className="px-6 py-20">
         <div className="mx-auto max-w-4xl">
           <div className="text-center">
             <p className="text-xs uppercase tracking-[0.35em] text-primary">Our Journey</p>
@@ -244,7 +244,7 @@ function AboutPage() {
       </section>
 
       {/* INSTRUMENTS */}
-      <section className="px-6 py-20 bg-white">
+      <section className="px-6 py-20">
         <div className="mx-auto max-w-7xl">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div>
@@ -287,7 +287,7 @@ function AboutPage() {
       </section>
 
       {/* TEAM */}
-      <section className="px-6 py-20 bg-white">
+      <section className="px-6 py-20">
         <div className="mx-auto max-w-7xl">
           <div className="text-center max-w-2xl mx-auto">
             <p className="text-xs uppercase tracking-[0.35em] text-primary">Leadership</p>

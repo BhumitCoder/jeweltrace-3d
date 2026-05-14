@@ -3,7 +3,7 @@ import logo from "@/assets/logo.png";
 
 export function SiteFooter() {
   return (
-    <footer className="relative mt-32 border-t border-border bg-[var(--section-warm)]">
+    <footer className="relative mt-32 border-t border-border/50">
       <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-gold opacity-50" />
       <div className="mx-auto max-w-7xl px-6 py-16 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-2">

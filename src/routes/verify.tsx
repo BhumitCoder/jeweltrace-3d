@@ -166,7 +166,7 @@ function FullDetails({ cert }: { cert: Certificate }) {
 
   return (
     <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm shadow-elegant overflow-hidden">
-      <div className="px-8 py-6 border-b border-border bg-white">
+      <div className="px-8 py-6 border-b border-border">
         <h3 className="font-display text-2xl">Full Certificate Details</h3>
       </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3">

@@ -154,7 +154,7 @@ function HomePage() {
       </section>
 
       {/* WHY US */}
-      <section className="px-6 py-24 bg-gradient-navy">
+      <section className="px-6 py-24 bg-white">
         <div className="mx-auto max-w-7xl">
           <div className="text-center max-w-2xl mx-auto">
             <p className="text-xs uppercase tracking-[0.35em] text-primary">Why JewelsReport</p>
@@ -218,7 +218,7 @@ function HomePage() {
       </section>
 
       {/* HOW VERIFY */}
-      <section className="px-6 py-24 bg-gradient-navy">
+      <section className="px-6 py-24 bg-white">
         <div className="mx-auto max-w-6xl">
           <div className="text-center max-w-2xl mx-auto">
             <p className="text-xs uppercase tracking-[0.35em] text-primary">Verification</p>
@@ -288,7 +288,7 @@ function HomePage() {
       </section>
 
       {/* FAQ */}
-      <section className="px-6 py-24 bg-gradient-navy">
+      <section className="px-6 py-24 bg-white">
         <div className="mx-auto max-w-4xl">
           <div className="text-center">
             <p className="text-xs uppercase tracking-[0.35em] text-primary">FAQ</p>

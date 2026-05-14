@@ -33,21 +33,34 @@ export function Card3D({ width = 420 }: { width?: number }) {
       style={{ width: w, height: h, perspective: 1600 }}
       aria-hidden
     >
-      {/* glow halo */}
+      {/* ambient gold glow */}
       <div
-        className="absolute -inset-16 rounded-full blur-3xl opacity-60"
+        className="absolute rounded-full blur-3xl"
         style={{
+          inset: -w * 0.15,
           background:
-            "radial-gradient(circle, oklch(0.78 0.14 80 / 0.35), transparent 70%)",
+            "radial-gradient(circle, oklch(0.78 0.14 80 / 0.28) 0%, oklch(0.65 0.12 80 / 0.10) 50%, transparent 75%)",
         }}
       />
-      {/* shadow under card */}
+      {/* multi-layer realistic drop shadow */}
       <div
-        className="absolute left-1/2 -bottom-8 -translate-x-1/2 rounded-[50%] blur-2xl"
+        className="absolute left-1/2 -translate-x-1/2 rounded-[50%]"
         style={{
-          width: w * 0.85,
-          height: 24,
-          background: "rgba(0,0,0,0.55)",
+          bottom: -(h * 0.10),
+          width: w * 0.80,
+          height: h * 0.09,
+          background: "rgba(0,0,0,0.50)",
+          filter: "blur(28px)",
+        }}
+      />
+      <div
+        className="absolute left-1/2 -translate-x-1/2 rounded-[50%]"
+        style={{
+          bottom: -(h * 0.05),
+          width: w * 0.55,
+          height: h * 0.05,
+          background: "rgba(0,0,0,0.40)",
+          filter: "blur(10px)",
         }}
       />
 

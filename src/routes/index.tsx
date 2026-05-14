@@ -108,9 +108,10 @@ function HomePage() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="relative flex items-center justify-center py-8 lg:py-0 w-full overflow-hidden"
+            className="relative flex items-center justify-center py-10 lg:py-0 w-full"
           >
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            {/* rings — clipped to their own layer so they never cause page overflow */}
+            <div className="absolute inset-0 overflow-hidden flex items-center justify-center pointer-events-none">
               <div className="w-[260px] h-[260px] sm:w-[380px] sm:h-[380px] lg:w-[460px] lg:h-[460px] rounded-full border border-primary/15 animate-spin-slow" />
               <div className="absolute w-[180px] h-[180px] sm:w-[280px] sm:h-[280px] lg:w-[340px] lg:h-[340px] rounded-full border border-primary/10" />
             </div>
@@ -210,7 +211,7 @@ function HomePage() {
               ))}
             </ul>
           </div>
-          <div className="relative flex items-center justify-center w-full overflow-hidden">
+          <div className="relative flex items-center justify-center w-full">
             <Card3D width={processCardWidth} />
           </div>
         </div>

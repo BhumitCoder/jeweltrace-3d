@@ -1,5 +1,6 @@
 import { QRCodeSVG } from "qrcode.react";
 import logo from "@/assets/logo.png";
+import type { Certificate } from "@/lib/store";
 
 // 3D rotating PVC/PAN-size certificate card (CR80 ratio 1.586:1)
 // Always shows fixed sample data — never reads from the store.

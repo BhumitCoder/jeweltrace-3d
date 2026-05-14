@@ -102,15 +102,6 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
 
   return (
     <>
-      {/* ── Watermark centred behind everything ── */}
-      <img src={logo} alt="" crossOrigin="anonymous" style={{
-        position: "absolute", width: 320, height: 320, objectFit: "contain",
-        opacity: 0.055, pointerEvents: "none",
-        left: "50%", top: "50%",
-        transform: "translate(-50%,-50%)",
-        zIndex: 0,
-      }} />
-
       {/* ── Left panel (main content) ── */}
       <div style={{
         width: 576, flexShrink: 0,
@@ -119,6 +110,14 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
         position: "relative", zIndex: 1,
         boxSizing: "border-box",
       }}>
+        {/* Watermark — inside left panel so it's never clipped by right panel */}
+        <img src={logo} alt="" crossOrigin="anonymous" style={{
+          position: "absolute", width: 280, height: 280, objectFit: "contain",
+          opacity: 0.055, pointerEvents: "none",
+          left: "50%", top: "50%",
+          transform: "translate(-50%,-50%)",
+          zIndex: 0,
+        }} />
 
         {/* Logo row */}
         <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 10 }}>
@@ -134,16 +133,16 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
           </div>
         </div>
 
-        {/* Green line + Report type label */}
+        {/* Report type label ABOVE orange line */}
         <div style={{ marginBottom: 12 }}>
-          <div style={{ height: 3, background: "#2E7D32", borderRadius: 2, marginBottom: 6 }} />
           <div style={{
             fontSize: 13, fontWeight: 800, letterSpacing: "0.06em",
-            textTransform: "uppercase", color: "#1B5E20",
-            lineHeight: 1.2,
+            textTransform: "uppercase", color: "#B8922A",
+            lineHeight: 1.2, marginBottom: 6,
           }}>
             {REPORT_TYPE_LABELS[cert.type] ?? cert.type}
           </div>
+          <div style={{ height: 3, background: "linear-gradient(90deg,#B8922A,#D4A843,#B8922A)", borderRadius: 2 }} />
         </div>
 
         {/* Fields with dotted leaders */}

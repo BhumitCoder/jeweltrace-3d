@@ -125,7 +125,6 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
           <div>
             <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 28, color: "#111", lineHeight: 1, letterSpacing: "-0.01em" }}>
               Jewel<span style={{ color: "#B8922A" }}>Report</span>
-              <span style={{ fontSize: 13, color: "#888", fontStyle: "italic", marginLeft: 4 }}>®</span>
             </div>
             <div style={{ fontSize: 8.5, letterSpacing: "0.35em", textTransform: "uppercase", color: "#888", marginTop: 4 }}>
               Certification Lab

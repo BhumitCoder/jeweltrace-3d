@@ -57,29 +57,29 @@ function AboutPage() {
   return (
     <Layout>
       {/* HERO */}
-      <section className="px-6 pt-20 pb-16">
-        <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-16 items-center">
+      <section className="px-4 sm:px-6 pt-20 pb-16">
+        <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <p className="text-xs uppercase tracking-[0.35em] text-primary">About JewelsReport</p>
-            <h1 className="mt-3 font-display text-5xl md:text-6xl leading-tight">
+            <h1 className="mt-3 font-display text-4xl sm:text-5xl md:text-6xl leading-tight">
               A new standard of <span className="text-gradient-gold">gemological trust</span>.
             </h1>
-            <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+            <p className="mt-5 sm:mt-6 text-base sm:text-lg text-muted-foreground leading-relaxed">
               JewelsReport Certification Lab is an independent gemological institute serving manufacturers,
               jewellers, traders and collectors across the world. Our reports are recognised in major
               diamond hubs and trusted by retailers in over 30 countries — issued on a secure,
               tamper-proof PVC certificate built to last a lifetime.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-6 sm:mt-8 flex flex-wrap gap-3 sm:gap-4">
               <Link
                 to="/verify"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-gold text-gold-foreground font-medium shadow-gold hover:scale-[1.03] transition-transform"
+                className="inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 rounded-full bg-gradient-gold text-gold-foreground font-medium shadow-gold hover:scale-[1.03] transition-transform text-sm sm:text-base"
               >
                 Verify a Report <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-border hover:border-primary hover:text-primary transition-colors"
+                className="inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 rounded-full border border-border hover:border-primary hover:text-primary transition-colors text-sm sm:text-base"
               >
                 Talk to the Lab
               </Link>
@@ -96,8 +96,8 @@ function AboutPage() {
       </section>
 
       {/* STATS STRIP */}
-      <section className="px-6 py-12 border-y border-border/50">
-        <div className="mx-auto max-w-6xl grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <section className="px-4 sm:px-6 py-10 sm:py-12 border-y border-border/50">
+        <div className="mx-auto max-w-6xl grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
           {[
             { k: "150K+", v: "Reports Issued" },
             { k: "30+", v: "Countries Served" },
@@ -113,15 +113,15 @@ function AboutPage() {
       </section>
 
       {/* CREDENTIALS */}
-      <section className="px-6 py-20">
+      <section className="px-4 sm:px-6 py-14 sm:py-20">
         <div className="mx-auto max-w-7xl">
           <div className="text-center max-w-2xl mx-auto">
             <p className="text-xs uppercase tracking-[0.35em] text-primary">Credentials</p>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl">
+            <h2 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl">
               Built on <span className="text-gradient-gold">science</span>, sealed by craft
             </h2>
           </div>
-          <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="mt-10 sm:mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {[
               { icon: Award, title: "Accredited", desc: "ISO/IEC 17025 aligned protocols across every workstation." },
               { icon: FlaskConical, title: "Advanced Instruments", desc: "FTIR, UV-Vis, Raman, photoluminescence & DiamondView." },
@@ -148,16 +148,16 @@ function AboutPage() {
       </section>
 
       {/* MISSION & VISION */}
-      <section className="px-6 py-20">
-        <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-10">
+      <section className="px-4 sm:px-6 py-14 sm:py-20">
+        <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-6 sm:gap-10">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="p-10 rounded-3xl gold-border shadow-3d"
+            className="p-6 sm:p-10 rounded-3xl gold-border shadow-3d"
           >
-            <Target className="w-10 h-10 text-primary" />
-            <h2 className="mt-4 font-display text-3xl md:text-4xl">Our Mission</h2>
+            <Target className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
+            <h2 className="mt-3 sm:mt-4 font-display text-2xl sm:text-3xl md:text-4xl">Our Mission</h2>
             <p className="mt-4 text-muted-foreground leading-relaxed">
               To protect both the trade and the consumer by blending rigorous science with the
               craftsmanship of master gemologists — ensuring every JewelsReport certificate stands
@@ -168,10 +168,10 @@ function AboutPage() {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="p-10 rounded-3xl gold-border shadow-3d"
+            className="p-6 sm:p-10 rounded-3xl gold-border shadow-3d"
           >
-            <Eye className="w-10 h-10 text-primary" />
-            <h2 className="mt-4 font-display text-3xl md:text-4xl">Our Vision</h2>
+            <Eye className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
+            <h2 className="mt-3 sm:mt-4 font-display text-2xl sm:text-3xl md:text-4xl">Our Vision</h2>
             <p className="mt-4 text-muted-foreground leading-relaxed">
               A world where every gemstone, every diamond and every piece of jewellery carries an
               unforgeable identity — verifiable in seconds, trusted for generations.
@@ -181,15 +181,15 @@ function AboutPage() {
       </section>
 
       {/* VALUES */}
-      <section className="px-6 py-20">
+      <section className="px-4 sm:px-6 py-14 sm:py-20">
         <div className="mx-auto max-w-7xl">
           <div className="text-center max-w-2xl mx-auto">
             <p className="text-xs uppercase tracking-[0.35em] text-primary">Our Values</p>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl">
+            <h2 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl">
               The principles we <span className="text-gradient-gold">grade by</span>
             </h2>
           </div>
-          <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="mt-10 sm:mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {values.map((v, i) => (
               <motion.div
                 key={v.title}
@@ -209,11 +209,11 @@ function AboutPage() {
       </section>
 
       {/* TIMELINE */}
-      <section className="px-6 py-20">
+      <section className="px-4 sm:px-6 py-14 sm:py-20">
         <div className="mx-auto max-w-4xl">
           <div className="text-center">
             <p className="text-xs uppercase tracking-[0.35em] text-primary">Our Journey</p>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl">
+            <h2 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl">
               A decade of <span className="text-gradient-gold">precision</span>
             </h2>
           </div>
@@ -244,15 +244,15 @@ function AboutPage() {
       </section>
 
       {/* INSTRUMENTS */}
-      <section className="px-6 py-20">
+      <section className="px-4 sm:px-6 py-14 sm:py-20">
         <div className="mx-auto max-w-7xl">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+          <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 items-start">
             <div>
               <p className="text-xs uppercase tracking-[0.35em] text-primary">Inside the Lab</p>
-              <h2 className="mt-3 font-display text-4xl md:text-5xl">
+              <h2 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl">
                 Instruments behind every <span className="text-gradient-gold">grade</span>
               </h2>
-              <p className="mt-4 text-muted-foreground leading-relaxed max-w-lg">
+              <p className="mt-4 text-sm sm:text-base text-muted-foreground leading-relaxed max-w-lg">
                 Our laboratory pairs traditional 10× loupe inspection with a complete suite of modern
                 spectroscopic instruments. Each report is the result of multiple independent readings.
               </p>
@@ -287,15 +287,15 @@ function AboutPage() {
       </section>
 
       {/* TEAM */}
-      <section className="px-6 py-20">
+      <section className="px-4 sm:px-6 py-14 sm:py-20">
         <div className="mx-auto max-w-7xl">
           <div className="text-center max-w-2xl mx-auto">
             <p className="text-xs uppercase tracking-[0.35em] text-primary">Leadership</p>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl">
+            <h2 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl">
               The <span className="text-gradient-gold">people</span> behind the seal
             </h2>
           </div>
-          <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="mt-10 sm:mt-14 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {team.map((t, i) => (
               <motion.div
                 key={t.name}
@@ -318,15 +318,15 @@ function AboutPage() {
       </section>
 
       {/* PROMISE */}
-      <section className="px-6 py-20">
+      <section className="px-4 sm:px-6 py-14 sm:py-20">
         <div className="mx-auto max-w-5xl">
           <div className="text-center">
             <p className="text-xs uppercase tracking-[0.35em] text-primary">Our Promise</p>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl">
+            <h2 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl">
               What every <span className="text-gradient-gold">JewelsReport card</span> guarantees
             </h2>
           </div>
-          <ul className="mt-12 grid md:grid-cols-2 gap-4">
+          <ul className="mt-8 sm:mt-12 grid sm:grid-cols-2 gap-3 sm:gap-4">
             {[
               "Independent grading with no commercial bias",
               "Cross-verification by at least two senior gemologists",
@@ -348,26 +348,26 @@ function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="px-6 py-24">
-        <div className="mx-auto max-w-5xl text-center relative p-12 md:p-16 rounded-3xl gold-border shadow-3d overflow-hidden">
+      <section className="px-4 sm:px-6 py-16 sm:py-24">
+        <div className="mx-auto max-w-5xl text-center relative p-8 sm:p-12 md:p-16 rounded-3xl gold-border shadow-3d overflow-hidden">
           <div className="absolute inset-0 bg-radial-gold opacity-50" />
           <div className="relative">
-            <h2 className="font-display text-4xl md:text-5xl">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl">
               Ready to certify your stones?
             </h2>
-            <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
+            <p className="mt-4 text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
               Speak with our team about grading, bulk submissions, or becoming an authorised partner.
             </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <div className="mt-7 sm:mt-8 flex flex-wrap justify-center gap-3 sm:gap-4">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-gold text-gold-foreground font-medium shadow-gold hover:scale-[1.03] transition-transform"
+                className="inline-flex items-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-gold text-gold-foreground font-medium shadow-gold hover:scale-[1.03] transition-transform text-sm sm:text-base"
               >
                 Contact the Lab <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/verify"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-border hover:border-primary hover:text-primary transition-colors"
+                className="inline-flex items-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full border border-border hover:border-primary hover:text-primary transition-colors text-sm sm:text-base"
               >
                 Verify a Report
               </Link>

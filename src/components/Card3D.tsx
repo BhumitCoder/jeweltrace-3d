@@ -25,7 +25,7 @@ const DUMMY = {
 export function Card3D({ width = 420 }: { width?: number }) {
   const w = width;
   const h = Math.round(w / 1.586);
-  const cert = DUMMY;
+  const cert = DUMMY as unknown as Certificate;
 
   return (
     <div

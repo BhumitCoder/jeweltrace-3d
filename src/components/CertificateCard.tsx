@@ -227,37 +227,40 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
         background: "#EFECE5",
       }}>
         {/* Item image — top portion */}
-        <div style={{ flex: 1, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", background: "#E8E4DA" }}>
-          {cert.imageDataUrl ? (
-            <img src={cert.imageDataUrl} alt="" crossOrigin="anonymous"
-              style={{ width: "100%", height: "100%", objectFit: "contain", display: "block", padding: "8px" }} />
-          ) : (
-            <div style={{
-              display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
-            }}>
-              <img src={logo} alt="" crossOrigin="anonymous" style={{ height: 56, width: 56, objectFit: "contain", opacity: 0.18 }} />
-              <div style={{ fontSize: 8.5, color: "#AAA", letterSpacing: "0.2em", textTransform: "uppercase" }}>No image</div>
-            </div>
-          )}
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "18px 18px 10px" }}>
+          <div style={{
+            width: "100%", aspectRatio: "1 / 1",
+            borderRadius: 22,
+            border: "1.5px solid rgba(184,146,42,0.45)",
+            background: "#F2EFE7",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.06), inset 0 0 0 1px rgba(255,255,255,0.6)",
+            overflow: "hidden",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            {cert.imageDataUrl ? (
+              <img src={cert.imageDataUrl} alt="" crossOrigin="anonymous"
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+                <img src={logo} alt="" crossOrigin="anonymous" style={{ height: 56, width: 56, objectFit: "contain", opacity: 0.18 }} />
+                <div style={{ fontSize: 8.5, color: "#AAA", letterSpacing: "0.2em", textTransform: "uppercase" }}>No image</div>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Gold separator */}
-        <div style={{ height: 2, background: "linear-gradient(90deg,#B8922A,#D4A843,#B8922A)", flexShrink: 0 }} />
-
-        {/* Verify URL + QR */}
         <div style={{
-          padding: "12px 16px",
+          padding: "6px 16px 18px",
           display: "flex", flexDirection: "column", alignItems: "center",
-          gap: 8, background: "#EFECE5",
-          flexShrink: 0,
+          gap: 8, flexShrink: 0,
         }}>
-          <div style={{ fontSize: 8.5, color: "#B8922A", letterSpacing: "0.3em", textTransform: "uppercase", fontWeight: 600 }}>
+          <div style={{ fontSize: 9, color: "#B8922A", letterSpacing: "0.3em", textTransform: "uppercase", fontWeight: 600 }}>
             JEWELREPORT.COM
           </div>
-          <div style={{ padding: 5, background: "#fff", border: "1.5px solid rgba(184,146,42,0.5)", borderRadius: 6 }}>
-            <QRCodeSVG value={verifyUrl} size={72} level="M" />
+          <div style={{ padding: 7, background: "#fff", border: "1.5px solid rgba(184,146,42,0.5)", borderRadius: 8 }}>
+            <QRCodeSVG value={verifyUrl} size={108} level="M" />
           </div>
-          <div style={{ fontSize: 7.5, color: "#888", textAlign: "center" }}>
+          <div style={{ fontSize: 8, color: "#888", textAlign: "center", letterSpacing: "0.05em" }}>
             Scan to verify online
           </div>
         </div>

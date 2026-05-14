@@ -86,7 +86,6 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
       ].filter(([, v]) => v) as [string, string][]
     : [
         ["Jewelry Report Number", cert.reportNo],
-        ["Report Type",           cert.type],
         ["Item",                  cert.itemName],
         ["Shape",                 cert.shape],
         ["Total Carat Weight",    cert.caratWeight ? `${cert.caratWeight} carat` : undefined],

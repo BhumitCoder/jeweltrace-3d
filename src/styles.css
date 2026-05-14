@@ -43,7 +43,7 @@
   --radius: 0.625rem;
 
   /* Light theme — Ivory + Navy + Gold luxury palette */
-  --background: oklch(0.98 0.005 90);        /* warm ivory */
+  --background: oklch(0.975 0.008 90);       /* warm ivory */
   --foreground: oklch(0.18 0.06 265);        /* deep navy text */
 
   --navy-deep: oklch(0.18 0.08 265);         /* darkest navy */
@@ -78,7 +78,7 @@
   --ring: oklch(0.68 0.14 75 / 0.45);
 
   /* Section tint colours */
-  --section-warm: oklch(0.96 0.018 80);    /* soft warm gold tint */
+  --section-warm: #EDE0C4;    /* warm champagne — clearly visible against ivory */
   --section-cool: oklch(0.97 0.008 265);   /* faint blue-grey tint */
 
   --gradient-gold: linear-gradient(135deg, oklch(0.82 0.14 88) 0%, oklch(0.68 0.16 70) 50%, oklch(0.52 0.14 60) 100%);

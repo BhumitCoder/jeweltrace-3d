@@ -1,9 +1,5 @@
 {
-  "buildCommand": "bun run build",
-  "outputDirectory": "dist",
+  "buildCommand": "bun run build && node scripts/vercel-postbuild.js",
   "installCommand": "bun install",
-  "framework": null,
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  "framework": null
 }

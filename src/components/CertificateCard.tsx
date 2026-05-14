@@ -20,7 +20,7 @@ export const CertificateCard = forwardRef<HTMLDivElement, Props>(
     return (
       <div ref={ref} style={{
         width: CARD_W, height: CARD_H,
-        background: "#F4F2EE",
+        background: "#F8F5EF",
         overflow: "hidden",
         fontFamily: "'Segoe UI', Arial, sans-serif",
         display: "flex",
@@ -39,25 +39,24 @@ function FrontSide() {
     <div style={{
       flex: 1, display: "flex", flexDirection: "column",
       alignItems: "center", justifyContent: "center",
-      background: "#F4F2EE", position: "relative",
+      background: "#F8F5EF", position: "relative",
     }}>
-      {/* Centre content — logo only, no competing watermark */}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0, position: "relative", zIndex: 1 }}>
         <img src={logo} alt="JewelsReport" crossOrigin="anonymous"
           style={{ height: 160, width: 160, objectFit: "contain", marginBottom: 28 }} />
-        <div style={{ width: 220, height: 1, background: "linear-gradient(90deg,transparent,#B8922A,transparent)", marginBottom: 22 }} />
-        <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 54, lineHeight: 1, color: "#111", letterSpacing: "-0.01em", textAlign: "center" }}>
+        <div style={{ width: 220, height: 2, background: "linear-gradient(90deg,transparent,#B8922A,transparent)", marginBottom: 20 }} />
+        <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 56, lineHeight: 1, color: "#111111", letterSpacing: "-0.01em", textAlign: "center", fontWeight: 700 }}>
           Jewels<span style={{ color: "#B8922A" }}>Report</span>
         </div>
-        <div style={{ fontSize: 11, letterSpacing: "0.55em", textTransform: "uppercase", color: "#888", textAlign: "center", marginTop: 12 }}>
+        <div style={{ fontSize: 12, letterSpacing: "0.55em", textTransform: "uppercase", color: "#555555", textAlign: "center", marginTop: 14, fontWeight: 600 }}>
           Certification Lab
         </div>
-        <div style={{ width: 220, height: 1, background: "linear-gradient(90deg,transparent,#B8922A,transparent)", marginTop: 22 }} />
+        <div style={{ width: 220, height: 2, background: "linear-gradient(90deg,transparent,#B8922A,transparent)", marginTop: 20 }} />
       </div>
 
       {/* Bottom URL */}
       <div style={{ position: "absolute", bottom: 26, left: 0, right: 0, textAlign: "center", zIndex: 1 }}>
-        <span style={{ fontSize: 10, letterSpacing: "0.45em", textTransform: "uppercase", color: "#B8922A" }}>JEWELSREPORT.COM</span>
+        <span style={{ fontSize: 11, letterSpacing: "0.45em", textTransform: "uppercase", color: "#B8922A", fontWeight: 700 }}>JEWELSREPORT.COM</span>
       </div>
     </div>
   );
@@ -99,36 +98,36 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
       <div style={{
         width: 576, flexShrink: 0,
         display: "flex", flexDirection: "column",
-        padding: "28px 32px 0 32px",
+        padding: "24px 30px 0 30px",
         position: "relative", zIndex: 1,
         boxSizing: "border-box",
       }}>
-        {/* Watermark — inside left panel so it's never clipped by right panel */}
+        {/* Watermark */}
         <img src={logo} alt="" crossOrigin="anonymous" style={{
-          position: "absolute", width: 280, height: 280, objectFit: "contain",
-          opacity: 0.055, pointerEvents: "none",
+          position: "absolute", width: 260, height: 260, objectFit: "contain",
+          opacity: 0.045, pointerEvents: "none",
           left: "50%", top: "50%",
           transform: "translate(-50%,-50%)",
           zIndex: 0,
         }} />
 
         {/* Logo row */}
-        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 10 }}>
-          <img src={logo} alt="JewelsReport" crossOrigin="anonymous" style={{ height: 52, width: 52, objectFit: "contain" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10, position: "relative", zIndex: 1 }}>
+          <img src={logo} alt="JewelsReport" crossOrigin="anonymous" style={{ height: 50, width: 50, objectFit: "contain" }} />
           <div>
-            <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 28, color: "#111", lineHeight: 1, letterSpacing: "-0.01em" }}>
+            <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 26, color: "#111111", lineHeight: 1, letterSpacing: "-0.01em", fontWeight: 700 }}>
               Jewels<span style={{ color: "#B8922A" }}>Report</span>
             </div>
-            <div style={{ fontSize: 8.5, letterSpacing: "0.35em", textTransform: "uppercase", color: "#888", marginTop: 4 }}>
+            <div style={{ fontSize: 8, letterSpacing: "0.35em", textTransform: "uppercase", color: "#666666", marginTop: 4, fontWeight: 600 }}>
               Certification Lab
             </div>
           </div>
         </div>
 
-        {/* Report type label ABOVE orange line */}
-        <div style={{ marginBottom: 12 }}>
+        {/* Report type label + gold line */}
+        <div style={{ marginBottom: 10, position: "relative", zIndex: 1 }}>
           <div style={{
-            fontSize: 13, fontWeight: 800, letterSpacing: "0.06em",
+            fontSize: 13, fontWeight: 900, letterSpacing: "0.08em",
             textTransform: "uppercase", color: "#B8922A",
             lineHeight: 1.2, marginBottom: 6,
           }}>
@@ -137,27 +136,26 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
           <div style={{ height: 3, background: "linear-gradient(90deg,#B8922A,#D4A843,#B8922A)", borderRadius: 2 }} />
         </div>
 
-        {/* Fields with dotted leaders */}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 5 }}>
+        {/* Fields */}
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, position: "relative", zIndex: 1 }}>
           {fields.map(([label, value]) => (
             <div key={label} style={{ display: "flex", alignItems: "flex-end", gap: 0 }}>
               <span style={{
-                fontSize: 11.5, color: "#222", whiteSpace: "nowrap",
-                lineHeight: 1.4, letterSpacing: "0.01em",
+                fontSize: 11, color: "#444444", whiteSpace: "nowrap",
+                lineHeight: 1.5, letterSpacing: "0.01em", fontWeight: 500,
               }}>
                 {label}
               </span>
-              {/* Dotted leader */}
               <span style={{
                 flex: 1,
-                borderBottom: "1.5px dotted #999",
-                margin: "0 5px 3px",
+                borderBottom: "1.5px dotted #BBBBBB",
+                margin: "0 6px 3px",
                 minWidth: 20,
               }} />
               <span style={{
-                fontSize: 11.5, fontWeight: 700, color: "#111",
-                whiteSpace: "nowrap", lineHeight: 1.4,
-                letterSpacing: "0.01em",
+                fontSize: 11.5, fontWeight: 800, color: "#000000",
+                whiteSpace: "nowrap", lineHeight: 1.5,
+                letterSpacing: "0.03em", textTransform: "uppercase",
               }}>
                 {value}
               </span>
@@ -167,11 +165,10 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
           {/* Diamond Details block — jewellery only */}
           {isJewellery && (cert.diamondShape || cert.diamondWeight || cert.diamondColor || cert.diamondClarity) && (
             <div style={{ marginTop: 6 }}>
-              {/* Section header */}
               <div style={{
-                fontSize: 9, fontWeight: 700, letterSpacing: "0.2em",
+                fontSize: 9, fontWeight: 800, letterSpacing: "0.25em",
                 textTransform: "uppercase", color: "#B8922A",
-                borderBottom: "1px solid #D4C9A8", paddingBottom: 3, marginBottom: 4,
+                borderBottom: "1.5px solid #D4C9A8", paddingBottom: 3, marginBottom: 5,
               }}>
                 Diamond Details
               </div>
@@ -182,30 +179,30 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
                 ["Clarity",             cert.diamondClarity],
               ].filter(([, v]) => v).map(([label, value]) => (
                 <div key={label} style={{ display: "flex", alignItems: "flex-end", gap: 0 }}>
-                  <span style={{ fontSize: 11.5, color: "#222", whiteSpace: "nowrap", lineHeight: 1.4 }}>{label}</span>
-                  <span style={{ flex: 1, borderBottom: "1.5px dotted #999", margin: "0 5px 3px", minWidth: 20 }} />
-                  <span style={{ fontSize: 11.5, fontWeight: 700, color: "#111", whiteSpace: "nowrap", lineHeight: 1.4 }}>{value}</span>
+                  <span style={{ fontSize: 11, color: "#444444", whiteSpace: "nowrap", lineHeight: 1.5, fontWeight: 500 }}>{label}</span>
+                  <span style={{ flex: 1, borderBottom: "1.5px dotted #BBBBBB", margin: "0 6px 3px", minWidth: 20 }} />
+                  <span style={{ fontSize: 11.5, fontWeight: 800, color: "#000000", whiteSpace: "nowrap", lineHeight: 1.5, letterSpacing: "0.03em", textTransform: "uppercase" }}>{value}</span>
                 </div>
               ))}
             </div>
           )}
 
-          {/* Remarks inline if present */}
+          {/* Remarks */}
           {cert.remarks && (
             <div style={{ marginTop: 4 }}>
-              <span style={{ fontSize: 11.5, color: "#222" }}>Remarks: </span>
-              <span style={{ fontSize: 11.5, fontWeight: 700, color: "#111" }}>{cert.remarks}</span>
+              <span style={{ fontSize: 11, color: "#444444", fontWeight: 500 }}>Remarks: </span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: "#111111" }}>{cert.remarks}</span>
             </div>
           )}
         </div>
 
         {/* Separator + disclaimer */}
-        <div style={{ marginTop: 10 }}>
-          <div style={{ height: 1.5, background: "linear-gradient(90deg,#B8922A,#D4A843,#B8922A)", marginBottom: 8 }} />
-          <p style={{ fontSize: 8, color: "#666", lineHeight: 1.5 }}>
+        <div style={{ marginTop: 8, position: "relative", zIndex: 1 }}>
+          <div style={{ height: 2, background: "linear-gradient(90deg,#B8922A,#D4A843,#B8922A)", marginBottom: 7 }} />
+          <p style={{ fontSize: 7.5, color: "#777777", lineHeight: 1.5, margin: 0 }}>
             This report is issued by JewelsReport Certification Lab and is based on the examination of the described article. Scan QR to verify online at JEWELSREPORT.COM. The results documented refer only to the article described and were obtained using the techniques and equipment used by JewelsReport at the time of examination. This report is not a guarantee or valuation.
           </p>
-          <div style={{ height: 22 }} />
+          <div style={{ height: 18 }} />
         </div>
       </div>
 
@@ -213,18 +210,18 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
       <div style={{
         flex: 1,
         display: "flex", flexDirection: "column",
-        borderLeft: "1.5px solid #D4C9A8",
+        borderLeft: "2px solid #D4C9A8",
         position: "relative", zIndex: 1,
-        background: "#EFECE5",
+        background: "#EDE8DF",
       }}>
-        {/* Item image — top portion */}
-        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "18px 18px 10px" }}>
+        {/* Item image */}
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "16px 16px 8px" }}>
           <div style={{
             width: "100%", aspectRatio: "1 / 1",
-            borderRadius: 22,
-            border: "1.5px solid rgba(184,146,42,0.45)",
-            background: "#F2EFE7",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.06), inset 0 0 0 1px rgba(255,255,255,0.6)",
+            borderRadius: 18,
+            border: "2px solid rgba(184,146,42,0.5)",
+            background: "#F5F1E9",
+            boxShadow: "0 2px 10px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.7)",
             overflow: "hidden",
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
@@ -234,24 +231,24 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
             ) : (
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
                 <img src={logo} alt="" crossOrigin="anonymous" style={{ height: 56, width: 56, objectFit: "contain", opacity: 0.18 }} />
-                <div style={{ fontSize: 8.5, color: "#AAA", letterSpacing: "0.2em", textTransform: "uppercase" }}>No image</div>
+                <div style={{ fontSize: 8.5, color: "#AAAAAA", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600 }}>No image</div>
               </div>
             )}
           </div>
         </div>
 
         <div style={{
-          padding: "6px 16px 18px",
+          padding: "6px 14px 16px",
           display: "flex", flexDirection: "column", alignItems: "center",
-          gap: 8, flexShrink: 0,
+          gap: 6, flexShrink: 0,
         }}>
-          <div style={{ fontSize: 9, color: "#B8922A", letterSpacing: "0.3em", textTransform: "uppercase", fontWeight: 600 }}>
+          <div style={{ fontSize: 9, color: "#B8922A", letterSpacing: "0.3em", textTransform: "uppercase", fontWeight: 800 }}>
             JEWELSREPORT.COM
           </div>
-          <div style={{ padding: 7, background: "#fff", border: "1.5px solid rgba(184,146,42,0.5)", borderRadius: 8 }}>
+          <div style={{ padding: 7, background: "#fff", border: "2px solid rgba(184,146,42,0.5)", borderRadius: 8 }}>
             <QRCodeSVG value={verifyUrl} size={108} level="M" />
           </div>
-          <div style={{ fontSize: 8, color: "#888", textAlign: "center", letterSpacing: "0.05em" }}>
+          <div style={{ fontSize: 8, color: "#666666", textAlign: "center", letterSpacing: "0.08em", fontWeight: 600, textTransform: "uppercase" }}>
             Scan to verify online
           </div>
         </div>

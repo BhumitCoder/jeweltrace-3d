@@ -2,8 +2,6 @@ import { QRCodeSVG } from "qrcode.react";
 import logo from "@/assets/logo.png";
 import type { Certificate } from "@/lib/store";
 
-// 3D rotating PVC/PAN-size certificate card (CR80 ratio 1.586:1)
-// Always shows fixed sample data — never reads from the store.
 const DUMMY = {
   reportNo: "LGD-26-004821",
   type: "Lab Grown Diamond",
@@ -39,28 +37,18 @@ export function Card3D({ width = 420 }: { width?: number }) {
         style={{
           inset: -w * 0.15,
           background:
-            "radial-gradient(circle, oklch(0.78 0.14 80 / 0.28) 0%, oklch(0.65 0.12 80 / 0.10) 50%, transparent 75%)",
+            "radial-gradient(circle, oklch(0.78 0.14 80 / 0.20) 0%, oklch(0.65 0.12 80 / 0.07) 50%, transparent 75%)",
         }}
       />
-      {/* multi-layer realistic drop shadow */}
+      {/* drop shadow */}
       <div
         className="absolute left-1/2 -translate-x-1/2 rounded-[50%]"
         style={{
           bottom: -(h * 0.10),
           width: w * 0.80,
           height: h * 0.09,
-          background: "rgba(0,0,0,0.50)",
+          background: "rgba(0,0,0,0.30)",
           filter: "blur(28px)",
-        }}
-      />
-      <div
-        className="absolute left-1/2 -translate-x-1/2 rounded-[50%]"
-        style={{
-          bottom: -(h * 0.05),
-          width: w * 0.55,
-          height: h * 0.05,
-          background: "rgba(0,0,0,0.40)",
-          filter: "blur(10px)",
         }}
       />
 
@@ -75,60 +63,34 @@ export function Card3D({ width = 420 }: { width?: number }) {
   );
 }
 
-function CardFace({
-  side,
-  w,
-  h,
-  cert,
-}: {
-  side: "front" | "back";
-  w: number;
-  h: number;
-  cert: Certificate | null;
-}) {
+function CardFace({ side, w, h, cert }: { side: "front" | "back"; w: number; h: number; cert: Certificate | null }) {
   const isBack = side === "back";
   return (
     <div
-      className="absolute inset-0 overflow-hidden text-white"
+      className="absolute inset-0 overflow-hidden"
       style={{
         borderRadius: 22,
         backfaceVisibility: "hidden",
         transform: isBack ? "rotateY(180deg)" : "rotateY(0deg)",
-        background:
-          "linear-gradient(135deg, oklch(0.20 0.06 265) 0%, oklch(0.10 0.04 265) 60%, oklch(0.22 0.07 265) 100%)",
-        boxShadow:
-          "0 30px 70px -20px rgba(0,0,0,0.7), inset 0 0 0 1.5px rgba(212,175,55,0.55)",
+        background: "#F8F5EF",
+        boxShadow: "0 20px 60px -15px rgba(0,0,0,0.25), 0 0 0 1.5px rgba(184,146,42,0.5), inset 0 0 0 1px rgba(255,255,255,0.9)",
       }}
     >
-      {/* holographic foil sweep */}
-      <div
-        className="absolute inset-0 opacity-30 pointer-events-none animate-holo bg-holo"
-        style={{ mixBlendMode: "screen" }}
-      />
-      {/* guilloché */}
+      {/* Subtle guilloché watermark */}
       <svg
-        className="absolute inset-0 w-full h-full opacity-[0.10] pointer-events-none"
+        className="absolute inset-0 w-full h-full pointer-events-none"
         viewBox="0 0 856 540"
         preserveAspectRatio="none"
+        style={{ opacity: 0.04 }}
       >
         <defs>
           <pattern id={`g3d-${side}`} width="22" height="22" patternUnits="userSpaceOnUse">
-            <path d="M 22 0 L 0 0 0 22" fill="none" stroke="#D4AF37" strokeWidth="0.5" />
+            <path d="M 22 0 L 0 0 0 22" fill="none" stroke="#B8922A" strokeWidth="0.6" />
           </pattern>
         </defs>
         <rect width="856" height="540" fill={`url(#g3d-${side})`} />
-        <circle cx="428" cy="270" r="220" fill="none" stroke="#D4AF37" strokeWidth="0.7" />
+        <circle cx="428" cy="270" r="220" fill="none" stroke="#B8922A" strokeWidth="0.8" />
       </svg>
-      {/* inner gold frame */}
-      <div
-        className="absolute inset-2 pointer-events-none"
-        style={{
-          borderRadius: 18,
-          border: "1px solid",
-          borderImage:
-            "linear-gradient(135deg, #f5d97a, #b8862e, #f5d97a) 1",
-        }}
-      />
 
       {isBack ? (
         <BackContent w={w} h={h} cert={cert} />
@@ -147,129 +109,85 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
 
   const specs = cert
     ? [
-        ["Type", cert.type],
-        ["Shape", cert.shape || "—"],
-        ["Carat", cert.caratWeight || "—"],
-        ["Color", cert.color || "—"],
+        ["Type",    cert.type],
+        ["Shape",   cert.shape || "—"],
+        ["Carat",   cert.caratWeight || "—"],
+        ["Color",   cert.color || "—"],
         ["Clarity", cert.clarity || "—"],
-        ["Cut", cert.cut || "—"],
+        ["Cut",     cert.cut || "—"],
       ]
     : [
-        ["Type", "Lab Grown Diamond"],
-        ["Shape", "Round Brilliant"],
-        ["Carat", "1.52 ct"],
-        ["Color", "E"],
+        ["Type",    "Lab Grown Diamond"],
+        ["Shape",   "Round Brilliant"],
+        ["Carat",   "1.52 ct"],
+        ["Color",   "E"],
         ["Clarity", "VS1"],
-        ["Cut", "Excellent"],
+        ["Cut",     "Excellent"],
       ];
 
   return (
-    <div
-      className="relative h-full w-full flex flex-col"
-      style={{ padding: pad }}
-    >
+    <div className="relative h-full w-full flex flex-col" style={{ padding: pad }}>
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <img
-            src={logo}
-            alt=""
-            style={{ width: h * 0.13, height: h * 0.13 }}
-            className="object-contain"
-          />
+          <img src={logo} alt="" style={{ width: h * 0.13, height: h * 0.13 }} className="object-contain" />
           <div>
-            <div
-              style={{
-                fontFamily: "Playfair Display, serif",
-                fontSize: w * 0.048,
-                lineHeight: 1,
-              }}
-            >
-              <span className="text-white">Jewels</span>
-              <span style={{ color: "#E8C56A" }}>Report</span>
+            <div style={{ fontFamily: "Georgia, serif", fontSize: w * 0.048, lineHeight: 1, fontWeight: 700 }}>
+              <span style={{ color: "#111111" }}>Jewels</span>
+              <span style={{ color: "#B8922A" }}>Report</span>
             </div>
-            <div
-              style={{ fontSize: w * 0.016, letterSpacing: "0.28em" }}
-              className="uppercase text-white/60 mt-0.5"
-            >
+            <div style={{ fontSize: w * 0.016, letterSpacing: "0.28em", color: "#666666", fontWeight: 600 }} className="uppercase mt-0.5">
               Certification Lab
             </div>
           </div>
         </div>
         <div className="text-right">
-          <div
-            style={{ fontSize: w * 0.016, letterSpacing: "0.25em" }}
-            className="uppercase text-white/60"
-          >
+          <div style={{ fontSize: w * 0.016, letterSpacing: "0.25em", color: "#888888", fontWeight: 600 }} className="uppercase">
             Report No.
           </div>
-          <div
-            className="font-mono"
-            style={{ fontSize: w * 0.032, color: "#E8C56A", letterSpacing: "0.06em" }}
-          >
+          <div className="font-mono" style={{ fontSize: w * 0.030, color: "#111111", letterSpacing: "0.06em", fontWeight: 800 }}>
             {cert ? cert.reportNo : "SAMPLE"}
           </div>
-          {!cert && (
-            <div style={{ fontSize: w * 0.014, color: "#E8C56A66" }}>
-              Issue a cert to see live data
-            </div>
-          )}
         </div>
       </div>
 
+      {/* Gold separator */}
+      <div style={{ height: 2, background: "linear-gradient(90deg,#B8922A,#D4A843,#B8922A)", margin: `${Math.round(w*0.018)}px 0`, borderRadius: 2 }} />
+
       {/* Body */}
-      <div className="flex-1 mt-2 flex gap-3 min-h-0">
-        {/* Image / Diamond visual */}
+      <div className="flex-1 flex gap-3 min-h-0">
+        {/* Diamond visual */}
         <div
-          className="rounded-lg overflow-hidden flex items-center justify-center shrink-0"
+          className="rounded-xl overflow-hidden flex items-center justify-center shrink-0"
           style={{
-            width: imgSize,
-            height: imgSize,
-            background:
-              "linear-gradient(135deg, rgba(212,175,55,0.18), rgba(255,255,255,0.05))",
-            border: "1px solid rgba(212,175,55,0.45)",
+            width: imgSize, height: imgSize,
+            background: "#EDE8DF",
+            border: "1.5px solid rgba(184,146,42,0.4)",
           }}
         >
           {cert?.imageDataUrl ? (
-            <img
-              src={cert.imageDataUrl}
-              alt=""
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
+            <img src={cert.imageDataUrl} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           ) : (
-            <svg viewBox="0 0 100 100" style={{ width: "75%", height: "75%" }}>
+            <svg viewBox="0 0 100 100" style={{ width: "72%", height: "72%" }}>
               <defs>
                 <linearGradient id="dg3d" x1="0" y1="0" x2="1" y2="1">
                   <stop offset="0%" stopColor="#E8F4FF" />
-                  <stop offset="100%" stopColor="#5B7FB6" />
+                  <stop offset="100%" stopColor="#7BA8D4" />
                 </linearGradient>
               </defs>
-              <polygon
-                points="20,40 50,15 80,40 50,90"
-                fill="url(#dg3d)"
-                stroke="#E8C56A"
-                strokeWidth="0.6"
-              />
-              <polygon points="20,40 35,40 50,15" fill="#fff" opacity="0.35" />
-              <line x1="20" y1="40" x2="80" y2="40" stroke="#E8C56A" strokeWidth="0.4" opacity="0.6" />
+              <polygon points="20,40 50,15 80,40 50,90" fill="url(#dg3d)" stroke="#B8922A" strokeWidth="0.8" />
+              <polygon points="20,40 35,40 50,15" fill="#fff" opacity="0.40" />
+              <line x1="20" y1="40" x2="80" y2="40" stroke="#B8922A" strokeWidth="0.5" opacity="0.7" />
             </svg>
           )}
         </div>
 
-        {/* Specs */}
-        <div
-          className="flex-1 grid grid-cols-2 gap-x-3 gap-y-1 content-start"
-          style={{ fontSize: w * 0.024 }}
-        >
+        {/* Specs grid */}
+        <div className="flex-1 grid grid-cols-2 gap-x-3 gap-y-1 content-start" style={{ fontSize: w * 0.024 }}>
           {specs.map(([l, v]) => (
-            <div key={l} className="border-b border-white/10 pb-0.5">
-              <div
-                className="uppercase text-white/55"
-                style={{ fontSize: w * 0.015, letterSpacing: "0.18em" }}
-              >
-                {l}
-              </div>
-              <div className="text-white truncate" style={{ fontSize: w * 0.024 }}>{v}</div>
+            <div key={l} style={{ borderBottom: "1px solid rgba(184,146,42,0.2)", paddingBottom: 3 }}>
+              <div style={{ fontSize: w * 0.015, letterSpacing: "0.18em", color: "#888888", fontWeight: 600 }} className="uppercase">{l}</div>
+              <div style={{ color: "#111111", fontWeight: 700, fontSize: w * 0.024 }} className="truncate">{v}</div>
             </div>
           ))}
         </div>
@@ -278,23 +196,13 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
       {/* Footer */}
       <div className="mt-2 flex items-end justify-between">
         <div>
-          <div
-            className="uppercase text-white/60"
-            style={{ fontSize: w * 0.016, letterSpacing: "0.22em" }}
-          >
-            Issue Date
-          </div>
-          <div style={{ color: "#E8C56A", fontSize: w * 0.026 }}>
+          <div style={{ fontSize: w * 0.016, letterSpacing: "0.22em", color: "#888888", fontWeight: 600 }} className="uppercase">Issue Date</div>
+          <div style={{ color: "#B8922A", fontSize: w * 0.026, fontWeight: 700 }}>
             {cert ? cert.issueDate : "13 May 2026"}
           </div>
-          <div
-            className="text-white/50 mt-0.5"
-            style={{ fontSize: w * 0.014, letterSpacing: "0.22em" }}
-          >
-            SCAN TO VERIFY
-          </div>
+          <div style={{ fontSize: w * 0.014, letterSpacing: "0.22em", color: "#AAAAAA", fontWeight: 600 }} className="uppercase mt-0.5">Scan to Verify</div>
         </div>
-        <div className="bg-white p-1 rounded">
+        <div style={{ background: "#fff", padding: 5, borderRadius: 8, border: "1.5px solid rgba(184,146,42,0.4)" }}>
           <QRCodeSVG
             value={cert ? verifyUrl : (typeof window !== "undefined" ? window.location.origin : "https://jewelsreport.com")}
             size={qrSize}
@@ -306,72 +214,65 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
   );
 }
 
-function BackContent({ w, cert }: { w: number; h?: number; cert: Certificate | null }) {
+function BackContent({ w, h, cert }: { w: number; h: number; cert: Certificate | null }) {
   const pad = w * 0.05;
 
   const specs = cert
     ? [
         ["Measurements", cert.measurements || "—"],
-        ["Polish", cert.polish || "—"],
-        ["Symmetry", cert.symmetry || "—"],
+        ["Polish",       cert.polish || "—"],
+        ["Symmetry",     cert.symmetry || "—"],
         ["Fluorescence", cert.fluorescence || "—"],
-        ["Origin", cert.origin || "—"],
-        ["Issued", cert.issueDate || "—"],
+        ["Origin",       cert.origin || "—"],
+        ["Issued",       cert.issueDate || "—"],
       ]
     : [
-        ["Measurements", "7.31 × 7.34 × 4.52 mm"],
-        ["Polish", "Excellent"],
-        ["Symmetry", "Excellent"],
+        ["Measurements", "7.41 × 7.43 × 4.61 mm"],
+        ["Polish",       "Excellent"],
+        ["Symmetry",     "Excellent"],
         ["Fluorescence", "None"],
-        ["Origin", "Laboratory Grown"],
-        ["Issued", "13 May 2026"],
+        ["Origin",       "Laboratory Grown"],
+        ["Issued",       "13 May 2026"],
       ];
 
   return (
     <div className="relative h-full w-full flex flex-col" style={{ padding: pad }}>
-      <div className="text-center">
-        <div
-          style={{
-            fontFamily: "Playfair Display, serif",
-            color: "#E8C56A",
-            fontSize: w * 0.05,
-          }}
-        >
-          {cert ? cert.itemName || "Certificate Details" : "Round Brilliant Diamond"}
+      {/* Header */}
+      <div className="flex items-center gap-2" style={{ marginBottom: 8 }}>
+        <img src={logo} alt="" style={{ width: h * 0.12, height: h * 0.12, objectFit: "contain" }} />
+        <div>
+          <div style={{ fontFamily: "Georgia, serif", fontSize: w * 0.042, lineHeight: 1, fontWeight: 700 }}>
+            <span style={{ color: "#111111" }}>Jewels</span>
+            <span style={{ color: "#B8922A" }}>Report</span>
+          </div>
+          <div style={{ fontSize: w * 0.014, letterSpacing: "0.28em", color: "#666666", fontWeight: 600 }} className="uppercase">
+            Certification Lab
+          </div>
         </div>
-        <div
-          className="h-px mx-auto mt-1.5"
-          style={{
-            width: w * 0.18,
-            background:
-              "linear-gradient(90deg, transparent, #E8C56A, transparent)",
-          }}
-        />
       </div>
 
-      <div
-        className="flex-1 mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5"
-        style={{ fontSize: w * 0.026 }}
-      >
+      {/* Gold line */}
+      <div style={{ height: 2, background: "linear-gradient(90deg,#B8922A,#D4A843,#B8922A)", marginBottom: 10, borderRadius: 2 }} />
+
+      {/* Item name */}
+      <div style={{ fontFamily: "Georgia, serif", color: "#111111", fontSize: w * 0.042, fontWeight: 700, marginBottom: 8 }}>
+        {cert ? cert.itemName || "Certificate Details" : "Round Brilliant Diamond"}
+      </div>
+
+      {/* Specs */}
+      <div className="flex-1 grid grid-cols-2 gap-x-6 gap-y-1.5" style={{ fontSize: w * 0.024 }}>
         {specs.map(([l, v]) => (
-          <div key={l} className="border-b border-white/10 pb-0.5">
-            <div
-              className="uppercase text-white/55"
-              style={{ fontSize: w * 0.017, letterSpacing: "0.2em" }}
-            >
-              {l}
-            </div>
-            <div className="text-white truncate">{v}</div>
+          <div key={l} style={{ borderBottom: "1px solid rgba(184,146,42,0.2)", paddingBottom: 3 }}>
+            <div style={{ fontSize: w * 0.016, letterSpacing: "0.2em", color: "#888888", fontWeight: 600 }} className="uppercase">{l}</div>
+            <div style={{ color: "#111111", fontWeight: 800, textTransform: "uppercase", fontSize: w * 0.024 }} className="truncate">{v}</div>
           </div>
         ))}
       </div>
 
-      <div
-        className="mt-2 pt-2 border-t border-white/10 flex items-center justify-between text-white/55"
-        style={{ fontSize: w * 0.017 }}
-      >
-        <span>Property of JewelsReport Lab.</span>
-        <span style={{ color: "#E8C56A", letterSpacing: "0.2em" }}>JEWELSREPORT.COM</span>
+      {/* Bottom */}
+      <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1.5px solid rgba(184,146,42,0.35)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <span style={{ fontSize: w * 0.016, color: "#888888", fontWeight: 600 }}>JewelsReport Certification Lab</span>
+        <span style={{ color: "#B8922A", letterSpacing: "0.2em", fontWeight: 800, fontSize: w * 0.016 }}>JEWELSREPORT.COM</span>
       </div>
     </div>
   );

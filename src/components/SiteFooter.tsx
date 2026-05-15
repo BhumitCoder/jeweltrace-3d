@@ -20,6 +20,14 @@ export function SiteFooter() {
             An internationally recognised laboratory delivering trusted reports for natural diamonds,
             lab-grown diamonds, gemstones and fine jewellery.
           </p>
+          <address className="not-italic mt-5 space-y-1 text-xs sm:text-sm text-muted-foreground">
+            <div>202, 2/F, Veer Ashish Building,</div>
+            <div>Surat Diamond Market, Mahidharpura,</div>
+            <div>Surat, Gujarat 395003, India</div>
+            <div className="pt-2">
+              <a href="tel:+919967381180" className="hover:text-primary transition-colors">+91 99673 81180</a>
+            </div>
+          </address>
         </div>
         <div>
           <h4 className="text-xs sm:text-sm uppercase tracking-widest text-primary mb-3 sm:mb-4">Reports</h4>

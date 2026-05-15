@@ -64,7 +64,7 @@ function FrontSide() {
 
 /* ─── BACK — GIA-style layout ────────────────────────────────────────────────── */
 function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string }) {
-  const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery";
+  const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery" || cert.type === "Gemstone";
 
   const fields: [string, string | undefined][] = isJewellery
     ? [

@@ -94,7 +94,7 @@ function CertEditor() {
     navigate({ to: "/admin" });
   };
 
-  const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery";
+  const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery" || cert.type === "Gemstone";
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-8">

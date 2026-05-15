@@ -55,6 +55,19 @@ const instruments = [
 ];
 
 function AboutPage() {
+  useSEO({
+    title: "About JewelsReport — Master Gemologists & Lab Standards",
+    description:
+      "Founded in 2014, JewelsReport is an independent gemological laboratory with master graders, ISO/IEC 17025 aligned protocols and 100,000+ certificates issued worldwide.",
+    path: "/about",
+    keywords:
+      "about JewelsReport, gemological laboratory, master gemologists, ISO 17025 diamond lab, diamond grading lab India, Surat diamond lab",
+    jsonLd: breadcrumb([
+      { name: "Home", path: "/" },
+      { name: "About", path: "/about" },
+    ]),
+  });
+
   return (
     <Layout>
       {/* HERO */}

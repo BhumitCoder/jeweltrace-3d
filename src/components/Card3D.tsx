@@ -204,7 +204,7 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
         </div>
         <div style={{ background: "#fff", padding: 5, borderRadius: 8, border: "1.5px solid rgba(184,146,42,0.4)" }}>
           <QRCodeSVG
-            value={cert ? verifyUrl : (typeof window !== "undefined" ? window.location.origin : "https://jewelsreport.com")}
+            value={cert ? verifyUrl : (typeof window !== "undefined" ? window.location.origin : "https://www.jewelsreport.com")}
             size={qrSize}
             level="M"
           />

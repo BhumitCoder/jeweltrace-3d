@@ -252,8 +252,11 @@ function CertEditor() {
         {isJewellery && (
           <Card title="Gemstone Details" sub="Details of coloured gemstones set in this jewellery piece">
             <div className="grid sm:grid-cols-2 gap-5">
+              <F label="Stone"><input value={cert.gemstoneStone || ""} onChange={(e) => set("gemstoneStone", e.target.value)} className={ic} placeholder="e.g. Ruby, Emerald, Sapphire" /></F>
+              <F label="Origin"><input value={cert.gemstoneOrigin || ""} onChange={(e) => set("gemstoneOrigin", e.target.value)} className={ic} placeholder="e.g. Burma, Sri Lanka" /></F>
               <F label="Shape and Cutting Style"><input value={cert.gemstoneShape || ""} onChange={(e) => set("gemstoneShape", e.target.value)} className={ic} placeholder="e.g. Oval, Mixed Cut" /></F>
               <F label="Carat Weight"><input value={cert.gemstoneCaratWeight || ""} onChange={(e) => set("gemstoneCaratWeight", e.target.value)} className={ic} placeholder="e.g. 2.45 CT" /></F>
+              <F label="PCS"><input value={cert.gemstonePcs || ""} onChange={(e) => set("gemstonePcs", e.target.value)} className={ic} placeholder="e.g. 1" /></F>
               <F label="Measurements"><input value={cert.gemstoneMeasurements || ""} onChange={(e) => set("gemstoneMeasurements", e.target.value)} className={ic} placeholder="e.g. 9.12 x 7.04 x 4.21 mm" /></F>
               <F label="Color and Transparency"><input value={cert.gemstoneColorTransparency || ""} onChange={(e) => set("gemstoneColorTransparency", e.target.value)} className={ic} placeholder="e.g. Vivid Red, Transparent" /></F>
               <F label="Characteristics"><input value={cert.gemstoneCharacteristics || ""} onChange={(e) => set("gemstoneCharacteristics", e.target.value)} className={ic} placeholder="e.g. Eye Clean" /></F>

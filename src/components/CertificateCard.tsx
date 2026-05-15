@@ -205,7 +205,7 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
           )}
 
           {/* Gemstone Details block — jewellery only */}
-          {isJewellery && (cert.gemstoneShape || cert.gemstoneCaratWeight || cert.gemstoneMeasurements || cert.gemstoneColorTransparency || cert.gemstoneCharacteristics) && (
+          {isJewellery && (cert.gemstoneStone || cert.gemstoneOrigin || cert.gemstoneShape || cert.gemstoneCaratWeight || cert.gemstonePcs || cert.gemstoneMeasurements || cert.gemstoneColorTransparency || cert.gemstoneCharacteristics) && (
             <div style={{ marginTop: 6 }}>
               <div style={{
                 fontSize: 9, fontWeight: 800, letterSpacing: "0.25em",
@@ -215,8 +215,11 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
                 Gemstone Details
               </div>
               {[
+                ["Stone",                    cert.gemstoneStone],
+                ["Origin",                   cert.gemstoneOrigin],
                 ["Shape and Cutting Style",  cert.gemstoneShape],
                 ["Carat Weight",             cert.gemstoneCaratWeight],
+                ["PCS",                      cert.gemstonePcs],
                 ["Measurements",             cert.gemstoneMeasurements],
                 ["Color and Transparency",   cert.gemstoneColorTransparency],
                 ["Characteristics",          cert.gemstoneCharacteristics],

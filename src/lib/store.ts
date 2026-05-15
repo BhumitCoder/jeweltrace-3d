@@ -50,10 +50,11 @@ export interface Certificate {
   diamondClarity?: string;
   diamondTotalPcs?: string;
   // Jewellery-specific gemstone details
-  gemstoneType?: string;
-  gemstoneWeight?: string;
-  gemstoneColor?: string;
-  gemstoneClarity?: string;
+  gemstoneShape?: string;
+  gemstoneCaratWeight?: string;
+  gemstoneMeasurements?: string;
+  gemstoneColorTransparency?: string;
+  gemstoneCharacteristics?: string;
   remarks?: string;
   imageDataUrl?: string;     // base64 image for the gem/jewellery
   clientId?: string;

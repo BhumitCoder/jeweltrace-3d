@@ -190,7 +190,7 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
           )}
 
           {/* Gemstone Details block — jewellery only */}
-          {isJewellery && (cert.gemstoneType || cert.gemstoneWeight || cert.gemstoneColor || cert.gemstoneClarity) && (
+          {isJewellery && (cert.gemstoneShape || cert.gemstoneCaratWeight || cert.gemstoneMeasurements || cert.gemstoneColorTransparency || cert.gemstoneCharacteristics) && (
             <div style={{ marginTop: 6 }}>
               <div style={{
                 fontSize: 9, fontWeight: 800, letterSpacing: "0.25em",
@@ -200,10 +200,11 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
                 Gemstone Details
               </div>
               {[
-                ["Gemstone Type",     cert.gemstoneType],
-                ["Total Est. Weight", cert.gemstoneWeight ? `${cert.gemstoneWeight} CT` : undefined],
-                ["Color",             cert.gemstoneColor],
-                ["Clarity",           cert.gemstoneClarity],
+                ["Shape and Cutting Style",  cert.gemstoneShape],
+                ["Carat Weight",             cert.gemstoneCaratWeight],
+                ["Measurements",             cert.gemstoneMeasurements],
+                ["Color and Transparency",   cert.gemstoneColorTransparency],
+                ["Characteristics",          cert.gemstoneCharacteristics],
               ].filter(([, v]) => v).map(([label, value]) => (
                 <div key={label} style={{ display: "flex", alignItems: "flex-end", gap: 0 }}>
                   <span style={{ fontSize: 11, color: "#444444", whiteSpace: "nowrap", lineHeight: 1.5, fontWeight: 500 }}>{label}</span>

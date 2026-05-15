@@ -30,7 +30,7 @@ function makeCert(type: ReportType = "Lab Grown Diamond"): Certificate {
     fluorescence: "", origin: "", metal: "", metalDescription: "",
     grossWeight: "", netWeight: "",
     diamondShape: "", diamondWeight: "", diamondColor: "", diamondClarity: "", diamondTotalPcs: "",
-    gemstoneType: "", gemstoneWeight: "", gemstoneColor: "", gemstoneClarity: "",
+    gemstoneShape: "", gemstoneCaratWeight: "", gemstoneMeasurements: "", gemstoneColorTransparency: "", gemstoneCharacteristics: "",
     remarks: "",
     clientId: "", clientName: "",
     createdAt: Date.now(),
@@ -235,10 +235,11 @@ function CertEditor() {
         {isJewellery && (
           <Card title="Gemstone Details" sub="Details of coloured gemstones set in this jewellery piece">
             <div className="grid sm:grid-cols-2 gap-5">
-              <F label="Gemstone Type"><input value={cert.gemstoneType || ""} onChange={(e) => set("gemstoneType", e.target.value)} className={ic} placeholder="e.g. Ruby, Emerald, Sapphire" /></F>
-              <F label="Total Est. Weight (CT)"><input value={cert.gemstoneWeight || ""} onChange={(e) => set("gemstoneWeight", e.target.value)} className={ic} placeholder="e.g. 2.45 CT" /></F>
-              <F label="Color"><input value={cert.gemstoneColor || ""} onChange={(e) => set("gemstoneColor", e.target.value)} className={ic} placeholder="e.g. Vivid Red" /></F>
-              <F label="Clarity"><input value={cert.gemstoneClarity || ""} onChange={(e) => set("gemstoneClarity", e.target.value)} className={ic} placeholder="e.g. Eye Clean" /></F>
+              <F label="Shape and Cutting Style"><input value={cert.gemstoneShape || ""} onChange={(e) => set("gemstoneShape", e.target.value)} className={ic} placeholder="e.g. Oval, Mixed Cut" /></F>
+              <F label="Carat Weight"><input value={cert.gemstoneCaratWeight || ""} onChange={(e) => set("gemstoneCaratWeight", e.target.value)} className={ic} placeholder="e.g. 2.45 CT" /></F>
+              <F label="Measurements"><input value={cert.gemstoneMeasurements || ""} onChange={(e) => set("gemstoneMeasurements", e.target.value)} className={ic} placeholder="e.g. 9.12 x 7.04 x 4.21 mm" /></F>
+              <F label="Color and Transparency"><input value={cert.gemstoneColorTransparency || ""} onChange={(e) => set("gemstoneColorTransparency", e.target.value)} className={ic} placeholder="e.g. Vivid Red, Transparent" /></F>
+              <F label="Characteristics"><input value={cert.gemstoneCharacteristics || ""} onChange={(e) => set("gemstoneCharacteristics", e.target.value)} className={ic} placeholder="e.g. Eye Clean" /></F>
             </div>
           </Card>
         )}

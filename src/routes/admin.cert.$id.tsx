@@ -94,7 +94,8 @@ function CertEditor() {
     navigate({ to: "/admin" });
   };
 
-  const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery" || cert.type === "Gemstone";
+  const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery";
+  const isGemstone = cert.type === "Gemstone";
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-8">
@@ -188,8 +189,21 @@ function CertEditor() {
           </div>
         </Card>
 
-        {/* Grading — non-jewellery only */}
-        {!isJewellery && (
+        {/* Gemstone — dedicated grading fields */}
+        {isGemstone && (
+          <Card title="Gemstone Grading Details" sub="Laboratory measurements and grades for the gemstone">
+            <div className="grid sm:grid-cols-2 gap-5">
+              <F label="Shape and Cutting Style"><input value={cert.gemstoneShape || ""} onChange={(e) => set("gemstoneShape", e.target.value)} className={ic} placeholder="e.g. Oval, Mixed Cut" /></F>
+              <F label="Carat Weight"><input value={cert.gemstoneCaratWeight || ""} onChange={(e) => set("gemstoneCaratWeight", e.target.value)} className={ic} placeholder="e.g. 2.45 CT" /></F>
+              <F label="Measurements"><input value={cert.gemstoneMeasurements || ""} onChange={(e) => set("gemstoneMeasurements", e.target.value)} className={ic} placeholder="e.g. 9.12 x 7.04 x 4.21 mm" /></F>
+              <F label="Color and Transparency"><input value={cert.gemstoneColorTransparency || ""} onChange={(e) => set("gemstoneColorTransparency", e.target.value)} className={ic} placeholder="e.g. Vivid Red, Transparent" /></F>
+              <F label="Characteristics"><input value={cert.gemstoneCharacteristics || ""} onChange={(e) => set("gemstoneCharacteristics", e.target.value)} className={ic} placeholder="e.g. Eye Clean" /></F>
+            </div>
+          </Card>
+        )}
+
+        {/* Grading — non-jewellery, non-gemstone only */}
+        {!isJewellery && !isGemstone && (
           <Card title="Grading Details" sub="Laboratory measurements and grades">
             <div className="grid sm:grid-cols-2 gap-5">
               <F label="Carat Weight"><input value={cert.caratWeight} onChange={(e) => set("caratWeight", e.target.value)} className={ic} placeholder="1.05 ct" /></F>

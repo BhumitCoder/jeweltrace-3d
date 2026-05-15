@@ -64,7 +64,8 @@ function FrontSide() {
 
 /* ─── BACK — GIA-style layout ────────────────────────────────────────────────── */
 function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string }) {
-  const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery" || cert.type === "Gemstone";
+  const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery";
+  const isGemstone = cert.type === "Gemstone";
 
   const fields: [string, string | undefined][] = isJewellery
     ? [
@@ -76,6 +77,17 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
         ["Net Weight",              cert.netWeight],
         ["Origin",                  cert.origin],
         ["Client",                  cert.clientName],
+      ].filter(([, v]) => v) as [string, string][]
+    : isGemstone
+    ? [
+        ["Report Number",          cert.reportNo],
+        ["Item",                   cert.itemName],
+        ["Shape and Cutting Style",cert.gemstoneShape],
+        ["Carat Weight",           cert.gemstoneCaratWeight],
+        ["Measurements",           cert.gemstoneMeasurements],
+        ["Color and Transparency", cert.gemstoneColorTransparency],
+        ["Characteristics",        cert.gemstoneCharacteristics],
+        ["Client",                 cert.clientName],
       ].filter(([, v]) => v) as [string, string][]
     : [
         ["Jewelry Report Number", cert.reportNo],

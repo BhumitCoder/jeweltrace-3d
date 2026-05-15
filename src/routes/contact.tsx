@@ -10,6 +10,20 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const [sent, setSent] = useState(false);
+  useSEO({
+    title: "Contact JewelsReport — Lab Enquiries & Support",
+    description:
+      "Reach the JewelsReport gemological laboratory for grading enquiries, bulk certification, retailer programs and verification support.",
+    path: "/contact",
+    keywords:
+      "contact gem lab, diamond grading enquiry, jewellery certification contact, JewelsReport support",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      name: "Contact JewelsReport",
+    },
+  });
+
   return (
     <Layout>
       <section className="px-4 sm:px-6 pt-20 pb-10 text-center">

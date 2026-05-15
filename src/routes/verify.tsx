@@ -1,11 +1,12 @@
 import { createFileRoute, useSearch } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Layout } from "@/components/Layout";
 import { useSEO, breadcrumb, webAppSchema, howToVerify, SITE_URL } from "@/lib/seo";
 import { CertificateCard, CARD_W, CARD_H } from "@/components/CertificateCard";
 import { getCertificate, type Certificate } from "@/lib/store";
 import { Search, ShieldCheck, AlertCircle, Printer } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { toPng } from "html-to-image";
 
 function useCardScale() {
   const [scale, setScale] = useState(0.52);
@@ -150,22 +151,60 @@ function VerifyPage() {
 /* ─── Card preview + print ───────────────────────────────────────────────────── */
 function CardPreview({ cert }: { cert: Certificate }) {
   const scale = useCardScale();
+  const frontRef = useRef<HTMLDivElement>(null);
+  const backRef  = useRef<HTMLDivElement>(null);
+  const [printing, setPrinting] = useState(false);
+
+  async function handlePrint() {
+    if (!frontRef.current || !backRef.current) return;
+    setPrinting(true);
+    try {
+      const [frontPng, backPng] = await Promise.all([
+        toPng(frontRef.current, { width: CARD_W, height: CARD_H, pixelRatio: 2 }),
+        toPng(backRef.current,  { width: CARD_W, height: CARD_H, pixelRatio: 2 }),
+      ]);
+
+      const win = window.open("", "_blank");
+      if (!win) return;
+      win.document.write(`<!DOCTYPE html><html><head><title>JewelsReport Certificate</title>
+        <style>
+          @page { size: A4 portrait; margin: 0; }
+          * { margin: 0; padding: 0; box-sizing: border-box; }
+          body { background: white; }
+          .page {
+            width: 210mm; height: 297mm;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 6mm;
+          }
+          .page:first-child { page-break-after: always; break-after: page; }
+          img { width: 85.6mm; height: 53.98mm; border-radius: 3.5mm;
+                border: 0.4mm solid #C9A84C; display: block; }
+          .label { font-family: system-ui, sans-serif; font-size: 8pt;
+                   letter-spacing: 0.25em; text-transform: uppercase; color: #999; }
+        </style></head><body>
+        <div class="page"><img src="${frontPng}" /><span class="label">Front Side</span></div>
+        <div class="page"><img src="${backPng}" /><span class="label">Back Side</span></div>
+      </body></html>`);
+      win.document.close();
+      win.onload = () => { win.focus(); win.print(); win.close(); };
+    } finally {
+      setPrinting(false);
+    }
+  }
 
   return (
     <div>
-      {/* Hidden print sheet — shown only during window.print() via CSS */}
-      <div className="print-only">
-        <div className="print-card-page">
-          <div><div><CertificateCard cert={cert} side="front" /></div></div>
-          <span className="print-card-label">Front</span>
+      {/* Hidden full-res renders used for image capture */}
+      <div style={{ position: "fixed", left: -9999, top: -9999, pointerEvents: "none", zIndex: -1 }}>
+        <div ref={frontRef} style={{ width: CARD_W, height: CARD_H }}>
+          <CertificateCard cert={cert} side="front" />
         </div>
-        <div className="print-card-page">
-          <div><div><CertificateCard cert={cert} side="back" /></div></div>
-          <span className="print-card-label">Back</span>
+        <div ref={backRef} style={{ width: CARD_W, height: CARD_H }}>
+          <CertificateCard cert={cert} side="back" />
         </div>
       </div>
 
-      {/* On-screen preview — stacked on mobile, side by side on sm+ */}
+      {/* On-screen preview */}
       <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-6">
         {(["front", "back"] as const).map((side) => (
           <div key={side} className="flex flex-col items-center gap-3">
@@ -182,11 +221,12 @@ function CardPreview({ cert }: { cert: Certificate }) {
       {/* Print button */}
       <div className="mt-8 flex justify-center">
         <button
-          onClick={() => window.print()}
-          className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full bg-gradient-gold text-gold-foreground font-semibold shadow-gold hover:scale-105 transition-transform text-sm sm:text-base"
+          onClick={handlePrint}
+          disabled={printing}
+          className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full bg-gradient-gold text-gold-foreground font-semibold shadow-gold hover:scale-105 transition-transform text-sm sm:text-base disabled:opacity-60 disabled:cursor-not-allowed"
         >
           <Printer className="w-4 h-4" />
-          Print Card (Front + Back)
+          {printing ? "Preparing…" : "Print Card (Front + Back)"}
         </button>
       </div>
     </div>

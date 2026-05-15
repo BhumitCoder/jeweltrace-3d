@@ -168,22 +168,18 @@ function CardPreview({ cert }: { cert: Certificate }) {
       if (!win) return;
       win.document.write(`<!DOCTYPE html><html><head><title>JewelsReport Certificate</title>
         <style>
-          @page { size: A4 portrait; margin: 0; }
+          @page { size: 85.6mm 53.98mm; margin: 0; }
           * { margin: 0; padding: 0; box-sizing: border-box; }
           body { background: white; }
           .page {
-            width: 210mm; height: 297mm;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center; gap: 6mm;
+            width: 85.6mm; height: 53.98mm;
+            page-break-after: always; break-after: page;
           }
-          .page:first-child { page-break-after: always; break-after: page; }
-          img { width: 85.6mm; height: 53.98mm; border-radius: 3.5mm;
-                border: 0.4mm solid #C9A84C; display: block; }
-          .label { font-family: system-ui, sans-serif; font-size: 8pt;
-                   letter-spacing: 0.25em; text-transform: uppercase; color: #999; }
+          .page:last-child { page-break-after: avoid; break-after: avoid; }
+          img { width: 85.6mm; height: 53.98mm; display: block; }
         </style></head><body>
-        <div class="page"><img src="${frontPng}" /><span class="label">Front Side</span></div>
-        <div class="page"><img src="${backPng}" /><span class="label">Back Side</span></div>
+        <div class="page"><img src="${frontPng}" /></div>
+        <div class="page"><img src="${backPng}" /></div>
       </body></html>`);
       win.document.close();
       win.onload = () => { win.focus(); win.print(); win.close(); };

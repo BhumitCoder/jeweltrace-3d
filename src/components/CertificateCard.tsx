@@ -69,7 +69,6 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
 
   const fields: [string, string | undefined][] = isJewellery
     ? [
-        ["Jewellery Report Number", cert.reportNo],
         ["Item",                    cert.itemName],
         ["Metal Tested",            cert.metal],
         ["Metal Description",       cert.metalDescription],
@@ -80,7 +79,6 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
       ].filter(([, v]) => v) as [string, string][]
     : isGemstone
     ? [
-        ["Report Number",          cert.reportNo],
         ["Item",                   cert.itemName],
         ["Stone",                  cert.gemstoneStone],
         ["Origin",                 cert.gemstoneOrigin],
@@ -140,14 +138,24 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
           </div>
         </div>
 
-        {/* Report type label + gold line */}
+        {/* Report type label + report number + gold line */}
         <div style={{ marginBottom: 10, position: "relative", zIndex: 1 }}>
-          <div style={{
-            fontSize: 13, fontWeight: 900, letterSpacing: "0.08em",
-            textTransform: "uppercase", color: "#B8922A",
-            lineHeight: 1.2, marginBottom: 6,
-          }}>
-            {REPORT_TYPE_LABELS[cert.type] ?? cert.type}
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
+            <div style={{
+              fontSize: 13, fontWeight: 900, letterSpacing: "0.08em",
+              textTransform: "uppercase", color: "#B8922A",
+              lineHeight: 1.2,
+            }}>
+              {REPORT_TYPE_LABELS[cert.type] ?? cert.type}
+            </div>
+            {cert.reportNo && (
+              <div style={{
+                fontSize: 12, fontWeight: 800, color: "#111111",
+                letterSpacing: "0.04em", whiteSpace: "nowrap", marginLeft: 10,
+              }}>
+                {cert.reportNo}
+              </div>
+            )}
           </div>
           <div style={{ height: 3, background: "linear-gradient(90deg,#B8922A,#D4A843,#B8922A)", borderRadius: 2 }} />
         </div>

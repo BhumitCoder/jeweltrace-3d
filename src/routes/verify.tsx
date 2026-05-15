@@ -31,6 +31,15 @@ export const Route = createFileRoute("/verify")({
 });
 
 function VerifyPage() {
+  useSEO({
+    title: "Verify a Certificate — JewelsReport",
+    description:
+      "Verify any JewelsReport diamond, gemstone or jewellery certificate instantly. Enter the report ID or scan the QR code on the PVC card.",
+    path: "/verify",
+    keywords:
+      "verify diamond certificate, check gemstone report, JewelsReport verify, QR diamond verification, certificate authentication",
+  });
+
   const search = useSearch({ from: "/verify" });
   const [query, setQuery]       = useState(search.id || "");
   const [searched, setSearched] = useState(false);

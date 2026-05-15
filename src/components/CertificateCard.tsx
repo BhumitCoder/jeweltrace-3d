@@ -176,6 +176,7 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
               {[
                 ["Shape and Cut",     cert.diamondShape],
                 ["Total Est. Weight", cert.diamondWeight ? `${cert.diamondWeight} CT` : undefined],
+                ["Total PCS",         cert.diamondTotalPcs],
                 ["Color",             cert.diamondColor],
                 ["Clarity",           cert.diamondClarity],
               ].filter(([, v]) => v).map(([label, value]) => (

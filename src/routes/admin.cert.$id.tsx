@@ -29,7 +29,7 @@ function makeCert(type: ReportType = "Lab Grown Diamond"): Certificate {
     color: "", clarity: "", cut: "", polish: "", symmetry: "",
     fluorescence: "", origin: "", metal: "", metalDescription: "",
     grossWeight: "", netWeight: "",
-    diamondShape: "", diamondWeight: "", diamondColor: "", diamondClarity: "",
+    diamondShape: "", diamondWeight: "", diamondColor: "", diamondClarity: "", diamondTotalPcs: "",
     gemstoneType: "", gemstoneWeight: "", gemstoneColor: "", gemstoneClarity: "",
     remarks: "",
     clientId: "", clientName: "",
@@ -224,6 +224,7 @@ function CertEditor() {
             <div className="grid sm:grid-cols-2 gap-5">
               <F label="Shape and Cut"><input value={cert.diamondShape || ""} onChange={(e) => set("diamondShape", e.target.value)} className={ic} placeholder="Round" /></F>
               <F label="Total Est. Weight (CT)"><input value={cert.diamondWeight || ""} onChange={(e) => set("diamondWeight", e.target.value)} className={ic} placeholder="4.34 + 1.98 (111 +19)" /></F>
+              <F label="Total PCS"><input value={cert.diamondTotalPcs || ""} onChange={(e) => set("diamondTotalPcs", e.target.value)} className={ic} placeholder="e.g. 130" /></F>
               <F label="Color"><input value={cert.diamondColor || ""} onChange={(e) => set("diamondColor", e.target.value)} className={ic} placeholder="E-F" /></F>
               <F label="Clarity"><input value={cert.diamondClarity || ""} onChange={(e) => set("diamondClarity", e.target.value)} className={ic} placeholder="VVS" /></F>
             </div>

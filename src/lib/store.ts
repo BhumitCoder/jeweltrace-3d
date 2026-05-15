@@ -48,6 +48,7 @@ export interface Certificate {
   diamondWeight?: string;
   diamondColor?: string;
   diamondClarity?: string;
+  diamondTotalPcs?: string;
   // Jewellery-specific gemstone details
   gemstoneType?: string;
   gemstoneWeight?: string;

@@ -132,7 +132,7 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
         <div className="flex items-center gap-2">
           <img src={logo} alt="" style={{ width: h * 0.13, height: h * 0.13 }} className="object-contain" />
           <div>
-            <div style={{ fontFamily: "Georgia, serif", fontSize: w * 0.048, lineHeight: 1, fontWeight: 700 }}>
+            <div style={{ fontFamily: "Georgia, serif", fontSize: w * 0.048, lineHeight: 1, fontWeight: 400 }}>
               <span style={{ color: "#111111" }}>Jewels</span>
               <span style={{ color: "#B8922A" }}>Report</span>
             </div>
@@ -241,7 +241,7 @@ function BackContent({ w, h, cert }: { w: number; h: number; cert: Certificate |
       <div className="flex items-center gap-2" style={{ marginBottom: 8 }}>
         <img src={logo} alt="" style={{ width: h * 0.12, height: h * 0.12, objectFit: "contain" }} />
         <div>
-          <div style={{ fontFamily: "Georgia, serif", fontSize: w * 0.042, lineHeight: 1, fontWeight: 700 }}>
+          <div style={{ fontFamily: "Georgia, serif", fontSize: w * 0.042, lineHeight: 1, fontWeight: 400 }}>
             <span style={{ color: "#111111" }}>Jewels</span>
             <span style={{ color: "#B8922A" }}>Report</span>
           </div>

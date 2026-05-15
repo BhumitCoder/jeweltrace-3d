@@ -19,5 +19,13 @@ export default defineConfig({
     port: 5000,
     host: "0.0.0.0",
     allowedHosts: true,
+    watch: {
+      ignored: [
+        path.resolve(__dirname, ".cache"),
+        path.resolve(__dirname, ".local"),
+        "**/.cache/**",
+        "**/.local/**",
+      ],
+    },
   },
 });

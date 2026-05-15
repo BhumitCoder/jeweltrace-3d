@@ -10,8 +10,8 @@ export const REPORT_TYPE_LABELS: Record<ReportType, string> = {
   "Natural Diamond":     "NATURAL DIAMOND GRADING REPORT",
   "Lab Grown Diamond":   "LAB GROWN DIAMOND GRADING REPORT",
   "Gemstone":            "GEMSTONE GRADING REPORT",
-  "Lab Grown Jewellery": "LAB DIAM JEWELLERY REPORT",
-  "Natural Jewellery":   "NATURAL DIAM JEWELLERY REPORT",
+  "Lab Grown Jewellery": "LAB GROWN DIAMOND JEWELLERY REPORT",
+  "Natural Jewellery":   "NATURAL DIAMOND JEWELLERY REPORT",
 };
 
 export interface Client {

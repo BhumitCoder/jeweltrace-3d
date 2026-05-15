@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
+import { useSEO, SITE_URL } from "@/lib/seo";
 import { getBlogPost } from "@/lib/store";
 import { useEffect, useState } from "react";
 import type { BlogPost } from "@/lib/store";

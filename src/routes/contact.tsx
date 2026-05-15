@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
+import { useSEO } from "@/lib/seo";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
 import { useState } from "react";
 

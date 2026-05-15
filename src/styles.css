@@ -194,7 +194,7 @@
 
   html, body {
     height: auto !important;
-    overflow: visible !important;
+    overflow: hidden !important;
     visibility: hidden !important;
     background: white !important;
   }
@@ -212,7 +212,7 @@
 
   .print-only * { visibility: visible !important; }
 
-  /* Each page: full A4, card centred */
+  /* Each page: full A4, card centred — no break by default */
   .print-card-page {
     display: flex !important;
     flex-direction: column;
@@ -220,14 +220,15 @@
     justify-content: center;
     width: 210mm;
     height: 297mm;
-    page-break-after: always;
-    break-after: page;
+    page-break-after: avoid;
+    break-after: avoid;
     gap: 6mm;
   }
 
-  .print-card-page:last-child {
-    page-break-after: avoid;
-    break-after: avoid;
+  /* Only the FIRST card forces a page break after it */
+  .print-card-page:first-child {
+    page-break-after: always;
+    break-after: page;
   }
 
   /* CR80 card size: 85.6 × 53.98 mm */

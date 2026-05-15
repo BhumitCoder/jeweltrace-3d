@@ -254,7 +254,7 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
         <div style={{ marginTop: 8, position: "relative", zIndex: 1 }}>
           <div style={{ height: 2, background: "linear-gradient(90deg,#B8922A,#D4A843,#B8922A)", marginBottom: 7 }} />
           <p style={{ fontSize: 7.5, color: "#777777", lineHeight: 1.5, margin: 0 }}>
-            This report is issued by JewelsReport Certification Lab and is based on the examination of the described article. Scan QR to verify online at JEWELSREPORT.COM. The results documented refer only to the article described and were obtained using the techniques and equipment used by JewelsReport at the time of examination. This report is not a guarantee or valuation.
+            Issued by JewelsReport Certification Lab. Results refer only to the article described. This report is not a guarantee or valuation. Scan QR to verify at JEWELSREPORT.COM.
           </p>
           <div style={{ height: 18 }} />
         </div>

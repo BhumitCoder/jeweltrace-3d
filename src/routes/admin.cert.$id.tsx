@@ -28,8 +28,10 @@ function makeCert(type: ReportType = "Lab Grown Diamond"): Certificate {
     itemName: "", shape: "", caratWeight: "", measurements: "",
     color: "", clarity: "", cut: "", polish: "", symmetry: "",
     fluorescence: "", origin: "", metal: "", metalDescription: "",
-    totalWeight: "", diamondShape: "", diamondWeight: "",
-    diamondColor: "", diamondClarity: "", remarks: "",
+    grossWeight: "", netWeight: "",
+    diamondShape: "", diamondWeight: "", diamondColor: "", diamondClarity: "",
+    gemstoneType: "", gemstoneWeight: "", gemstoneColor: "", gemstoneClarity: "",
+    remarks: "",
     clientId: "", clientName: "",
     createdAt: Date.now(),
   };
@@ -205,11 +207,12 @@ function CertEditor() {
 
         {/* Jewellery — Metal */}
         {isJewellery && (
-          <Card title="Metal Details" sub="Metal type and description for this jewellery piece">
+          <Card title="Metal Details" sub="Metal type, description and weight for this jewellery piece">
             <div className="grid sm:grid-cols-2 gap-5">
-              <F label="Metal Tested"><input value={cert.metal || ""} onChange={(e) => set("metal", e.target.value)} className={ic} placeholder="18K Yellow Gold" /></F>
-              <F label="Metal Description"><input value={cert.metalDescription || ""} onChange={(e) => set("metalDescription", e.target.value)} className={ic} placeholder="e.g. 18K Yellow Gold Necklace" /></F>
-              <F label="Total Weight"><input value={cert.totalWeight || ""} onChange={(e) => set("totalWeight", e.target.value)} className={ic} placeholder="4.20 g" /></F>
+              <F label="Metal Tested"><input value={cert.metal || ""} onChange={(e) => set("metal", e.target.value)} className={ic} placeholder="18kt" /></F>
+              <F label="Metal Description"><input value={cert.metalDescription || ""} onChange={(e) => set("metalDescription", e.target.value)} className={ic} placeholder="YELLOW GOLD" /></F>
+              <F label="Gross Weight"><input value={cert.grossWeight || ""} onChange={(e) => set("grossWeight", e.target.value)} className={ic} placeholder="11.709 GRM" /></F>
+              <F label="Net Weight"><input value={cert.netWeight || ""} onChange={(e) => set("netWeight", e.target.value)} className={ic} placeholder="10.443 GRM" /></F>
               <F label="Origin"><input value={cert.origin} onChange={(e) => set("origin", e.target.value)} className={ic} placeholder="Natural / Lab Grown" /></F>
             </div>
           </Card>
@@ -220,9 +223,21 @@ function CertEditor() {
           <Card title="Diamond Details" sub="Details of diamonds set in this jewellery piece">
             <div className="grid sm:grid-cols-2 gap-5">
               <F label="Shape and Cut"><input value={cert.diamondShape || ""} onChange={(e) => set("diamondShape", e.target.value)} className={ic} placeholder="Round" /></F>
-              <F label="Total Est. Weight (CT)"><input value={cert.diamondWeight || ""} onChange={(e) => set("diamondWeight", e.target.value)} className={ic} placeholder="25.00" /></F>
+              <F label="Total Est. Weight (CT)"><input value={cert.diamondWeight || ""} onChange={(e) => set("diamondWeight", e.target.value)} className={ic} placeholder="4.34 + 1.98 (111 +19)" /></F>
               <F label="Color"><input value={cert.diamondColor || ""} onChange={(e) => set("diamondColor", e.target.value)} className={ic} placeholder="E-F" /></F>
               <F label="Clarity"><input value={cert.diamondClarity || ""} onChange={(e) => set("diamondClarity", e.target.value)} className={ic} placeholder="VVS" /></F>
+            </div>
+          </Card>
+        )}
+
+        {/* Jewellery — Gemstone Details */}
+        {isJewellery && (
+          <Card title="Gemstone Details" sub="Details of coloured gemstones set in this jewellery piece">
+            <div className="grid sm:grid-cols-2 gap-5">
+              <F label="Gemstone Type"><input value={cert.gemstoneType || ""} onChange={(e) => set("gemstoneType", e.target.value)} className={ic} placeholder="e.g. Ruby, Emerald, Sapphire" /></F>
+              <F label="Total Est. Weight (CT)"><input value={cert.gemstoneWeight || ""} onChange={(e) => set("gemstoneWeight", e.target.value)} className={ic} placeholder="e.g. 2.45 CT" /></F>
+              <F label="Color"><input value={cert.gemstoneColor || ""} onChange={(e) => set("gemstoneColor", e.target.value)} className={ic} placeholder="e.g. Vivid Red" /></F>
+              <F label="Clarity"><input value={cert.gemstoneClarity || ""} onChange={(e) => set("gemstoneClarity", e.target.value)} className={ic} placeholder="e.g. Eye Clean" /></F>
             </div>
           </Card>
         )}

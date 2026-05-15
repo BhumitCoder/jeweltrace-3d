@@ -72,7 +72,8 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
         ["Item",                    cert.itemName],
         ["Metal Tested",            cert.metal],
         ["Metal Description",       cert.metalDescription],
-        ["Total Weight",            cert.totalWeight],
+        ["Gross Weight",            cert.grossWeight],
+        ["Net Weight",              cert.netWeight],
         ["Origin",                  cert.origin],
         ["Client",                  cert.clientName],
       ].filter(([, v]) => v) as [string, string][]
@@ -173,10 +174,35 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
                 Diamond Details
               </div>
               {[
-                ["Shape and Cut",       cert.diamondShape],
-                ["Total Est. Weight",   cert.diamondWeight ? `${cert.diamondWeight} CT` : undefined],
-                ["Color",               cert.diamondColor],
-                ["Clarity",             cert.diamondClarity],
+                ["Shape and Cut",     cert.diamondShape],
+                ["Total Est. Weight", cert.diamondWeight ? `${cert.diamondWeight} CT` : undefined],
+                ["Color",             cert.diamondColor],
+                ["Clarity",           cert.diamondClarity],
+              ].filter(([, v]) => v).map(([label, value]) => (
+                <div key={label} style={{ display: "flex", alignItems: "flex-end", gap: 0 }}>
+                  <span style={{ fontSize: 11, color: "#444444", whiteSpace: "nowrap", lineHeight: 1.5, fontWeight: 500 }}>{label}</span>
+                  <span style={{ flex: 1, borderBottom: "1.5px dotted #BBBBBB", margin: "0 6px 3px", minWidth: 20 }} />
+                  <span style={{ fontSize: 11.5, fontWeight: 800, color: "#000000", whiteSpace: "nowrap", lineHeight: 1.5, letterSpacing: "0.03em", textTransform: "uppercase" }}>{value}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Gemstone Details block — jewellery only */}
+          {isJewellery && (cert.gemstoneType || cert.gemstoneWeight || cert.gemstoneColor || cert.gemstoneClarity) && (
+            <div style={{ marginTop: 6 }}>
+              <div style={{
+                fontSize: 9, fontWeight: 800, letterSpacing: "0.25em",
+                textTransform: "uppercase", color: "#B8922A",
+                borderBottom: "1.5px solid #D4C9A8", paddingBottom: 3, marginBottom: 5,
+              }}>
+                Gemstone Details
+              </div>
+              {[
+                ["Gemstone Type",     cert.gemstoneType],
+                ["Total Est. Weight", cert.gemstoneWeight ? `${cert.gemstoneWeight} CT` : undefined],
+                ["Color",             cert.gemstoneColor],
+                ["Clarity",           cert.gemstoneClarity],
               ].filter(([, v]) => v).map(([label, value]) => (
                 <div key={label} style={{ display: "flex", alignItems: "flex-end", gap: 0 }}>
                   <span style={{ fontSize: 11, color: "#444444", whiteSpace: "nowrap", lineHeight: 1.5, fontWeight: 500 }}>{label}</span>

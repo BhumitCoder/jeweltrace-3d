@@ -41,12 +41,18 @@ export interface Certificate {
   origin: string;
   metal?: string;
   metalDescription?: string;
-  totalWeight?: string;
+  grossWeight?: string;
+  netWeight?: string;
   // Jewellery-specific diamond details
   diamondShape?: string;
   diamondWeight?: string;
   diamondColor?: string;
   diamondClarity?: string;
+  // Jewellery-specific gemstone details
+  gemstoneType?: string;
+  gemstoneWeight?: string;
+  gemstoneColor?: string;
+  gemstoneClarity?: string;
   remarks?: string;
   imageDataUrl?: string;     // base64 image for the gem/jewellery
   clientId?: string;

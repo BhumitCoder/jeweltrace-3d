@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
+import { useSEO, SITE_URL } from "@/lib/seo";
 import { Card3D } from "@/components/Card3D";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";

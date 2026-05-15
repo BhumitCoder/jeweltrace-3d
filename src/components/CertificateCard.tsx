@@ -48,7 +48,7 @@ function FrontSide() {
         <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 56, lineHeight: 1, color: "#111111", letterSpacing: "-0.01em", textAlign: "center", fontWeight: 400 }}>
           Jewels<span style={{ color: "#B8922A" }}>Report</span>
         </div>
-        <div style={{ fontSize: 12, letterSpacing: "0.55em", textTransform: "uppercase", color: "#333333", textAlign: "center", marginTop: 14, fontWeight: 900 }}>
+        <div style={{ fontSize: 17, letterSpacing: "0.45em", textTransform: "uppercase", color: "#111111", textAlign: "center", marginTop: 14, fontWeight: 900 }}>
           Certification Lab
         </div>
         <div style={{ width: 220, height: 2, background: "linear-gradient(90deg,transparent,#B8922A,transparent)", marginTop: 20 }} />
@@ -118,7 +118,7 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
             <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 26, color: "#111111", lineHeight: 1, letterSpacing: "-0.01em", fontWeight: 400 }}>
               Jewels<span style={{ color: "#B8922A" }}>Report</span>
             </div>
-            <div style={{ fontSize: 8, letterSpacing: "0.35em", textTransform: "uppercase", color: "#333333", marginTop: 4, fontWeight: 900 }}>
+            <div style={{ fontSize: 11, letterSpacing: "0.30em", textTransform: "uppercase", color: "#111111", marginTop: 4, fontWeight: 900 }}>
               Certification Lab
             </div>
           </div>

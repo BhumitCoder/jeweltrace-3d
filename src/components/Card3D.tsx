@@ -136,7 +136,7 @@ function FrontContent({ w, h, cert }: { w: number; h: number; cert: Certificate 
               <span style={{ color: "#111111" }}>Jewels</span>
               <span style={{ color: "#B8922A" }}>Report</span>
             </div>
-            <div style={{ fontSize: w * 0.016, letterSpacing: "0.28em", color: "#333333", fontWeight: 900 }} className="uppercase mt-0.5">
+            <div style={{ fontSize: w * 0.022, letterSpacing: "0.22em", color: "#111111", fontWeight: 900 }} className="uppercase mt-0.5">
               Certification Lab
             </div>
           </div>
@@ -245,7 +245,7 @@ function BackContent({ w, h, cert }: { w: number; h: number; cert: Certificate |
             <span style={{ color: "#111111" }}>Jewels</span>
             <span style={{ color: "#B8922A" }}>Report</span>
           </div>
-          <div style={{ fontSize: w * 0.014, letterSpacing: "0.28em", color: "#333333", fontWeight: 900 }} className="uppercase">
+          <div style={{ fontSize: w * 0.020, letterSpacing: "0.22em", color: "#111111", fontWeight: 900 }} className="uppercase">
             Certification Lab
           </div>
         </div>

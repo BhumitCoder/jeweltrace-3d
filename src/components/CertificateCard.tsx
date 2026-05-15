@@ -253,8 +253,8 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
         {/* Separator + disclaimer */}
         <div style={{ marginTop: 8, position: "relative", zIndex: 1 }}>
           <div style={{ height: 2, background: "linear-gradient(90deg,#B8922A,#D4A843,#B8922A)", marginBottom: 7 }} />
-          <p style={{ fontSize: 7.5, color: "#777777", lineHeight: 1.5, margin: 0 }}>
-            Issued by JewelsReport Certification Lab. Results refer only to the article described. This report is not a guarantee or valuation. Scan QR to verify at JEWELSREPORT.COM.
+          <p style={{ fontSize: 7.5, color: "#777777", lineHeight: 1.5, margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+            Issued by JewelsReport Certification Lab. Results refer only to the article described. Not a guarantee or valuation. Verify at JEWELSREPORT.COM.
           </p>
           <div style={{ height: 18 }} />
         </div>

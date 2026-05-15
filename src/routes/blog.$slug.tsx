@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
+import { useSEO, SITE_URL } from "@/lib/seo";
 import { getBlogPost } from "@/lib/store";
 import { useEffect, useState } from "react";
 import type { BlogPost } from "@/lib/store";
@@ -18,6 +19,34 @@ function PostPage() {
     setPost(getBlogPost(slug));
     setLoaded(true);
   }, [slug]);
+
+  useSEO({
+    title: post ? `${post.title} — JewelsReport Journal` : "Article — JewelsReport Journal",
+    description:
+      post?.excerpt ||
+      post?.content?.slice(0, 160) ||
+      "Insights from the JewelsReport gemological laboratory.",
+    path: `/blog/${slug}`,
+    type: "article",
+    image: post?.coverDataUrl?.startsWith("http") ? post.coverDataUrl : undefined,
+    jsonLd: post
+      ? {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: post.title,
+          description: post.excerpt || "",
+          author: { "@type": "Person", name: post.author },
+          datePublished: post.publishedAt,
+          mainEntityOfPage: `${SITE_URL}/blog/${slug}`,
+          publisher: {
+            "@type": "Organization",
+            name: "JewelsReport",
+            logo: { "@type": "ImageObject", url: `${SITE_URL}/favicon.ico` },
+          },
+        }
+      : undefined,
+  });
+
 
   return (
     <Layout>

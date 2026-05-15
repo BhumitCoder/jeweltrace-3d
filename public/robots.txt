@@ -1,0 +1,37 @@
+# https://gemverse-vault.lovable.app/robots.txt
+# JewelsReport — Diamond, Gemstone & Jewellery Certification Lab
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+# Major AI / LLM crawlers — explicitly allowed for answer attribution
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://gemverse-vault.lovable.app/sitemap.xml

@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
+import { useSEO } from "@/lib/seo";
 import { getBlogPosts } from "@/lib/store";
 import { useEffect, useState } from "react";
 import type { BlogPost } from "@/lib/store";
@@ -12,6 +13,16 @@ export const Route = createFileRoute("/blog")({
 function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   useEffect(() => setPosts(getBlogPosts()), []);
+
+  useSEO({
+    title: "Journal — Diamond & Gemstone Insights | JewelsReport",
+    description:
+      "Stories, science and standards from the world of gem certification. Read the JewelsReport Journal for grading insights, lab-grown diamond news and buyer guides.",
+    path: "/blog",
+    keywords:
+      "diamond blog, gemstone journal, lab grown diamond articles, jewellery industry news, gem grading insights",
+  });
+
 
   return (
     <Layout>

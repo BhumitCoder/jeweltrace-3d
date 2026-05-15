@@ -1,6 +1,7 @@
 import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Layout } from "@/components/Layout";
+import { useSEO } from "@/lib/seo";
 import { CertificateCard, CARD_W, CARD_H } from "@/components/CertificateCard";
 import { getCertificate, type Certificate } from "@/lib/store";
 import { Search, ShieldCheck, AlertCircle, Printer } from "lucide-react";
@@ -30,6 +31,15 @@ export const Route = createFileRoute("/verify")({
 });
 
 function VerifyPage() {
+  useSEO({
+    title: "Verify a Certificate — JewelsReport",
+    description:
+      "Verify any JewelsReport diamond, gemstone or jewellery certificate instantly. Enter the report ID or scan the QR code on the PVC card.",
+    path: "/verify",
+    keywords:
+      "verify diamond certificate, check gemstone report, JewelsReport verify, QR diamond verification, certificate authentication",
+  });
+
   const search = useSearch({ from: "/verify" });
   const [query, setQuery]       = useState(search.id || "");
   const [searched, setSearched] = useState(false);

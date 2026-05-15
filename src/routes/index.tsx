@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
+import { useSEO, SITE_URL } from "@/lib/seo";
 import { Card3D } from "@/components/Card3D";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -53,6 +54,43 @@ function useCardWidth(max = 420) {
 function HomePage() {
   const heroCardWidth = useCardWidth(420);
   const processCardWidth = useCardWidth(360);
+
+  useSEO({
+    title: "JewelsReport — Diamond, Gemstone & Jewellery Certification Lab",
+    description:
+      "Internationally trusted gemological lab issuing tamper-proof PVC certificates for natural & lab-grown diamonds, coloured gemstones and fine jewellery. Verify by ID or QR in seconds.",
+    path: "/",
+    keywords:
+      "diamond certification, gemstone report, lab grown diamond report, jewellery certification, PVC diamond certificate, QR diamond verification, 4Cs grading, sapphire report, ruby report, emerald report, JewelsReport",
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "@id": `${SITE_URL}/#service`,
+        name: "JewelsReport Gemological Laboratory",
+        url: SITE_URL,
+        description:
+          "Independent gem & jewellery grading lab. PVC certificates with holographic foil and QR-based instant online verification.",
+        serviceType: [
+          "Diamond grading",
+          "Lab grown diamond certification",
+          "Gemstone identification",
+          "Fine jewellery appraisal",
+        ],
+        areaServed: "Worldwide",
+        priceRange: "$$",
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
+    ],
+  });
 
   return (
     <Layout>

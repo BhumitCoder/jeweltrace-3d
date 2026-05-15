@@ -82,8 +82,11 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
     ? [
         ["Report Number",          cert.reportNo],
         ["Item",                   cert.itemName],
+        ["Stone",                  cert.gemstoneStone],
+        ["Origin",                 cert.gemstoneOrigin],
         ["Shape and Cutting Style",cert.gemstoneShape],
         ["Carat Weight",           cert.gemstoneCaratWeight],
+        ["PCS",                    cert.gemstonePcs],
         ["Measurements",           cert.gemstoneMeasurements],
         ["Color and Transparency", cert.gemstoneColorTransparency],
         ["Characteristics",        cert.gemstoneCharacteristics],

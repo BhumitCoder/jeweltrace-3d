@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
-import { useSEO, SITE_URL } from "@/lib/seo";
+import { useSEO, SITE_URL, serviceItemList, reviewsSchema } from "@/lib/seo";
 import { Card3D } from "@/components/Card3D";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -56,30 +56,13 @@ function HomePage() {
   const processCardWidth = useCardWidth(360);
 
   useSEO({
-    title: "JewelsReport — Diamond, Gemstone & Jewellery Certification Lab",
+    title: "JewelsReport — Diamond, Gemstone & Jewellery Certification Lab | Surat, India",
     description:
-      "Internationally trusted gemological lab issuing tamper-proof PVC certificates for natural & lab-grown diamonds, coloured gemstones and fine jewellery. Verify by ID or QR in seconds.",
+      "Internationally trusted gemological lab issuing tamper-proof PVC certificates for natural & lab-grown diamonds, coloured gemstones and fine jewellery. 150,000+ reports issued. Verify by ID or QR in seconds.",
     path: "/",
     keywords:
-      "diamond certification, gemstone report, lab grown diamond report, jewellery certification, PVC diamond certificate, QR diamond verification, 4Cs grading, sapphire report, ruby report, emerald report, JewelsReport",
+      "diamond certification, gemstone report, lab grown diamond report, jewellery certification, PVC diamond certificate, QR diamond verification, 4Cs grading, sapphire report, ruby report, emerald report, JewelsReport, Surat diamond lab, certificate verify online",
     jsonLd: [
-      {
-        "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "@id": `${SITE_URL}/#service`,
-        name: "JewelsReport Gemological Laboratory",
-        url: SITE_URL,
-        description:
-          "Independent gem & jewellery grading lab. PVC certificates with holographic foil and QR-based instant online verification.",
-        serviceType: [
-          "Diamond grading",
-          "Lab grown diamond certification",
-          "Gemstone identification",
-          "Fine jewellery appraisal",
-        ],
-        areaServed: "Worldwide",
-        priceRange: "$$",
-      },
       {
         "@context": "https://schema.org",
         "@type": "FAQPage",
@@ -88,6 +71,24 @@ function HomePage() {
           name: f.q,
           acceptedAnswer: { "@type": "Answer", text: f.a },
         })),
+      },
+      serviceItemList(),
+      reviewsSchema(testimonials),
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": `${SITE_URL}/#webpage`,
+        url: `${SITE_URL}/`,
+        name: "JewelsReport — Diamond, Gemstone & Jewellery Certification Lab",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        description:
+          "Internationally trusted gemological lab issuing tamper-proof PVC certificates for diamonds, gemstones and fine jewellery.",
+        inLanguage: "en-US",
+        speakable: {
+          "@type": "SpeakableSpecification",
+          cssSelector: ["h1", ".hero-description"],
+        },
       },
     ],
   });

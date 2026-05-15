@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
-import { useSEO } from "@/lib/seo";
+import { useSEO, breadcrumb, localBusiness, SITE_URL } from "@/lib/seo";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
 import { useState } from "react";
 
@@ -11,17 +11,30 @@ export const Route = createFileRoute("/contact")({
 function ContactPage() {
   const [sent, setSent] = useState(false);
   useSEO({
-    title: "Contact JewelsReport — Lab Enquiries & Support",
+    title: "Contact JewelsReport — Lab Enquiries, Bulk Certification & Support",
     description:
-      "Reach the JewelsReport gemological laboratory for grading enquiries, bulk certification, retailer programs and verification support.",
+      "Reach the JewelsReport gemological laboratory in Surat for diamond grading enquiries, bulk certification, retailer programs and verification support. Call +91 99673 81180 or email reports@jewelsreport.com.",
     path: "/contact",
     keywords:
-      "contact gem lab, diamond grading enquiry, jewellery certification contact, JewelsReport support",
-    jsonLd: {
-      "@context": "https://schema.org",
-      "@type": "ContactPage",
-      name: "Contact JewelsReport",
-    },
+      "contact gem lab, diamond grading enquiry, jewellery certification contact, JewelsReport support, bulk diamond certification, Surat gem lab contact, diamond lab India phone",
+    jsonLd: [
+      breadcrumb([
+        { name: "Home", path: "/" },
+        { name: "Contact", path: "/contact" },
+      ]),
+      localBusiness(),
+      {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "@id": `${SITE_URL}/contact#webpage`,
+        url: `${SITE_URL}/contact`,
+        name: "Contact JewelsReport Gemological Laboratory",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        description: "Contact details and enquiry form for JewelsReport gemological laboratory.",
+        inLanguage: "en-US",
+      },
+    ],
   });
 
   return (

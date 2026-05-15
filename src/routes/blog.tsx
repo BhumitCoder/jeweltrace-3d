@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
-import { useSEO } from "@/lib/seo";
+import { useSEO, breadcrumb, SITE_URL } from "@/lib/seo";
 import { getBlogPosts } from "@/lib/store";
 import { useEffect, useState } from "react";
 import type { BlogPost } from "@/lib/store";
@@ -15,12 +15,51 @@ function BlogPage() {
   useEffect(() => setPosts(getBlogPosts()), []);
 
   useSEO({
-    title: "Journal — Diamond & Gemstone Insights | JewelsReport",
+    title: "JewelsReport Journal — Diamond, Gemstone & Jewellery Industry Insights",
     description:
-      "Stories, science and standards from the world of gem certification. Read the JewelsReport Journal for grading insights, lab-grown diamond news and buyer guides.",
+      "Stories, science and standards from the world of gem certification. Read the JewelsReport Journal for grading insights, lab-grown diamond news, buyer guides and gemological research.",
     path: "/blog",
     keywords:
-      "diamond blog, gemstone journal, lab grown diamond articles, jewellery industry news, gem grading insights",
+      "diamond blog, gemstone journal, lab grown diamond articles, jewellery industry news, gem grading insights, CVD diamond news, sapphire guide, gemstone buyer guide, certification tips",
+    jsonLd: [
+      breadcrumb([
+        { name: "Home", path: "/" },
+        { name: "Journal", path: "/blog" },
+      ]),
+      {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "@id": `${SITE_URL}/blog#blog`,
+        url: `${SITE_URL}/blog`,
+        name: "JewelsReport Journal",
+        description:
+          "Diamond, gemstone and jewellery certification insights from the JewelsReport laboratory team.",
+        publisher: { "@id": `${SITE_URL}/#organization` },
+        inLanguage: "en-US",
+        blogPost: posts.map((p) => ({
+          "@type": "BlogPosting",
+          headline: p.title,
+          url: `${SITE_URL}/blog/${p.slug}`,
+          datePublished: p.publishedAt,
+          author: {
+            "@type": "Person",
+            name: p.author,
+            worksFor: { "@id": `${SITE_URL}/#organization` },
+          },
+          description: p.excerpt,
+          publisher: { "@id": `${SITE_URL}/#organization` },
+        })),
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": `${SITE_URL}/blog#webpage`,
+        url: `${SITE_URL}/blog`,
+        name: "JewelsReport Journal",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        inLanguage: "en-US",
+      },
+    ],
   });
 
 

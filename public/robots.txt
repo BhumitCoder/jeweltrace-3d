@@ -35,3 +35,4 @@ User-agent: Applebot-Extended
 Allow: /
 
 Sitemap: https://www.jewelsreport.com/sitemap.xml
+LLMs: https://www.jewelsreport.com/llms.txt

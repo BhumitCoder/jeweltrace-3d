@@ -1,7 +1,7 @@
 import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Layout } from "@/components/Layout";
-import { useSEO } from "@/lib/seo";
+import { useSEO, breadcrumb, webAppSchema, howToVerify, SITE_URL } from "@/lib/seo";
 import { CertificateCard, CARD_W, CARD_H } from "@/components/CertificateCard";
 import { getCertificate, type Certificate } from "@/lib/store";
 import { Search, ShieldCheck, AlertCircle, Printer } from "lucide-react";
@@ -32,12 +32,35 @@ export const Route = createFileRoute("/verify")({
 
 function VerifyPage() {
   useSEO({
-    title: "Verify a Certificate — JewelsReport",
+    title: "Verify a Certificate — Instant Diamond & Gemstone Report Check | JewelsReport",
     description:
-      "Verify any JewelsReport diamond, gemstone or jewellery certificate instantly. Enter the report ID or scan the QR code on the PVC card.",
+      "Verify any JewelsReport diamond, gemstone or jewellery certificate in seconds. Enter the report number or scan the QR code on your PVC card to confirm authenticity and view full grading details.",
     path: "/verify",
     keywords:
-      "verify diamond certificate, check gemstone report, JewelsReport verify, QR diamond verification, certificate authentication",
+      "verify diamond certificate, check gemstone report, JewelsReport verify, QR diamond verification, certificate authentication, fake diamond certificate check, real gem certificate, lab report verify",
+    jsonLd: [
+      breadcrumb([
+        { name: "Home", path: "/" },
+        { name: "Verify Certificate", path: "/verify" },
+      ]),
+      webAppSchema(),
+      howToVerify(),
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": `${SITE_URL}/verify#webpage`,
+        url: `${SITE_URL}/verify`,
+        name: "Verify a JewelsReport Certificate",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        description: "Free online certificate verification tool for all JewelsReport gemological reports.",
+        inLanguage: "en-US",
+        speakable: {
+          "@type": "SpeakableSpecification",
+          cssSelector: ["h1"],
+        },
+      },
+    ],
   });
 
   const search = useSearch({ from: "/verify" });

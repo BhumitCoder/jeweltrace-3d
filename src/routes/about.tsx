@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
-import { useSEO, breadcrumb } from "@/lib/seo";
+import { useSEO, breadcrumb, SITE_URL, organizationSchema } from "@/lib/seo";
 import { Card3D } from "@/components/Card3D";
 import { motion } from "framer-motion";
 import {
@@ -56,16 +56,67 @@ const instruments = [
 
 function AboutPage() {
   useSEO({
-    title: "About JewelsReport — Master Gemologists & Lab Standards",
+    title: "About JewelsReport — Master Gemologists & ISO-Aligned Lab | Surat",
     description:
-      "Founded in 2014, JewelsReport is an independent gemological laboratory with master graders, ISO/IEC 17025 aligned protocols and 100,000+ certificates issued worldwide.",
+      "Founded in 2014, JewelsReport is an independent gemological laboratory with 25+ master graders, ISO/IEC 17025 aligned protocols, advanced spectroscopy instruments and 150,000+ certificates issued in 30+ countries.",
     path: "/about",
     keywords:
-      "about JewelsReport, gemological laboratory, master gemologists, ISO 17025 diamond lab, diamond grading lab India, Surat diamond lab",
-    jsonLd: breadcrumb([
-      { name: "Home", path: "/" },
-      { name: "About", path: "/about" },
-    ]),
+      "about JewelsReport, gemological laboratory Surat, master gemologists India, ISO 17025 diamond lab, diamond grading lab India, gem certification lab, FTIR spectrometer lab, CVD HPHT diamond testing",
+    jsonLd: [
+      breadcrumb([
+        { name: "Home", path: "/" },
+        { name: "About", path: "/about" },
+      ]),
+      organizationSchema(),
+      {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "@id": `${SITE_URL}/about#webpage`,
+        url: `${SITE_URL}/about`,
+        name: "About JewelsReport Gemological Laboratory",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        description:
+          "History, team, instruments and standards of JewelsReport, an independent gemological certification laboratory based in Surat, India.",
+        inLanguage: "en-US",
+        speakable: {
+          "@type": "SpeakableSpecification",
+          cssSelector: ["h1", "h2"],
+        },
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: "JewelsReport Leadership Team",
+        numberOfItems: team.length,
+        itemListElement: team.map((m, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          item: {
+            "@type": "Person",
+            name: m.name,
+            jobTitle: m.role,
+            worksFor: { "@id": `${SITE_URL}/#organization` },
+            description: `${m.years} of experience in gemological sciences.`,
+          },
+        })),
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: "JewelsReport Laboratory Instruments",
+        numberOfItems: instruments.length,
+        itemListElement: instruments.map((inst, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          item: {
+            "@type": "Thing",
+            name: inst.name,
+            description: inst.use,
+          },
+        })),
+      },
+    ],
   });
 
   return (

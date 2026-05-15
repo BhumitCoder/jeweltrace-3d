@@ -188,42 +188,49 @@
 /* ── Screen: hide print sheet ── */
 .print-only { display: none; }
 
-/* ── Print: both cards side-by-side on one landscape page ── */
+/* ── Print: front on page 1, back on page 2 (A4 portrait) ── */
 @media print {
-  @page { size: A4 landscape; margin: 12mm; }
+  @page { size: A4 portrait; margin: 0; }
 
   html, body {
-    height: 100vh !important;
-    overflow: hidden !important;
+    height: auto !important;
+    overflow: visible !important;
     visibility: hidden !important;
     background: white !important;
   }
 
   .print-only {
-    display: flex !important;
+    display: block !important;
     visibility: visible !important;
-    position: fixed;
-    inset: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
     z-index: 99999;
     background: white;
-    align-items: center;
-    justify-content: center;
-    gap: 14mm;
-    flex-direction: row;
+    width: 210mm;
   }
 
   .print-only * { visibility: visible !important; }
 
-  /* Each card: CR80 = 85.6 × 53.98 mm */
+  /* Each page: full A4, card centred */
   .print-card-page {
     display: flex !important;
     flex-direction: column;
     align-items: center;
-    gap: 4mm;
+    justify-content: center;
+    width: 210mm;
+    height: 297mm;
+    page-break-after: always;
+    break-after: page;
+    gap: 6mm;
+  }
+
+  .print-card-page:last-child {
     page-break-after: avoid;
     break-after: avoid;
   }
 
+  /* CR80 card size: 85.6 × 53.98 mm */
   .print-card-page > div {
     width: 85.6mm;
     height: 53.98mm;
@@ -234,7 +241,7 @@
     position: relative;
   }
 
-  /* scale the 856×540px card down to 85.6×53.98mm */
+  /* Scale the 856×540px card canvas down to 85.6×53.98mm */
   .print-card-page > div > div {
     transform: scale(0.378);
     transform-origin: top left;
@@ -247,7 +254,7 @@
 
   .print-card-label {
     font-family: system-ui, sans-serif;
-    font-size: 7pt;
+    font-size: 8pt;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: #999;

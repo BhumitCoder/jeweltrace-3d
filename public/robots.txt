@@ -1,4 +1,4 @@
-# https://gemverse-vault.lovable.app/robots.txt
+# https://www.jewelsreport.com/robots.txt
 # JewelsReport — Diamond, Gemstone & Jewellery Certification Lab
 
 User-agent: *
@@ -34,4 +34,4 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://gemverse-vault.lovable.app/sitemap.xml
+Sitemap: https://www.jewelsreport.com/sitemap.xml

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export const SITE_URL = "https://gemverse-vault.lovable.app";
+export const SITE_URL = "https://www.jewelsreport.com";
 export const SITE_NAME = "JewelsReport";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 

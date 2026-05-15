@@ -14,6 +14,16 @@ function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   useEffect(() => setPosts(getBlogPosts()), []);
 
+  useSEO({
+    title: "Journal — Diamond & Gemstone Insights | JewelsReport",
+    description:
+      "Stories, science and standards from the world of gem certification. Read the JewelsReport Journal for grading insights, lab-grown diamond news and buyer guides.",
+    path: "/blog",
+    keywords:
+      "diamond blog, gemstone journal, lab grown diamond articles, jewellery industry news, gem grading insights",
+  });
+
+
   return (
     <Layout>
       <section className="px-4 sm:px-6 pt-20 pb-10 text-center">

@@ -1,6 +1,7 @@
 import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Layout } from "@/components/Layout";
+import { useSEO } from "@/lib/seo";
 import { CertificateCard, CARD_W, CARD_H } from "@/components/CertificateCard";
 import { getCertificate, type Certificate } from "@/lib/store";
 import { Search, ShieldCheck, AlertCircle, Printer } from "lucide-react";

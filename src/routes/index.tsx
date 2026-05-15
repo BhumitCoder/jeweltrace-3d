@@ -111,8 +111,8 @@ function HomePage() {
               <br />you can trust.
             </h1>
             <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
-              JewelsReport delivers world-class grading and authentication for diamonds,
-              gemstones and fine jewellery — issued on a secure, tamper-proof PVC certificate.
+              World-class grading and authentication for diamonds,<br />
+              gemstones and fine jewellery.
             </p>
             <div className="mt-7 flex flex-wrap gap-3 sm:gap-4">
               <Link

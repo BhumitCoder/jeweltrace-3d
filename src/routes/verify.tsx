@@ -230,42 +230,121 @@ function CardPreview({ cert }: { cert: Certificate }) {
 }
 
 /* ─── Full details table ─────────────────────────────────────────────────────── */
+function DetailRow({ label, value }: { label: string; value?: string }) {
+  if (!value) return null;
+  return (
+    <div className="px-6 py-4 border-b border-border/60">
+      <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">{label}</div>
+      <div className="mt-1 font-medium text-foreground uppercase">{value}</div>
+    </div>
+  );
+}
+
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <div className="px-6 py-3 bg-primary/5 border-b border-border">
+        <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-bold">{title}</p>
+      </div>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3">
+        {children}
+      </div>
+    </div>
+  );
+}
+
 function FullDetails({ cert }: { cert: Certificate }) {
-  const rows = ([
-    ["Report Number", cert.reportNo],
-    ["Report Type",   cert.type],
-    ["Item",          cert.itemName],
-    ["Issue Date",    cert.issueDate],
-    ["Shape",         cert.shape],
-    ["Carat Weight",  cert.caratWeight],
-    ["Measurements",  cert.measurements],
-    ["Color",         cert.color],
-    ["Clarity",       cert.clarity],
-    ["Cut Grade",     cert.cut],
-    ["Polish",        cert.polish],
-    ["Symmetry",      cert.symmetry],
-    ["Fluorescence",  cert.fluorescence],
-    ["Origin",        cert.origin],
-    ["Metal",         cert.metal],
-    ["Total Weight",  cert.totalWeight],
-    ["Client",        cert.clientName],
-  ] as [string, string | undefined][]).filter(([, v]) => v) as [string, string][];
+  const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery";
+  const isGemstone  = cert.type === "Gemstone";
+  const isDiamond   = !isJewellery && !isGemstone;
+
+  const hasDiamondDetails = isJewellery && (cert.diamondShape || cert.diamondWeight || cert.diamondTotalPcs || cert.diamondColor || cert.diamondClarity);
+  const hasGemstoneDetails = isJewellery && (cert.gemstoneStone || cert.gemstoneOrigin || cert.gemstoneShape || cert.gemstoneCaratWeight || cert.gemstonePcs || cert.gemstoneMeasurements || cert.gemstoneColorTransparency || cert.gemstoneCharacteristics);
 
   return (
     <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm shadow-elegant overflow-hidden">
-      <div className="px-8 py-6 border-b border-border">
+      <div className="px-6 py-6 border-b border-border">
         <h3 className="font-display text-2xl">Full Certificate Details</h3>
+        <p className="text-xs text-muted-foreground mt-1">All information recorded on this certificate</p>
       </div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3">
-        {rows.map(([k, v]) => (
-          <div key={k} className="px-8 py-5 border-b border-border/60">
-            <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">{k}</div>
-            <div className="mt-1 text-foreground">{v}</div>
-          </div>
-        ))}
-      </div>
+
+      {/* Report Info — always shown */}
+      <Section title="Report Information">
+        <DetailRow label="Report Number"  value={cert.reportNo} />
+        <DetailRow label="Report Type"    value={cert.type} />
+        <DetailRow label="Issue Date"     value={cert.issueDate} />
+        <DetailRow label="Item"           value={cert.itemName} />
+        <DetailRow label="Origin"         value={cert.origin} />
+        <DetailRow label="Client"         value={cert.clientName} />
+      </Section>
+
+      {/* Diamond grading — Natural / Lab Grown Diamond */}
+      {isDiamond && (
+        <Section title="Grading Details">
+          <DetailRow label="Shape / Cut Style" value={cert.shape} />
+          <DetailRow label="Carat Weight"      value={cert.caratWeight ? `${cert.caratWeight} CT` : undefined} />
+          <DetailRow label="Measurements"      value={cert.measurements} />
+          <DetailRow label="Color"             value={cert.color} />
+          <DetailRow label="Clarity"           value={cert.clarity} />
+          <DetailRow label="Cut Grade"         value={cert.cut} />
+          <DetailRow label="Polish"            value={cert.polish} />
+          <DetailRow label="Symmetry"          value={cert.symmetry} />
+          <DetailRow label="Fluorescence"      value={cert.fluorescence} />
+        </Section>
+      )}
+
+      {/* Gemstone grading */}
+      {isGemstone && (
+        <Section title="Gemstone Grading">
+          <DetailRow label="Stone"                    value={cert.gemstoneStone} />
+          <DetailRow label="Origin"                   value={cert.gemstoneOrigin} />
+          <DetailRow label="Shape and Cutting Style"  value={cert.gemstoneShape} />
+          <DetailRow label="Carat Weight"             value={cert.gemstoneCaratWeight} />
+          <DetailRow label="PCS"                      value={cert.gemstonePcs} />
+          <DetailRow label="Measurements"             value={cert.gemstoneMeasurements} />
+          <DetailRow label="Color and Transparency"   value={cert.gemstoneColorTransparency} />
+          <DetailRow label="Characteristics"          value={cert.gemstoneCharacteristics} />
+        </Section>
+      )}
+
+      {/* Jewellery — Metal */}
+      {isJewellery && (
+        <Section title="Metal Details">
+          <DetailRow label="Metal Tested"       value={cert.metal} />
+          <DetailRow label="Metal Description"  value={cert.metalDescription} />
+          <DetailRow label="Gross Weight"       value={cert.grossWeight ? `${cert.grossWeight} GRM` : undefined} />
+          <DetailRow label="Net Weight"         value={cert.netWeight ? `${cert.netWeight} GRM` : undefined} />
+        </Section>
+      )}
+
+      {/* Jewellery — Diamond Details sub-section */}
+      {hasDiamondDetails && (
+        <Section title="Diamond Details">
+          <DetailRow label="Shape and Cut"      value={cert.diamondShape} />
+          <DetailRow label="Total Est. Weight"  value={cert.diamondWeight ? `${cert.diamondWeight} CT` : undefined} />
+          <DetailRow label="Total PCS"          value={cert.diamondTotalPcs} />
+          <DetailRow label="Color"              value={cert.diamondColor} />
+          <DetailRow label="Clarity"            value={cert.diamondClarity} />
+        </Section>
+      )}
+
+      {/* Jewellery — Gemstone Details sub-section */}
+      {hasGemstoneDetails && (
+        <Section title="Gemstone Details">
+          <DetailRow label="Stone"                    value={cert.gemstoneStone} />
+          <DetailRow label="Origin"                   value={cert.gemstoneOrigin} />
+          <DetailRow label="Shape and Cutting Style"  value={cert.gemstoneShape} />
+          <DetailRow label="Carat Weight"             value={cert.gemstoneCaratWeight} />
+          <DetailRow label="PCS"                      value={cert.gemstonePcs} />
+          <DetailRow label="Measurements"             value={cert.gemstoneMeasurements} />
+          <DetailRow label="Color and Transparency"   value={cert.gemstoneColorTransparency} />
+          <DetailRow label="Characteristics"          value={cert.gemstoneCharacteristics} />
+        </Section>
+      )}
+
+      {/* Remarks */}
       {cert.remarks && (
-        <div className="px-8 py-5 border-t border-border/60">
+        <div className="px-6 py-5 border-t border-border/60">
           <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Remarks</div>
           <p className="mt-2 text-foreground/90">{cert.remarks}</p>
         </div>

@@ -61,13 +61,13 @@ function FrontSide({ cert, showDescription }: { cert: Certificate; showDescripti
         <div style={{ width: 220, height: 2, background: "linear-gradient(90deg,transparent,#B8922A,transparent)", marginTop: 20 }} />
       </div>
 
-      {/* Bottom area — description (when all 3 sections) or just URL */}
+      {/* Bottom area */}
       <div style={{ position: "absolute", bottom: 26, left: 24, right: 24, textAlign: "center", zIndex: 1 }}>
-        {showDescription && cert.description ? (
+        {showDescription ? (
           <>
             <div style={{ height: 1.5, background: "linear-gradient(90deg,transparent,#B8922A,transparent)", marginBottom: 10 }} />
-            <p style={{ fontSize: 11, color: "#555555", lineHeight: 1.6, margin: 0, letterSpacing: "0.02em" }}>
-              {cert.description}
+            <p style={{ fontSize: 10, color: "#555555", lineHeight: 1.6, margin: 0, letterSpacing: "0.02em" }}>
+              {cert.description || "Issued by JewelsReport Certification Lab. Results refer only to the article described. Not a guarantee or valuation. Verify at JEWELSREPORT.COM."}
             </p>
           </>
         ) : (

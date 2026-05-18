@@ -31,7 +31,7 @@ function makeCert(type: ReportType = "Lab Grown Diamond"): Certificate {
     grossWeight: "", netWeight: "",
     diamondShape: "", diamondWeight: "", diamondColor: "", diamondClarity: "", diamondTotalPcs: "",
     gemstoneStone: "", gemstoneOrigin: "", gemstoneShape: "", gemstoneCaratWeight: "", gemstonePcs: "", gemstoneMeasurements: "", gemstoneColorTransparency: "", gemstoneCharacteristics: "",
-    remarks: "",
+    remarks: "", description: "",
     clientId: "", clientName: "",
     createdAt: Date.now(),
   };
@@ -294,6 +294,9 @@ function CertEditor() {
             </F>
             <F label="Remarks">
               <textarea value={cert.remarks || ""} onChange={(e) => set("remarks", e.target.value)} rows={3} className={ic} placeholder="Any additional notes for this report…" />
+            </F>
+            <F label="Front Card Description">
+              <textarea value={cert.description || ""} onChange={(e) => set("description", e.target.value)} rows={3} className={ic} placeholder="Short text shown at bottom of front card (used when card has all 3 detail sections)…" />
             </F>
           </div>
         </Card>

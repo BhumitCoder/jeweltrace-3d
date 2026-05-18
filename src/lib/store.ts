@@ -59,6 +59,7 @@ export interface Certificate {
   gemstoneColorTransparency?: string;
   gemstoneCharacteristics?: string;
   remarks?: string;
+  description?: string;      // front-side bottom text (shown when card has all 3 sections)
   imageDataUrl?: string;     // base64 image for the gem/jewellery
   clientId?: string;
   clientName?: string;       // denormalised for display

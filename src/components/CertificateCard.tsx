@@ -8,7 +8,7 @@ import logo from "@/assets/logo.png";
 export const CARD_W = 856;
 export const CARD_H = 540;
 
-interface Props { cert: Certificate; side: "front" | "back" }
+interface Props { cert: Certificate; side: "front" | "back"; showDescription?: boolean }
 
 export const CertificateCard = forwardRef<HTMLDivElement, Props>(
   function CertificateCard({ cert, side }, ref) {
@@ -16,6 +16,11 @@ export const CertificateCard = forwardRef<HTMLDivElement, Props>(
       typeof window !== "undefined"
         ? `${window.location.origin}/verify?id=${encodeURIComponent(cert.reportNo)}`
         : `/verify?id=${cert.reportNo}`;
+
+    const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery";
+    const hasDiamondDetails = isJewellery && !!(cert.diamondShape || cert.diamondWeight || cert.diamondTotalPcs || cert.diamondColor || cert.diamondClarity);
+    const hasGemstoneDetails = isJewellery && !!(cert.gemstoneStone || cert.gemstoneOrigin || cert.gemstoneShape || cert.gemstoneCaratWeight || cert.gemstonePcs || cert.gemstoneMeasurements || cert.gemstoneColorTransparency || cert.gemstoneCharacteristics);
+    const allThreeSections = isJewellery && hasDiamondDetails && hasGemstoneDetails;
 
     return (
       <div ref={ref} style={{
@@ -27,14 +32,16 @@ export const CertificateCard = forwardRef<HTMLDivElement, Props>(
         boxSizing: "border-box",
         position: "relative",
       }}>
-        {side === "front" ? <FrontSide /> : <BackSide cert={cert} verifyUrl={verifyUrl} />}
+        {side === "front"
+          ? <FrontSide cert={cert} showDescription={allThreeSections} />
+          : <BackSide cert={cert} verifyUrl={verifyUrl} hideDisclaimer={allThreeSections} />}
       </div>
     );
   }
 );
 
 /* ─── FRONT ──────────────────────────────────────────────────────────────────── */
-function FrontSide() {
+function FrontSide({ cert, showDescription }: { cert: Certificate; showDescription: boolean }) {
   return (
     <div style={{
       flex: 1, display: "flex", flexDirection: "column",
@@ -54,9 +61,18 @@ function FrontSide() {
         <div style={{ width: 220, height: 2, background: "linear-gradient(90deg,transparent,#B8922A,transparent)", marginTop: 20 }} />
       </div>
 
-      {/* Bottom URL */}
-      <div style={{ position: "absolute", bottom: 26, left: 0, right: 0, textAlign: "center", zIndex: 1 }}>
-        <span style={{ fontSize: 11, letterSpacing: "0.45em", textTransform: "uppercase", color: "#B8922A", fontWeight: 700 }}>JEWELSREPORT.COM</span>
+      {/* Bottom area — description (when all 3 sections) or just URL */}
+      <div style={{ position: "absolute", bottom: 26, left: 24, right: 24, textAlign: "center", zIndex: 1 }}>
+        {showDescription && cert.description ? (
+          <>
+            <div style={{ height: 1.5, background: "linear-gradient(90deg,transparent,#B8922A,transparent)", marginBottom: 10 }} />
+            <p style={{ fontSize: 11, color: "#555555", lineHeight: 1.6, margin: 0, letterSpacing: "0.02em" }}>
+              {cert.description}
+            </p>
+          </>
+        ) : (
+          <span style={{ fontSize: 11, letterSpacing: "0.45em", textTransform: "uppercase", color: "#B8922A", fontWeight: 700 }}>JEWELSREPORT.COM</span>
+        )}
       </div>
     </div>
   );
@@ -70,7 +86,7 @@ function withGrm(val: string | undefined) {
   return `${val} GRM`;
 }
 
-function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string }) {
+function BackSide({ cert, verifyUrl, hideDisclaimer }: { cert: Certificate; verifyUrl: string; hideDisclaimer: boolean }) {
   const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery";
   const isGemstone = cert.type === "Gemstone";
 
@@ -257,14 +273,16 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
           )}
         </div>
 
-        {/* Separator + disclaimer */}
-        <div style={{ marginTop: 8, position: "relative", zIndex: 1 }}>
-          <div style={{ height: 2, background: "linear-gradient(90deg,#B8922A,#D4A843,#B8922A)", marginBottom: 7 }} />
-          <p style={{ fontSize: 8.5, color: "#777777", lineHeight: 1.5, margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-            Issued by JewelsReport Certification Lab. Results refer only to the article described. Not a guarantee or valuation. Verify at JEWELSREPORT.COM.
-          </p>
-          <div style={{ height: 18 }} />
-        </div>
+        {/* Separator + disclaimer — hidden when all 3 sections fill the back */}
+        {!hideDisclaimer && (
+          <div style={{ marginTop: 8, position: "relative", zIndex: 1 }}>
+            <div style={{ height: 2, background: "linear-gradient(90deg,#B8922A,#D4A843,#B8922A)", marginBottom: 7 }} />
+            <p style={{ fontSize: 8.5, color: "#777777", lineHeight: 1.5, margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              Issued by JewelsReport Certification Lab. Results refer only to the article described. Not a guarantee or valuation. Verify at JEWELSREPORT.COM.
+            </p>
+            <div style={{ height: 18 }} />
+          </div>
+        )}
       </div>
 
       {/* ── Right panel ── */}

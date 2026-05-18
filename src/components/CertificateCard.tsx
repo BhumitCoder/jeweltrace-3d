@@ -150,9 +150,9 @@ function BackSide({ cert, verifyUrl, hideDisclaimer, compact }: { cert: Certific
 
         {/* Logo row */}
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: compact ? 5 : 8, position: "relative", zIndex: 1 }}>
-          <img src={logo} alt="JewelsReport" crossOrigin="anonymous" style={{ height: compact ? 40 : 58, width: compact ? 40 : 58, objectFit: "contain" }} />
+          <img src={logo} alt="JewelsReport" crossOrigin="anonymous" style={{ height: compact ? 45 : 58, width: compact ? 45 : 58, objectFit: "contain" }} />
           <div>
-            <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: compact ? 20 : 28, color: "#111111", lineHeight: 1, letterSpacing: "-0.01em", fontWeight: 400 }}>
+            <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: compact ? 23 : 28, color: "#111111", lineHeight: 1, letterSpacing: "-0.01em", fontWeight: 400 }}>
               Jewels<span style={{ color: "#B8922A" }}>Report</span>
             </div>
             <div style={{ fontSize: compact ? 8 : 10, letterSpacing: "0.30em", textTransform: "uppercase", color: "#111111", marginTop: 3, fontWeight: 900 }}>

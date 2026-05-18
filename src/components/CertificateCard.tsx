@@ -63,6 +63,13 @@ function FrontSide() {
 }
 
 /* ─── BACK — GIA-style layout ────────────────────────────────────────────────── */
+function withGrm(val: string | undefined) {
+  if (!val) return val;
+  const t = val.trim().toUpperCase();
+  if (t.endsWith("GRM") || t.endsWith("GM") || t.endsWith("G")) return val;
+  return `${val} GRM`;
+}
+
 function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string }) {
   const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery";
   const isGemstone = cert.type === "Gemstone";
@@ -72,8 +79,8 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
         ["Item",                    cert.itemName],
         ["Metal Tested",            cert.metal],
         ["Metal Description",       cert.metalDescription],
-        ["Gross Weight",            cert.grossWeight],
-        ["Net Weight",              cert.netWeight],
+        ["Gross Weight",            withGrm(cert.grossWeight)],
+        ["Net Weight",              withGrm(cert.netWeight)],
         ["Origin",                  cert.origin],
         ["Client",                  cert.clientName],
       ].filter(([, v]) => v) as [string, string][]
@@ -126,23 +133,23 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
         }} />
 
         {/* Logo row */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10, position: "relative", zIndex: 1 }}>
-          <img src={logo} alt="JewelsReport" crossOrigin="anonymous" style={{ height: 50, width: 50, objectFit: "contain" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8, position: "relative", zIndex: 1 }}>
+          <img src={logo} alt="JewelsReport" crossOrigin="anonymous" style={{ height: 58, width: 58, objectFit: "contain" }} />
           <div>
-            <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 26, color: "#111111", lineHeight: 1, letterSpacing: "-0.01em", fontWeight: 400 }}>
+            <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 32, color: "#111111", lineHeight: 1, letterSpacing: "-0.01em", fontWeight: 400 }}>
               Jewels<span style={{ color: "#B8922A" }}>Report</span>
             </div>
-            <div style={{ fontSize: 9, letterSpacing: "0.30em", textTransform: "uppercase", color: "#111111", marginTop: 4, fontWeight: 900 }}>
+            <div style={{ fontSize: 11, letterSpacing: "0.30em", textTransform: "uppercase", color: "#111111", marginTop: 4, fontWeight: 900 }}>
               Certification Lab
             </div>
           </div>
         </div>
 
         {/* Report type label + report number + gold line */}
-        <div style={{ marginBottom: 10, position: "relative", zIndex: 1 }}>
+        <div style={{ marginBottom: 8, position: "relative", zIndex: 1 }}>
           <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
             <div style={{
-              fontSize: 13, fontWeight: 900, letterSpacing: "0.08em",
+              fontSize: 16, fontWeight: 900, letterSpacing: "0.08em",
               textTransform: "uppercase", color: "#B8922A",
               lineHeight: 1.2,
             }}>
@@ -150,7 +157,7 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
             </div>
             {cert.reportNo && (
               <div style={{
-                fontSize: 12, fontWeight: 800, color: "#111111",
+                fontSize: 15, fontWeight: 800, color: "#111111",
                 letterSpacing: "0.04em", whiteSpace: "nowrap", marginLeft: 10,
               }}>
                 {cert.reportNo}
@@ -161,11 +168,11 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
         </div>
 
         {/* Fields */}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, position: "relative", zIndex: 1 }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 3, position: "relative", zIndex: 1 }}>
           {fields.map(([label, value]) => (
             <div key={label} style={{ display: "flex", alignItems: "flex-end", gap: 0 }}>
               <span style={{
-                fontSize: 11, color: "#444444", whiteSpace: "nowrap",
+                fontSize: 14, color: "#444444", whiteSpace: "nowrap",
                 lineHeight: 1.5, letterSpacing: "0.01em", fontWeight: 500,
               }}>
                 {label}
@@ -177,7 +184,7 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
                 minWidth: 20,
               }} />
               <span style={{
-                fontSize: 11.5, fontWeight: 800, color: "#000000",
+                fontSize: 14, fontWeight: 800, color: "#000000",
                 whiteSpace: "nowrap", lineHeight: 1.5,
                 letterSpacing: "0.03em", textTransform: "uppercase",
               }}>
@@ -188,11 +195,11 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
 
           {/* Diamond Details block — jewellery only */}
           {isJewellery && (cert.diamondShape || cert.diamondWeight || cert.diamondColor || cert.diamondClarity) && (
-            <div style={{ marginTop: 6 }}>
+            <div style={{ marginTop: 4 }}>
               <div style={{
-                fontSize: 9, fontWeight: 800, letterSpacing: "0.25em",
+                fontSize: 11, fontWeight: 800, letterSpacing: "0.25em",
                 textTransform: "uppercase", color: "#B8922A",
-                borderBottom: "1.5px solid #D4C9A8", paddingBottom: 3, marginBottom: 5,
+                borderBottom: "1.5px solid #D4C9A8", paddingBottom: 2, marginBottom: 3,
               }}>
                 Diamond Details
               </div>
@@ -204,9 +211,9 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
                 ["Clarity",           cert.diamondClarity],
               ].filter(([, v]) => v).map(([label, value]) => (
                 <div key={label} style={{ display: "flex", alignItems: "flex-end", gap: 0 }}>
-                  <span style={{ fontSize: 11, color: "#444444", whiteSpace: "nowrap", lineHeight: 1.5, fontWeight: 500 }}>{label}</span>
+                  <span style={{ fontSize: 14, color: "#444444", whiteSpace: "nowrap", lineHeight: 1.5, fontWeight: 500 }}>{label}</span>
                   <span style={{ flex: 1, borderBottom: "1.5px dotted #BBBBBB", margin: "0 6px 3px", minWidth: 20 }} />
-                  <span style={{ fontSize: 11.5, fontWeight: 800, color: "#000000", whiteSpace: "nowrap", lineHeight: 1.5, letterSpacing: "0.03em", textTransform: "uppercase" }}>{value}</span>
+                  <span style={{ fontSize: 14, fontWeight: 800, color: "#000000", whiteSpace: "nowrap", lineHeight: 1.5, letterSpacing: "0.03em", textTransform: "uppercase" }}>{value}</span>
                 </div>
               ))}
             </div>
@@ -214,11 +221,11 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
 
           {/* Gemstone Details block — jewellery only */}
           {isJewellery && (cert.gemstoneStone || cert.gemstoneOrigin || cert.gemstoneShape || cert.gemstoneCaratWeight || cert.gemstonePcs || cert.gemstoneMeasurements || cert.gemstoneColorTransparency || cert.gemstoneCharacteristics) && (
-            <div style={{ marginTop: 6 }}>
+            <div style={{ marginTop: 4 }}>
               <div style={{
-                fontSize: 9, fontWeight: 800, letterSpacing: "0.25em",
+                fontSize: 11, fontWeight: 800, letterSpacing: "0.25em",
                 textTransform: "uppercase", color: "#B8922A",
-                borderBottom: "1.5px solid #D4C9A8", paddingBottom: 3, marginBottom: 5,
+                borderBottom: "1.5px solid #D4C9A8", paddingBottom: 2, marginBottom: 3,
               }}>
                 Gemstone Details
               </div>
@@ -233,9 +240,9 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
                 ["Characteristics",          cert.gemstoneCharacteristics],
               ].filter(([, v]) => v).map(([label, value]) => (
                 <div key={label} style={{ display: "flex", alignItems: "flex-end", gap: 0 }}>
-                  <span style={{ fontSize: 11, color: "#444444", whiteSpace: "nowrap", lineHeight: 1.5, fontWeight: 500 }}>{label}</span>
+                  <span style={{ fontSize: 14, color: "#444444", whiteSpace: "nowrap", lineHeight: 1.5, fontWeight: 500 }}>{label}</span>
                   <span style={{ flex: 1, borderBottom: "1.5px dotted #BBBBBB", margin: "0 6px 3px", minWidth: 20 }} />
-                  <span style={{ fontSize: 11.5, fontWeight: 800, color: "#000000", whiteSpace: "nowrap", lineHeight: 1.5, letterSpacing: "0.03em", textTransform: "uppercase" }}>{value}</span>
+                  <span style={{ fontSize: 14, fontWeight: 800, color: "#000000", whiteSpace: "nowrap", lineHeight: 1.5, letterSpacing: "0.03em", textTransform: "uppercase" }}>{value}</span>
                 </div>
               ))}
             </div>
@@ -244,8 +251,8 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
           {/* Remarks */}
           {cert.remarks && (
             <div style={{ marginTop: 4 }}>
-              <span style={{ fontSize: 11, color: "#444444", fontWeight: 500 }}>Remarks: </span>
-              <span style={{ fontSize: 11, fontWeight: 700, color: "#111111" }}>{cert.remarks}</span>
+              <span style={{ fontSize: 14, color: "#444444", fontWeight: 500 }}>Remarks: </span>
+              <span style={{ fontSize: 14, fontWeight: 700, color: "#111111" }}>{cert.remarks}</span>
             </div>
           )}
         </div>
@@ -253,7 +260,7 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
         {/* Separator + disclaimer */}
         <div style={{ marginTop: 8, position: "relative", zIndex: 1 }}>
           <div style={{ height: 2, background: "linear-gradient(90deg,#B8922A,#D4A843,#B8922A)", marginBottom: 7 }} />
-          <p style={{ fontSize: 7.5, color: "#777777", lineHeight: 1.5, margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+          <p style={{ fontSize: 9.5, color: "#777777", lineHeight: 1.5, margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
             Issued by JewelsReport Certification Lab. Results refer only to the article described. Not a guarantee or valuation. Verify at JEWELSREPORT.COM.
           </p>
           <div style={{ height: 18 }} />
@@ -296,13 +303,13 @@ function BackSide({ cert, verifyUrl }: { cert: Certificate; verifyUrl: string })
           display: "flex", flexDirection: "column", alignItems: "center",
           gap: 6, flexShrink: 0,
         }}>
-          <div style={{ fontSize: 9, color: "#B8922A", letterSpacing: "0.3em", textTransform: "uppercase", fontWeight: 800 }}>
+          <div style={{ fontSize: 11, color: "#B8922A", letterSpacing: "0.3em", textTransform: "uppercase", fontWeight: 800 }}>
             JEWELSREPORT.COM
           </div>
           <div style={{ padding: 7, background: "#fff", border: "2px solid rgba(184,146,42,0.5)", borderRadius: 8 }}>
-            <QRCodeSVG value={verifyUrl} size={108} level="M" />
+            <QRCodeSVG value={verifyUrl} size={100} level="M" />
           </div>
-          <div style={{ fontSize: 8, color: "#666666", textAlign: "center", letterSpacing: "0.08em", fontWeight: 600, textTransform: "uppercase" }}>
+          <div style={{ fontSize: 10, color: "#666666", textAlign: "center", letterSpacing: "0.08em", fontWeight: 600, textTransform: "uppercase" }}>
             Scan to verify online
           </div>
         </div>

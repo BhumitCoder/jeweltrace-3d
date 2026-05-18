@@ -228,8 +228,18 @@ function CertEditor() {
             <div className="grid sm:grid-cols-2 gap-5">
               <F label="Metal Tested"><input value={cert.metal || ""} onChange={(e) => set("metal", e.target.value)} className={ic} placeholder="18kt" /></F>
               <F label="Metal Description"><input value={cert.metalDescription || ""} onChange={(e) => set("metalDescription", e.target.value)} className={ic} placeholder="YELLOW GOLD" /></F>
-              <F label="Gross Weight"><input value={cert.grossWeight || ""} onChange={(e) => set("grossWeight", e.target.value)} className={ic} placeholder="11.709 GRM" /></F>
-              <F label="Net Weight"><input value={cert.netWeight || ""} onChange={(e) => set("netWeight", e.target.value)} className={ic} placeholder="10.443 GRM" /></F>
+              <F label="Gross Weight">
+                <div className="relative">
+                  <input value={cert.grossWeight || ""} onChange={(e) => set("grossWeight", e.target.value)} className={ic + " pr-16"} placeholder="11.709" />
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-muted-foreground pointer-events-none select-none">GRM</span>
+                </div>
+              </F>
+              <F label="Net Weight">
+                <div className="relative">
+                  <input value={cert.netWeight || ""} onChange={(e) => set("netWeight", e.target.value)} className={ic + " pr-16"} placeholder="10.443" />
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-muted-foreground pointer-events-none select-none">GRM</span>
+                </div>
+              </F>
               <F label="Origin"><input value={cert.origin} onChange={(e) => set("origin", e.target.value)} className={ic} placeholder="Natural / Lab Grown" /></F>
             </div>
           </Card>
@@ -303,7 +313,7 @@ function CertEditor() {
   );
 }
 
-const ic = "w-full bg-input/30 border border-border rounded-xl px-4 py-2.5 outline-none focus:border-primary transition-colors text-foreground text-sm";
+const ic = "w-full bg-input/30 border border-border rounded-xl px-4 py-2.5 outline-none focus:border-primary transition-colors text-foreground text-sm uppercase placeholder:uppercase";
 
 function clientInitials(name: string) {
   return name.split(" ").slice(0, 2).map((w) => w[0]).join("").toUpperCase();

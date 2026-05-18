@@ -34,7 +34,7 @@ export const CertificateCard = forwardRef<HTMLDivElement, Props>(
       }}>
         {side === "front"
           ? <FrontSide cert={cert} showDescription={allThreeSections} />
-          : <BackSide cert={cert} verifyUrl={verifyUrl} hideDisclaimer={allThreeSections} />}
+          : <BackSide cert={cert} verifyUrl={verifyUrl} hideDisclaimer={allThreeSections} compact={allThreeSections} />}
       </div>
     );
   }
@@ -86,7 +86,7 @@ function withGrm(val: string | undefined) {
   return `${val} GRM`;
 }
 
-function BackSide({ cert, verifyUrl, hideDisclaimer }: { cert: Certificate; verifyUrl: string; hideDisclaimer: boolean }) {
+function BackSide({ cert, verifyUrl, hideDisclaimer, compact }: { cert: Certificate; verifyUrl: string; hideDisclaimer: boolean; compact: boolean }) {
   const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery";
   const isGemstone = cert.type === "Gemstone";
 
@@ -135,7 +135,7 @@ function BackSide({ cert, verifyUrl, hideDisclaimer }: { cert: Certificate; veri
       <div style={{
         width: 576, flexShrink: 0,
         display: "flex", flexDirection: "column",
-        padding: "24px 30px 0 30px",
+        padding: compact ? "14px 30px 0 30px" : "24px 30px 0 30px",
         position: "relative", zIndex: 1,
         boxSizing: "border-box",
       }}>
@@ -149,20 +149,20 @@ function BackSide({ cert, verifyUrl, hideDisclaimer }: { cert: Certificate; veri
         }} />
 
         {/* Logo row */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8, position: "relative", zIndex: 1 }}>
-          <img src={logo} alt="JewelsReport" crossOrigin="anonymous" style={{ height: 58, width: 58, objectFit: "contain" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: compact ? 5 : 8, position: "relative", zIndex: 1 }}>
+          <img src={logo} alt="JewelsReport" crossOrigin="anonymous" style={{ height: compact ? 40 : 58, width: compact ? 40 : 58, objectFit: "contain" }} />
           <div>
-            <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 28, color: "#111111", lineHeight: 1, letterSpacing: "-0.01em", fontWeight: 400 }}>
+            <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: compact ? 20 : 28, color: "#111111", lineHeight: 1, letterSpacing: "-0.01em", fontWeight: 400 }}>
               Jewels<span style={{ color: "#B8922A" }}>Report</span>
             </div>
-            <div style={{ fontSize: 10, letterSpacing: "0.30em", textTransform: "uppercase", color: "#111111", marginTop: 4, fontWeight: 900 }}>
+            <div style={{ fontSize: compact ? 8 : 10, letterSpacing: "0.30em", textTransform: "uppercase", color: "#111111", marginTop: 3, fontWeight: 900 }}>
               Certification Lab
             </div>
           </div>
         </div>
 
         {/* Report type label + report number + gold line */}
-        <div style={{ marginBottom: 8, position: "relative", zIndex: 1 }}>
+        <div style={{ marginBottom: compact ? 5 : 8, position: "relative", zIndex: 1 }}>
           <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
             <div style={{
               fontSize: 14, fontWeight: 900, letterSpacing: "0.08em",
@@ -184,7 +184,7 @@ function BackSide({ cert, verifyUrl, hideDisclaimer }: { cert: Certificate; veri
         </div>
 
         {/* Fields */}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 3, position: "relative", zIndex: 1 }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: compact ? 1.5 : 3, position: "relative", zIndex: 1 }}>
           {fields.map(([label, value]) => (
             <div key={label} style={{ display: "flex", alignItems: "flex-end", gap: 0 }}>
               <span style={{

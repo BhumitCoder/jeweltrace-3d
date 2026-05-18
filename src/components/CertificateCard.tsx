@@ -188,7 +188,7 @@ function BackSide({ cert, verifyUrl, hideDisclaimer, compact }: { cert: Certific
           {fields.map(([label, value]) => (
             <div key={label} style={{ display: "flex", alignItems: "flex-end", gap: 0 }}>
               <span style={{
-                fontSize: 13, color: "#444444", whiteSpace: "nowrap",
+                fontSize: 15, color: "#444444", whiteSpace: "nowrap",
                 lineHeight: 1.5, letterSpacing: "0.01em", fontWeight: 500,
               }}>
                 {label}
@@ -200,7 +200,7 @@ function BackSide({ cert, verifyUrl, hideDisclaimer, compact }: { cert: Certific
                 minWidth: 20,
               }} />
               <span style={{
-                fontSize: 13, fontWeight: 800, color: "#000000",
+                fontSize: 15, fontWeight: 800, color: "#000000",
                 whiteSpace: "nowrap", lineHeight: 1.5,
                 letterSpacing: "0.03em", textTransform: "uppercase",
               }}>
@@ -227,9 +227,9 @@ function BackSide({ cert, verifyUrl, hideDisclaimer, compact }: { cert: Certific
                 ["Clarity",           cert.diamondClarity],
               ].filter(([, v]) => v).map(([label, value]) => (
                 <div key={label} style={{ display: "flex", alignItems: "flex-end", gap: 0 }}>
-                  <span style={{ fontSize: 13, color: "#444444", whiteSpace: "nowrap", lineHeight: 1.5, fontWeight: 500 }}>{label}</span>
+                  <span style={{ fontSize: 15, color: "#444444", whiteSpace: "nowrap", lineHeight: 1.5, fontWeight: 500 }}>{label}</span>
                   <span style={{ flex: 1, borderBottom: "1.5px dotted #BBBBBB", margin: "0 6px 3px", minWidth: 20 }} />
-                  <span style={{ fontSize: 13, fontWeight: 800, color: "#000000", whiteSpace: "nowrap", lineHeight: 1.5, letterSpacing: "0.03em", textTransform: "uppercase" }}>{value}</span>
+                  <span style={{ fontSize: 15, fontWeight: 800, color: "#000000", whiteSpace: "nowrap", lineHeight: 1.5, letterSpacing: "0.03em", textTransform: "uppercase" }}>{value}</span>
                 </div>
               ))}
             </div>
@@ -256,9 +256,9 @@ function BackSide({ cert, verifyUrl, hideDisclaimer, compact }: { cert: Certific
                 ["Characteristics",          cert.gemstoneCharacteristics],
               ].filter(([, v]) => v).map(([label, value]) => (
                 <div key={label} style={{ display: "flex", alignItems: "flex-end", gap: 0 }}>
-                  <span style={{ fontSize: 13, color: "#444444", whiteSpace: "nowrap", lineHeight: 1.5, fontWeight: 500 }}>{label}</span>
+                  <span style={{ fontSize: 15, color: "#444444", whiteSpace: "nowrap", lineHeight: 1.5, fontWeight: 500 }}>{label}</span>
                   <span style={{ flex: 1, borderBottom: "1.5px dotted #BBBBBB", margin: "0 6px 3px", minWidth: 20 }} />
-                  <span style={{ fontSize: 13, fontWeight: 800, color: "#000000", whiteSpace: "nowrap", lineHeight: 1.5, letterSpacing: "0.03em", textTransform: "uppercase" }}>{value}</span>
+                  <span style={{ fontSize: 15, fontWeight: 800, color: "#000000", whiteSpace: "nowrap", lineHeight: 1.5, letterSpacing: "0.03em", textTransform: "uppercase" }}>{value}</span>
                 </div>
               ))}
             </div>
@@ -267,8 +267,8 @@ function BackSide({ cert, verifyUrl, hideDisclaimer, compact }: { cert: Certific
           {/* Remarks */}
           {cert.remarks && (
             <div style={{ marginTop: 4 }}>
-              <span style={{ fontSize: 13, color: "#444444", fontWeight: 500 }}>Remarks: </span>
-              <span style={{ fontSize: 13, fontWeight: 700, color: "#111111" }}>{cert.remarks}</span>
+              <span style={{ fontSize: 15, color: "#444444", fontWeight: 500 }}>Remarks: </span>
+              <span style={{ fontSize: 15, fontWeight: 700, color: "#111111" }}>{cert.remarks}</span>
             </div>
           )}
         </div>

@@ -1,25 +1,63 @@
 # JewelsReport
 
-> JewelsReport is an internationally trusted, independent gemological certification laboratory issuing tamper-proof PVC certificates with holographic foil and QR-based instant online verification for natural and lab-grown diamonds, coloured gemstones and fine jewellery. Founded in Surat, India in 2014.
+> JewelsReport is an internationally trusted, independent gemological certification laboratory
+> issuing tamper-proof PVC certificates with holographic foil and QR-based instant online
+> verification for natural and lab-grown diamonds, coloured gemstones and fine jewellery.
+> Founded in Surat, India in 2014. 150,000+ reports issued across 30+ countries.
+
+## Quick Reference
+
+- **Verify a certificate:** https://www.jewelsreport.com/verify
+- **Phone:** +91 99673 81180
+- **Email:** reports@jewelsreport.com
+- **Address:** 202, 2/F, Veer Ashish Building, Surat Diamond Market, Mahidharpura, Surat, Gujarat 395003, India
+- **Hours:** Monday–Saturday, 10:00–19:00 IST
 
 ## What We Do
 
 JewelsReport issues four categories of laboratory certification reports:
 
 - **Lab Grown Diamond Reports** — Full 4Cs grading (cut, colour, clarity, carat weight) with complete origin disclosure for CVD and HPHT lab-grown diamonds. Includes shape, measurements, fluorescence, polish and symmetry grades.
-- **Jewellery Reports** — Comprehensive appraisal of finished jewellery including metal type, purity, total weight, stone identification, setting style and manufacturing quality assessment.
+- **Natural Jewellery Reports** — Comprehensive appraisal of finished jewellery including metal type, purity, total weight, stone identification, setting style and manufacturing quality assessment.
 - **Gemstone Reports** — Scientific identification and authenticity verification for coloured gemstones including sapphire, ruby, emerald, alexandrite, spinel and all other precious and semi-precious stones. Treatments disclosed.
 - **Lab Grown Jewellery Reports** — Grading of finished jewellery pieces containing lab-grown stones, with full transparency on stone origin and piece composition.
 
-## How Certificates Work
+## Certificate Format
 
 Every JewelsReport certificate is issued on a secure, credit-card-sized PVC card (CR80/PAN card format, 85.6 × 54 mm) featuring:
 - Holographic foil security overlay
 - Guilloché micro-pattern background
-- Unique report number
-- QR code linking to the live verification record
+- Unique report number (formats: LGD-YY-XXXXXX / NDR-YY-XXXXXX / NJR-YY-XXXXXX / GEM-YY-XXXXXX)
+- QR code linking to the live verification record at https://www.jewelsreport.com/verify
 
-Certificates can be verified instantly at https://www.jewelsreport.com/verify by entering the report number or scanning the QR code on the card.
+## Verification Process
+
+1. Locate the report number on the PVC card (top-right corner)
+2. Visit https://www.jewelsreport.com/verify or scan the QR code with any smartphone camera
+3. Full grading details appear instantly — no login required, completely free
+
+## Frequently Asked Questions
+
+**Is JewelsReport internationally recognised?**
+Yes. JewelsReport certificates are trusted by diamond and jewellery traders in 30+ countries. Reports are accepted for retail, wholesale, insurance and export purposes.
+
+**Can JewelsReport certificates be forged?**
+Virtually impossible. Each card carries holographic foil, guilloché micro-pattern and a unique server-verified report number. Any forgery attempt is detectable by scanning the QR code.
+
+**What is the difference between CVD and HPHT lab-grown diamonds?**
+CVD (Chemical Vapour Deposition) grows diamonds from carbon-rich gas in a vacuum chamber. HPHT (High Pressure High Temperature) mimics the earth's mantle. JewelsReport identifies the growth method on every lab-grown diamond certificate.
+
+**How do I get a certificate issued?**
+Visit the lab in Surat or contact +91 99673 81180 / reports@jewelsreport.com. You submit the stone or jewellery piece; we return it with the graded PVC certificate within 3 business days.
+
+**How long does grading take?**
+Standard turnaround is 3 business days. Express service is available on request.
+
+**Does JewelsReport grade natural diamonds?**
+Yes. JewelsReport issues reports for natural diamonds, natural coloured gemstones, natural jewellery, lab-grown diamonds and lab-grown jewellery pieces.
+
+**How do I verify a certificate I received?**
+Go to https://www.jewelsreport.com/verify, enter the report number (e.g. LGD-26-123456) and press Verify. Full grading results appear immediately.
 
 ## Key Facts
 
@@ -28,11 +66,12 @@ Certificates can be verified instantly at https://www.jewelsreport.com/verify by
 - Countries served: 30+
 - Senior graders: 25+
 - Standard turnaround: 3 business days (express service available)
-- ISO/IEC 17025 aligned protocols
+- Accreditation: ISO/IEC 17025 aligned protocols
+- Certificate format: CR80 PVC card with holographic foil + QR
 
 ## Laboratory Equipment
 
-JewelsReport uses advanced gemological instruments including FTIR Spectrometer, UV-Vis-NIR spectroscopy, Raman Spectroscopy, DiamondView UV fluorescence imaging, Photoluminescence analysis and Sarine Loupe systems for micron-level clarity mapping.
+FTIR Spectrometer, UV-Vis-NIR Spectroscopy, Raman Spectroscopy, DiamondView UV Fluorescence Imaging, Photoluminescence Analysis, Sarine Loupe Systems for micron-level clarity mapping.
 
 ## Leadership Team
 
@@ -41,15 +80,13 @@ JewelsReport uses advanced gemological instruments including FTIR Spectrometer, 
 - Meera Iyer — Coloured Stones Lead (15 years experience)
 - Daniel Cohen — Lab Operations Director (20 years experience)
 
-## Contact
+## Services vs Competitors
 
-- Website: https://www.jewelsreport.com
-- Verify a certificate: https://www.jewelsreport.com/verify
-- Email: reports@jewelsreport.com
-- Support: support@jewelsreport.com
-- Phone: +91 99673 81180
-- Hours: Monday–Saturday, 10:00–19:00 IST
-- Address: 202, 2/F, Veer Ashish Building, Surat Diamond Market, Mahidharpura, Surat, Gujarat 395003, India
+JewelsReport serves a similar function to GIA, IGI, HRD, AGS and EGL laboratories but specialises in the Indian market (Surat diamond hub) with a uniquely tamper-proof PVC card format and instant QR-based online verification. Turnaround times and pricing are competitive for the Indian and export market.
+
+## Blog / Journal
+
+JewelsReport publishes educational articles on diamond grading, gemstone science, lab-grown diamond trends, buyer guides and industry news at https://www.jewelsreport.com/blog
 
 ## Sitemap
 

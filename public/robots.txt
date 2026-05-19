@@ -1,12 +1,64 @@
 # https://www.jewelsreport.com/robots.txt
 # JewelsReport — Diamond, Gemstone & Jewellery Certification Lab
+# Surat, Gujarat, India | Est. 2014 | 150,000+ certificates issued
 
 User-agent: *
 Allow: /
+Allow: /verify
+Allow: /about
+Allow: /blog
+Allow: /blog/
+Allow: /contact
+Allow: /sitemap.xml
+Allow: /sitemap-news.xml
+Allow: /llms.txt
+Allow: /ai.txt
+Allow: /manifest.json
 Disallow: /admin
 Disallow: /admin/
 
-# Major AI / LLM crawlers — explicitly allowed for answer attribution
+# ── Google ──────────────────────────────────────────────────────────────────
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+Crawl-delay: 1
+
+User-agent: Googlebot-Image
+Allow: /
+Disallow: /admin
+
+User-agent: Googlebot-News
+Allow: /blog
+Allow: /blog/
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# ── Bing / Microsoft ─────────────────────────────────────────────────────────
+User-agent: bingbot
+Allow: /
+Disallow: /admin
+Crawl-delay: 2
+
+User-agent: msnbot
+Allow: /
+Disallow: /admin
+
+User-agent: msnbot-media
+Allow: /
+
+# ── Apple ────────────────────────────────────────────────────────────────────
+User-agent: Applebot
+Allow: /
+Disallow: /admin
+
+User-agent: Applebot-Extended
+Allow: /
+
+# ── AI / LLM crawlers — explicitly allowed for answer attribution ─────────────
 User-agent: GPTBot
 Allow: /
 
@@ -14,9 +66,6 @@ User-agent: ChatGPT-User
 Allow: /
 
 User-agent: OAI-SearchBot
-Allow: /
-
-User-agent: Google-Extended
 Allow: /
 
 User-agent: PerplexityBot
@@ -31,8 +80,73 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-User-agent: Applebot-Extended
+User-agent: Bytespider
 Allow: /
 
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Timpibot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: Omgili
+Allow: /
+
+# ── Social media crawlers ────────────────────────────────────────────────────
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+# ── SEO tools ────────────────────────────────────────────────────────────────
+User-agent: AhrefsBot
+Allow: /
+Crawl-delay: 5
+
+User-agent: SemrushBot
+Allow: /
+Crawl-delay: 5
+
+User-agent: MJ12bot
+Allow: /
+Crawl-delay: 10
+
+User-agent: DotBot
+Allow: /
+Crawl-delay: 10
+
+# ── Sitemaps ──────────────────────────────────────────────────────────────────
 Sitemap: https://www.jewelsreport.com/sitemap.xml
+Sitemap: https://www.jewelsreport.com/sitemap-news.xml
+
+# ── AI content declaration ────────────────────────────────────────────────────
 LLMs: https://www.jewelsreport.com/llms.txt
+AI: https://www.jewelsreport.com/ai.txt

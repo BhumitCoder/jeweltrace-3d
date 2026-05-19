@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ╔══════════════════════════════════════════════════════════════════════════════╗
+  ║  JewelsReport — Sitemap Index                                               ║
+  ║  https://www.jewelsreport.com                                               ║
+  ║  Independent gemological certification laboratory — Surat, India, Est. 2014 ║
+  ╚══════════════════════════════════════════════════════════════════════════════╝
+-->
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="
+                http://www.sitemaps.org/schemas/sitemap/0.9
+                http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd">
+
+  <!-- Primary pages sitemap -->
+  <sitemap>
+    <loc>https://www.jewelsreport.com/sitemap.xml</loc>
+    <lastmod>2026-05-19</lastmod>
+  </sitemap>
+
+  <!-- Image sitemap -->
+  <sitemap>
+    <loc>https://www.jewelsreport.com/sitemap-images.xml</loc>
+    <lastmod>2026-05-19</lastmod>
+  </sitemap>
+
+  <!-- Google News sitemap (blog) -->
+  <sitemap>
+    <loc>https://www.jewelsreport.com/sitemap-news.xml</loc>
+    <lastmod>2026-05-19</lastmod>
+  </sitemap>
+
+</sitemapindex>

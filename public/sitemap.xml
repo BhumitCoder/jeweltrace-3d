@@ -1,67 +1,164 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
-        xsi:schemaLocation="
-          http://www.sitemaps.org/schemas/sitemap/0.9
-          http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
-          http://www.google.com/schemas/sitemap-image/1.1
-          http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
+<!--
+  ╔══════════════════════════════════════════════════════════════════════════════╗
+  ║                                                                              ║
+  ║   J E W E L S R E P O R T   —   P R I M A R Y   S I T E M A P              ║
+  ║                                                                              ║
+  ║   https://www.jewelsreport.com/sitemap.xml                                   ║
+  ║   Independent Gemological Certification Laboratory                           ║
+  ║   202, 2/F, Veer Ashish Building, Surat Diamond Market,                      ║
+  ║   Mahidharpura, Surat, Gujarat 395003, India                                 ║
+  ║                                                                              ║
+  ║   Namespaces active:                                                         ║
+  ║     • sitemaps.org/0.9   — core URL entries                                  ║
+  ║     • google image/1.1   — image indexing signals                            ║
+  ║     • google mobile/1.0  — mobile-friendliness signal                        ║
+  ║     • w3.org/1999/xhtml  — alternate / hreflang entries                      ║
+  ║                                                                              ║
+  ║   Submitted to:                                                              ║
+  ║     Google Search Console · Bing Webmaster Tools                             ║
+  ║                                                                              ║
+  ║   Index sitemap: https://www.jewelsreport.com/sitemap-index.xml              ║
+  ║   Last updated:  2026-05-19                                                  ║
+  ║                                                                              ║
+  ╚══════════════════════════════════════════════════════════════════════════════╝
+-->
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+  xsi:schemaLocation="
+    http://www.sitemaps.org/schemas/sitemap/0.9
+    http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
+    http://www.google.com/schemas/sitemap-image/1.1
+    http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
 
-  <!-- Homepage — highest priority, refreshed weekly -->
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       HOMEPAGE
+       Priority: 1.0 — root of all authority
+       ═══════════════════════════════════════════════════════════════════════ -->
   <url>
     <loc>https://www.jewelsreport.com/</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+
+    <!-- Hreflang: English worldwide + India specific -->
+    <xhtml:link rel="alternate" hreflang="en"       href="https://www.jewelsreport.com/" />
+    <xhtml:link rel="alternate" hreflang="en-IN"    href="https://www.jewelsreport.com/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/" />
+
+    <!-- OG / social share image -->
     <image:image>
       <image:loc>https://www.jewelsreport.com/og-image.jpg</image:loc>
-      <image:caption>JewelsReport — Tamper-proof PVC certificates with holographic foil and QR verification for diamonds, gemstones and fine jewellery</image:caption>
-      <image:title>JewelsReport Gemological Certification Lab</image:title>
+      <image:title>JewelsReport — Tamper-proof PVC Gemological Certificates with QR Verification</image:title>
+      <image:caption>JewelsReport CR80 PVC certificate card: holographic foil, guilloché micro-pattern and QR code for instant online authentication of diamonds, gemstones and jewellery</image:caption>
+      <image:geo_location>Surat, Gujarat, India</image:geo_location>
+      <image:license>https://www.jewelsreport.com/</image:license>
     </image:image>
+
+    <!-- Mobile-friendly signal -->
     <mobile:mobile/>
   </url>
 
-  <!-- Verify Certificate — core product page -->
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       VERIFY CERTIFICATE
+       Priority: 0.95 — highest-value user action; core product page
+       Target keywords: verify diamond certificate, check gemstone report,
+         QR diamond verification, certificate authentication
+       ═══════════════════════════════════════════════════════════════════════ -->
   <url>
     <loc>https://www.jewelsreport.com/verify</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
+
+    <xhtml:link rel="alternate" hreflang="en"       href="https://www.jewelsreport.com/verify" />
+    <xhtml:link rel="alternate" hreflang="en-IN"    href="https://www.jewelsreport.com/verify" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/verify" />
+
+    <image:image>
+      <image:loc>https://www.jewelsreport.com/og-image.jpg</image:loc>
+      <image:title>Verify a JewelsReport Certificate — Instant Authenticity Check</image:title>
+      <image:caption>Enter report number or scan QR code to verify any JewelsReport diamond, gemstone or jewellery certificate instantly — free, no login required</image:caption>
+      <image:geo_location>Surat, Gujarat, India</image:geo_location>
+      <image:license>https://www.jewelsreport.com/</image:license>
+    </image:image>
+
     <mobile:mobile/>
   </url>
 
-  <!-- About the Lab -->
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       ABOUT THE LAB
+       Priority: 0.80 — authority / E-E-A-T page; builds trust signals
+       Target keywords: gem lab Surat, master gemologist India,
+         ISO gemological lab, diamond grading lab
+       ═══════════════════════════════════════════════════════════════════════ -->
   <url>
     <loc>https://www.jewelsreport.com/about</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
+
+    <xhtml:link rel="alternate" hreflang="en"       href="https://www.jewelsreport.com/about" />
+    <xhtml:link rel="alternate" hreflang="en-IN"    href="https://www.jewelsreport.com/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/about" />
+
     <image:image>
       <image:loc>https://www.jewelsreport.com/og-image.jpg</image:loc>
-      <image:caption>JewelsReport gemological laboratory team — 25+ master gemologists, ISO/IEC 17025 aligned protocols</image:caption>
-      <image:title>About JewelsReport Gemological Laboratory</image:title>
+      <image:title>About JewelsReport — Master Gemologists &amp; ISO-Aligned Lab, Surat India</image:title>
+      <image:caption>JewelsReport laboratory — founded 2014 in Surat Diamond Market; 25+ senior gemologists, FTIR spectrometry, UV-Vis-NIR, Raman spectroscopy and DiamondView instruments</image:caption>
+      <image:geo_location>Surat, Gujarat, India</image:geo_location>
+      <image:license>https://www.jewelsreport.com/</image:license>
     </image:image>
+
     <mobile:mobile/>
   </url>
 
-  <!-- Blog / Journal — updated frequently -->
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       BLOG / JOURNAL
+       Priority: 0.75 — content hub; feeds topical authority cluster
+       Target keywords: diamond blog, lab grown diamond news,
+         gemstone buyer guide, gem grading insights
+       ═══════════════════════════════════════════════════════════════════════ -->
   <url>
     <loc>https://www.jewelsreport.com/blog</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
+
+    <xhtml:link rel="alternate" hreflang="en"       href="https://www.jewelsreport.com/blog" />
+    <xhtml:link rel="alternate" hreflang="en-IN"    href="https://www.jewelsreport.com/blog" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog" />
+
     <mobile:mobile/>
   </url>
 
-  <!-- Contact -->
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       CONTACT
+       Priority: 0.65 — local SEO + conversion page
+       Target keywords: diamond lab Surat contact, gem lab India phone,
+         bulk diamond certification enquiry
+       ═══════════════════════════════════════════════════════════════════════ -->
   <url>
     <loc>https://www.jewelsreport.com/contact</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
+
+    <xhtml:link rel="alternate" hreflang="en"       href="https://www.jewelsreport.com/contact" />
+    <xhtml:link rel="alternate" hreflang="en-IN"    href="https://www.jewelsreport.com/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/contact" />
+
     <mobile:mobile/>
   </url>
+
 
 </urlset>

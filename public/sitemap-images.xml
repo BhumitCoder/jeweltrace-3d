@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ╔══════════════════════════════════════════════════════════════════════════════╗
+  ║  JewelsReport — Image Sitemap                                               ║
+  ║  https://www.jewelsreport.com/sitemap-images.xml                            ║
+  ╚══════════════════════════════════════════════════════════════════════════════╝
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+          http://www.sitemaps.org/schemas/sitemap/0.9
+          http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
+          http://www.google.com/schemas/sitemap-image/1.1
+          http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
+
+  <url>
+    <loc>https://www.jewelsreport.com/</loc>
+    <image:image>
+      <image:loc>https://www.jewelsreport.com/og-image.jpg</image:loc>
+      <image:title>JewelsReport — Tamper-proof PVC Gemological Certificate</image:title>
+      <image:caption>JewelsReport CR80 PVC certificate with holographic foil and QR verification code for diamonds, gemstones and fine jewellery</image:caption>
+      <image:geo_location>Surat, Gujarat, India</image:geo_location>
+      <image:license>https://www.jewelsreport.com/</image:license>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/about</loc>
+    <image:image>
+      <image:loc>https://www.jewelsreport.com/og-image.jpg</image:loc>
+      <image:title>JewelsReport Gemological Laboratory — Master Gemologists in Surat</image:title>
+      <image:caption>The JewelsReport laboratory team — 25+ master gemologists with ISO/IEC 17025 aligned protocols for diamond and gemstone grading</image:caption>
+      <image:geo_location>Surat, Gujarat, India</image:geo_location>
+      <image:license>https://www.jewelsreport.com/</image:license>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/verify</loc>
+    <image:image>
+      <image:loc>https://www.jewelsreport.com/og-image.jpg</image:loc>
+      <image:title>Verify a JewelsReport Certificate — Instant Online Authentication</image:title>
+      <image:caption>Free online diamond and gemstone certificate verification tool — enter report number or scan QR code to confirm authenticity</image:caption>
+      <image:geo_location>Surat, Gujarat, India</image:geo_location>
+      <image:license>https://www.jewelsreport.com/</image:license>
+    </image:image>
+  </url>
+
+</urlset>

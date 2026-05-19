@@ -144,7 +144,9 @@ Allow: /
 Crawl-delay: 10
 
 # ── Sitemaps ──────────────────────────────────────────────────────────────────
+Sitemap: https://www.jewelsreport.com/sitemap-index.xml
 Sitemap: https://www.jewelsreport.com/sitemap.xml
+Sitemap: https://www.jewelsreport.com/sitemap-images.xml
 Sitemap: https://www.jewelsreport.com/sitemap-news.xml
 
 # ── AI content declaration ────────────────────────────────────────────────────

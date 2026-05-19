@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ╔══════════════════════════════════════════════════════════════════════════════╗
+  ║  JewelsReport — Google News Sitemap                                         ║
+  ║  https://www.jewelsreport.com/sitemap-news.xml                              ║
+  ║  Covers: JewelsReport Journal (blog) — gemological industry news            ║
+  ╚══════════════════════════════════════════════════════════════════════════════╝
+-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+          http://www.sitemaps.org/schemas/sitemap/0.9
+          http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
+          http://www.google.com/schemas/sitemap-news/0.9
+          http://www.google.com/schemas/sitemap-news/0.9/sitemap-news.xsd">
 
   <url>
     <loc>https://www.jewelsreport.com/blog</loc>
@@ -11,7 +24,7 @@
       </news:publication>
       <news:publication_date>2026-05-19</news:publication_date>
       <news:title>Diamond, Gemstone &amp; Jewellery Certification Insights — JewelsReport Journal</news:title>
-      <news:keywords>diamond certification, gemstone report, lab grown diamond, CVD diamond, HPHT diamond, gem grading, jewellery appraisal, Surat diamond lab</news:keywords>
+      <news:keywords>diamond certification, lab grown diamond, CVD diamond, HPHT diamond, gemstone report, jewellery appraisal, 4Cs grading, QR certificate verification, Surat diamond lab, PVC gemological certificate</news:keywords>
     </news:news>
   </url>
 

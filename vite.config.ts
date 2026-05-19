@@ -255,11 +255,11 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ["react", "react-dom"],
-          router: ["@tanstack/react-router"],
-          ui: ["framer-motion", "lucide-react"],
-          pdf: ["jspdf", "html-to-image", "html2canvas"],
+        manualChunks(id) {
+          if (id.includes("node_modules/react") || id.includes("node_modules/react-dom")) return "react";
+          if (id.includes("node_modules/@tanstack/react-router")) return "router";
+          if (id.includes("node_modules/framer-motion") || id.includes("node_modules/lucide-react")) return "ui";
+          if (id.includes("node_modules/jspdf") || id.includes("node_modules/html-to-image") || id.includes("node_modules/html2canvas")) return "pdf";
         },
       },
     },

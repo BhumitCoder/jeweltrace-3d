@@ -166,7 +166,7 @@ function CardPreview({ cert }: { cert: Certificate }) {
 
       const win = window.open("", "_blank");
       if (!win) return;
-      win.document.write(`<!DOCTYPE html><html><head><title>JewelsReport Certificate</title>
+      win.document.write(`<!DOCTYPE html><html><head><title>JewelsReport Certificate ${cert.reportNo}</title>
         <style>
           @page { size: 85.6mm 53.98mm; margin: 0; }
           * { margin: 0; padding: 0; box-sizing: border-box; }

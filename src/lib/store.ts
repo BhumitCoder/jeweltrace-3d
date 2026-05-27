@@ -91,6 +91,30 @@ export const generateReportNo = (type: ReportType): string => {
   return `${prefix}-${yr}-${rand}`;
 };
 
+export interface Visitor {
+  id: string;
+  timestamp: number;
+  page: string;
+  referrer: string | null;
+  userAgent: string;
+  browser: string;
+  os: string;
+  device: string;
+  screenWidth: number;
+  screenHeight: number;
+  ip: string | null;
+  city: string | null;
+  region: string | null;
+  country: string | null;
+  countryCode: string | null;
+  lat: number | null;
+  lon: number | null;
+  locationAccuracy?: number;
+  isp: string | null;
+  timezone: string | null;
+  locationSource: "browser" | "ip" | "denied";
+}
+
 export const slugify = (s: string) =>
   s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 

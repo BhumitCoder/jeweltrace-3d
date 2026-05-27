@@ -6,7 +6,7 @@ import {
   ref, uploadString, getDownloadURL, deleteObject,
 } from "firebase/storage";
 import { db, storage } from "./firebase";
-import type { Client, Certificate, BlogPost } from "./store";
+import type { Client, Certificate, BlogPost, Visitor } from "./store";
 
 // ─── Clients ─────────────────────────────────────────────────────────────────
 
@@ -131,4 +131,18 @@ export async function deleteBlogPost(id: string): Promise<void> {
     // cover may not exist — ignore
   }
   await deleteDoc(doc(db, "blogPosts", id));
+}
+
+// ─── Visitors ─────────────────────────────────────────────────────────────────
+
+export async function saveVisitor(visitor: Omit<Visitor, "id">): Promise<void> {
+  const id = `v-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+  await setDoc(doc(db, "visitors", id), { ...visitor, id });
+}
+
+export async function getVisitors(): Promise<Visitor[]> {
+  const snap = await getDocs(
+    query(collection(db, "visitors"), orderBy("timestamp", "desc"))
+  );
+  return snap.docs.map((d) => d.data() as Visitor);
 }

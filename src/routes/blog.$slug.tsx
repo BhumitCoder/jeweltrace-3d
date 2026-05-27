@@ -172,9 +172,19 @@ function PostPage() {
     <Layout>
       <article itemScope itemType="https://schema.org/BlogPosting">
 
-        {/* Cover image — full bleed */}
+          <div className="px-4 sm:px-6 pt-24 pb-4 mx-auto max-w-3xl">
+          {/* Back nav */}
+          <Link
+            to="/blog"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" /> Back to Journal
+          </Link>
+        </div>
+
+        {/* Cover image — full bleed below nav */}
         {post?.coverDataUrl && (
-          <div className="w-full h-[40vh] sm:h-[55vh] overflow-hidden">
+          <div className="w-full h-[45vh] sm:h-[55vh] overflow-hidden">
             <img
               src={post.coverDataUrl}
               alt={post.title}
@@ -185,14 +195,8 @@ function PostPage() {
           </div>
         )}
 
-        <div className="px-4 sm:px-6 pt-10 pb-32 mx-auto max-w-3xl">
-          {/* Back nav */}
-          <Link
-            to="/blog"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" /> Back to Journal
-          </Link>
+        <div className="px-4 sm:px-6 pt-8 pb-32 mx-auto max-w-3xl">
+          <span />
 
           {loaded && !post && (
             <div className="mt-16 text-center text-muted-foreground">

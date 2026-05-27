@@ -11,6 +11,7 @@ import {
   Trash2, Edit3, Eye, Gem, LayoutDashboard,
   Users, Search, Phone, Mail, X, Loader2,
 } from "lucide-react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/")({
   component: Dashboard,
@@ -203,6 +204,7 @@ function Dashboard() {
                             onClick={async () => {
                               if (confirm(`Delete client "${cl.name}"?`)) {
                                 await deleteClient(cl.id);
+                                toast.success("Client deleted", { description: cl.name });
                                 await refresh();
                               }
                             }}
@@ -301,6 +303,7 @@ function Dashboard() {
                             onClick={async () => {
                               if (confirm(`Delete certificate ${c.reportNo}?`)) {
                                 await deleteCertificate(c.id);
+                                toast.success("Certificate deleted", { description: c.reportNo });
                                 await refresh();
                               }
                             }}
@@ -395,6 +398,7 @@ function Dashboard() {
                             onClick={async () => {
                               if (confirm(`Delete "${p.title}"?`)) {
                                 await deleteBlogPost(p.id);
+                                toast.success("Post deleted", { description: p.title });
                                 await refresh();
                               }
                             }}

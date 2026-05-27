@@ -4,6 +4,7 @@ import { saveBlogPost, getBlogPostById } from "@/lib/db";
 import { slugify } from "@/lib/store";
 import type { BlogPost } from "@/lib/store";
 import { ArrowLeft, Save, Upload, Eye, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/blog/$id")({
   component: BlogEditor,
@@ -64,7 +65,12 @@ function BlogEditor() {
     try {
       const slug = post.slug || slugify(post.title);
       await saveBlogPost({ ...post, slug });
+      toast.success(isNew ? "Post published!" : "Post saved!", {
+        description: post.title,
+      });
       navigate({ to: "/admin" });
+    } catch {
+      toast.error("Failed to save post", { description: "Check your connection and try again." });
     } finally {
       setSaving(false);
     }

@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { toast } from "sonner";
 import { saveCertificate, getCertificate, getClients } from "@/lib/db";
 import {
   generateReportNo,
@@ -94,7 +95,12 @@ function CertEditor() {
     setSaving(true);
     try {
       await saveCertificate({ ...cert, createdAt: cert.createdAt || Date.now() });
+      toast.success(isNew ? "Certificate created!" : "Certificate saved!", {
+        description: cert.reportNo,
+      });
       navigate({ to: "/admin" });
+    } catch {
+      toast.error("Failed to save certificate", { description: "Check your connection and try again." });
     } finally {
       setSaving(false);
     }

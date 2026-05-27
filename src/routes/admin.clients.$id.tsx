@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getClient, saveClient } from "@/lib/db";
 import type { Client } from "@/lib/store";
 import { ArrowLeft, Save, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/clients/$id")({
   component: ClientEditor,
@@ -56,7 +57,12 @@ function ClientEditor() {
     setSaving(true);
     try {
       await saveClient({ ...client, createdAt: client.createdAt || Date.now() });
+      toast.success(isNew ? "Client created!" : "Client updated!", {
+        description: client.name,
+      });
       navigate({ to: "/admin" });
+    } catch {
+      toast.error("Failed to save client", { description: "Check your connection and try again." });
     } finally {
       setSaving(false);
     }

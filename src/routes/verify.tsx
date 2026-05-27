@@ -3,8 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { Layout } from "@/components/Layout";
 import { useSEO, breadcrumb, webAppSchema, howToVerify, SITE_URL } from "@/lib/seo";
 import { CertificateCard, CARD_W, CARD_H } from "@/components/CertificateCard";
-import { getCertificate, type Certificate } from "@/lib/store";
-import { Search, ShieldCheck, AlertCircle, Printer } from "lucide-react";
+import { getCertificate } from "@/lib/db";
+import type { Certificate } from "@/lib/store";
+import { Search, ShieldCheck, AlertCircle, Printer, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toPng } from "html-to-image";
 
@@ -67,19 +68,31 @@ function VerifyPage() {
   const search = useSearch({ from: "/verify" });
   const [query, setQuery]       = useState(search.id || "");
   const [searched, setSearched] = useState(false);
+  const [searching, setSearching] = useState(false);
   const [cert, setCert]         = useState<Certificate | undefined>();
 
   useEffect(() => {
     if (search.id) {
-      setCert(getCertificate(search.id));
-      setSearched(true);
+      setSearching(true);
+      getCertificate(search.id).then((found) => {
+        setCert(found);
+        setSearched(true);
+        setSearching(false);
+      });
     }
   }, [search.id]);
 
-  const onSearch = (e?: React.FormEvent) => {
+  const onSearch = async (e?: React.FormEvent) => {
     e?.preventDefault();
-    setCert(getCertificate(query.trim()));
+    const q = query.trim();
+    if (!q) return;
+    setSearching(true);
+    setCert(undefined);
+    setSearched(false);
+    const found = await getCertificate(q);
+    setCert(found);
     setSearched(true);
+    setSearching(false);
   };
 
   return (
@@ -102,9 +115,13 @@ function VerifyPage() {
             />
             <button
               type="submit"
-              className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-gradient-gold text-gold-foreground font-medium shadow-gold flex items-center gap-2 hover:scale-105 transition-transform text-sm whitespace-nowrap"
+              disabled={searching}
+              className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-gradient-gold text-gold-foreground font-medium shadow-gold flex items-center gap-2 hover:scale-105 transition-transform text-sm whitespace-nowrap disabled:opacity-60 disabled:scale-100"
             >
-              <Search className="w-4 h-4" /> <span className="hidden sm:inline">Verify</span><span className="sm:hidden">Go</span>
+              {searching
+                ? <><Loader2 className="w-4 h-4 animate-spin" /> <span className="hidden sm:inline">Searching…</span></>
+                : <><Search className="w-4 h-4" /> <span className="hidden sm:inline">Verify</span><span className="sm:hidden">Go</span></>
+              }
             </button>
           </form>
         </div>
@@ -113,7 +130,17 @@ function VerifyPage() {
       <section className="px-6 pb-32">
         <div className="mx-auto max-w-6xl">
           <AnimatePresence mode="wait">
-            {searched && !cert && (
+            {searching && (
+              <motion.div
+                key="searching"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                className="flex justify-center py-16"
+              >
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              </motion.div>
+            )}
+
+            {!searching && searched && !cert && (
               <motion.div
                 key="notfound"
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
@@ -127,7 +154,7 @@ function VerifyPage() {
               </motion.div>
             )}
 
-            {cert && (
+            {!searching && cert && (
               <motion.div
                 key={cert.id}
                 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
@@ -268,7 +295,6 @@ function FullDetails({ cert }: { cert: Certificate }) {
         <p className="text-xs text-muted-foreground mt-1">All information recorded on this certificate</p>
       </div>
 
-      {/* Report Info — always shown */}
       <Section title="Report Information">
         <DetailRow label="Report Number"  value={cert.reportNo} />
         <DetailRow label="Report Type"    value={cert.type} />
@@ -278,7 +304,6 @@ function FullDetails({ cert }: { cert: Certificate }) {
         <DetailRow label="Client"         value={cert.clientName} />
       </Section>
 
-      {/* Diamond grading — Natural / Lab Grown Diamond */}
       {isDiamond && (
         <Section title="Grading Details">
           <DetailRow label="Shape / Cut Style" value={cert.shape} />
@@ -293,7 +318,6 @@ function FullDetails({ cert }: { cert: Certificate }) {
         </Section>
       )}
 
-      {/* Gemstone grading */}
       {isGemstone && (
         <Section title="Gemstone Grading">
           <DetailRow label="Stone"                    value={cert.gemstoneStone} />
@@ -307,7 +331,6 @@ function FullDetails({ cert }: { cert: Certificate }) {
         </Section>
       )}
 
-      {/* Jewellery — Metal */}
       {isJewellery && (
         <Section title="Metal Details">
           <DetailRow label="Metal Tested"       value={cert.metal} />
@@ -317,7 +340,6 @@ function FullDetails({ cert }: { cert: Certificate }) {
         </Section>
       )}
 
-      {/* Jewellery — Diamond Details sub-section */}
       {hasDiamondDetails && (
         <Section title="Diamond Details">
           <DetailRow label="Shape and Cut"      value={cert.diamondShape} />
@@ -328,7 +350,6 @@ function FullDetails({ cert }: { cert: Certificate }) {
         </Section>
       )}
 
-      {/* Jewellery — Gemstone Details sub-section */}
       {hasGemstoneDetails && (
         <Section title="Gemstone Details">
           <DetailRow label="Stone"                    value={cert.gemstoneStone} />
@@ -342,7 +363,6 @@ function FullDetails({ cert }: { cert: Certificate }) {
         </Section>
       )}
 
-      {/* Remarks */}
       {cert.remarks && (
         <div className="px-6 py-5 border-t border-border/60">
           <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Remarks</div>

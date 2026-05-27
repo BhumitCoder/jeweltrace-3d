@@ -1,6 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { saveBlogPost, getBlogPostById, slugify, type BlogPost } from "@/lib/store";
+import { saveBlogPost, getBlogPostById } from "@/lib/db";
+import { slugify } from "@/lib/store";
+import type { BlogPost } from "@/lib/store";
 import { ArrowLeft, Save, Upload, Eye, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/admin/blog/$id")({
@@ -29,9 +31,10 @@ function BlogEditor() {
     if (isNew) {
       setPost(makePost());
     } else {
-      const found = getBlogPostById(id);
-      if (found) setPost(found);
-      else navigate({ to: "/admin" });
+      getBlogPostById(id).then((found) => {
+        if (found) setPost(found);
+        else navigate({ to: "/admin" });
+      });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -54,13 +57,17 @@ function BlogEditor() {
     r.readAsDataURL(file);
   };
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!post || saving) return;
     setSaving(true);
-    const slug = post.slug || slugify(post.title);
-    saveBlogPost({ ...post, slug });
-    navigate({ to: "/admin" });
+    try {
+      const slug = post.slug || slugify(post.title);
+      await saveBlogPost({ ...post, slug });
+      navigate({ to: "/admin" });
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (

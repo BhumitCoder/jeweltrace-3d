@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { getClient, saveClient, type Client } from "@/lib/store";
+import { getClient, saveClient } from "@/lib/db";
+import type { Client } from "@/lib/store";
 import { ArrowLeft, Save, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/admin/clients/$id")({
@@ -30,9 +31,10 @@ function ClientEditor() {
     if (isNew) {
       setClient(makeClient());
     } else {
-      const found = getClient(id);
-      if (found) setClient(found);
-      else navigate({ to: "/admin" });
+      getClient(id).then((found) => {
+        if (found) setClient(found);
+        else navigate({ to: "/admin" });
+      });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -48,12 +50,16 @@ function ClientEditor() {
   const set = <K extends keyof Client>(k: K, v: Client[K]) =>
     setClient((c) => (c ? { ...c, [k]: v } : c));
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!client || saving) return;
     setSaving(true);
-    saveClient({ ...client, createdAt: client.createdAt || Date.now() });
-    navigate({ to: "/admin" });
+    try {
+      await saveClient({ ...client, createdAt: client.createdAt || Date.now() });
+      navigate({ to: "/admin" });
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (

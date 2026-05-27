@@ -4,12 +4,12 @@ import {
   getCertificates, deleteCertificate,
   getBlogPosts, deleteBlogPost,
   getClients, deleteClient,
-  type Certificate, type BlogPost, type Client,
-} from "@/lib/store";
+} from "@/lib/db";
+import type { Certificate, BlogPost, Client } from "@/lib/store";
 import {
   Plus, FileText, Newspaper,
   Trash2, Edit3, Eye, Gem, LayoutDashboard,
-  Users, Search, Phone, Mail, X,
+  Users, Search, Phone, Mail, X, Loader2,
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin/")({
@@ -22,15 +22,22 @@ function Dashboard() {
   const [certs, setCerts]     = useState<Certificate[]>([]);
   const [posts, setPosts]     = useState<BlogPost[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
+  const [loading, setLoading] = useState(true);
   const [certSearch, setCertSearch]     = useState("");
   const [clientSearch, setClientSearch] = useState("");
   const [blogSearch, setBlogSearch]     = useState("");
   const [clientFilter, setClientFilter] = useState<Client | null>(null);
 
-  const refresh = () => {
-    setCerts(getCertificates());
-    setPosts(getBlogPosts());
-    setClients(getClients());
+  const refresh = async () => {
+    setLoading(true);
+    try {
+      const [c, p, cl] = await Promise.all([getCertificates(), getBlogPosts(), getClients()]);
+      setCerts(c);
+      setPosts(p);
+      setClients(cl);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => { refresh(); }, []);
@@ -79,10 +86,10 @@ function Dashboard() {
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
         {[
-          { label: "Clients",      value: clients.length, icon: Users    },
-          { label: "Certificates", value: certs.length,   icon: FileText },
-          { label: "Blog Posts",   value: posts.length,   icon: Newspaper},
-          { label: "Status",       value: "Live",         icon: Eye      },
+          { label: "Clients",      value: loading ? "—" : clients.length, icon: Users    },
+          { label: "Certificates", value: loading ? "—" : certs.length,   icon: FileText },
+          { label: "Blog Posts",   value: loading ? "—" : posts.length,   icon: Newspaper},
+          { label: "Status",       value: "Live",                          icon: Eye      },
         ].map((s) => (
           <div key={s.label} className="p-4 rounded-xl border border-border bg-card/60 backdrop-blur-sm shadow-elegant">
             <div className="flex items-center justify-between mb-2">
@@ -115,8 +122,14 @@ function Dashboard() {
         ))}
       </div>
 
+      {loading && (
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        </div>
+      )}
+
       {/* ── CLIENTS ── */}
-      {tab === "clients" && (
+      {!loading && tab === "clients" && (
         <div>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
             <h2 className="font-display text-xl">
@@ -187,10 +200,10 @@ function Dashboard() {
                           <ActionBtn
                             title="Delete"
                             danger
-                            onClick={() => {
+                            onClick={async () => {
                               if (confirm(`Delete client "${cl.name}"?`)) {
-                                deleteClient(cl.id);
-                                refresh();
+                                await deleteClient(cl.id);
+                                await refresh();
                               }
                             }}
                           >
@@ -208,7 +221,7 @@ function Dashboard() {
       )}
 
       {/* ── CERTIFICATES ── */}
-      {tab === "certs" && (
+      {!loading && tab === "certs" && (
         <div>
           {clientFilter && (
             <div className="flex items-center gap-3 mb-4 px-4 py-2.5 rounded-xl border border-primary/30 bg-primary/5 text-sm">
@@ -285,10 +298,10 @@ function Dashboard() {
                           <ActionBtn
                             title="Delete"
                             danger
-                            onClick={() => {
+                            onClick={async () => {
                               if (confirm(`Delete certificate ${c.reportNo}?`)) {
-                                deleteCertificate(c.id);
-                                refresh();
+                                await deleteCertificate(c.id);
+                                await refresh();
                               }
                             }}
                           >
@@ -306,7 +319,7 @@ function Dashboard() {
       )}
 
       {/* ── BLOG ── */}
-      {tab === "blog" && (
+      {!loading && tab === "blog" && (
         <div>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
             <h2 className="font-display text-xl">
@@ -379,10 +392,10 @@ function Dashboard() {
                           <ActionBtn
                             title="Delete"
                             danger
-                            onClick={() => {
+                            onClick={async () => {
                               if (confirm(`Delete "${p.title}"?`)) {
-                                deleteBlogPost(p.id);
-                                refresh();
+                                await deleteBlogPost(p.id);
+                                await refresh();
                               }
                             }}
                           >

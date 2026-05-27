@@ -1,8 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { saveCertificate, getCertificate, getClients } from "@/lib/db";
 import {
-  generateReportNo, saveCertificate, getCertificate, getClients,
+  generateReportNo,
   REPORT_TYPE_LABELS,
   type Certificate, type ReportType, type Client,
 } from "@/lib/store";
@@ -47,13 +48,14 @@ function CertEditor() {
   const [saving, setSaving]   = useState(false);
 
   useEffect(() => {
-    setClients(getClients());
+    getClients().then(setClients);
     if (isNew) {
       setCert(makeCert());
     } else {
-      const found = getCertificate(id);
-      if (found) setCert(found);
-      else navigate({ to: "/admin" });
+      getCertificate(id).then((found) => {
+        if (found) setCert(found);
+        else navigate({ to: "/admin" });
+      });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -86,12 +88,16 @@ function CertEditor() {
     r.readAsDataURL(file);
   };
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!cert || saving) return;
     setSaving(true);
-    saveCertificate({ ...cert, createdAt: cert.createdAt || Date.now() });
-    navigate({ to: "/admin" });
+    try {
+      await saveCertificate({ ...cert, createdAt: cert.createdAt || Date.now() });
+      navigate({ to: "/admin" });
+    } finally {
+      setSaving(false);
+    }
   };
 
   const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery";
@@ -383,7 +389,6 @@ function ClientPicker({
 
   return (
     <div className="relative">
-      {/* Trigger */}
       <button
         ref={triggerRef}
         type="button"
@@ -422,10 +427,8 @@ function ClientPicker({
         )}
       </button>
 
-      {/* Dropdown — portalled into body to escape all stacking contexts */}
       {open && createPortal(
         <div ref={ref} style={dropStyle} className="rounded-2xl border border-border bg-card shadow-[0_8px_40px_-4px_rgba(0,0,0,0.7)] overflow-hidden">
-          {/* Search */}
           <div className="p-2 border-b border-border">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground pointer-events-none" />
@@ -439,7 +442,6 @@ function ClientPicker({
             </div>
           </div>
 
-          {/* List */}
           <div className="max-h-60 overflow-y-auto">
             {filtered.length === 0 ? (
               <div className="px-4 py-8 text-center text-sm text-muted-foreground">No clients match your search.</div>
@@ -455,14 +457,12 @@ function ClientPicker({
                       isSelected ? "bg-primary/10" : "hover:bg-muted/30"
                     }`}
                   >
-                    <span className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
-                      isSelected ? "bg-gradient-gold text-gold-foreground" : "bg-muted/50 text-foreground/70"
-                    }`}>
+                    <span className="w-8 h-8 rounded-full bg-gradient-gold flex items-center justify-center text-[11px] font-bold text-gold-foreground shrink-0">
                       {clientInitials(cl.name)}
                     </span>
                     <span className="flex-1 min-w-0">
                       <span className="block text-sm font-medium text-foreground truncate">{cl.name}</span>
-                      <span className="block text-xs text-muted-foreground truncate">{cl.phone}{cl.email ? ` · ${cl.email}` : ""}</span>
+                      <span className="block text-xs text-muted-foreground truncate">{cl.phone}</span>
                     </span>
                     {isSelected && <Check className="w-4 h-4 text-primary shrink-0" />}
                   </button>
@@ -470,18 +470,19 @@ function ClientPicker({
               })
             )}
           </div>
-        </div>
-      , document.body)}
+        </div>,
+        document.body
+      )}
     </div>
   );
 }
 
-function Card({ title, sub, children }: { title: string; sub?: string; children: React.ReactNode }) {
+function Card({ title, sub, children }: { title: string; sub: string; children: React.ReactNode }) {
   return (
     <div className="p-6 rounded-2xl border border-border bg-card/60 backdrop-blur-sm shadow-elegant">
       <div className="mb-5">
         <h2 className="font-display text-lg">{title}</h2>
-        {sub && <p className="text-xs text-muted-foreground mt-0.5">{sub}</p>}
+        <p className="text-xs text-muted-foreground mt-0.5">{sub}</p>
       </div>
       {children}
     </div>

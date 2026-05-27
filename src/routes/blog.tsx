@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { useSEO, breadcrumb, SITE_URL } from "@/lib/seo";
-import { getBlogPosts } from "@/lib/store";
+import { getBlogPosts } from "@/lib/db";
 import { useEffect, useState } from "react";
 import type { BlogPost } from "@/lib/store";
 import { Calendar, ArrowRight } from "lucide-react";
@@ -12,7 +12,10 @@ export const Route = createFileRoute("/blog")({
 
 function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
-  useEffect(() => setPosts(getBlogPosts()), []);
+
+  useEffect(() => {
+    getBlogPosts().then(setPosts);
+  }, []);
 
   useSEO({
     title: "JewelsReport Journal — Diamond, Gemstone & Jewellery Industry Insights",

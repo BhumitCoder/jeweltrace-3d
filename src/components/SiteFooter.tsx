@@ -45,7 +45,7 @@ export function SiteFooter() {
             <li><Link to="/verify" className="text-muted-foreground hover:text-primary transition-colors">Verify Report</Link></li>
             <li><Link to="/blog" className="text-muted-foreground hover:text-primary transition-colors">Blog</Link></li>
             <li><Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">Contact</Link></li>
-            <li><Link to="/admin" className="text-muted-foreground/50 hover:text-primary transition-colors text-xs">Admin</Link></li>
+
           </ul>
         </div>
       </div>

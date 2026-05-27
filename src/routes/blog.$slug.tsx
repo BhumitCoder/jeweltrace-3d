@@ -1,7 +1,7 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { useSEO, SITE_URL, breadcrumb } from "@/lib/seo";
-import { getBlogPost } from "@/lib/store";
+import { getBlogPost } from "@/lib/db";
 import { useEffect, useState } from "react";
 import type { BlogPost } from "@/lib/store";
 import { ArrowLeft, Calendar, User } from "lucide-react";
@@ -16,8 +16,10 @@ function PostPage() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    setPost(getBlogPost(slug));
-    setLoaded(true);
+    getBlogPost(slug).then((found) => {
+      setPost(found);
+      setLoaded(true);
+    });
   }, [slug]);
 
   const wordCount = post?.content ? post.content.trim().split(/\s+/).length : undefined;

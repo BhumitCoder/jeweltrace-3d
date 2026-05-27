@@ -34,10 +34,54 @@ const testimonials = [
 ];
 
 const faqs = [
-  { q: "What format is the certificate?", a: "Every report is issued on a secure, tamper-proof PVC certificate with holographic foil and a unique QR code." },
-  { q: "How do I verify a card?", a: "Scan the QR on the card, or enter the report number on the Verify page — full details appear instantly." },
-  { q: "Can the card be forged?", a: "Each card carries holographic foil, guilloché micro-pattern and a unique server-verified report number." },
-  { q: "How long does grading take?", a: "Standard turnaround is 3 business days. Express service is available on request." },
+  {
+    q: "What is a JewelsReport diamond certificate?",
+    a: "A JewelsReport certificate is an independent, third-party grading report issued after scientific analysis of a diamond or gemstone. It documents the 4Cs (Cut, Colour, Clarity, Carat), fluorescence, measurements, and origin. Every report is printed on a tamper-proof PVC card with holographic foil and a unique QR code for instant online verification.",
+  },
+  {
+    q: "What format is the JewelsReport certificate?",
+    a: "Every report is issued on a secure, credit-card-sized PVC certificate featuring holographic foil, a guilloché micro-pattern, a unique report number, and a QR code that links directly to the live laboratory record.",
+  },
+  {
+    q: "How do I verify a JewelsReport certificate?",
+    a: "Scan the QR code on the card with any smartphone camera, or visit jewelsreport.com/verify and enter the report number. Full grading details appear instantly — no login or registration required.",
+  },
+  {
+    q: "Can a JewelsReport certificate be faked or forged?",
+    a: "It is extremely difficult. Each card carries holographic foil, guilloché micro-print security features, and a unique report number that is cross-checked against our live server. Any duplicate or altered number will fail verification immediately.",
+  },
+  {
+    q: "How long does diamond grading take?",
+    a: "Standard turnaround is 3 working days from submission. Express 24-hour service is available on request for urgent orders. Bulk orders from wholesalers are handled on dedicated schedules.",
+  },
+  {
+    q: "Does JewelsReport certify lab grown diamonds?",
+    a: "Yes. JewelsReport issues separate grading reports for CVD and HPHT lab-grown diamonds with full origin disclosure. The report clearly states 'Lab Grown Diamond' and includes the same 4Cs analysis as natural diamond reports.",
+  },
+  {
+    q: "What is the difference between CVD and HPHT on a certificate?",
+    a: "CVD (Chemical Vapour Deposition) and HPHT (High Pressure High Temperature) refer to the two methods of growing diamonds in a laboratory. JewelsReport identifies the growth method using advanced spectroscopy and discloses it on the certificate, so buyers always know exactly what they are purchasing.",
+  },
+  {
+    q: "Is JewelsReport accepted by jewellers and buyers internationally?",
+    a: "JewelsReport is trusted by diamond wholesalers, retailers, and independent appraisers across India and internationally. Our standards are aligned with global gemological practice, and our QR-based verification system works worldwide with any smartphone.",
+  },
+  {
+    q: "Does JewelsReport certify coloured gemstones — rubies, emeralds, sapphires?",
+    a: "Yes. JewelsReport issues gemstone reports for all coloured stones including ruby, emerald, sapphire, tanzanite, spinel and more. Reports include colour grade, clarity, origin determination (where possible) and any treatment disclosure such as heat treatment or fracture filling.",
+  },
+  {
+    q: "What does the fluorescence grade on a diamond certificate mean?",
+    a: "Fluorescence describes how a diamond glows under ultraviolet (UV) light. JewelsReport grades fluorescence from None to Very Strong and notes the colour (usually blue). In most cases, faint fluorescence has no visible effect on appearance, but strong fluorescence can make some diamonds look hazy in daylight — which is why it is always disclosed on the certificate.",
+  },
+  {
+    q: "Can I get a certificate for a diamond already set in jewellery?",
+    a: "JewelsReport offers both loose-stone grading and mounted jewellery reports. For mounted stones, some measurements and clarity assessments are estimated. For a complete 4Cs report with full precision, loose-stone grading is recommended.",
+  },
+  {
+    q: "How much does a JewelsReport certificate cost?",
+    a: "Pricing is based on stone type, carat weight, and turnaround time. Contact us directly via phone (+91-9967381180) or email (reports@jewelsreport.com) for current rates. Wholesale packages are available for high-volume submitters.",
+  },
 ];
 
 function useCardWidth(max = 420) {

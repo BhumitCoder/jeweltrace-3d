@@ -146,3 +146,11 @@ export async function getVisitors(): Promise<Visitor[]> {
   );
   return snap.docs.map((d) => d.data() as Visitor);
 }
+
+export async function deleteVisitor(id: string): Promise<void> {
+  await deleteDoc(doc(db, "visitors", id));
+}
+
+export async function deleteVisitors(ids: string[]): Promise<void> {
+  await Promise.all(ids.map((id) => deleteDoc(doc(db, "visitors", id))));
+}

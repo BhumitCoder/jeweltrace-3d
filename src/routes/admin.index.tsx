@@ -4,7 +4,7 @@ import {
   getCertificates, deleteCertificate,
   getBlogPosts, deleteBlogPost,
   getClients, deleteClient,
-  getVisitors,
+  getVisitors, deleteVisitor, deleteVisitors,
 } from "@/lib/db";
 import type { Certificate, BlogPost, Client, Visitor } from "@/lib/store";
 import {
@@ -12,6 +12,7 @@ import {
   Trash2, Edit3, Eye, Gem, LayoutDashboard,
   Users, Search, Phone, Mail, X, Loader2,
   MapPin, Globe, Monitor, Smartphone, Tablet, Activity,
+  Filter, CalendarDays, ArrowUpRight, Wifi,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -31,6 +32,8 @@ function Dashboard() {
   const [clientSearch, setClientSearch] = useState("");
   const [blogSearch, setBlogSearch]     = useState("");
   const [visitorSearch, setVisitorSearch] = useState("");
+  const [visitorDateFilter, setVisitorDateFilter] = useState<"today" | "yesterday" | "7d" | "30d" | "all">("all");
+  const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set());
   const [clientFilter, setClientFilter] = useState<Client | null>(null);
 
   const refresh = async () => {
@@ -83,7 +86,24 @@ function Dashboard() {
     );
   });
 
+  // Date range helpers
+  const now = Date.now();
+  const startOfDay = (offset = 0) => {
+    const d = new Date(); d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() - offset); return d.getTime();
+  };
+  const dateRanges: Record<string, [number, number]> = {
+    today:     [startOfDay(0), now],
+    yesterday: [startOfDay(1), startOfDay(0) - 1],
+    "7d":      [now - 7  * 86400000, now],
+    "30d":     [now - 30 * 86400000, now],
+    all:       [0, now],
+  };
+  const [rangeStart, rangeEnd] = dateRanges[visitorDateFilter];
+
   const filteredVisitors = visitors.filter((v) => {
+    if (v.timestamp < rangeStart || v.timestamp > rangeEnd) return false;
+    if (!visitorSearch) return true;
     const q = visitorSearch.toLowerCase();
     return (
       (v.ip ?? "").includes(q) ||
@@ -96,14 +116,29 @@ function Dashboard() {
   });
 
   // Visitor stats
-  const todayStart = new Date();
-  todayStart.setHours(0, 0, 0, 0);
-  const todayVisitors = visitors.filter(v => v.timestamp >= todayStart.getTime());
+  const todayStart2 = startOfDay(0);
+  const todayVisitors = visitors.filter(v => v.timestamp >= todayStart2);
   const uniqueIPs = new Set(visitors.map(v => v.ip).filter(Boolean)).size;
   const deviceBreakdown = visitors.reduce<Record<string, number>>((acc, v) => {
     acc[v.device] = (acc[v.device] || 0) + 1;
     return acc;
   }, {});
+
+  const handleDeleteVisitor = async (id: string) => {
+    setDeletingIds(prev => new Set(prev).add(id));
+    await deleteVisitor(id);
+    setVisitors(prev => prev.filter(v => v.id !== id));
+    setDeletingIds(prev => { const s = new Set(prev); s.delete(id); return s; });
+    toast.success("Visitor record deleted");
+  };
+
+  const handleDeleteFiltered = async () => {
+    if (!confirm(`Delete all ${filteredVisitors.length} visible visitor records?`)) return;
+    const ids = filteredVisitors.map(v => v.id);
+    await deleteVisitors(ids);
+    setVisitors(prev => prev.filter(v => !ids.includes(v.id)));
+    toast.success(`Deleted ${ids.length} visitor records`);
+  };
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-10">
@@ -449,116 +484,159 @@ function Dashboard() {
       {/* ── VISITORS ── */}
       {!loading && tab === "visitors" && (
         <div>
-          {/* Visitor stats mini-cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-            <MiniStat label="Today" value={todayVisitors.length} />
-            <MiniStat label="Unique IPs" value={uniqueIPs} />
-            <MiniStat label="Mobile" value={deviceBreakdown["Mobile"] ?? 0} />
-            <MiniStat label="Desktop" value={deviceBreakdown["Desktop"] ?? 0} />
+          {/* Stats row */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-7">
+            {[
+              { label: "Today", value: todayVisitors.length, color: "text-emerald-400" },
+              { label: "Unique IPs", value: uniqueIPs, color: "text-blue-400" },
+              { label: "Mobile", value: deviceBreakdown["Mobile"] ?? 0, color: "text-violet-400" },
+              { label: "Desktop", value: deviceBreakdown["Desktop"] ?? 0, color: "text-amber-400" },
+            ].map((s) => (
+              <div key={s.label} className="p-4 rounded-xl border border-border bg-card/60 flex items-center gap-3">
+                <div className={`font-display text-3xl ${s.color}`}>{s.value}</div>
+                <div className="text-xs uppercase tracking-widest text-muted-foreground leading-tight">{s.label}</div>
+              </div>
+            ))}
           </div>
 
+          {/* Controls */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
-            <h2 className="font-display text-xl">
-              Visitor Log
-              <span className="ml-2 text-sm font-sans text-muted-foreground font-normal">
-                ({filteredVisitors.length})
-              </span>
-            </h2>
-            <SearchBox value={visitorSearch} onChange={setVisitorSearch} placeholder="Search IP, city, page…" />
+            <div className="flex items-center gap-2 flex-wrap">
+              <Filter className="w-4 h-4 text-muted-foreground" />
+              {(["today","yesterday","7d","30d","all"] as const).map((f) => (
+                <button
+                  key={f}
+                  onClick={() => setVisitorDateFilter(f)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all border ${
+                    visitorDateFilter === f
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
+                  }`}
+                >
+                  {f === "today" ? "Today" : f === "yesterday" ? "Yesterday" : f === "7d" ? "Last 7 days" : f === "30d" ? "Last 30 days" : "All time"}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-2">
+              <SearchBox value={visitorSearch} onChange={setVisitorSearch} placeholder="IP, city, page…" />
+              {filteredVisitors.length > 0 && (
+                <button
+                  onClick={handleDeleteFiltered}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full border border-destructive/30 text-destructive text-xs hover:bg-destructive/10 transition-colors"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  Delete {filteredVisitors.length > 1 ? `all ${filteredVisitors.length}` : ""}
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="text-sm text-muted-foreground mb-4">
+            {filteredVisitors.length} visit{filteredVisitors.length !== 1 ? "s" : ""} found
           </div>
 
           {filteredVisitors.length === 0 ? (
-            <Empty msg="No visitor records yet — visits are tracked 5 seconds after page load." />
+            <Empty msg={visitors.length === 0 ? "No visitor records yet — visits are tracked 5 s after page load." : "No visits in this date range."} />
           ) : (
-            <div className="space-y-3">
-              {filteredVisitors.map((v) => (
-                <div
-                  key={v.id}
-                  className="rounded-xl border border-border bg-card p-4 hover:border-primary/30 transition-colors"
-                >
-                  <div className="flex flex-wrap items-start gap-x-6 gap-y-2">
-                    {/* Time + page */}
-                    <div className="min-w-0">
-                      <div className="text-xs text-muted-foreground mb-0.5">
-                        {new Date(v.timestamp).toLocaleString("en-GB", {
-                          day: "numeric", month: "short", year: "numeric",
-                          hour: "2-digit", minute: "2-digit",
-                        })}
+            <div className="space-y-2">
+              {filteredVisitors.map((v) => {
+                const DevIcon = v.device === "Mobile" ? Smartphone : v.device === "Tablet" ? Tablet : Monitor;
+                const locBadge =
+                  v.locationSource === "browser"
+                    ? { label: "GPS", cls: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20" }
+                    : v.locationSource === "ip"
+                      ? { label: "IP loc", cls: "bg-amber-500/15 text-amber-400 border-amber-500/20" }
+                      : { label: "Denied", cls: "bg-muted/30 text-muted-foreground border-border" };
+
+                return (
+                  <div
+                    key={v.id}
+                    className="group rounded-xl border border-border bg-card hover:border-primary/30 transition-colors overflow-hidden"
+                  >
+                    {/* Top bar: time + page + delete */}
+                    <div className="flex items-center justify-between px-4 py-2.5 border-b border-border/50 bg-muted/20">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <CalendarDays className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+                        <span className="text-xs text-muted-foreground">
+                          {new Date(v.timestamp).toLocaleString("en-GB", {
+                            day: "numeric", month: "short", year: "numeric",
+                            hour: "2-digit", minute: "2-digit",
+                          })}
+                        </span>
+                        <span className="text-muted-foreground/40">·</span>
+                        <span className="font-mono text-xs text-foreground/80 truncate max-w-[160px]">{v.page || "/"}</span>
                       </div>
-                      <div className="font-mono text-sm text-foreground/90 truncate max-w-[200px]">
-                        {v.page || "/"}
-                      </div>
+                      <button
+                        onClick={() => handleDeleteVisitor(v.id)}
+                        disabled={deletingIds.has(v.id)}
+                        className="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all ml-2 shrink-0"
+                        title="Delete"
+                      >
+                        {deletingIds.has(v.id)
+                          ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          : <Trash2 className="w-3.5 h-3.5" />
+                        }
+                      </button>
                     </div>
 
-                    {/* Location */}
-                    <div className="flex items-start gap-1.5 min-w-0">
-                      <MapPin className="w-3.5 h-3.5 text-primary/60 mt-0.5 shrink-0" />
-                      <div>
-                        <div className="text-sm font-medium">
-                          {[v.city, v.region, v.country].filter(Boolean).join(", ") || "Unknown location"}
+                    {/* Content */}
+                    <div className="px-4 py-3 flex flex-wrap gap-x-6 gap-y-2.5 items-center">
+                      {/* Location */}
+                      <div className="flex items-center gap-2 min-w-[180px]">
+                        <MapPin className="w-4 h-4 text-primary/50 shrink-0" />
+                        <div>
+                          <div className="text-sm font-medium leading-tight">
+                            {[v.city, v.country].filter(Boolean).join(", ") || "Unknown"}
+                          </div>
+                          <div className="text-xs text-muted-foreground font-mono leading-tight mt-0.5">{v.ip || "—"}</div>
                         </div>
-                        <div className="text-xs text-muted-foreground font-mono">
-                          {v.ip || "—"}
-                          {v.locationSource === "browser" && (
-                            <span className="ml-2 text-emerald-500 font-sans">● GPS</span>
-                          )}
-                          {v.locationSource === "ip" && (
-                            <span className="ml-2 text-amber-500 font-sans">● IP</span>
-                          )}
-                          {v.locationSource === "denied" && (
-                            <span className="ml-2 text-muted-foreground font-sans">● Denied</span>
-                          )}
-                        </div>
+                        <span className={`ml-1 text-[10px] px-1.5 py-0.5 rounded-full border font-medium ${locBadge.cls}`}>
+                          {locBadge.label}
+                        </span>
                       </div>
-                    </div>
 
-                    {/* Lat/lon if browser GPS */}
-                    {v.lat && v.lon && (
-                      <div className="flex items-center gap-1.5">
-                        <Globe className="w-3.5 h-3.5 text-primary/60 shrink-0" />
+                      {/* GPS coords */}
+                      {v.lat && v.lon && (
                         <a
                           href={`https://maps.google.com/?q=${v.lat},${v.lon}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-xs text-primary hover:underline font-mono"
+                          className="inline-flex items-center gap-1 text-xs text-primary hover:underline font-mono"
                         >
+                          <Globe className="w-3.5 h-3.5" />
                           {v.lat.toFixed(4)}, {v.lon.toFixed(4)}
+                          <ArrowUpRight className="w-3 h-3" />
                         </a>
-                      </div>
-                    )}
-
-                    {/* Device */}
-                    <div className="flex items-center gap-1.5">
-                      {v.device === "Mobile" ? (
-                        <Smartphone className="w-3.5 h-3.5 text-primary/60" />
-                      ) : v.device === "Tablet" ? (
-                        <Tablet className="w-3.5 h-3.5 text-primary/60" />
-                      ) : (
-                        <Monitor className="w-3.5 h-3.5 text-primary/60" />
                       )}
-                      <div>
-                        <div className="text-sm">{v.browser} · {v.os}</div>
-                        <div className="text-xs text-muted-foreground">{v.device} · {v.screenWidth}×{v.screenHeight}</div>
+
+                      {/* Device */}
+                      <div className="flex items-center gap-1.5">
+                        <DevIcon className="w-4 h-4 text-muted-foreground shrink-0" />
+                        <span className="text-sm text-foreground/80">{v.browser}</span>
+                        <span className="text-muted-foreground/50">·</span>
+                        <span className="text-xs text-muted-foreground">{v.os}</span>
+                        <span className="text-muted-foreground/50">·</span>
+                        <span className="text-xs text-muted-foreground">{v.screenWidth}×{v.screenHeight}</span>
                       </div>
+
+                      {/* ISP */}
+                      {v.isp && (
+                        <div className="flex items-center gap-1.5">
+                          <Wifi className="w-3.5 h-3.5 text-muted-foreground/50 shrink-0" />
+                          <span className="text-xs text-muted-foreground truncate max-w-[160px]">{v.isp}</span>
+                        </div>
+                      )}
+
+                      {/* Referrer */}
+                      {v.referrer && (
+                        <div className="text-xs text-muted-foreground truncate max-w-[200px]" title={v.referrer}>
+                          From: {v.referrer}
+                        </div>
+                      )}
                     </div>
-
-                    {/* ISP / Timezone */}
-                    {(v.isp || v.timezone) && (
-                      <div className="text-xs text-muted-foreground leading-relaxed">
-                        {v.isp && <div className="truncate max-w-[180px]">{v.isp}</div>}
-                        {v.timezone && <div>{v.timezone}</div>}
-                      </div>
-                    )}
-
-                    {/* Referrer */}
-                    {v.referrer && (
-                      <div className="text-xs text-muted-foreground truncate max-w-[180px]" title={v.referrer}>
-                        From: {v.referrer}
-                      </div>
-                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

@@ -4,7 +4,8 @@
   ╔══════════════════════════════════════════════════════════════════════════════╗
   ║  JewelsReport — Google News Sitemap                                         ║
   ║  https://www.jewelsreport.com/sitemap-news.xml                              ║
-  ║  Covers: JewelsReport Journal (blog) — gemological industry news            ║
+  ║  Covers: JewelsReport Journal — 10 SEO-optimised gemological articles       ║
+  ║  Last updated: 2026-05-26                                                   ║
   ╚══════════════════════════════════════════════════════════════════════════════╝
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -17,15 +18,132 @@
           http://www.google.com/schemas/sitemap-news/0.9/sitemap-news.xsd">
 
   <url>
-    <loc>https://www.jewelsreport.com/blog</loc>
+    <loc>https://www.jewelsreport.com/blog/how-to-verify-diamond-certificate-online-step-by-step</loc>
+    <news:news>
+      <news:publication>
+        <news:name>JewelsReport Journal</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-05-26</news:publication_date>
+      <news:title>How to Verify a Diamond Certificate Online: A Complete Step-by-Step Guide</news:title>
+      <news:keywords>verify diamond certificate, JewelsReport verify, certificate authentication, QR diamond verification</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/diamond-clarity-grades-explained-fl-if-vvs-vs-si-included</loc>
+    <news:news>
+      <news:publication>
+        <news:name>JewelsReport Journal</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-05-23</news:publication_date>
+      <news:title>Diamond Clarity Grades Explained: From Flawless to Included — A Deep Dive</news:title>
+      <news:keywords>diamond clarity grades, FL IF VVS VS SI clarity, eye-clean diamond, diamond clarity scale</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/lab-grown-diamond-jewellery-indian-weddings-bridal-guide</loc>
+    <news:news>
+      <news:publication>
+        <news:name>JewelsReport Journal</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-05-21</news:publication_date>
+      <news:title>Lab Grown Diamond Jewellery for Indian Weddings: A Complete Bridal Guide</news:title>
+      <news:keywords>lab grown diamond India wedding, bridal diamond jewellery, lab diamond engagement ring India</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/ruby-emerald-sapphire-coloured-gemstone-certification-grading</loc>
     <news:news>
       <news:publication>
         <news:name>JewelsReport Journal</news:name>
         <news:language>en</news:language>
       </news:publication>
       <news:publication_date>2026-05-19</news:publication_date>
-      <news:title>Diamond, Gemstone &amp; Jewellery Certification Insights — JewelsReport Journal</news:title>
-      <news:keywords>diamond certification, lab grown diamond, CVD diamond, HPHT diamond, gemstone report, jewellery appraisal, 4Cs grading, QR certificate verification, Surat diamond lab, PVC gemological certificate</news:keywords>
+      <news:title>Ruby, Emerald and Sapphire Certification: How Coloured Gemstones Are Graded</news:title>
+      <news:keywords>ruby certification, emerald grading, sapphire certification, coloured gemstone report, heat treatment detection</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/why-diamond-gemological-certificate-important-before-buying</loc>
+    <news:news>
+      <news:publication>
+        <news:name>JewelsReport Journal</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-05-17</news:publication_date>
+      <news:title>Why Every Diamond Needs a Gemological Certificate Before You Buy</news:title>
+      <news:keywords>diamond certificate important, independent diamond grading, certified diamond buying, JewelsReport certification</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/diamond-fluorescence-explained-effect-on-value-certificate</loc>
+    <news:news>
+      <news:publication>
+        <news:name>JewelsReport Journal</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-05-14</news:publication_date>
+      <news:title>Diamond Fluorescence: What It Is, How It Affects Value and What Your Certificate Says</news:title>
+      <news:keywords>diamond fluorescence, blue fluorescence diamonds, fluorescence effect on value, UV diamond fluorescence</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/cvd-vs-hpht-lab-grown-diamonds-differences-explained</loc>
+    <news:news>
+      <news:publication>
+        <news:name>JewelsReport Journal</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-05-11</news:publication_date>
+      <news:title>CVD vs HPHT Diamonds: Understanding How Lab Grown Diamonds Are Created</news:title>
+      <news:keywords>CVD vs HPHT diamonds, CVD diamond differences, HPHT lab grown diamonds, lab grown diamond types</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/how-to-read-diamond-certificate-jewelsreport-guide</loc>
+    <news:news>
+      <news:publication>
+        <news:name>JewelsReport Journal</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-05-08</news:publication_date>
+      <news:title>How to Read a Diamond Certificate: Understanding Your JewelsReport Card</news:title>
+      <news:keywords>how to read diamond certificate, JewelsReport certificate guide, diamond grading report explained</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/lab-grown-diamonds-vs-natural-diamonds-buyers-guide-2026</loc>
+    <news:news>
+      <news:publication>
+        <news:name>JewelsReport Journal</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-05-05</news:publication_date>
+      <news:title>Lab Grown Diamonds vs Natural Diamonds: The Complete 2026 Buyer's Guide</news:title>
+      <news:keywords>lab grown diamonds vs natural, lab diamond guide 2026, CVD diamond buyer guide, lab grown diamond price India</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/4cs-diamond-grading-cut-colour-clarity-carat</loc>
+    <news:news>
+      <news:publication>
+        <news:name>JewelsReport Journal</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-05-01</news:publication_date>
+      <news:title>The 4Cs of Diamond Grading Explained: Cut, Colour, Clarity &amp; Carat</news:title>
+      <news:keywords>4Cs diamond grading, diamond cut colour clarity carat, diamond quality guide, JewelsReport 4Cs explained</news:keywords>
     </news:news>
   </url>
 

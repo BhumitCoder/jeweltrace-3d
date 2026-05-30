@@ -98,7 +98,6 @@ function BackSide({ cert, verifyUrl, hideDisclaimer, compact }: { cert: Certific
         ["Gross Weight",            withGrm(cert.grossWeight)],
         ["Net Weight",              withGrm(cert.netWeight)],
         ["Origin",                  cert.origin],
-        ["Client",                  cert.clientName],
       ].filter(([, v]) => v) as [string, string][]
     : isGemstone
     ? [
@@ -111,7 +110,6 @@ function BackSide({ cert, verifyUrl, hideDisclaimer, compact }: { cert: Certific
         ["Measurements",           cert.gemstoneMeasurements],
         ["Color and Transparency", cert.gemstoneColorTransparency],
         ["Characteristics",        cert.gemstoneCharacteristics],
-        ["Client",                 cert.clientName],
       ].filter(([, v]) => v) as [string, string][]
     : [
         ["Jewelry Report Number", cert.reportNo],
@@ -126,7 +124,6 @@ function BackSide({ cert, verifyUrl, hideDisclaimer, compact }: { cert: Certific
         ["Symmetry",              cert.symmetry],
         ["Fluorescence",          cert.fluorescence],
         ["Origin",                cert.origin],
-        ["Client",                cert.clientName],
       ].filter(([, v]) => v) as [string, string][];
 
   return (

@@ -301,7 +301,6 @@ function FullDetails({ cert }: { cert: Certificate }) {
         <DetailRow label="Issue Date"     value={cert.issueDate} />
         <DetailRow label="Item"           value={cert.itemName} />
         <DetailRow label="Origin"         value={cert.origin} />
-        <DetailRow label="Client"         value={cert.clientName} />
       </Section>
 
       {isDiamond && (

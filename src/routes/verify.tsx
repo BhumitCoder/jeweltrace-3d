@@ -195,7 +195,12 @@ function CardPreview({ cert }: { cert: Certificate }) {
         <title>JewelsReport Certificate ${cert.reportNo}</title>
         <style>
           @page { size: 85.6mm 53.98mm; margin: 0; }
-          *, *::before, *::after { box-sizing: border-box; }
+          *, *::before, *::after {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
           html, body { margin: 0; padding: 0; background: white; }
           .page {
             width: 85.6mm; height: 53.98mm;

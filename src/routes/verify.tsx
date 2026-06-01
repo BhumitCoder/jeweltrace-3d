@@ -186,22 +186,25 @@ function CardPreview({ cert }: { cert: Certificate }) {
     if (!frontRef.current || !backRef.current) return;
     setPrinting(true);
     try {
+      const opts = {
+        width: CARD_W, height: CARD_H, pixelRatio: 4,
+        skipFonts: true,
+        filter: () => true,
+      };
       const [frontPng, backPng] = await Promise.all([
-        toPng(frontRef.current, { width: CARD_W, height: CARD_H, pixelRatio: 4, skipFonts: true }),
-        toPng(backRef.current,  { width: CARD_W, height: CARD_H, pixelRatio: 4, skipFonts: true }),
+        toPng(frontRef.current, opts),
+        toPng(backRef.current,  opts),
       ]);
 
       const win = window.open("", "_blank");
-      if (!win) return;
-      win.document.write(`<!DOCTYPE html><html><head><title>JewelsReport Certificate ${cert.reportNo}</title>
+      if (!win) { setPrinting(false); return; }
+      win.document.write(`<!DOCTYPE html><html><head>
+        <title>JewelsReport Certificate ${cert.reportNo}</title>
         <style>
           @page { size: 85.6mm 53.98mm; margin: 0; }
           * { margin: 0; padding: 0; box-sizing: border-box; }
           body { background: white; }
-          .page {
-            width: 85.6mm; height: 53.98mm;
-            page-break-after: always; break-after: page;
-          }
+          .page { width: 85.6mm; height: 53.98mm; page-break-after: always; break-after: page; }
           .page:last-child { page-break-after: avoid; break-after: avoid; }
           img { width: 85.6mm; height: 53.98mm; display: block; }
         </style></head><body>
@@ -209,7 +212,9 @@ function CardPreview({ cert }: { cert: Certificate }) {
         <div class="page"><img src="${backPng}" /></div>
       </body></html>`);
       win.document.close();
-      win.onload = () => { win.focus(); win.print(); win.close(); };
+      win.onload = () => { win.focus(); win.print(); };
+    } catch (err) {
+      console.error("Print failed:", err);
     } finally {
       setPrinting(false);
     }

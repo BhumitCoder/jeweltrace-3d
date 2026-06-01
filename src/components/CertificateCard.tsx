@@ -49,7 +49,7 @@ function FrontSide({ cert, showDescription }: { cert: Certificate; showDescripti
       background: "#F8F5EF", position: "relative",
     }}>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0, position: "relative", zIndex: 1 }}>
-        <img src={logo} alt="JewelsReport" crossOrigin="anonymous"
+        <img src={logo} alt="JewelsReport"
           style={{ height: 160, width: 160, objectFit: "contain", marginBottom: 28 }} />
         <div style={{ width: 220, height: 2, background: "linear-gradient(90deg,transparent,#B8922A,transparent)", marginBottom: 20 }} />
         <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 56, lineHeight: 1, color: "#111111", letterSpacing: "-0.01em", textAlign: "center", fontWeight: 400 }}>
@@ -137,7 +137,7 @@ function BackSide({ cert, verifyUrl, hideDisclaimer, compact }: { cert: Certific
         boxSizing: "border-box",
       }}>
         {/* Watermark */}
-        <img src={logo} alt="" crossOrigin="anonymous" style={{
+        <img src={logo} alt="" style={{
           position: "absolute", width: 260, height: 260, objectFit: "contain",
           opacity: 0.045, pointerEvents: "none",
           left: "50%", top: "50%",
@@ -147,7 +147,7 @@ function BackSide({ cert, verifyUrl, hideDisclaimer, compact }: { cert: Certific
 
         {/* Logo row */}
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: compact ? 5 : 8, position: "relative", zIndex: 1 }}>
-          <img src={logo} alt="JewelsReport" crossOrigin="anonymous" style={{ height: compact ? 48 : 58, width: compact ? 48 : 58, objectFit: "contain" }} />
+          <img src={logo} alt="JewelsReport" style={{ height: compact ? 48 : 58, width: compact ? 48 : 58, objectFit: "contain" }} />
           <div>
             <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: compact ? 25 : 28, color: "#111111", lineHeight: 1, letterSpacing: "-0.01em", fontWeight: 400 }}>
               Jewels<span style={{ color: "#B8922A" }}>Report</span>
@@ -306,7 +306,7 @@ function BackSide({ cert, verifyUrl, hideDisclaimer, compact }: { cert: Certific
                 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
             ) : (
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-                <img src={logo} alt="" crossOrigin="anonymous" style={{ height: 56, width: 56, objectFit: "contain", opacity: 0.18 }} />
+                <img src={logo} alt="" style={{ height: 56, width: 56, objectFit: "contain", opacity: 0.18 }} />
                 <div style={{ fontSize: 8.5, color: "#AAAAAA", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600 }}>No image</div>
               </div>
             )}

@@ -1,0 +1,95 @@
+Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
+67verify?id=NJR-26-666336:1 Uncaught (in promise) Error: Could not establish connection. Receiving end does not exist.Understand this error
+verify?id=NJR-26-666336:1 Access to fetch at 'https://firebasestorage.googleapis.com/v0/b/starlinkjewels109.firebasestorage.app/o/certificates%2FNJR-26-666336%2Fimage?alt=media&token=0d1eb5ca-2bde-4cdd-a572-0fdfc2001e46' from origin 'https://0da4ccea-e31a-492e-a650-f9176c9dc07e-00-9t2zylh051ry.sisko.replit.dev' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+verify.tsx:196  GET https://firebasestorage.googleapis.com/v0/b/starlinkjewels109.firebasestorage.app/o/certificates%2FNJR-26-666336%2Fimage?alt=media&token=0d1eb5ca-2bde-4cdd-a572-0fdfc2001e46 net::ERR_FAILED 304 (Not Modified)
+fetchAsDataURL @ html-to-image.js?v=b240dca5:209
+resourceToDataURL @ html-to-image.js?v=b240dca5:241
+embedImageNode @ html-to-image.js?v=b240dca5:434
+embedImages @ html-to-image.js?v=b240dca5:460
+await in embedImages
+(anonymous) @ html-to-image.js?v=b240dca5:454
+embedChildren @ html-to-image.js?v=b240dca5:454
+embedImages @ html-to-image.js?v=b240dca5:461
+await in embedImages
+(anonymous) @ html-to-image.js?v=b240dca5:454
+embedChildren @ html-to-image.js?v=b240dca5:454
+embedImages @ html-to-image.js?v=b240dca5:461
+await in embedImages
+(anonymous) @ html-to-image.js?v=b240dca5:454
+embedChildren @ html-to-image.js?v=b240dca5:454
+embedImages @ html-to-image.js?v=b240dca5:461
+await in embedImages
+(anonymous) @ html-to-image.js?v=b240dca5:454
+embedChildren @ html-to-image.js?v=b240dca5:454
+embedImages @ html-to-image.js?v=b240dca5:461
+await in embedImages
+(anonymous) @ html-to-image.js?v=b240dca5:454
+embedChildren @ html-to-image.js?v=b240dca5:454
+embedImages @ html-to-image.js?v=b240dca5:461
+await in embedImages
+toSvg @ html-to-image.js?v=b240dca5:621
+await in toSvg
+toCanvas @ html-to-image.js?v=b240dca5:627
+toPng @ html-to-image.js?v=b240dca5:650
+handlePrint @ verify.tsx:196
+executeDispatch @ react-dom_client.js?v=b240dca5:9141
+runWithFiberInDEV @ react-dom_client.js?v=b240dca5:851
+processDispatchQueue @ react-dom_client.js?v=b240dca5:9167
+(anonymous) @ react-dom_client.js?v=b240dca5:9454
+batchedUpdates$1 @ react-dom_client.js?v=b240dca5:2044
+dispatchEventForPluginEventSystem @ react-dom_client.js?v=b240dca5:9240
+dispatchEvent @ react-dom_client.js?v=b240dca5:11319
+dispatchDiscreteEvent @ react-dom_client.js?v=b240dca5:11301Understand this error
+client:510 Failed to fetch
+(anonymous) @ client:510
+resourceToDataURL @ html-to-image.js?v=b240dca5:249
+await in resourceToDataURL
+embedImageNode @ html-to-image.js?v=b240dca5:434
+embedImages @ html-to-image.js?v=b240dca5:460
+await in embedImages
+(anonymous) @ html-to-image.js?v=b240dca5:454
+embedChildren @ html-to-image.js?v=b240dca5:454
+embedImages @ html-to-image.js?v=b240dca5:461
+await in embedImages
+(anonymous) @ html-to-image.js?v=b240dca5:454
+embedChildren @ html-to-image.js?v=b240dca5:454
+embedImages @ html-to-image.js?v=b240dca5:461
+await in embedImages
+(anonymous) @ html-to-image.js?v=b240dca5:454
+embedChildren @ html-to-image.js?v=b240dca5:454
+embedImages @ html-to-image.js?v=b240dca5:461
+await in embedImages
+(anonymous) @ html-to-image.js?v=b240dca5:454
+embedChildren @ html-to-image.js?v=b240dca5:454
+embedImages @ html-to-image.js?v=b240dca5:461
+await in embedImages
+(anonymous) @ html-to-image.js?v=b240dca5:454
+embedChildren @ html-to-image.js?v=b240dca5:454
+embedImages @ html-to-image.js?v=b240dca5:461
+await in embedImages
+toSvg @ html-to-image.js?v=b240dca5:621
+await in toSvg
+toCanvas @ html-to-image.js?v=b240dca5:627
+toPng @ html-to-image.js?v=b240dca5:650
+handlePrint @ verify.tsx:196
+executeDispatch @ react-dom_client.js?v=b240dca5:9141
+runWithFiberInDEV @ react-dom_client.js?v=b240dca5:851
+processDispatchQueue @ react-dom_client.js?v=b240dca5:9167
+(anonymous) @ react-dom_client.js?v=b240dca5:9454
+batchedUpdates$1 @ react-dom_client.js?v=b240dca5:2044
+dispatchEventForPluginEventSystem @ react-dom_client.js?v=b240dca5:9240
+dispatchEvent @ react-dom_client.js?v=b240dca5:11319
+dispatchDiscreteEvent @ react-dom_client.js?v=b240dca5:11301Understand this warning
+client:510 Print failed: Event {isTrusted: true, type: 'error', target: img, currentTarget: img, eventPhase: 2, …}
+(anonymous) @ client:510
+handlePrint @ verify.tsx:217
+await in handlePrint
+executeDispatch @ react-dom_client.js?v=b240dca5:9141
+runWithFiberInDEV @ react-dom_client.js?v=b240dca5:851
+processDispatchQueue @ react-dom_client.js?v=b240dca5:9167
+(anonymous) @ react-dom_client.js?v=b240dca5:9454
+batchedUpdates$1 @ react-dom_client.js?v=b240dca5:2044
+dispatchEventForPluginEventSystem @ react-dom_client.js?v=b240dca5:9240
+dispatchEvent @ react-dom_client.js?v=b240dca5:11319
+dispatchDiscreteEvent @ react-dom_client.js?v=b240dca5:11301Understand this error
+13verify?id=NJR-26-666336:1 Uncaught (in promise) Error: Could not establish connection. Receiving end does not exist.

@@ -220,15 +220,22 @@ function CardPreview({ cert }: { cert: Certificate }) {
     }
   }
 
+  // Strip external image URLs (old Firebase Storage) — html-to-image can't fetch them due to CORS.
+  // Only base64 data: URLs are safe to embed.
+  const printCert = {
+    ...cert,
+    imageDataUrl: cert.imageDataUrl?.startsWith("data:") ? cert.imageDataUrl : undefined,
+  };
+
   return (
     <div>
       {/* Hidden full-res renders used for image capture */}
       <div style={{ position: "fixed", left: -9999, top: -9999, pointerEvents: "none", zIndex: -1 }}>
         <div ref={frontRef} style={{ width: CARD_W, height: CARD_H }}>
-          <CertificateCard cert={cert} side="front" />
+          <CertificateCard cert={printCert} side="front" />
         </div>
         <div ref={backRef} style={{ width: CARD_W, height: CARD_H }}>
-          <CertificateCard cert={cert} side="back" />
+          <CertificateCard cert={printCert} side="back" />
         </div>
       </div>
 

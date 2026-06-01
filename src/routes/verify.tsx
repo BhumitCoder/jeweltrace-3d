@@ -1,5 +1,5 @@
 import { createFileRoute, useSearch } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Layout } from "@/components/Layout";
 import { useSEO, breadcrumb, webAppSchema, howToVerify, SITE_URL } from "@/lib/seo";
 import { CertificateCard, CARD_W, CARD_H } from "@/components/CertificateCard";
@@ -176,25 +176,71 @@ function VerifyPage() {
 
 /* ─── Card preview + print ───────────────────────────────────────────────────── */
 function CardPreview({ cert }: { cert: Certificate }) {
-  const scale = useCardScale();
+  const scale    = useCardScale();
+  const frontRef = useRef<HTMLDivElement>(null);
+  const backRef  = useRef<HTMLDivElement>(null);
+  const [printing, setPrinting] = useState(false);
 
-  function handlePrint() {
-    window.print();
+  async function handlePrint() {
+    if (!frontRef.current || !backRef.current) return;
+    setPrinting(true);
+    try {
+      const frontHTML = frontRef.current.outerHTML;
+      const backHTML  = backRef.current.outerHTML;
+
+      const win = window.open("", "_blank");
+      if (!win) return;
+
+      win.document.write(`<!DOCTYPE html><html><head>
+        <title>JewelsReport Certificate ${cert.reportNo}</title>
+        <style>
+          @page { size: 85.6mm 53.98mm; margin: 0; }
+          *, *::before, *::after { box-sizing: border-box; }
+          html, body { margin: 0; padding: 0; background: white; }
+          .page {
+            width: 85.6mm; height: 53.98mm;
+            overflow: hidden;
+            page-break-after: always; break-after: page;
+          }
+          .page:last-child { page-break-after: avoid; break-after: avoid; }
+          .card {
+            width: ${CARD_W}px; height: ${CARD_H}px;
+            transform: scale(0.378);
+            transform-origin: top left;
+          }
+        </style>
+      </head><body>
+        <div class="page"><div class="card">${frontHTML}</div></div>
+        <div class="page"><div class="card">${backHTML}</div></div>
+      </body></html>`);
+      win.document.close();
+
+      /* Wait for all images to load, then print */
+      const imgs = Array.from(win.document.querySelectorAll("img"));
+      await Promise.all(
+        imgs.map(img =>
+          img.complete
+            ? Promise.resolve()
+            : new Promise(r => { img.onload = r; img.onerror = r; })
+        )
+      );
+
+      win.focus();
+      win.print();
+    } finally {
+      setPrinting(false);
+    }
   }
 
   return (
-    <>
-      {/* Always-rendered print area — visible only via @media print CSS */}
-      <div id="jr-print-area" style={{ display: "none" }}>
-        <div className="jr-print-page">
-          <div className="jr-print-card">
-            <CertificateCard cert={cert} side="front" />
-          </div>
+    <div>
+      {/* Hidden full-res cards — source for print clone */}
+      <div style={{ position: "fixed", left: -9999, top: -9999, pointerEvents: "none", zIndex: -1 }}>
+        <div ref={frontRef} style={{ width: CARD_W, height: CARD_H }}>
+          <CertificateCard cert={cert} side="front" />
         </div>
-        <div className="jr-print-page">
-          <div className="jr-print-card">
-            <CertificateCard cert={cert} side="back" />
-          </div>
+        <div ref={backRef} style={{ width: CARD_W, height: CARD_H }}>
+          <CertificateCard cert={cert} side="back" />
         </div>
       </div>
 
@@ -216,13 +262,14 @@ function CardPreview({ cert }: { cert: Certificate }) {
       <div className="mt-8 flex justify-center">
         <button
           onClick={handlePrint}
-          className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full bg-gradient-gold text-gold-foreground font-semibold shadow-gold hover:scale-105 transition-transform text-sm sm:text-base"
+          disabled={printing}
+          className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full bg-gradient-gold text-gold-foreground font-semibold shadow-gold hover:scale-105 transition-transform text-sm sm:text-base disabled:opacity-60 disabled:cursor-not-allowed"
         >
           <Printer className="w-4 h-4" />
-          Print Card (Front + Back)
+          {printing ? "Preparing…" : "Print Card (Front + Back)"}
         </button>
       </div>
-    </>
+    </div>
   );
 }
 

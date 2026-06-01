@@ -302,7 +302,7 @@ function BackSide({ cert, verifyUrl, hideDisclaimer, compact }: { cert: Certific
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
             {cert.imageDataUrl ? (
-              <img src={cert.imageDataUrl} alt="" crossOrigin="anonymous"
+              <img src={cert.imageDataUrl} alt=""
                 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
             ) : (
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>

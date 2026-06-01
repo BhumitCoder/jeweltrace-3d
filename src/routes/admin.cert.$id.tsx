@@ -84,9 +84,22 @@ function CertEditor() {
 
   const onImage = (file?: File) => {
     if (!file) return;
-    const r = new FileReader();
-    r.onload = () => set("imageDataUrl", r.result as string);
-    r.readAsDataURL(file);
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const raw = e.target?.result as string;
+      const img = new Image();
+      img.onload = () => {
+        const MAX = 800;
+        const scale = Math.min(1, MAX / Math.max(img.width, img.height));
+        const canvas = document.createElement("canvas");
+        canvas.width  = Math.round(img.width  * scale);
+        canvas.height = Math.round(img.height * scale);
+        canvas.getContext("2d")!.drawImage(img, 0, 0, canvas.width, canvas.height);
+        set("imageDataUrl", canvas.toDataURL("image/jpeg", 0.82));
+      };
+      img.src = raw;
+    };
+    reader.readAsDataURL(file);
   };
 
   const submit = async (e: React.FormEvent) => {

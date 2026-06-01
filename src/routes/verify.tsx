@@ -187,8 +187,8 @@ function CardPreview({ cert }: { cert: Certificate }) {
     setPrinting(true);
     try {
       const [frontPng, backPng] = await Promise.all([
-        toPng(frontRef.current, { width: CARD_W, height: CARD_H, pixelRatio: 4 }),
-        toPng(backRef.current,  { width: CARD_W, height: CARD_H, pixelRatio: 4 }),
+        toPng(frontRef.current, { width: CARD_W, height: CARD_H, pixelRatio: 4, skipFonts: true }),
+        toPng(backRef.current,  { width: CARD_W, height: CARD_H, pixelRatio: 4, skipFonts: true }),
       ]);
 
       const win = window.open("", "_blank");

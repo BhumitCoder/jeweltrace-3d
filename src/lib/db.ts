@@ -71,16 +71,11 @@ export async function getCertificatesByClient(clientId: string): Promise<Certifi
 }
 
 export async function saveCertificate(cert: Certificate): Promise<void> {
-  let imageDataUrl = cert.imageDataUrl;
-
-  // If it's a fresh base64 blob, upload to Storage and replace with URL
-  if (imageDataUrl && imageDataUrl.startsWith("data:")) {
-    const imgRef = ref(storage, `certificates/${cert.id}/image`);
-    await uploadString(imgRef, imageDataUrl, "data_url");
-    imageDataUrl = await getDownloadURL(imgRef);
-  }
-
-  await setDoc(doc(db, "certificates", cert.id), { ...cert, imageDataUrl: imageDataUrl ?? null });
+  // Store base64 image directly in Firestore — avoids Firebase Storage CORS issues
+  await setDoc(doc(db, "certificates", cert.id), {
+    ...cert,
+    imageDataUrl: cert.imageDataUrl ?? null,
+  });
 }
 
 export async function deleteCertificate(id: string): Promise<void> {
@@ -112,16 +107,11 @@ export async function getBlogPostById(id: string): Promise<BlogPost | undefined>
 }
 
 export async function saveBlogPost(post: BlogPost): Promise<void> {
-  let coverDataUrl = post.coverDataUrl;
-
-  // If it's a fresh base64 blob, upload to Storage and replace with URL
-  if (coverDataUrl && coverDataUrl.startsWith("data:")) {
-    const coverRef = ref(storage, `blog/${post.id}/cover`);
-    await uploadString(coverRef, coverDataUrl, "data_url");
-    coverDataUrl = await getDownloadURL(coverRef);
-  }
-
-  await setDoc(doc(db, "blogPosts", post.id), { ...post, coverDataUrl: coverDataUrl ?? null });
+  // Store base64 cover directly in Firestore — avoids Firebase Storage CORS issues
+  await setDoc(doc(db, "blogPosts", post.id), {
+    ...post,
+    coverDataUrl: post.coverDataUrl ?? null,
+  });
 }
 
 export async function deleteBlogPost(id: string): Promise<void> {

@@ -94,7 +94,7 @@
     <!-- ── Icons & Manifest ──────────────────────────────────────────────────── -->
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
     <link rel="manifest" href="/manifest.json" />
 
     <!-- ── Feeds ────────────────────────────────────────────────────────────── -->
@@ -262,6 +262,72 @@
         },
         "query-input": "required name=search_term_string"
       }
+    }
+    </script>
+
+    <!-- ── JSON-LD: FAQPage ─────────────────────────────────────────────────── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a JewelsReport diamond certificate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A JewelsReport certificate is an independent, third-party grading report issued after scientific analysis of a diamond or gemstone. It documents the 4Cs (Cut, Colour, Clarity, Carat), fluorescence, measurements, and origin. Every report is printed on a tamper-proof PVC card with holographic foil and a unique QR code for instant online verification."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I verify a JewelsReport certificate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Scan the QR code on the card with any smartphone camera, or visit jewelsreport.com/verify and enter the report number. Full grading details appear instantly — no login or registration required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does diamond grading take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standard turnaround is 3 working days from submission. Express 24-hour service is available on request for urgent orders. Bulk orders from wholesalers are handled on dedicated schedules."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does JewelsReport certify lab grown diamonds?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. JewelsReport issues separate grading reports for CVD and HPHT lab-grown diamonds with full origin disclosure. The report clearly states 'Lab Grown Diamond' and includes the same 4Cs analysis as natural diamond reports."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a JewelsReport certificate be faked or forged?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is extremely difficult. Each card carries holographic foil, guilloché micro-print security features, and a unique report number that is cross-checked against our live server. Any duplicate or altered number will fail verification immediately."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does JewelsReport certify coloured gemstones — rubies, emeralds, sapphires?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. JewelsReport issues gemstone reports for all coloured stones including ruby, emerald, sapphire, tanzanite, spinel and more. Reports include colour grade, clarity, origin determination where possible, and any treatment disclosure such as heat treatment or fracture filling."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What format is the JewelsReport certificate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every report is issued on a secure, credit-card-sized PVC certificate featuring holographic foil, a guilloché micro-pattern, a unique report number, and a QR code that links directly to the live laboratory record."
+          }
+        }
+      ]
     }
     </script>
 

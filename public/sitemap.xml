@@ -294,19 +294,45 @@
   <!-- ═══════════════════════════════════════════════════════════════════════
        CONTACT
        Priority: 0.65 — local SEO + conversion page
-       Target keywords: diamond lab Surat contact, gem lab India phone,
-         bulk diamond certification enquiry
        ═══════════════════════════════════════════════════════════════════════ -->
   <url>
     <loc>https://www.jewelsreport.com/contact</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
-
     <xhtml:link rel="alternate" hreflang="en"       href="https://www.jewelsreport.com/contact" />
     <xhtml:link rel="alternate" hreflang="en-IN"    href="https://www.jewelsreport.com/contact" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/contact" />
+    <mobile:mobile/>
+  </url>
 
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       PRIVACY POLICY
+       Priority: 0.40 — E-E-A-T trust signal; legal requirement
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <url>
+    <loc>https://www.jewelsreport.com/privacy-policy</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.40</priority>
+    <xhtml:link rel="alternate" hreflang="en"       href="https://www.jewelsreport.com/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/privacy-policy" />
+    <mobile:mobile/>
+  </url>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       TERMS OF SERVICE
+       Priority: 0.40 — E-E-A-T trust signal; shows legitimate business
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <url>
+    <loc>https://www.jewelsreport.com/terms-of-service</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.40</priority>
+    <xhtml:link rel="alternate" hreflang="en"       href="https://www.jewelsreport.com/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/terms-of-service" />
     <mobile:mobile/>
   </url>
 

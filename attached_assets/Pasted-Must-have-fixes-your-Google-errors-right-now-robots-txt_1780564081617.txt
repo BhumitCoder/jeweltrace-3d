@@ -1,0 +1,57 @@
+Must have — fixes your Google errors right now
+/robots.txt
+Critical
+Tells Google and AI bots which pages to crawl. Missing or wrong = indexing blocked. Must list your sitemap URL.
+/sitemap.xml
+Critical
+List of all your pages with correct https://www URLs. Wrong URLs here = redirect errors in Search Console.
+/sitemap-images.xml
+Critical
+Separate sitemap just for images. Helps Google index your product/service photos. You already have this but URLs are wrong.
+SEO files — get you ranked on Google
+canonical tag (in every page head)
+Important
+Not a file — a tag inside each page. Tells Google "this is the real URL". Prevents duplicate content penalty.
+schema JSON-LD (in every page head)
+Important
+Structured data. Enables sitelinks, rich results, star ratings in Google. 11 types needed for your site.
+/images/og-image.jpg
+Important
+1200×630px preview image shown when your link is shared on WhatsApp, Facebook, LinkedIn. Should show your logo + tagline.
+/favicon.ico + /apple-touch-icon.png
+Important
+Small icon shown in browser tab and phone home screen. Google uses presence of favicon as a quality signal.
+AEO files — get found by ChatGPT, Perplexity, Gemini
+/llms.txt
+AEO 2025
+Brand new 2025 standard. Tells ChatGPT, Perplexity, Claude what your website is about so they can answer questions about your business.
+/ai.txt
+AEO 2025
+Gives permission to AI crawlers to use your content for answers. Without it some AI bots skip your site.
+Trust & legal files — required for E-E-A-T score
+/privacy-policy
+Trust
+Legal requirement in India. Google gives lower trust score to sites without one. Required for Google Ads too.
+/terms-of-service
+Trust
+Builds trust with Google and visitors. Shows your site is a legitimate business.
+/contact
+Trust
+Must have full address, phone, email, Google Maps embed. Google checks this to verify you are a real local business.
+Performance files — faster site = better ranking
+/.htaccess or /vercel.json
+Performance
+Server config. Enable gzip compression, browser caching, HTTPS redirect, www redirect — all in one file.
+/manifest.json
+Performance
+Makes your site installable as an app on phones. Google gives ranking boost to PWA-ready sites.
+/.well-known/security.txt
+Trust
+Tells Google your site takes security seriously. Small signal but takes 2 minutes to add.
+Summary count
+3 Critical files
+4 SEO files
+2 AEO files
+3 Trust files
+3 Performance files
+Click any card above to get exact code for that file

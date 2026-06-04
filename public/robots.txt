@@ -9,6 +9,8 @@ Allow: /about
 Allow: /blog
 Allow: /blog/
 Allow: /contact
+Allow: /privacy-policy
+Allow: /terms-of-service
 Allow: /sitemap.xml
 Allow: /sitemap-news.xml
 Allow: /llms.txt

@@ -45,14 +45,21 @@ export function SiteFooter() {
             <li><Link to="/verify" className="text-muted-foreground hover:text-primary transition-colors">Verify Report</Link></li>
             <li><Link to="/blog" className="text-muted-foreground hover:text-primary transition-colors">Blog</Link></li>
             <li><Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">Contact</Link></li>
-
+            <li><Link to="/privacy-policy" className="text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link></li>
+            <li><Link to="/terms-of-service" className="text-muted-foreground hover:text-primary transition-colors">Terms of Service</Link></li>
           </ul>
         </div>
       </div>
       <div className="border-t border-border/50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4 sm:py-5 text-xs text-muted-foreground flex flex-col sm:flex-row items-center justify-between gap-2">
           <p>© {new Date().getFullYear()} JewelsReport Certification Lab. All rights reserved.</p>
-          <p className="tracking-widest uppercase">Trust · Precision · Integrity</p>
+          <div className="flex items-center gap-4">
+            <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <span>·</span>
+            <Link to="/terms-of-service" className="hover:text-primary transition-colors">Terms of Service</Link>
+            <span>·</span>
+            <span className="tracking-widest uppercase">Trust · Precision · Integrity</span>
+          </div>
         </div>
       </div>
     </footer>

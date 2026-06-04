@@ -126,6 +126,64 @@ const ROUTES: Array<{
     ],
   },
   {
+    dir: "privacy-policy",
+    title: "Privacy Policy — JewelsReport Gemological Laboratory",
+    description:
+      "JewelsReport privacy policy. Learn how we collect, use and protect your personal data when you use our certificate verification service and website.",
+    keywords:
+      "JewelsReport privacy policy, data protection, gemological lab privacy",
+    canonical: `${SITE_URL}/privacy-policy`,
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Privacy Policy", item: `${SITE_URL}/privacy-policy` },
+        ],
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": `${SITE_URL}/privacy-policy#webpage`,
+        url: `${SITE_URL}/privacy-policy`,
+        name: "Privacy Policy — JewelsReport",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        inLanguage: "en-US",
+        dateModified: "2026-06-01",
+      },
+    ],
+  },
+  {
+    dir: "terms-of-service",
+    title: "Terms of Service — JewelsReport Gemological Laboratory",
+    description:
+      "Terms and conditions governing use of JewelsReport certificate verification services, website and gemological reports issued by our laboratory.",
+    keywords:
+      "JewelsReport terms of service, certificate terms, gem lab terms, diamond report terms",
+    canonical: `${SITE_URL}/terms-of-service`,
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Terms of Service", item: `${SITE_URL}/terms-of-service` },
+        ],
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": `${SITE_URL}/terms-of-service#webpage`,
+        url: `${SITE_URL}/terms-of-service`,
+        name: "Terms of Service — JewelsReport",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        inLanguage: "en-US",
+        dateModified: "2026-06-01",
+      },
+    ],
+  },
+  {
     dir: "contact",
     title: "Contact JewelsReport — Lab Enquiries, Bulk Certification & Support",
     description:

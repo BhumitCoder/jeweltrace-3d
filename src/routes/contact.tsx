@@ -35,6 +35,12 @@ function ContactPage() {
         inLanguage: "en-IN",
         publisher: { "@id": `${SITE_URL}/#organization` },
         breadcrumb: { "@id": `${SITE_URL}/contact#breadcrumb` },
+        datePublished: "2026-05-01",
+        dateModified: "2026-06-04",
+        speakable: {
+          "@type": "SpeakableSpecification",
+          cssSelector: ["h1", "h2", ".contact-address"],
+        },
       },
     ],
   });

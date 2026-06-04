@@ -128,7 +128,7 @@ function PostPage() {
           ]),
           {
             "@context": "https://schema.org",
-            "@type": "BlogPosting",
+            "@type": ["NewsArticle", "BlogPosting"],
             "@id": `${SITE_URL}/blog/${slug}#article`,
             headline: post.title,
             name: post.title,
@@ -177,6 +177,24 @@ function PostPage() {
             speakable: {
               "@type": "SpeakableSpecification",
               cssSelector: ["h1", ".article-excerpt"],
+            },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "@id": `${SITE_URL}/blog/${slug}#webpage`,
+            url: `${SITE_URL}/blog/${slug}`,
+            name: post.title,
+            isPartOf: { "@id": `${SITE_URL}/#website` },
+            about: { "@id": `${SITE_URL}/#organization` },
+            publisher: { "@id": `${SITE_URL}/#organization` },
+            inLanguage: "en-IN",
+            datePublished: post.publishedAt,
+            dateModified: post.publishedAt,
+            breadcrumb: { "@id": `${SITE_URL}/blog/${slug}#breadcrumb` },
+            speakable: {
+              "@type": "SpeakableSpecification",
+              cssSelector: ["h1", ".article-excerpt", "h2"],
             },
           },
         ]

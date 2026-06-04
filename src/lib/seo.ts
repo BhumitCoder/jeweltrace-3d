@@ -4,17 +4,29 @@ export const SITE_URL = "https://www.jewelsreport.com";
 export const SITE_NAME = "JewelsReport";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 
+type ArticleMeta = {
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  authorUrl?: string;
+  section?: string;
+  tags?: string[];
+};
+
 type SEOProps = {
   title: string;
   description: string;
   path: string;
   keywords?: string;
   image?: string;
+  imageAlt?: string;
   type?: "website" | "article" | "product";
+  article?: ArticleMeta;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 };
 
 const MANAGED_ATTR = "data-seo-managed";
+const ARTICLE_ATTR = "data-seo-article";
 
 function upsertMeta(selector: string, attrs: Record<string, string>) {
   let el = document.head.querySelector<HTMLMetaElement>(selector);
@@ -43,6 +55,20 @@ function clearJsonLd() {
     .forEach((n) => n.remove());
 }
 
+function clearArticleMeta() {
+  document.head
+    .querySelectorAll(`meta[${ARTICLE_ATTR}]`)
+    .forEach((n) => n.remove());
+}
+
+function addArticleMeta(attrs: Record<string, string>) {
+  const el = document.createElement("meta");
+  el.setAttribute(MANAGED_ATTR, "true");
+  el.setAttribute(ARTICLE_ATTR, "true");
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  document.head.appendChild(el);
+}
+
 function injectJsonLd(data: Record<string, unknown> | Record<string, unknown>[]) {
   const blocks = Array.isArray(data) ? data : [data];
   for (const block of blocks) {
@@ -60,7 +86,9 @@ export function useSEO({
   path,
   keywords,
   image = DEFAULT_OG_IMAGE,
+  imageAlt,
   type = "website",
+  article,
   jsonLd,
 }: SEOProps) {
   useEffect(() => {
@@ -74,19 +102,49 @@ export function useSEO({
     upsertMeta('meta[property="og:description"]', { property: "og:description", content: description });
     upsertMeta('meta[property="og:url"]', { property: "og:url", content: url });
     upsertMeta('meta[property="og:type"]', { property: "og:type", content: type });
+    upsertMeta('meta[property="og:locale"]', { property: "og:locale", content: "en_IN" });
     upsertMeta('meta[property="og:image"]', { property: "og:image", content: image });
+    upsertMeta('meta[property="og:image:secure_url"]', { property: "og:image:secure_url", content: image });
+    upsertMeta('meta[property="og:image:width"]', { property: "og:image:width", content: "1200" });
+    upsertMeta('meta[property="og:image:height"]', { property: "og:image:height", content: "630" });
+    upsertMeta('meta[property="og:image:type"]', { property: "og:image:type", content: "image/jpeg" });
+    upsertMeta('meta[property="og:image:alt"]', {
+      property: "og:image:alt",
+      content: imageAlt ?? `${title} — JewelsReport`,
+    });
     upsertMeta('meta[property="og:site_name"]', { property: "og:site_name", content: SITE_NAME });
 
     upsertMeta('meta[name="twitter:card"]', { name: "twitter:card", content: "summary_large_image" });
     upsertMeta('meta[name="twitter:title"]', { name: "twitter:title", content: title });
     upsertMeta('meta[name="twitter:description"]', { name: "twitter:description", content: description });
     upsertMeta('meta[name="twitter:image"]', { name: "twitter:image", content: image });
+    upsertMeta('meta[name="twitter:image:alt"]', {
+      name: "twitter:image:alt",
+      content: imageAlt ?? `${title} — JewelsReport`,
+    });
 
     upsertLink("canonical", url);
 
+    clearArticleMeta();
+    if (type === "article" && article) {
+      if (article.publishedTime)
+        addArticleMeta({ property: "article:published_time", content: article.publishedTime });
+      if (article.modifiedTime)
+        addArticleMeta({ property: "article:modified_time", content: article.modifiedTime });
+      addArticleMeta({
+        property: "article:author",
+        content: article.authorUrl ?? `${SITE_URL}/about`,
+      });
+      if (article.section)
+        addArticleMeta({ property: "article:section", content: article.section });
+      article.tags?.slice(0, 6).forEach((tag) =>
+        addArticleMeta({ property: "article:tag", content: tag })
+      );
+    }
+
     clearJsonLd();
     if (jsonLd) injectJsonLd(jsonLd);
-  }, [title, description, path, keywords, image, type, JSON.stringify(jsonLd)]);
+  }, [title, description, path, keywords, image, imageAlt, type, JSON.stringify(article), JSON.stringify(jsonLd)]);
 }
 
 /* ─── Schema helpers ─────────────────────────────────────────── */
@@ -94,6 +152,7 @@ export function useSEO({
 export const breadcrumb = (items: { name: string; path: string }[]) => ({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
+  "@id": `${SITE_URL}${items[items.length - 1]?.path}#breadcrumb`,
   itemListElement: items.map((it, i) => ({
     "@type": "ListItem",
     position: i + 1,
@@ -109,8 +168,15 @@ export const localBusiness = () => ({
   name: "JewelsReport Gemological Laboratory",
   alternateName: "JewelsReport",
   url: `${SITE_URL}/`,
-  logo: `${SITE_URL}/favicon.ico`,
-  image: DEFAULT_OG_IMAGE,
+  logo: {
+    "@type": "ImageObject",
+    url: `${SITE_URL}/apple-touch-icon.png`,
+    width: 180,
+    height: 180,
+  },
+  image: [
+    { "@type": "ImageObject", url: DEFAULT_OG_IMAGE, width: 1200, height: 630 },
+  ],
   description:
     "Independent gemological certification laboratory issuing tamper-proof PVC certificates with QR verification for diamonds, gemstones and jewellery.",
   telephone: "+91-9967381180",
@@ -149,9 +215,7 @@ export const localBusiness = () => ({
     ratingCount: "1247",
     reviewCount: "312",
   },
-  sameAs: [
-    "https://www.jewelsreport.com",
-  ],
+  sameAs: ["https://www.jewelsreport.com"],
 });
 
 export const organizationSchema = () => ({
@@ -163,9 +227,9 @@ export const organizationSchema = () => ({
   url: `${SITE_URL}/`,
   logo: {
     "@type": "ImageObject",
-    url: `${SITE_URL}/favicon.ico`,
-    width: 512,
-    height: 512,
+    url: `${SITE_URL}/apple-touch-icon.png`,
+    width: 180,
+    height: 180,
   },
   description:
     "Independent gemological laboratory founded in 2014, issuing tamper-proof PVC certificates for natural & lab-grown diamonds, coloured gemstones and fine jewellery.",
@@ -186,19 +250,38 @@ export const organizationSchema = () => ({
     postalCode: "395003",
     addressCountry: "IN",
   },
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: "+91-9967381180",
+      contactType: "customer service",
+      areaServed: "Worldwide",
+      availableLanguage: ["English", "Hindi", "Gujarati"],
+    },
+    {
+      "@type": "ContactPoint",
+      email: "reports@jewelsreport.com",
+      contactType: "technical support",
+      areaServed: "Worldwide",
+    },
+  ],
   knowsAbout: [
     "Diamond grading",
     "Lab grown diamond certification",
+    "CVD diamond identification",
+    "HPHT diamond identification",
     "Gemstone identification",
+    "Coloured gemstone treatment detection",
     "Jewellery appraisal",
     "4Cs grading",
     "QR certificate verification",
-    "CVD diamond",
-    "HPHT diamond",
-    "Coloured gemstone treatment detection",
+    "FTIR spectroscopy",
+    "Raman spectroscopy",
+    "UV-Vis-NIR analysis",
   ],
   hasCredential: "ISO/IEC 17025 aligned protocols",
   slogan: "The seal of brilliance you can trust.",
+  sameAs: ["https://www.jewelsreport.com"],
 });
 
 export const serviceItemList = () => ({

@@ -24,8 +24,11 @@ function TermsOfServicePage() {
         url: `${SITE_URL}/terms-of-service`,
         name: "Terms of Service — JewelsReport",
         isPartOf: { "@id": `${SITE_URL}/#website` },
-        inLanguage: "en-US",
-        dateModified: "2026-06-01",
+        about: { "@id": `${SITE_URL}/#organization` },
+        publisher: { "@id": `${SITE_URL}/#organization` },
+        inLanguage: "en-IN",
+        datePublished: "2026-06-01",
+        dateModified: "2026-06-04",
       },
     ],
   });

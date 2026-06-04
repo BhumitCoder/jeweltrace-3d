@@ -91,6 +91,9 @@ function PostPage() {
 
   const rt = readingTime(post?.content);
 
+  const coverImage = post?.coverDataUrl?.startsWith("http") ? post.coverDataUrl : undefined;
+  const category = post ? (CATEGORIES[slug] ?? "Gemology") : undefined;
+
   useSEO({
     title: post
       ? `${post.title} | JewelsReport Journal`
@@ -101,7 +104,18 @@ function PostPage() {
       "Gemological insights from the JewelsReport laboratory.",
     path: `/blog/${slug}`,
     type: "article",
-    image: post?.coverDataUrl?.startsWith("http") ? post.coverDataUrl : undefined,
+    image: coverImage,
+    imageAlt: post ? `${post.title} — JewelsReport Journal` : undefined,
+    article: post
+      ? {
+          publishedTime: post.publishedAt,
+          modifiedTime: post.publishedAt,
+          author: post.author,
+          authorUrl: `${SITE_URL}/about`,
+          section: category,
+          tags: (KEYWORDS[slug] ?? post.title).split(",").slice(0, 6).map((t) => t.trim()),
+        }
+      : undefined,
     keywords: KEYWORDS[slug] || (post
       ? `${post.title}, JewelsReport Journal, gemological insights, diamond certification, gemstone report`
       : undefined),
@@ -129,19 +143,19 @@ function PostPage() {
             keywords: KEYWORDS[slug] ?? post.title,
             inLanguage: "en-IN",
             copyrightHolder: { "@id": `${SITE_URL}/#organization` },
-            ...(post.coverDataUrl?.startsWith("http")
+            ...(coverImage
               ? {
-                  image: {
-                    "@type": "ImageObject",
-                    url: post.coverDataUrl,
-                    width: 1200,
-                    height: 630,
-                  },
+                  image: [
+                    { "@type": "ImageObject", url: coverImage, width: 1200, height: 1200 },
+                    { "@type": "ImageObject", url: coverImage, width: 1200, height: 900 },
+                    { "@type": "ImageObject", url: coverImage, width: 1200, height: 675 },
+                  ],
                 }
               : {}),
             author: {
               "@type": "Person",
               name: post.author,
+              url: `${SITE_URL}/about`,
               worksFor: { "@id": `${SITE_URL}/#organization` },
             },
             publisher: {
@@ -150,9 +164,9 @@ function PostPage() {
               name: "JewelsReport",
               logo: {
                 "@type": "ImageObject",
-                url: `${SITE_URL}/favicon.ico`,
-                width: 512,
-                height: 512,
+                url: `${SITE_URL}/apple-touch-icon.png`,
+                width: 180,
+                height: 180,
               },
             },
             datePublished: post.publishedAt,

@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
-<!--
-  ╔══════════════════════════════════════════════════════════════════════════════╗
-  ║  JewelsReport — Google News Sitemap                                         ║
-  ║  https://www.jewelsreport.com/sitemap-news.xml                              ║
-  ║  Covers: JewelsReport Journal — 10 SEO-optimised gemological articles       ║
-  ║  Last updated: 2026-05-26                                                   ║
-  ╚══════════════════════════════════════════════════════════════════════════════╝
--->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="
-          http://www.sitemaps.org/schemas/sitemap/0.9
-          http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
-          http://www.google.com/schemas/sitemap-news/0.9
-          http://www.google.com/schemas/sitemap-news/0.9/sitemap-news.xsd">
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
 
   <url>
     <loc>https://www.jewelsreport.com/blog/how-to-verify-diamond-certificate-online-step-by-step</loc>
@@ -142,7 +127,7 @@
         <news:language>en</news:language>
       </news:publication>
       <news:publication_date>2026-05-01</news:publication_date>
-      <news:title>The 4Cs of Diamond Grading Explained: Cut, Colour, Clarity &amp; Carat</news:title>
+      <news:title>The 4Cs of Diamond Grading Explained: Cut, Colour, Clarity and Carat</news:title>
       <news:keywords>4Cs diamond grading, diamond cut colour clarity carat, diamond quality guide, JewelsReport 4Cs explained</news:keywords>
     </news:news>
   </url>

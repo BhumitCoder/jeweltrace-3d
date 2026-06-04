@@ -127,7 +127,8 @@ function PostPage() {
             articleSection: CATEGORIES[slug] ?? "Gemology",
             genre: "Informational",
             keywords: KEYWORDS[slug] ?? post.title,
-            inLanguage: "en-US",
+            inLanguage: "en-IN",
+            copyrightHolder: { "@id": `${SITE_URL}/#organization` },
             ...(post.coverDataUrl?.startsWith("http")
               ? {
                   image: {

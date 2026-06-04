@@ -1,161 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
-<!--
-  ╔══════════════════════════════════════════════════════════════════════════════╗
-  ║                                                                              ║
-  ║   J E W E L S R E P O R T   —   P R I M A R Y   S I T E M A P              ║
-  ║                                                                              ║
-  ║   https://www.jewelsreport.com/sitemap.xml                                   ║
-  ║   Independent Gemological Certification Laboratory                           ║
-  ║   202, 2/F, Veer Ashish Building, Surat Diamond Market,                      ║
-  ║   Mahidharpura, Surat, Gujarat 395003, India                                 ║
-  ║                                                                              ║
-  ║   Namespaces active:                                                         ║
-  ║     • sitemaps.org/0.9   — core URL entries                                  ║
-  ║     • google image/1.1   — image indexing signals                            ║
-  ║     • google mobile/1.0  — mobile-friendliness signal                        ║
-  ║     • w3.org/1999/xhtml  — alternate / hreflang entries                      ║
-  ║                                                                              ║
-  ║   Submitted to:                                                              ║
-  ║     Google Search Console · Bing Webmaster Tools                             ║
-  ║                                                                              ║
-  ║   Index sitemap: https://www.jewelsreport.com/sitemap-index.xml              ║
-  ║   Last updated:  2026-05-19                                                  ║
-  ║                                                                              ║
-  ╚══════════════════════════════════════════════════════════════════════════════╝
--->
-<urlset
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml"
-  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-  xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
-  xsi:schemaLocation="
-    http://www.sitemaps.org/schemas/sitemap/0.9
-    http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
-    http://www.google.com/schemas/sitemap-image/1.1
-    http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
-
-  <!-- ═══════════════════════════════════════════════════════════════════════
-       HOMEPAGE
-       Priority: 1.0 — root of all authority
-       ═══════════════════════════════════════════════════════════════════════ -->
   <url>
     <loc>https://www.jewelsreport.com/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-
-    <!-- Hreflang: English worldwide + India specific -->
-    <xhtml:link rel="alternate" hreflang="en"       href="https://www.jewelsreport.com/" />
-    <xhtml:link rel="alternate" hreflang="en-IN"    href="https://www.jewelsreport.com/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/" />
-
-    <!-- OG / social share image -->
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/"/>
+    <xhtml:link rel="alternate" hreflang="en-IN"     href="https://www.jewelsreport.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/"/>
     <image:image>
       <image:loc>https://www.jewelsreport.com/og-image.jpg</image:loc>
       <image:title>JewelsReport — Tamper-proof PVC Gemological Certificates with QR Verification</image:title>
-      <image:caption>JewelsReport CR80 PVC certificate card: holographic foil, guilloché micro-pattern and QR code for instant online authentication of diamonds, gemstones and jewellery</image:caption>
+      <image:caption>JewelsReport CR80 PVC certificate card with holographic foil and QR code for instant authentication of diamonds, gemstones and jewellery</image:caption>
       <image:geo_location>Surat, Gujarat, India</image:geo_location>
-      <image:license>https://www.jewelsreport.com/</image:license>
     </image:image>
-
-    <!-- Mobile-friendly signal -->
-    <mobile:mobile/>
   </url>
 
-
-  <!-- ═══════════════════════════════════════════════════════════════════════
-       VERIFY CERTIFICATE
-       Priority: 0.95 — highest-value user action; core product page
-       Target keywords: verify diamond certificate, check gemstone report,
-         QR diamond verification, certificate authentication
-       ═══════════════════════════════════════════════════════════════════════ -->
   <url>
     <loc>https://www.jewelsreport.com/verify</loc>
-    <lastmod>2026-05-19</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
-
-    <xhtml:link rel="alternate" hreflang="en"       href="https://www.jewelsreport.com/verify" />
-    <xhtml:link rel="alternate" hreflang="en-IN"    href="https://www.jewelsreport.com/verify" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/verify" />
-
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/verify"/>
+    <xhtml:link rel="alternate" hreflang="en-IN"     href="https://www.jewelsreport.com/verify"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/verify"/>
     <image:image>
       <image:loc>https://www.jewelsreport.com/og-image.jpg</image:loc>
       <image:title>Verify a JewelsReport Certificate — Instant Authenticity Check</image:title>
       <image:caption>Enter report number or scan QR code to verify any JewelsReport diamond, gemstone or jewellery certificate instantly — free, no login required</image:caption>
       <image:geo_location>Surat, Gujarat, India</image:geo_location>
-      <image:license>https://www.jewelsreport.com/</image:license>
     </image:image>
-
-    <mobile:mobile/>
   </url>
 
-
-  <!-- ═══════════════════════════════════════════════════════════════════════
-       ABOUT THE LAB
-       Priority: 0.80 — authority / E-E-A-T page; builds trust signals
-       Target keywords: gem lab Surat, master gemologist India,
-         ISO gemological lab, diamond grading lab
-       ═══════════════════════════════════════════════════════════════════════ -->
   <url>
     <loc>https://www.jewelsreport.com/about</loc>
-    <lastmod>2026-05-19</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
-
-    <xhtml:link rel="alternate" hreflang="en"       href="https://www.jewelsreport.com/about" />
-    <xhtml:link rel="alternate" hreflang="en-IN"    href="https://www.jewelsreport.com/about" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/about" />
-
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/about"/>
+    <xhtml:link rel="alternate" hreflang="en-IN"     href="https://www.jewelsreport.com/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/about"/>
     <image:image>
       <image:loc>https://www.jewelsreport.com/og-image.jpg</image:loc>
       <image:title>About JewelsReport — Master Gemologists &amp; ISO-Aligned Lab, Surat India</image:title>
-      <image:caption>JewelsReport laboratory — founded 2014 in Surat Diamond Market; 25+ senior gemologists, FTIR spectrometry, UV-Vis-NIR, Raman spectroscopy and DiamondView instruments</image:caption>
+      <image:caption>JewelsReport laboratory founded 2014 — 25+ master gemologists with FTIR, UV-Vis-NIR, Raman spectroscopy and DiamondView instruments</image:caption>
       <image:geo_location>Surat, Gujarat, India</image:geo_location>
-      <image:license>https://www.jewelsreport.com/</image:license>
     </image:image>
-
-    <mobile:mobile/>
   </url>
 
-
-  <!-- ═══════════════════════════════════════════════════════════════════════
-       BLOG / JOURNAL INDEX
-       Priority: 0.85 — content authority hub; 10 articles published
-       ═══════════════════════════════════════════════════════════════════════ -->
   <url>
     <loc>https://www.jewelsreport.com/blog</loc>
-    <lastmod>2026-05-26</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
-    <xhtml:link rel="alternate" hreflang="en"       href="https://www.jewelsreport.com/blog" />
-    <xhtml:link rel="alternate" hreflang="en-IN"    href="https://www.jewelsreport.com/blog" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog" />
-    <mobile:mobile/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="en-IN"     href="https://www.jewelsreport.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog"/>
   </url>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════
-       BLOG ARTICLES — 10 SEO-optimised posts
-       Keywords: diamond grading, lab grown diamonds, gemstone certification,
-         4Cs, CVD vs HPHT, fluorescence, clarity grades, certificate verify
-       ═══════════════════════════════════════════════════════════════════════ -->
 
   <url>
     <loc>https://www.jewelsreport.com/blog/4cs-diamond-grading-cut-colour-clarity-carat</loc>
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.jewelsreport.com/blog/4cs-diamond-grading-cut-colour-clarity-carat" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/4cs-diamond-grading-cut-colour-clarity-carat" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/blog/4cs-diamond-grading-cut-colour-clarity-carat"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/4cs-diamond-grading-cut-colour-clarity-carat"/>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=1200&amp;q=80</image:loc>
       <image:title>The 4Cs of Diamond Grading — Cut, Colour, Clarity &amp; Carat</image:title>
       <image:caption>Round brilliant diamond illustrating the 4Cs grading standard used by JewelsReport laboratory</image:caption>
     </image:image>
-    <mobile:mobile/>
   </url>
 
   <url>
@@ -163,14 +80,13 @@
     <lastmod>2026-05-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.jewelsreport.com/blog/lab-grown-diamonds-vs-natural-diamonds-buyers-guide-2026" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/lab-grown-diamonds-vs-natural-diamonds-buyers-guide-2026" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/blog/lab-grown-diamonds-vs-natural-diamonds-buyers-guide-2026"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/lab-grown-diamonds-vs-natural-diamonds-buyers-guide-2026"/>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1603974372039-adc49044b6bd?w=1200&amp;q=80</image:loc>
-      <image:title>Lab Grown Diamonds vs Natural Diamonds — Complete 2026 Buyer's Guide</image:title>
+      <image:title>Lab Grown Diamonds vs Natural Diamonds — Complete 2026 Buyer&apos;s Guide</image:title>
       <image:caption>Comparison of lab grown and natural diamonds — chemically identical, different origins</image:caption>
     </image:image>
-    <mobile:mobile/>
   </url>
 
   <url>
@@ -178,14 +94,13 @@
     <lastmod>2026-05-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.jewelsreport.com/blog/how-to-read-diamond-certificate-jewelsreport-guide" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/how-to-read-diamond-certificate-jewelsreport-guide" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/blog/how-to-read-diamond-certificate-jewelsreport-guide"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/how-to-read-diamond-certificate-jewelsreport-guide"/>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&amp;q=80</image:loc>
       <image:title>How to Read a Diamond Certificate — JewelsReport Grading Card Guide</image:title>
       <image:caption>Step-by-step guide to reading a JewelsReport PVC diamond grading certificate</image:caption>
     </image:image>
-    <mobile:mobile/>
   </url>
 
   <url>
@@ -193,14 +108,13 @@
     <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.jewelsreport.com/blog/cvd-vs-hpht-lab-grown-diamonds-differences-explained" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/cvd-vs-hpht-lab-grown-diamonds-differences-explained" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/blog/cvd-vs-hpht-lab-grown-diamonds-differences-explained"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/cvd-vs-hpht-lab-grown-diamonds-differences-explained"/>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=1200&amp;q=80</image:loc>
       <image:title>CVD vs HPHT Lab Grown Diamonds — Key Differences Explained</image:title>
-      <image:caption>Laboratory diamond growth: comparing CVD chemical vapour deposition and HPHT high pressure high temperature methods</image:caption>
+      <image:caption>Laboratory diamond growth: comparing CVD and HPHT methods</image:caption>
     </image:image>
-    <mobile:mobile/>
   </url>
 
   <url>
@@ -208,9 +122,8 @@
     <lastmod>2026-05-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.jewelsreport.com/blog/diamond-fluorescence-explained-effect-on-value-certificate" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/diamond-fluorescence-explained-effect-on-value-certificate" />
-    <mobile:mobile/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/blog/diamond-fluorescence-explained-effect-on-value-certificate"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/diamond-fluorescence-explained-effect-on-value-certificate"/>
   </url>
 
   <url>
@@ -218,14 +131,13 @@
     <lastmod>2026-05-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.jewelsreport.com/blog/why-diamond-gemological-certificate-important-before-buying" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/why-diamond-gemological-certificate-important-before-buying" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/blog/why-diamond-gemological-certificate-important-before-buying"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/why-diamond-gemological-certificate-important-before-buying"/>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1617038260897-41a533f8f21e?w=1200&amp;q=80</image:loc>
       <image:title>Why Every Diamond Needs a Gemological Certificate Before You Buy</image:title>
-      <image:caption>Diamond jewellery — certified with an independent JewelsReport grading report for buyer protection</image:caption>
+      <image:caption>Diamond jewellery certified with an independent JewelsReport grading report for buyer protection</image:caption>
     </image:image>
-    <mobile:mobile/>
   </url>
 
   <url>
@@ -233,14 +145,13 @@
     <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.jewelsreport.com/blog/ruby-emerald-sapphire-coloured-gemstone-certification-grading" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/ruby-emerald-sapphire-coloured-gemstone-certification-grading" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/blog/ruby-emerald-sapphire-coloured-gemstone-certification-grading"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/ruby-emerald-sapphire-coloured-gemstone-certification-grading"/>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=1200&amp;q=80</image:loc>
       <image:title>Ruby, Emerald &amp; Sapphire Certification — How Coloured Gemstones Are Graded</image:title>
-      <image:caption>Blue sapphire gemstone — graded for colour, origin, clarity and treatment by JewelsReport gemologists</image:caption>
+      <image:caption>Blue sapphire gemstone graded for colour, origin, clarity and treatment by JewelsReport gemologists</image:caption>
     </image:image>
-    <mobile:mobile/>
   </url>
 
   <url>
@@ -248,15 +159,14 @@
     <lastmod>2026-05-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.jewelsreport.com/blog/lab-grown-diamond-jewellery-indian-weddings-bridal-guide" />
-    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.jewelsreport.com/blog/lab-grown-diamond-jewellery-indian-weddings-bridal-guide" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/lab-grown-diamond-jewellery-indian-weddings-bridal-guide" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/blog/lab-grown-diamond-jewellery-indian-weddings-bridal-guide"/>
+    <xhtml:link rel="alternate" hreflang="en-IN"     href="https://www.jewelsreport.com/blog/lab-grown-diamond-jewellery-indian-weddings-bridal-guide"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/lab-grown-diamond-jewellery-indian-weddings-bridal-guide"/>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&amp;q=80</image:loc>
       <image:title>Lab Grown Diamond Jewellery for Indian Weddings — Bridal Guide</image:title>
-      <image:caption>Bridal bouquet and wedding jewellery — lab grown diamond bridal sets certified by JewelsReport for Indian weddings</image:caption>
+      <image:caption>Lab grown diamond bridal sets certified by JewelsReport for Indian weddings</image:caption>
     </image:image>
-    <mobile:mobile/>
   </url>
 
   <url>
@@ -264,14 +174,13 @@
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.jewelsreport.com/blog/diamond-clarity-grades-explained-fl-if-vvs-vs-si-included" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/diamond-clarity-grades-explained-fl-if-vvs-vs-si-included" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/blog/diamond-clarity-grades-explained-fl-if-vvs-vs-si-included"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/diamond-clarity-grades-explained-fl-if-vvs-vs-si-included"/>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1576086213369-97a306d36557?w=1200&amp;q=80</image:loc>
       <image:title>Diamond Clarity Grades Explained — FL IF VVS VS SI Included Scale</image:title>
-      <image:caption>Gemological microscope used to assess diamond clarity — from Flawless to Included on the GIA scale</image:caption>
+      <image:caption>Gemological microscope used to assess diamond clarity from Flawless to Included</image:caption>
     </image:image>
-    <mobile:mobile/>
   </url>
 
   <url>
@@ -279,62 +188,42 @@
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.jewelsreport.com/blog/how-to-verify-diamond-certificate-online-step-by-step" />
-    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.jewelsreport.com/blog/how-to-verify-diamond-certificate-online-step-by-step" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/how-to-verify-diamond-certificate-online-step-by-step" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/blog/how-to-verify-diamond-certificate-online-step-by-step"/>
+    <xhtml:link rel="alternate" hreflang="en-IN"     href="https://www.jewelsreport.com/blog/how-to-verify-diamond-certificate-online-step-by-step"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/blog/how-to-verify-diamond-certificate-online-step-by-step"/>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&amp;q=80</image:loc>
       <image:title>How to Verify a Diamond Certificate Online — Step-by-Step Guide</image:title>
-      <image:caption>Verifying a JewelsReport certificate online using the report number — instant authenticity check at jewelsreport.com/verify</image:caption>
+      <image:caption>Verifying a JewelsReport certificate online using the report number at jewelsreport.com/verify</image:caption>
     </image:image>
-    <mobile:mobile/>
   </url>
 
-
-  <!-- ═══════════════════════════════════════════════════════════════════════
-       CONTACT
-       Priority: 0.65 — local SEO + conversion page
-       ═══════════════════════════════════════════════════════════════════════ -->
   <url>
     <loc>https://www.jewelsreport.com/contact</loc>
-    <lastmod>2026-05-19</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
-    <xhtml:link rel="alternate" hreflang="en"       href="https://www.jewelsreport.com/contact" />
-    <xhtml:link rel="alternate" hreflang="en-IN"    href="https://www.jewelsreport.com/contact" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/contact" />
-    <mobile:mobile/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/contact"/>
+    <xhtml:link rel="alternate" hreflang="en-IN"     href="https://www.jewelsreport.com/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/contact"/>
   </url>
 
-
-  <!-- ═══════════════════════════════════════════════════════════════════════
-       PRIVACY POLICY
-       Priority: 0.40 — E-E-A-T trust signal; legal requirement
-       ═══════════════════════════════════════════════════════════════════════ -->
   <url>
     <loc>https://www.jewelsreport.com/privacy-policy</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.40</priority>
-    <xhtml:link rel="alternate" hreflang="en"       href="https://www.jewelsreport.com/privacy-policy" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/privacy-policy" />
-    <mobile:mobile/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/privacy-policy"/>
   </url>
 
-
-  <!-- ═══════════════════════════════════════════════════════════════════════
-       TERMS OF SERVICE
-       Priority: 0.40 — E-E-A-T trust signal; shows legitimate business
-       ═══════════════════════════════════════════════════════════════════════ -->
   <url>
     <loc>https://www.jewelsreport.com/terms-of-service</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.40</priority>
-    <xhtml:link rel="alternate" hreflang="en"       href="https://www.jewelsreport.com/terms-of-service" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/terms-of-service" />
-    <mobile:mobile/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.jewelsreport.com/terms-of-service"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jewelsreport.com/terms-of-service"/>
   </url>
-
 
 </urlset>

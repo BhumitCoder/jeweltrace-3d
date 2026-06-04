@@ -1,26 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
-<!--
-  ╔══════════════════════════════════════════════════════════════════════════════╗
-  ║  JewelsReport — Image Sitemap                                               ║
-  ║  https://www.jewelsreport.com/sitemap-images.xml                            ║
-  ╚══════════════════════════════════════════════════════════════════════════════╝
--->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="
-          http://www.sitemaps.org/schemas/sitemap/0.9
-          http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
-          http://www.google.com/schemas/sitemap-image/1.1
-          http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
   <url>
     <loc>https://www.jewelsreport.com/</loc>
     <image:image>
       <image:loc>https://www.jewelsreport.com/og-image.jpg</image:loc>
       <image:title>JewelsReport — Tamper-proof PVC Gemological Certificate</image:title>
-      <image:caption>JewelsReport CR80 PVC certificate with holographic foil and QR verification code for diamonds, gemstones and fine jewellery</image:caption>
+      <image:caption>JewelsReport CR80 PVC certificate with holographic foil and QR verification for diamonds, gemstones and fine jewellery</image:caption>
       <image:geo_location>Surat, Gujarat, India</image:geo_location>
       <image:license>https://www.jewelsreport.com/</image:license>
     </image:image>
@@ -42,9 +29,90 @@
     <image:image>
       <image:loc>https://www.jewelsreport.com/og-image.jpg</image:loc>
       <image:title>Verify a JewelsReport Certificate — Instant Online Authentication</image:title>
-      <image:caption>Free online diamond and gemstone certificate verification tool — enter report number or scan QR code to confirm authenticity</image:caption>
+      <image:caption>Free online diamond and gemstone certificate verification — enter report number or scan QR code to confirm authenticity</image:caption>
       <image:geo_location>Surat, Gujarat, India</image:geo_location>
       <image:license>https://www.jewelsreport.com/</image:license>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/4cs-diamond-grading-cut-colour-clarity-carat</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=1200&amp;q=80</image:loc>
+      <image:title>The 4Cs of Diamond Grading — Cut, Colour, Clarity &amp; Carat</image:title>
+      <image:caption>Round brilliant diamond illustrating the 4Cs grading standard</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/lab-grown-diamonds-vs-natural-diamonds-buyers-guide-2026</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1603974372039-adc49044b6bd?w=1200&amp;q=80</image:loc>
+      <image:title>Lab Grown vs Natural Diamonds — 2026 Buyer&apos;s Guide</image:title>
+      <image:caption>Comparison of lab grown and natural diamonds — chemically identical, different origins</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/how-to-read-diamond-certificate-jewelsreport-guide</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&amp;q=80</image:loc>
+      <image:title>How to Read a Diamond Certificate — JewelsReport Guide</image:title>
+      <image:caption>Step-by-step guide to reading a JewelsReport PVC diamond grading certificate</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/cvd-vs-hpht-lab-grown-diamonds-differences-explained</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=1200&amp;q=80</image:loc>
+      <image:title>CVD vs HPHT Lab Grown Diamonds — Differences Explained</image:title>
+      <image:caption>Laboratory diamond growth methods: CVD and HPHT compared</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/why-diamond-gemological-certificate-important-before-buying</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1617038260897-41a533f8f21e?w=1200&amp;q=80</image:loc>
+      <image:title>Why Every Diamond Needs a Gemological Certificate</image:title>
+      <image:caption>Diamond jewellery certified with an independent JewelsReport grading report</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/ruby-emerald-sapphire-coloured-gemstone-certification-grading</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=1200&amp;q=80</image:loc>
+      <image:title>Ruby, Emerald &amp; Sapphire Certification — Coloured Gemstone Grading</image:title>
+      <image:caption>Blue sapphire gemstone graded for colour, origin, clarity and treatment</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/lab-grown-diamond-jewellery-indian-weddings-bridal-guide</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&amp;q=80</image:loc>
+      <image:title>Lab Grown Diamond Jewellery for Indian Weddings</image:title>
+      <image:caption>Lab grown diamond bridal sets certified by JewelsReport for Indian weddings</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/diamond-clarity-grades-explained-fl-if-vvs-vs-si-included</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1576086213369-97a306d36557?w=1200&amp;q=80</image:loc>
+      <image:title>Diamond Clarity Grades — FL IF VVS VS SI Included Scale</image:title>
+      <image:caption>Gemological microscope used to assess diamond clarity</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.jewelsreport.com/blog/how-to-verify-diamond-certificate-online-step-by-step</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&amp;q=80</image:loc>
+      <image:title>How to Verify a Diamond Certificate Online</image:title>
+      <image:caption>Verifying a JewelsReport certificate online using the report number</image:caption>
     </image:image>
   </url>
 

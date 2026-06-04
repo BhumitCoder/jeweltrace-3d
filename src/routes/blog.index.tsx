@@ -58,7 +58,7 @@ function BlogPage() {
         "@type": "Blog",
         "@id": `${SITE_URL}/blog#blog`,
         url: `${SITE_URL}/blog`,
-        name: "JewelsReport Journal",
+        name: "Diamond & Gem Journal",
         description:
           "Expert diamond and gemstone grading insights from the JewelsReport gemological laboratory. Buyer guides, certification tutorials, lab grown diamond news and gemstone identification articles.",
         publisher: { "@id": `${SITE_URL}/#organization` },

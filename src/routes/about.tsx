@@ -73,12 +73,13 @@ function AboutPage() {
         "@type": "AboutPage",
         "@id": `${SITE_URL}/about#webpage`,
         url: `${SITE_URL}/about`,
-        name: "About JewelsReport Gemological Laboratory",
+        name: "About the Lab",
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${SITE_URL}/#organization` },
-        description:
-          "History, team, instruments and standards of JewelsReport, an independent gemological certification laboratory based in Surat, India.",
-        inLanguage: "en-US",
+        description: "JewelsReport gemological laboratory — 25+ master gemologists, ISO/IEC 17025 aligned protocols, advanced spectroscopy instruments, founded Surat India 2014.",
+        inLanguage: "en-IN",
+        publisher: { "@id": `${SITE_URL}/#organization` },
+        breadcrumb: { "@id": `${SITE_URL}/about#breadcrumb` },
         speakable: {
           "@type": "SpeakableSpecification",
           cssSelector: ["h1", "h2"],

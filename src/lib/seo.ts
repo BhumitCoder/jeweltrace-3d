@@ -360,6 +360,25 @@ export const howToVerify = () => ({
   ],
 });
 
+export const webPage = (
+  path: string,
+  name: string,
+  description: string,
+  extra?: Record<string, unknown>
+) => ({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${SITE_URL}${path}#webpage`,
+  url: `${SITE_URL}${path}`,
+  name,
+  description,
+  isPartOf: { "@id": `${SITE_URL}/#website` },
+  about: { "@id": `${SITE_URL}/#organization` },
+  publisher: { "@id": `${SITE_URL}/#organization` },
+  inLanguage: "en-IN",
+  ...(extra ?? {}),
+});
+
 export const speakable = (cssSelectors: string[]) => ({
   "@context": "https://schema.org",
   "@type": "WebPage",

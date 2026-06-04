@@ -126,9 +126,9 @@ function HomePage() {
         name: "JewelsReport — Diamond, Gemstone & Jewellery Certification Lab",
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${SITE_URL}/#organization` },
-        description:
-          "Internationally trusted gemological lab issuing tamper-proof PVC certificates for diamonds, gemstones and fine jewellery.",
-        inLanguage: "en-US",
+        description: "Internationally trusted gemological lab issuing tamper-proof PVC certificates for natural & lab-grown diamonds, coloured gemstones and fine jewellery. 150,000+ reports issued.",
+        inLanguage: "en-IN",
+        publisher: { "@id": `${SITE_URL}/#organization` },
         speakable: {
           "@type": "SpeakableSpecification",
           cssSelector: ["h1", ".hero-description"],

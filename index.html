@@ -104,42 +104,63 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" />
 
-    <!-- ── JSON-LD: SiteNavigationElement — tells Google your page hierarchy ── -->
+    <!-- ── JSON-LD: SiteNavigationElement (ItemList) — primary sitelinks signal ── -->
     <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "SiteNavigationElement",
-        "@id": "https://www.jewelsreport.com/verify#nav",
-        "name": "Verify Certificate",
-        "description": "Instantly verify any JewelsReport diamond or gemstone certificate by report number or QR code — free, no login required.",
-        "url": "https://www.jewelsreport.com/verify"
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "SiteNavigationElement",
-        "@id": "https://www.jewelsreport.com/about#nav",
-        "name": "About the Lab",
-        "description": "JewelsReport gemological laboratory — 25+ master gemologists, ISO/IEC 17025 aligned protocols, founded Surat India 2014.",
-        "url": "https://www.jewelsreport.com/about"
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "SiteNavigationElement",
-        "@id": "https://www.jewelsreport.com/blog#nav",
-        "name": "Blog & Journal",
-        "description": "Diamond, gemstone and jewellery certification insights, industry news and buyer guides from JewelsReport laboratory.",
-        "url": "https://www.jewelsreport.com/blog"
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "SiteNavigationElement",
-        "@id": "https://www.jewelsreport.com/contact#nav",
-        "name": "Contact the Lab",
-        "description": "Contact JewelsReport for grading enquiries, bulk certification, retailer programmes and verification support.",
-        "url": "https://www.jewelsreport.com/contact"
-      }
-    ]
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "@id": "https://www.jewelsreport.com/#navigation",
+      "name": "JewelsReport Main Navigation",
+      "description": "Primary navigation pages of JewelsReport gemological laboratory",
+      "numberOfItems": 5,
+      "itemListElement": [
+        {
+          "@type": "SiteNavigationElement",
+          "position": 1,
+          "name": "Verify Certificate",
+          "alternateName": "Certificate Verification",
+          "description": "Instantly verify any JewelsReport diamond or gemstone certificate by report number or QR code — free, no login required.",
+          "url": "https://www.jewelsreport.com/verify",
+          "image": "https://www.jewelsreport.com/og-image.jpg"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 2,
+          "name": "About the Lab",
+          "alternateName": "About JewelsReport",
+          "description": "JewelsReport gemological laboratory — 25+ master gemologists, ISO/IEC 17025 aligned protocols, advanced spectroscopy instruments, founded Surat India 2014.",
+          "url": "https://www.jewelsreport.com/about",
+          "image": "https://www.jewelsreport.com/og-image.jpg"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 3,
+          "name": "Diamond & Gem Journal",
+          "alternateName": "Blog",
+          "description": "Expert diamond grading guides, gemstone certification articles, CVD vs HPHT comparisons, and jewellery industry insights from JewelsReport gemologists.",
+          "url": "https://www.jewelsreport.com/blog",
+          "image": "https://www.jewelsreport.com/og-image.jpg"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 4,
+          "name": "Contact the Lab",
+          "alternateName": "Contact JewelsReport",
+          "description": "Contact JewelsReport for diamond grading enquiries, bulk certification, retailer programmes and verification support. Call +91-9967381180.",
+          "url": "https://www.jewelsreport.com/contact",
+          "image": "https://www.jewelsreport.com/og-image.jpg"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 5,
+          "name": "Privacy Policy",
+          "alternateName": "Privacy",
+          "description": "JewelsReport privacy policy — how we handle your data, certificate records and contact information.",
+          "url": "https://www.jewelsreport.com/privacy-policy",
+          "image": "https://www.jewelsreport.com/og-image.jpg"
+        }
+      ]
+    }
     </script>
 
     <!-- ── JSON-LD: Organization ────────────────────────────────────────────── -->
@@ -328,7 +349,7 @@
     }
     </script>
 
-    <!-- ── JSON-LD: WebSite + Sitelinks Search ───────────────────────────────── -->
+    <!-- ── JSON-LD: WebSite + Sitelinks Search Box ───────────────────────────── -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -336,11 +357,66 @@
       "@id": "https://www.jewelsreport.com/#website",
       "url": "https://www.jewelsreport.com/",
       "name": "JewelsReport",
-      "alternateName": "JewelsReport Gemological Laboratory",
-      "description": "Diamond, gemstone & jewellery certification lab — tamper-proof PVC certificates with QR verification.",
+      "alternateName": ["JewelsReport Gemological Laboratory", "Jewels Report", "JewelsReport Cert Lab"],
+      "description": "Independent gemological laboratory issuing tamper-proof PVC certificates with holographic foil and QR verification for natural & lab-grown diamonds, coloured gemstones and fine jewellery. 150,000+ reports issued.",
+      "keywords": "diamond certification India, lab grown diamond certificate, gemstone report India, JewelsReport, diamond grading Surat",
       "publisher": { "@id": "https://www.jewelsreport.com/#organization" },
-      "inLanguage": "en-US",
+      "author": { "@id": "https://www.jewelsreport.com/#organization" },
+      "inLanguage": "en-IN",
       "copyrightYear": "2026",
+      "copyrightHolder": { "@id": "https://www.jewelsreport.com/#organization" },
+      "hasPart": [
+        {
+          "@type": "WebPage",
+          "@id": "https://www.jewelsreport.com/#homepage",
+          "url": "https://www.jewelsreport.com/",
+          "name": "JewelsReport — Diamond, Gemstone & Jewellery Certification Lab",
+          "description": "Internationally trusted gemological lab issuing tamper-proof PVC certificates for natural & lab-grown diamonds, coloured gemstones and fine jewellery. 150,000+ reports. Verify by ID or QR instantly.",
+          "isPartOf": { "@id": "https://www.jewelsreport.com/#website" },
+          "about": { "@id": "https://www.jewelsreport.com/#organization" },
+          "inLanguage": "en-IN"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://www.jewelsreport.com/verify#webpage",
+          "url": "https://www.jewelsreport.com/verify",
+          "name": "Verify Certificate — Instant Diamond & Gemstone Report Check",
+          "description": "Verify any JewelsReport diamond, gemstone or jewellery certificate in seconds. Enter the report number or scan the QR code on your PVC card.",
+          "isPartOf": { "@id": "https://www.jewelsreport.com/#website" },
+          "about": { "@id": "https://www.jewelsreport.com/#organization" },
+          "inLanguage": "en-IN"
+        },
+        {
+          "@type": "AboutPage",
+          "@id": "https://www.jewelsreport.com/about#webpage",
+          "url": "https://www.jewelsreport.com/about",
+          "name": "About JewelsReport — Master Gemologists & ISO-Aligned Lab",
+          "description": "Founded in 2014, JewelsReport is an independent gemological laboratory with 25+ master graders, ISO/IEC 17025 aligned protocols and 150,000+ certificates issued worldwide.",
+          "isPartOf": { "@id": "https://www.jewelsreport.com/#website" },
+          "about": { "@id": "https://www.jewelsreport.com/#organization" },
+          "inLanguage": "en-IN"
+        },
+        {
+          "@type": "Blog",
+          "@id": "https://www.jewelsreport.com/blog#webpage",
+          "url": "https://www.jewelsreport.com/blog",
+          "name": "Diamond & Gem Journal — Grading Guides & Certification Insights",
+          "description": "Expert guides on the 4Cs, lab grown vs natural diamonds, gemstone certification, CVD vs HPHT, and how to verify a certificate. Written by JewelsReport gemologists.",
+          "isPartOf": { "@id": "https://www.jewelsreport.com/#website" },
+          "about": { "@id": "https://www.jewelsreport.com/#organization" },
+          "inLanguage": "en-IN"
+        },
+        {
+          "@type": "ContactPage",
+          "@id": "https://www.jewelsreport.com/contact#webpage",
+          "url": "https://www.jewelsreport.com/contact",
+          "name": "Contact JewelsReport — Diamond Grading Enquiries & Bulk Certification",
+          "description": "Contact the JewelsReport gemological laboratory for grading enquiries, bulk certification, retailer programmes and verification support. Surat, Gujarat, India.",
+          "isPartOf": { "@id": "https://www.jewelsreport.com/#website" },
+          "about": { "@id": "https://www.jewelsreport.com/#organization" },
+          "inLanguage": "en-IN"
+        }
+      ],
       "potentialAction": {
         "@type": "SearchAction",
         "target": {

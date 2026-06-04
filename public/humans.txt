@@ -1,0 +1,16 @@
+/* TEAM */
+
+Chief Gemologist: Dr. Anjali Verma
+Head of Diamonds: Rohit Khanna
+Coloured Stones Lead: Meera Iyer
+Lab Operations Director: Daniel Cohen
+Location: Surat, Gujarat, India
+
+/* SITE */
+
+Last update: 2026-06-04
+Language: English (India)
+Standards: ISO/IEC 17025 aligned
+Technology: React, TanStack Router, Firebase, Tailwind CSS
+Website: https://www.jewelsreport.com
+Contact: reports@jewelsreport.com

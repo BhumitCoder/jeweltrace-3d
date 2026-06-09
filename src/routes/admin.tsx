@@ -6,6 +6,17 @@ import {
 } from "@/lib/store";
 import { Gem, Lock } from "lucide-react";
 
+function useAdminNoIndex() {
+  useEffect(() => {
+    const meta = document.createElement("meta");
+    meta.name = "robots";
+    meta.content = "noindex, nofollow";
+    meta.setAttribute("data-admin-meta", "true");
+    document.head.appendChild(meta);
+    return () => { meta.remove(); };
+  }, []);
+}
+
 export const Route = createFileRoute("/admin")({
   component: AdminLayout,
 });
@@ -13,6 +24,8 @@ export const Route = createFileRoute("/admin")({
 function AdminLayout() {
   const [authed, setAuthed] = useState(false);
   const [ready, setReady] = useState(false);
+
+  useAdminNoIndex();
 
   useEffect(() => {
     setAuthed(isAdminAuthed());

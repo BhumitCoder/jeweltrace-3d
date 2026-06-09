@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { useSEO, SITE_URL, breadcrumb } from "@/lib/seo";
 import { getBlogPost, getBlogPosts } from "@/lib/db";
+import { getSeedPost, BLOG_SEED } from "@/lib/blog-seed";
 import { useEffect, useState } from "react";
 import type { BlogPost } from "@/lib/store";
 import { ArrowLeft, Calendar, User, BookOpen, ArrowRight, Clock } from "lucide-react";
@@ -80,12 +81,22 @@ function PostPage() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
+    const seed = getSeedPost(slug);
+    if (seed) {
+      setPost(seed);
+      setLoaded(true);
+    }
     getBlogPost(slug).then((found) => {
-      setPost(found);
+      if (found) setPost(found);
       setLoaded(true);
     });
     getBlogPosts().then((all) => {
-      setRelated(all.filter((p) => p.slug !== slug).slice(0, 3));
+      const filtered = all.filter((p) => p.slug !== slug);
+      if (filtered.length > 0) {
+        setRelated(filtered.slice(0, 3));
+      } else {
+        setRelated(BLOG_SEED.filter((p) => p.slug !== slug).slice(0, 3));
+      }
     });
   }, [slug]);
 

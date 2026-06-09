@@ -8,7 +8,7 @@ export const Route = createFileRoute("/terms-of-service")({
 
 function TermsOfServicePage() {
   useSEO({
-    title: "Terms of Service — JewelsReport Gemological Laboratory",
+    title: "Terms of Service | JewelsReport",
     description: "Terms and conditions governing use of JewelsReport certificate verification services, website and gemological reports issued by our laboratory.",
     path: "/terms-of-service",
     keywords: "JewelsReport terms of service, certificate terms, gem lab terms, diamond report terms",

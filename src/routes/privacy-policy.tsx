@@ -8,7 +8,7 @@ export const Route = createFileRoute("/privacy-policy")({
 
 function PrivacyPolicyPage() {
   useSEO({
-    title: "Privacy Policy — JewelsReport Gemological Laboratory",
+    title: "Privacy Policy | JewelsReport",
     description: "JewelsReport privacy policy. Learn how we collect, use and protect your personal data when you use our certificate verification service and website.",
     path: "/privacy-policy",
     keywords: "JewelsReport privacy policy, data protection, gemological lab privacy",

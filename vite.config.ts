@@ -19,7 +19,7 @@ const ROUTES: Array<{
   /* ── Static pages ───────────────────────────────────────────── */
   {
     dir: "about",
-    title: "About JewelsReport — Master Gemologists & ISO-Aligned Lab | Surat",
+    title: "About JewelsReport — Gem Lab, Surat India",
     description:
       "Independent gemological laboratory in Surat founded by master gemologists. ISO/IEC 17025 aligned protocols. Issuing tamper-proof PVC certificates for diamonds, gemstones and jewellery since 2014.",
     keywords:
@@ -54,7 +54,7 @@ const ROUTES: Array<{
   },
   {
     dir: "verify",
-    title: "Verify a Certificate — Instant Diamond & Gemstone Report Check | JewelsReport",
+    title: "Verify Your Diamond Certificate | JewelsReport",
     description:
       "Verify any JewelsReport diamond, gemstone or jewellery certificate in seconds. Enter the report number or scan the QR code on your PVC card to confirm authenticity and view full grading details.",
     keywords:
@@ -113,7 +113,7 @@ const ROUTES: Array<{
   },
   {
     dir: "blog",
-    title: "JewelsReport Journal — Diamond, Gemstone & Jewellery Industry Insights",
+    title: "JewelsReport Journal — Diamond & Gem Grading Guides",
     description:
       "Stories, science and standards from the world of gem certification. Lab-grown diamond news, buyer guides, gemological research and industry updates from JewelsReport.",
     keywords:
@@ -156,7 +156,7 @@ const ROUTES: Array<{
   },
   {
     dir: "privacy-policy",
-    title: "Privacy Policy — JewelsReport Gemological Laboratory",
+    title: "Privacy Policy | JewelsReport",
     description:
       "JewelsReport privacy policy. Learn how we collect, use and protect your personal data when you use our certificate verification service and website.",
     keywords:
@@ -189,7 +189,7 @@ const ROUTES: Array<{
   },
   {
     dir: "terms-of-service",
-    title: "Terms of Service — JewelsReport Gemological Laboratory",
+    title: "Terms of Service | JewelsReport",
     description:
       "Terms and conditions governing use of JewelsReport certificate verification services, website and gemological reports issued by our laboratory.",
     keywords:
@@ -222,7 +222,7 @@ const ROUTES: Array<{
   },
   {
     dir: "contact",
-    title: "Contact JewelsReport — Lab Enquiries, Bulk Certification & Support",
+    title: "Contact JewelsReport — Diamond Lab Enquiries",
     description:
       "Reach the JewelsReport gemological laboratory in Surat for diamond grading enquiries, bulk certification, retailer programs and verification support. Call +91 99673 81180 or email reports@jewelsreport.com.",
     keywords:
@@ -284,7 +284,7 @@ const ROUTES: Array<{
   /* ── Blog posts ─────────────────────────────────────────────── */
   {
     dir: "blog/4cs-diamond-grading-cut-colour-clarity-carat",
-    title: "The 4Cs of Diamond Grading: Cut, Colour, Clarity & Carat Explained | JewelsReport",
+    title: "The 4Cs of Diamond Grading Explained | JewelsReport",
     description:
       "Complete guide to the 4Cs of diamond grading — cut, colour, clarity and carat weight. Learn how each factor affects a diamond's beauty, quality and value from JewelsReport master gemologists.",
     keywords:
@@ -336,7 +336,7 @@ const ROUTES: Array<{
   },
   {
     dir: "blog/lab-grown-diamonds-vs-natural-diamonds-buyers-guide-2026",
-    title: "Lab Grown vs Natural Diamonds: Complete Buyer's Guide 2026 | JewelsReport",
+    title: "Lab Grown vs Natural Diamonds: Buyer's Guide 2026 | JewelsReport",
     description:
       "Everything you need to know about lab grown vs natural diamonds in 2026 — price difference, quality, certification, resale value and what your gemological certificate actually says.",
     keywords:
@@ -388,7 +388,7 @@ const ROUTES: Array<{
   },
   {
     dir: "blog/how-to-read-diamond-certificate-jewelsreport-guide",
-    title: "How to Read a Diamond Certificate: JewelsReport Complete Guide",
+    title: "How to Read a Diamond Certificate | JewelsReport",
     description:
       "Step-by-step guide to reading every field on a JewelsReport diamond certificate — from cut grade to fluorescence, measurements, clarity map and what each number really means.",
     keywords:
@@ -440,7 +440,7 @@ const ROUTES: Array<{
   },
   {
     dir: "blog/cvd-vs-hpht-lab-grown-diamonds-differences-explained",
-    title: "CVD vs HPHT Lab Grown Diamonds: Key Differences Explained | JewelsReport",
+    title: "CVD vs HPHT Lab Grown Diamonds Explained | JewelsReport",
     description:
       "CVD vs HPHT lab grown diamonds explained — how each is made, how gemologists tell them apart, what your certificate discloses, and which is better for buyers in India.",
     keywords:
@@ -492,7 +492,7 @@ const ROUTES: Array<{
   },
   {
     dir: "blog/diamond-fluorescence-explained-effect-on-value-certificate",
-    title: "Diamond Fluorescence Explained: Effect on Value & Certificate | JewelsReport",
+    title: "Diamond Fluorescence Explained | JewelsReport",
     description:
       "What is diamond fluorescence? How blue fluorescence affects appearance and price, which fluorescence grades exist, and how JewelsReport grades and discloses fluorescence on the certificate.",
     keywords:
@@ -544,7 +544,7 @@ const ROUTES: Array<{
   },
   {
     dir: "blog/why-diamond-gemological-certificate-important-before-buying",
-    title: "Why a Diamond Certificate Is Essential Before You Buy | JewelsReport",
+    title: "Why a Diamond Certificate Matters | JewelsReport",
     description:
       "Why every diamond buyer needs an independent gemological certificate. What certified really means, how to spot a fake report, and what protection a JewelsReport certificate provides.",
     keywords:
@@ -596,7 +596,7 @@ const ROUTES: Array<{
   },
   {
     dir: "blog/ruby-emerald-sapphire-coloured-gemstone-certification-grading",
-    title: "Ruby, Emerald & Sapphire Certification: Coloured Gemstone Grading Guide",
+    title: "Ruby, Emerald & Sapphire Certification Guide | JewelsReport",
     description:
       "How JewelsReport certifies ruby, emerald and sapphire — treatment detection, origin determination, colour grading and what the coloured gemstone report shows buyers and dealers.",
     keywords:
@@ -648,7 +648,7 @@ const ROUTES: Array<{
   },
   {
     dir: "blog/lab-grown-diamond-jewellery-indian-weddings-bridal-guide",
-    title: "Lab Grown Diamond Jewellery for Indian Weddings: Complete Bridal Guide",
+    title: "Lab Grown Diamond Jewellery for Indian Weddings | JewelsReport",
     description:
       "Why Indian brides are choosing certified lab grown diamond jewellery in 2026. Bridal set comparisons, budget guide, and why the certificate matters for wedding purchases.",
     keywords:
@@ -700,7 +700,7 @@ const ROUTES: Array<{
   },
   {
     dir: "blog/diamond-clarity-grades-explained-fl-if-vvs-vs-si-included",
-    title: "Diamond Clarity Grades Explained: FL, IF, VVS, VS, SI, Included | JewelsReport",
+    title: "Diamond Clarity Grades: FL, IF, VVS, VS, SI Explained | JewelsReport",
     description:
       "Complete diamond clarity grade scale from Flawless to Included — what each grade means, how inclusions affect beauty and value, and how to choose the best clarity for your budget.",
     keywords:
@@ -752,7 +752,7 @@ const ROUTES: Array<{
   },
   {
     dir: "blog/how-to-verify-diamond-certificate-online-step-by-step",
-    title: "How to Verify a Diamond Certificate Online: Step-by-Step Guide | JewelsReport",
+    title: "How to Verify a Diamond Certificate Online | JewelsReport",
     description:
       "Complete step-by-step guide to verifying a JewelsReport certificate online. Scan the QR code or enter the report number at jewelsreport.com/verify — free, instant, no login required.",
     keywords:

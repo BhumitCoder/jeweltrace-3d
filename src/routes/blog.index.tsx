@@ -42,7 +42,7 @@ function BlogPage() {
   }, []);
 
   useSEO({
-    title: "JewelsReport Journal — Diamond, Gemstone & Jewellery Grading Insights",
+    title: "JewelsReport Journal — Diamond & Gem Grading Guides",
     description:
       "Expert guides on the 4Cs of diamond grading, lab grown vs natural diamonds, gemstone certification, CVD vs HPHT, diamond fluorescence, and how to verify a certificate. Written by JewelsReport gemologists.",
     path: "/blog",

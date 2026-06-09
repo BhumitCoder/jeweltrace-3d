@@ -33,7 +33,7 @@ export const Route = createFileRoute("/verify")({
 
 function VerifyPage() {
   useSEO({
-    title: "Verify a Certificate — Instant Diamond & Gemstone Report Check | JewelsReport",
+    title: "Verify Your Diamond Certificate | JewelsReport",
     description:
       "Verify any JewelsReport diamond, gemstone or jewellery certificate in seconds. Enter the report number or scan the QR code on your PVC card to confirm authenticity and view full grading details.",
     path: "/verify",

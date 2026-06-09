@@ -1,0 +1,1 @@
+- [SEO structured data policy](seo-structured-data-policy.md) — fake aggregateRating is a Google policy violation; removed from 4 places; only re-add with real data

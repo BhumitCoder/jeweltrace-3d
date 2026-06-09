@@ -207,14 +207,6 @@ export const localBusiness = () => ({
   paymentAccepted: "Cash, Bank Transfer, UPI",
   areaServed: "Worldwide",
   hasMap: "https://maps.google.com/?q=Surat+Diamond+Market+Mahidharpura+Surat+Gujarat",
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    bestRating: "5",
-    worstRating: "1",
-    ratingCount: "1247",
-    reviewCount: "312",
-  },
   sameAs: ["https://www.jewelsreport.com"],
 });
 
@@ -357,13 +349,6 @@ export const reviewsSchema = (reviews: { name: string; role: string; text: strin
   description:
     "Tamper-proof PVC gemological certificate with holographic foil and QR-based instant verification, issued by JewelsReport laboratory.",
   brand: { "@type": "Brand", name: "JewelsReport" },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    bestRating: "5",
-    worstRating: "1",
-    ratingCount: "1247",
-  },
   review: reviews.map((r) => ({
     "@type": "Review",
     reviewRating: {

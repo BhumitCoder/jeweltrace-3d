@@ -107,8 +107,8 @@ function PostPage() {
 
   useSEO({
     title: post
-      ? `${post.title} | JewelsReport Journal`
-      : "Article — JewelsReport Journal",
+      ? `${post.title} | JewelsReport`
+      : "Article — JewelsReport",
     description:
       post?.excerpt ||
       post?.content?.slice(0, 155) ||

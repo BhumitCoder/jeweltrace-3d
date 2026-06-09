@@ -100,7 +100,7 @@ function HomePage() {
   const processCardWidth = useCardWidth(360);
 
   useSEO({
-    title: "JewelsReport — Diamond, Gemstone & Jewellery Certification Lab | Surat, India",
+    title: "JewelsReport — Diamond & Gemstone Certification Lab",
     description:
       "Internationally trusted gemological lab issuing tamper-proof PVC certificates for natural & lab-grown diamonds, coloured gemstones and fine jewellery. 150,000+ reports issued. Verify by ID or QR in seconds.",
     path: "/",
@@ -153,14 +153,6 @@ function HomePage() {
               serviceType: "Gemological Certification",
             },
           })),
-        },
-        aggregateRating: {
-          "@type": "AggregateRating",
-          ratingValue: "4.9",
-          bestRating: "5",
-          worstRating: "1",
-          ratingCount: "1247",
-          reviewCount: "312",
         },
         parentOrganization: { "@id": `${SITE_URL}/#organization` },
       },

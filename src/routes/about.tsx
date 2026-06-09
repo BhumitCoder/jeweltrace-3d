@@ -56,7 +56,7 @@ const instruments = [
 
 function AboutPage() {
   useSEO({
-    title: "About JewelsReport — Master Gemologists & ISO-Aligned Lab | Surat",
+    title: "About JewelsReport — Gem Lab, Surat India",
     description:
       "Founded in 2014, JewelsReport is an independent gemological laboratory with 25+ master graders, ISO/IEC 17025 aligned protocols, advanced spectroscopy instruments and 150,000+ certificates issued in 30+ countries.",
     path: "/about",

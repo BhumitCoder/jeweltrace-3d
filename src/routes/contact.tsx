@@ -11,7 +11,7 @@ export const Route = createFileRoute("/contact")({
 function ContactPage() {
   const [sent, setSent] = useState(false);
   useSEO({
-    title: "Contact JewelsReport — Lab Enquiries, Bulk Certification & Support",
+    title: "Contact JewelsReport — Diamond Lab Enquiries",
     description:
       "Reach the JewelsReport gemological laboratory in Surat for diamond grading enquiries, bulk certification, retailer programs and verification support. Call +91 99673 81180 or email reports@jewelsreport.com.",
     path: "/contact",

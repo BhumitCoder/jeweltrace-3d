@@ -3,9 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { Layout } from "@/components/Layout";
 import { useSEO, breadcrumb, webAppSchema, howToVerify, SITE_URL } from "@/lib/seo";
 import { CertificateCard, CARD_W, CARD_H } from "@/components/CertificateCard";
+import { A4Certificate, A4_W, A4_H } from "@/components/A4Certificate";
 import { getCertificate } from "@/lib/db";
 import type { Certificate } from "@/lib/store";
-import { Search, ShieldCheck, AlertCircle, Printer, Loader2 } from "lucide-react";
+import { isAdminAuthed } from "@/lib/store";
+import { downloadJpg } from "@/lib/download";
+import { Search, ShieldCheck, AlertCircle, Printer, Loader2, Download } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 function useCardScale() {
@@ -18,6 +21,20 @@ function useCardScale() {
       } else {
         setScale(0.52);
       }
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  return scale;
+}
+
+function useA4Scale() {
+  const [scale, setScale] = useState(0.65);
+  useEffect(() => {
+    const update = () => {
+      const vw = window.innerWidth;
+      setScale(vw < 900 ? Math.max(0.32, (vw - 48) / A4_W) : 0.65);
     };
     update();
     window.addEventListener("resize", update);
@@ -176,72 +193,143 @@ function VerifyPage() {
   );
 }
 
-/* ─── Card preview + print ───────────────────────────────────────────────────── */
+/* ─── Card preview + download ────────────────────────────────────────────────── */
 function CardPreview({ cert }: { cert: Certificate }) {
-  const scale    = useCardScale();
+  const isA4    = cert.cardStyle === "a4";
+  const isAdmin = isAdminAuthed();
+  const pvcScale = useCardScale();
+  const a4Scale  = useA4Scale();
+
   const frontRef = useRef<HTMLDivElement>(null);
   const backRef  = useRef<HTMLDivElement>(null);
-  const [printing, setPrinting] = useState(false);
+  const a4Ref    = useRef<HTMLDivElement>(null);
+  const [printing,    setPrinting]    = useState(false);
+  const [downloading, setDownloading] = useState(false);
 
-  async function handlePrint() {
+  /* ── PVC print popup (front + back, credit-card size) ── */
+  async function handlePrintPvc() {
     if (!frontRef.current || !backRef.current) return;
     setPrinting(true);
     try {
       const frontHTML = frontRef.current.outerHTML;
       const backHTML  = backRef.current.outerHTML;
-
       const win = window.open("", "_blank");
       if (!win) return;
-
       win.document.write(`<!DOCTYPE html><html><head>
         <title>JewelsReport Certificate ${cert.reportNo}</title>
         <style>
           @page { size: 85.6mm 53.98mm; margin: 0; }
-          *, *::before, *::after {
-            box-sizing: border-box;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-            color-adjust: exact !important;
-          }
+          *, *::before, *::after { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
           html, body { margin: 0; padding: 0; background: white; }
-          .page {
-            width: 85.6mm; height: 53.98mm;
-            overflow: hidden;
-            page-break-after: always; break-after: page;
-          }
+          .page { width: 85.6mm; height: 53.98mm; overflow: hidden; page-break-after: always; break-after: page; }
           .page:last-child { page-break-after: avoid; break-after: avoid; }
-          .card {
-            width: ${CARD_W}px; height: ${CARD_H}px;
-            transform: scale(0.378);
-            transform-origin: top left;
-          }
+          .card { width: ${CARD_W}px; height: ${CARD_H}px; transform: scale(0.378); transform-origin: top left; }
         </style>
       </head><body>
         <div class="page"><div class="card">${frontHTML}</div></div>
         <div class="page"><div class="card">${backHTML}</div></div>
       </body></html>`);
       win.document.close();
-
-      /* Wait for all images to load, then print */
       const imgs = Array.from(win.document.querySelectorAll("img"));
-      await Promise.all(
-        imgs.map(img =>
-          img.complete
-            ? Promise.resolve()
-            : new Promise(r => { img.onload = r; img.onerror = r; })
-        )
-      );
-
-      win.focus();
-      win.print();
-    } finally {
-      setPrinting(false);
-    }
+      await Promise.all(imgs.map(img => img.complete ? Promise.resolve() : new Promise(r => { img.onload = r; img.onerror = r; })));
+      win.focus(); win.print();
+    } finally { setPrinting(false); }
   }
 
+  /* ── A4 print popup (single page, A4 size) ── */
+  async function handlePrintA4() {
+    if (!a4Ref.current) return;
+    setPrinting(true);
+    try {
+      const html = a4Ref.current.outerHTML;
+      const win = window.open("", "_blank");
+      if (!win) return;
+      win.document.write(`<!DOCTYPE html><html><head>
+        <title>JewelsReport Certificate ${cert.reportNo}</title>
+        <style>
+          @page { size: 210mm 297mm; margin: 0; }
+          *, *::before, *::after { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+          html, body { margin: 0; padding: 0; background: white; }
+          .page { width: 210mm; height: 297mm; overflow: hidden; }
+          .cert { width: ${A4_W}px; height: ${A4_H}px; }
+        </style>
+      </head><body>
+        <div class="page"><div class="cert">${html}</div></div>
+      </body></html>`);
+      win.document.close();
+      const imgs = Array.from(win.document.querySelectorAll("img"));
+      await Promise.all(imgs.map(img => img.complete ? Promise.resolve() : new Promise(r => { img.onload = r; img.onerror = r; })));
+      win.focus(); win.print();
+    } finally { setPrinting(false); }
+  }
+
+  /* ── JPG download — admin only ── */
+  async function handleDownloadJpg() {
+    const el = isA4 ? a4Ref.current : frontRef.current;
+    if (!el) return;
+    setDownloading(true);
+    try {
+      await downloadJpg(el, `JewelsReport-${cert.reportNo}${isA4 ? "-Certificate" : "-Front"}`);
+    } catch (err) {
+      console.error("JPG download failed", err);
+    } finally { setDownloading(false); }
+  }
+
+  /* ── Download buttons shared UI ── */
+  const DownloadButtons = (
+    <div className="mt-8 flex flex-wrap justify-center gap-3">
+      <button
+        onClick={isA4 ? handlePrintA4 : handlePrintPvc}
+        disabled={printing}
+        className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full bg-gradient-gold text-gold-foreground font-semibold shadow-gold hover:scale-105 transition-transform text-sm sm:text-base disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        <Printer className="w-4 h-4" />
+        {printing ? "Preparing…" : isA4 ? "Print / Save PDF" : "Print Card (Front + Back)"}
+      </button>
+      {isAdmin && (
+        <button
+          onClick={handleDownloadJpg}
+          disabled={downloading}
+          className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full border border-primary text-primary font-semibold hover:bg-primary/10 hover:scale-105 transition-all text-sm sm:text-base disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          <Download className="w-4 h-4" />
+          {downloading ? "Generating…" : "Download JPG"}
+        </button>
+      )}
+    </div>
+  );
+
+  /* ── A4 layout ── */
+  if (isA4) {
+    return (
+      <div>
+        {/* Hidden full-res for download/print */}
+        <div style={{ position: "fixed", left: -9999, top: -9999, pointerEvents: "none", zIndex: -1 }}>
+          <div ref={a4Ref}><A4Certificate cert={cert} /></div>
+        </div>
+
+        {/* On-screen scaled preview */}
+        <div className="flex justify-center">
+          <div style={{
+            width: A4_W * a4Scale, height: A4_H * a4Scale,
+            overflow: "hidden", borderRadius: 8,
+            border: "1.5px solid rgba(201,168,76,0.45)",
+            boxShadow: "0 8px 40px -8px rgba(0,0,0,0.5), 0 0 0 3px rgba(201,168,76,0.1)",
+          }}>
+            <div style={{ transform: `scale(${a4Scale})`, transformOrigin: "top left", width: A4_W, height: A4_H }}>
+              <A4Certificate cert={cert} />
+            </div>
+          </div>
+        </div>
+        {DownloadButtons}
+      </div>
+    );
+  }
+
+  /* ── PVC layout ── */
   return (
     <div>
-      {/* Hidden full-res cards — source for print clone */}
+      {/* Hidden full-res cards — source for print/download */}
       <div style={{ position: "fixed", left: -9999, top: -9999, pointerEvents: "none", zIndex: -1 }}>
         <div ref={frontRef} style={{ width: CARD_W, height: CARD_H }}>
           <CertificateCard cert={cert} side="front" />
@@ -255,8 +343,8 @@ function CardPreview({ cert }: { cert: Certificate }) {
       <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-6">
         {(["front", "back"] as const).map((side) => (
           <div key={side} className="flex flex-col items-center gap-3">
-            <div style={{ width: CARD_W * scale, height: CARD_H * scale, overflow: "hidden", borderRadius: 10, border: "1.5px solid rgba(201,168,76,0.45)", boxShadow: "0 8px 40px -8px rgba(0,0,0,0.5), 0 0 0 3px rgba(201,168,76,0.1)" }}>
-              <div style={{ transform: `scale(${scale})`, transformOrigin: "top left", width: CARD_W, height: CARD_H }}>
+            <div style={{ width: CARD_W * pvcScale, height: CARD_H * pvcScale, overflow: "hidden", borderRadius: 10, border: "1.5px solid rgba(201,168,76,0.45)", boxShadow: "0 8px 40px -8px rgba(0,0,0,0.5), 0 0 0 3px rgba(201,168,76,0.1)" }}>
+              <div style={{ transform: `scale(${pvcScale})`, transformOrigin: "top left", width: CARD_W, height: CARD_H }}>
                 <CertificateCard cert={cert} side={side} />
               </div>
             </div>
@@ -264,18 +352,7 @@ function CardPreview({ cert }: { cert: Certificate }) {
           </div>
         ))}
       </div>
-
-      {/* Print button */}
-      <div className="mt-8 flex justify-center">
-        <button
-          onClick={handlePrint}
-          disabled={printing}
-          className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full bg-gradient-gold text-gold-foreground font-semibold shadow-gold hover:scale-105 transition-transform text-sm sm:text-base disabled:opacity-60 disabled:cursor-not-allowed"
-        >
-          <Printer className="w-4 h-4" />
-          {printing ? "Preparing…" : "Print Card (Front + Back)"}
-        </button>
-      </div>
+      {DownloadButtons}
     </div>
   );
 }

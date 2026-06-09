@@ -60,6 +60,8 @@ export interface Certificate {
   remarks?: string;
   description?: string;
   imageDataUrl?: string;
+  imageDataUrl2?: string;
+  cardStyle?: "pvc" | "a4";
   clientId?: string;
   clientName?: string;
   createdAt: number;

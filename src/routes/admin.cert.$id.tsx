@@ -8,7 +8,7 @@ import {
   REPORT_TYPE_LABELS,
   type Certificate, type ReportType, type Client,
 } from "@/lib/store";
-import { ArrowLeft, Save, Upload, RefreshCw, Loader2, Users, Search, ChevronDown, X, Check } from "lucide-react";
+import { ArrowLeft, Save, Upload, RefreshCw, Loader2, Users, Search, ChevronDown, X, Check, CreditCard, FileText } from "lucide-react";
 
 export const Route = createFileRoute("/admin/cert/$id")({
   component: CertEditor,
@@ -82,25 +82,27 @@ function CertEditor() {
     setCert((c) => c ? { ...c, clientId, clientName: cl?.name ?? "" } : c);
   };
 
-  const onImage = (file?: File) => {
-    if (!file) return;
+  const processImage = (file: File, onDone: (dataUrl: string) => void) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const raw = e.target?.result as string;
       const img = new Image();
       img.onload = () => {
-        const MAX = 800;
+        const MAX = 1200;
         const scale = Math.min(1, MAX / Math.max(img.width, img.height));
         const canvas = document.createElement("canvas");
         canvas.width  = Math.round(img.width  * scale);
         canvas.height = Math.round(img.height * scale);
         canvas.getContext("2d")!.drawImage(img, 0, 0, canvas.width, canvas.height);
-        set("imageDataUrl", canvas.toDataURL("image/jpeg", 0.82));
+        onDone(canvas.toDataURL("image/jpeg", 0.85));
       };
       img.src = raw;
     };
     reader.readAsDataURL(file);
   };
+
+  const onImage  = (file?: File) => { if (file) processImage(file, (url) => set("imageDataUrl",  url)); };
+  const onImage2 = (file?: File) => { if (file) processImage(file, (url) => set("imageDataUrl2", url)); };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,7 +133,7 @@ function CertEditor() {
       <div className="mt-6 mb-8">
         <h1 className="font-display text-3xl">{isNew ? "New Certificate" : "Edit Certificate"}</h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          Fill in all report details. The PVC card can be printed from the Verify page.
+          Fill in all report details. The certificate can be printed or downloaded from the Verify page.
         </p>
       </div>
 
@@ -182,6 +184,31 @@ function CertEditor() {
                 </span>
               </button>
             ))}
+          </div>
+        </Card>
+
+        {/* Card Style */}
+        <Card title="Card Style" sub="Choose the certificate format — PVC wallet card or A4 paper report">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {([
+              { key: "pvc" as const, label: "PVC Wallet Card", desc: "CR80 format (85.6 × 54 mm) — printed 2-sided, fits a wallet", Icon: CreditCard },
+              { key: "a4"  as const, label: "A4 Paper Certificate", desc: "GIA-style full-page report — up to 2 item photos, A4 printout", Icon: FileText },
+            ]).map(({ key, label, desc, Icon }) => {
+              const active = key === "a4" ? cert.cardStyle === "a4" : cert.cardStyle !== "a4";
+              return (
+                <button key={key} type="button"
+                  onClick={() => set("cardStyle", key === "a4" ? "a4" : undefined)}
+                  className={`flex items-start gap-3 px-4 py-4 rounded-xl border text-left transition-all ${
+                    active ? "border-primary bg-primary/10" : "border-border hover:border-primary/50 text-muted-foreground"
+                  }`}>
+                  <Icon className={`w-5 h-5 mt-0.5 shrink-0 ${active ? "text-primary" : ""}`} />
+                  <div>
+                    <span className={`block font-semibold text-sm ${active ? "text-primary" : ""}`}>{label}</span>
+                    <span className="block text-xs text-muted-foreground mt-0.5">{desc}</span>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </Card>
 
@@ -300,9 +327,12 @@ function CertEditor() {
         )}
 
         {/* Media */}
-        <Card title="Media & Notes" sub="Item photo and any additional remarks">
+        <Card
+          title="Media & Notes"
+          sub={cert.cardStyle === "a4" ? "Up to 2 item photos for the A4 certificate, plus remarks" : "Item photo and any additional remarks"}
+        >
           <div className="grid sm:grid-cols-2 gap-5">
-            <F label="Item Image">
+            <F label={cert.cardStyle === "a4" ? "Item Image 1" : "Item Image"}>
               <div className="flex items-center gap-4">
                 <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border hover:border-primary cursor-pointer text-sm transition-colors">
                   <Upload className="w-4 h-4" /> Upload Image
@@ -317,12 +347,38 @@ function CertEditor() {
                 )}
               </div>
             </F>
+
+            {cert.cardStyle === "a4" ? (
+              <F label="Item Image 2 (optional)">
+                <div className="flex items-center gap-4">
+                  <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border hover:border-primary cursor-pointer text-sm transition-colors">
+                    <Upload className="w-4 h-4" /> Upload Image
+                    <input type="file" accept="image/*" className="hidden" onChange={(e) => onImage2(e.target.files?.[0])} />
+                  </label>
+                  {cert.imageDataUrl2 && (
+                    <div className="relative">
+                      <img src={cert.imageDataUrl2} alt="" className="w-16 h-16 object-cover rounded-xl border border-border" />
+                      <button type="button" onClick={() => set("imageDataUrl2", undefined)}
+                        className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-destructive text-white text-[10px] flex items-center justify-center leading-none">×</button>
+                    </div>
+                  )}
+                </div>
+              </F>
+            ) : (
+              <F label="Front Card Description">
+                <textarea value={cert.description || ""} onChange={(e) => set("description", e.target.value)} rows={3} className={ic} placeholder="Short text shown at bottom of front card (used when card has all 3 detail sections)…" />
+              </F>
+            )}
+
             <F label="Remarks">
               <textarea value={cert.remarks || ""} onChange={(e) => set("remarks", e.target.value)} rows={3} className={ic} placeholder="Any additional notes for this report…" />
             </F>
-            <F label="Front Card Description">
-              <textarea value={cert.description || ""} onChange={(e) => set("description", e.target.value)} rows={3} className={ic} placeholder="Short text shown at bottom of front card (used when card has all 3 detail sections)…" />
-            </F>
+
+            {cert.cardStyle === "a4" && (
+              <F label="Item Description">
+                <textarea value={cert.description || ""} onChange={(e) => set("description", e.target.value)} rows={3} className={ic} placeholder="Brief description shown in the centre column of the A4 certificate…" />
+              </F>
+            )}
           </div>
         </Card>
 

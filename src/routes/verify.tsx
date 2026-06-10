@@ -265,11 +265,17 @@ function CardPreview({ cert }: { cert: Certificate }) {
 
   /* ── JPG download — admin only ── */
   async function handleDownloadJpg() {
-    const el = isA4 ? a4Ref.current : frontRef.current;
-    if (!el) return;
     setDownloading(true);
     try {
-      await downloadJpg(el, `JewelsReport-${cert.reportNo}${isA4 ? "-Certificate" : "-Front"}`);
+      if (isA4) {
+        if (!a4Ref.current) return;
+        await downloadJpg(a4Ref.current, `JewelsReport-${cert.reportNo}-Certificate`);
+      } else {
+        if (!frontRef.current || !backRef.current) return;
+        await downloadJpg(frontRef.current, `JewelsReport-${cert.reportNo}-Front`);
+        await new Promise(r => setTimeout(r, 400));
+        await downloadJpg(backRef.current, `JewelsReport-${cert.reportNo}-Back`);
+      }
     } catch (err) {
       console.error("JPG download failed", err);
     } finally { setDownloading(false); }

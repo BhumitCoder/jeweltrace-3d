@@ -101,8 +101,27 @@ function CertEditor() {
     reader.readAsDataURL(file);
   };
 
-  const onImage  = (file?: File) => { if (file) processImage(file, (url) => set("imageDataUrl",  url)); };
-  const onImage2 = (file?: File) => { if (file) processImage(file, (url) => set("imageDataUrl2", url)); };
+  const onImage     = (file?: File) => { if (file) processImage(file, (url) => set("imageDataUrl",  url)); };
+  const onImage2    = (file?: File) => { if (file) processImage(file, (url) => set("imageDataUrl2", url)); };
+  const onSignature = (file?: File) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const raw = e.target?.result as string;
+      const img = new Image();
+      img.onload = () => {
+        const MAX = 600;
+        const scale = Math.min(1, MAX / Math.max(img.width, img.height));
+        const canvas = document.createElement("canvas");
+        canvas.width  = Math.round(img.width  * scale);
+        canvas.height = Math.round(img.height * scale);
+        canvas.getContext("2d")!.drawImage(img, 0, 0, canvas.width, canvas.height);
+        set("signatureDataUrl", canvas.toDataURL("image/png"));
+      };
+      img.src = raw;
+    };
+    reader.readAsDataURL(file);
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -349,21 +368,40 @@ function CertEditor() {
             </F>
 
             {cert.cardStyle === "a4" ? (
-              <F label="Item Image 2 (optional)">
-                <div className="flex items-center gap-4">
-                  <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border hover:border-primary cursor-pointer text-sm transition-colors">
-                    <Upload className="w-4 h-4" /> Upload Image
-                    <input type="file" accept="image/*" className="hidden" onChange={(e) => onImage2(e.target.files?.[0])} />
-                  </label>
-                  {cert.imageDataUrl2 && (
-                    <div className="relative">
-                      <img src={cert.imageDataUrl2} alt="" className="w-16 h-16 object-cover rounded-xl border border-border" />
-                      <button type="button" onClick={() => set("imageDataUrl2", undefined)}
-                        className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-destructive text-white text-[10px] flex items-center justify-center leading-none">×</button>
-                    </div>
-                  )}
-                </div>
-              </F>
+              <>
+                <F label="Item Image 2 (optional)">
+                  <div className="flex items-center gap-4">
+                    <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border hover:border-primary cursor-pointer text-sm transition-colors">
+                      <Upload className="w-4 h-4" /> Upload Image
+                      <input type="file" accept="image/*" className="hidden" onChange={(e) => onImage2(e.target.files?.[0])} />
+                    </label>
+                    {cert.imageDataUrl2 && (
+                      <div className="relative">
+                        <img src={cert.imageDataUrl2} alt="" className="w-16 h-16 object-cover rounded-xl border border-border" />
+                        <button type="button" onClick={() => set("imageDataUrl2", undefined)}
+                          className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-destructive text-white text-[10px] flex items-center justify-center leading-none">×</button>
+                      </div>
+                    )}
+                  </div>
+                </F>
+
+                <F label="Authorised Signature (A4 only)">
+                  <div className="flex items-center gap-4">
+                    <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border hover:border-primary cursor-pointer text-sm transition-colors">
+                      <Upload className="w-4 h-4" /> Upload Signature
+                      <input type="file" accept="image/*" className="hidden" onChange={(e) => onSignature(e.target.files?.[0])} />
+                    </label>
+                    {cert.signatureDataUrl && (
+                      <div className="relative">
+                        <img src={cert.signatureDataUrl} alt="Signature" className="h-12 max-w-[120px] object-contain rounded border border-border bg-white px-1" />
+                        <button type="button" onClick={() => set("signatureDataUrl", undefined)}
+                          className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-destructive text-white text-[10px] flex items-center justify-center leading-none">×</button>
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-1">PNG with transparent background recommended. Appears at the bottom of the left column.</p>
+                </F>
+              </>
             ) : (
               <F label="Front Card Description">
                 <textarea value={cert.description || ""} onChange={(e) => set("description", e.target.value)} rows={3} className={ic} placeholder="Short text shown at bottom of front card (used when card has all 3 detail sections)…" />

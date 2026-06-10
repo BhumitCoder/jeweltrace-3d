@@ -61,6 +61,7 @@ export interface Certificate {
   description?: string;
   imageDataUrl?: string;
   imageDataUrl2?: string;
+  signatureDataUrl?: string;
   cardStyle?: "pvc" | "a4";
   clientId?: string;
   clientName?: string;

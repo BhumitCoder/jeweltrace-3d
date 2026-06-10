@@ -7,17 +7,67 @@ import logo from "@/assets/logo.png";
 export const A4_W = 794;
 export const A4_H = 1123;
 
+/* ── Palette ─────────────────────────────────────── */
+const G        = "#B8922A";  // brand gold
+const SH_L     = "#B8922A";  // left section header bg
+const SH_M     = "#8B6E1A";  // middle section header bg
+const SH_R     = "#5F4A10";  // right section header bg
+const SH_SEC   = "#1A0D00";  // security strip bg
+
+/* ── Column widths (must sum to 794) ─────────────── */
+const CL = 238; // left
+const CM = 278; // middle
+const CR = 256; // right
+const CS = 22;  // security strip
+// 238+278+256+22 = 794 ✓
+
+/* ── Vertical areas ──────────────────────────────── */
+const HDR_H = 168; // header (incl. 3px gold border at bottom)
+const SHD_H = 24;  // section header bar
+const FTR_H = 44;  // footer
+// body = 1123 - 168 - 24 - 44 = 887px
+
+/* ── Dotted-leader field row (GIA style) ─────────── */
+function FR({ label, value }: { label: string; value: string }) {
+  return (
+    <div style={{ display: "flex", alignItems: "flex-end", marginBottom: 4.5, minWidth: 0 }}>
+      <span style={{ fontSize: 11, color: "#555", whiteSpace: "nowrap", lineHeight: 1.35, fontWeight: 400, flexShrink: 0 }}>
+        {label}
+      </span>
+      <span style={{ flex: 1, borderBottom: "1.5px dotted #BBBBBB", margin: "0 4px 2.5px", minWidth: 6 }} />
+      <span style={{ fontSize: 11, fontWeight: 800, color: "#111", whiteSpace: "nowrap", lineHeight: 1.35, textTransform: "uppercase", letterSpacing: "0.02em" }}>
+        {value}
+      </span>
+    </div>
+  );
+}
+
+/* ── Sub-section header bar ──────────────────────── */
+function SubHdr({ label }: { label: string }) {
+  return (
+    <div style={{
+      background: SH_M, padding: "3px 7px",
+      marginTop: 8, marginBottom: 5, borderRadius: 2,
+    }}>
+      <span style={{ fontSize: 7.5, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff" }}>
+        {label}
+      </span>
+    </div>
+  );
+}
+
 interface Props { cert: Certificate }
 
 export const A4Certificate = forwardRef<HTMLDivElement, Props>(
   function A4Certificate({ cert }, ref) {
+
     const verifyUrl =
       typeof window !== "undefined"
         ? `${window.location.origin}/verify?id=${encodeURIComponent(cert.reportNo)}`
         : `https://www.jewelsreport.com/verify?id=${cert.reportNo}`;
 
-    const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery";
-    const isGemstone  = cert.type === "Gemstone";
+    const isJ = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery";
+    const isG = cert.type === "Gemstone";
 
     const fmtDate = (d: string) => {
       try {
@@ -25,259 +75,489 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
       } catch { return d; }
     };
 
-    /* ── Left-column grading fields ─────────────────────────────── */
+    /* ── Left column: main grading fields ─────────── */
     let mainFields: [string, string | undefined][] = [];
-    if (isGemstone) {
+    if (isG) {
       mainFields = [
-        ["Stone",                    cert.gemstoneStone],
-        ["Origin",                   cert.gemstoneOrigin],
-        ["Shape & Cutting Style",    cert.gemstoneShape],
-        ["Carat Weight",             cert.gemstoneCaratWeight],
-        ["PCS",                      cert.gemstonePcs],
-        ["Measurements",             cert.gemstoneMeasurements],
-        ["Color & Transparency",     cert.gemstoneColorTransparency],
-        ["Characteristics",          cert.gemstoneCharacteristics],
+        ["GRL Report Number",         cert.reportNo],
+        ["Stone",                     cert.gemstoneStone],
+        ["Origin",                    cert.gemstoneOrigin],
+        ["Shape and Cutting Style",   cert.gemstoneShape],
+        ["Carat Weight",              cert.gemstoneCaratWeight],
+        ["PCS",                       cert.gemstonePcs],
+        ["Measurements",              cert.gemstoneMeasurements],
+        ["Color and Transparency",    cert.gemstoneColorTransparency],
+        ["Characteristics",           cert.gemstoneCharacteristics],
       ];
-    } else if (isJewellery) {
+    } else if (isJ) {
       mainFields = [
-        ["Item",              cert.itemName],
-        ["Shape",             cert.shape],
-        ["Metal Tested",      cert.metal],
-        ["Metal Description", cert.metalDescription],
-        ["Gross Weight",      cert.grossWeight ? `${cert.grossWeight} GRM` : undefined],
-        ["Net Weight",        cert.netWeight   ? `${cert.netWeight} GRM`   : undefined],
-        ["Origin",            cert.origin],
+        ["GRL Report Number",  cert.reportNo],
+        ["Item",               cert.itemName],
+        ["Shape",              cert.shape],
+        ["Metal Tested As",    cert.metal],
+        ["Metal Description",  cert.metalDescription],
+        ["Gross Weight",       cert.grossWeight ? `${cert.grossWeight} GRM` : undefined],
+        ["Net Weight",         cert.netWeight   ? `${cert.netWeight} GRM`   : undefined],
+        ["Origin",             cert.origin],
       ];
     } else {
       mainFields = [
-        ["Shape & Cutting Style", cert.shape],
-        ["Measurements",         cert.measurements],
-        ["Carat Weight",         cert.caratWeight ? `${cert.caratWeight} carat` : undefined],
-        ["Color Grade",          cert.color],
-        ["Clarity Grade",        cert.clarity],
-        ["Cut Grade",            cert.cut],
-        ["Polish Grade",         cert.polish],
-        ["Symmetry Grade",       cert.symmetry],
-        ["Fluorescence",         cert.fluorescence],
-        ["Origin",               cert.origin],
+        ["GRL Report Number",              cert.reportNo],
+        ["Shape(s) and Cutting Style(s)",  cert.shape],
+        ["Measurements",                   cert.measurements],
+        ["Carat Weight",                   cert.caratWeight ? `${cert.caratWeight} carat` : undefined],
+        ["Color Grade",                    cert.color],
+        ["Clarity Grade",                  cert.clarity],
+        ["Cut Grade",                      cert.cut],
+        ["Polish Grade",                   cert.polish],
+        ["Symmetry Grade",                 cert.symmetry],
+        ["Fluorescence",                   cert.fluorescence],
+        ["Origin",                         cert.origin],
       ];
     }
     mainFields = mainFields.filter(([, v]) => v) as [string, string][];
 
-    /* ── Right-column detail fields (jewellery only) ─────────────── */
-    const rightFields: [string, string | undefined][] = isJewellery ? [
-      ...(cert.diamondShape || cert.diamondWeight ? [
-        ["Diamond Shape",   cert.diamondShape] as [string, string | undefined],
-        ["Diamond Weight",  cert.diamondWeight ? `${cert.diamondWeight} CT` : undefined] as [string, string | undefined],
-        ["Diamond Total PCS", cert.diamondTotalPcs] as [string, string | undefined],
-        ["Diamond Color",   cert.diamondColor] as [string, string | undefined],
-        ["Diamond Clarity", cert.diamondClarity] as [string, string | undefined],
-      ] : []),
-      ...(cert.gemstoneStone ? [
-        ["Stone",        cert.gemstoneStone] as [string, string | undefined],
-        ["Stone Origin", cert.gemstoneOrigin] as [string, string | undefined],
-        ["Stone Shape",  cert.gemstoneShape] as [string, string | undefined],
-        ["Stone Weight", cert.gemstoneCaratWeight] as [string, string | undefined],
-        ["Stone PCS",    cert.gemstonePcs] as [string, string | undefined],
-      ] : []),
-    ].filter(([, v]) => v) as [string, string][] : [];
+    /* ── Additional diamond details ───────────────── */
+    const hasDiamond = isJ && (cert.diamondShape || cert.diamondWeight || cert.diamondColor || cert.diamondClarity);
+    const diamondFields: [string, string][] = hasDiamond ? ([
+      ["Shape and Cut",       cert.diamondShape],
+      ["Total Est. Weight",   cert.diamondWeight ? `${cert.diamondWeight} CT` : undefined],
+      ["Total PCS",           cert.diamondTotalPcs],
+      ["Color",               cert.diamondColor],
+      ["Clarity",             cert.diamondClarity],
+    ].filter(([, v]) => v) as [string, string][]) : [];
 
-    const hasImages = !!(cert.imageDataUrl || cert.imageDataUrl2);
-    const imgMaxH   = cert.imageDataUrl && cert.imageDataUrl2 ? 360 : 660;
+    /* ── Right column: item details ───────────────── */
+    const rightFields: [string, string][] = (
+      isJ ? [
+        ["Total Stones",          cert.diamondTotalPcs],
+        ["Est. Total Carat Wt.", cert.diamondWeight ? `${cert.diamondWeight} CT` : undefined],
+        ["Metal Tested As",       cert.metal],
+        ["Item(s) Weight",        cert.grossWeight ? `${cert.grossWeight} GRM` : undefined],
+      ] :
+      isG ? [
+        ["Stone",        cert.gemstoneStone],
+        ["Origin",       cert.gemstoneOrigin],
+        ["Carat Weight", cert.gemstoneCaratWeight],
+      ] :
+      [
+        ["Carat Weight",  cert.caratWeight ? `${cert.caratWeight} carat` : undefined],
+        ["Color Grade",   cert.color],
+        ["Clarity Grade", cert.clarity],
+        ["Cut Grade",     cert.cut],
+      ]
+    ).filter(([, v]) => v) as [string, string][];
 
-    /* ── Label / col header text ─────────────────────────────────── */
-    const leftHeader  = isGemstone ? "Gemstone Grading" : isJewellery ? "Jewellery Report" : "Diamond Grading";
-    const rightHeader = rightFields.length > 0 ? "Item Details" : "Verification";
+    /* ── Gemstone right details (jewellery) ───────── */
+    const gemRightFields: [string, string][] = isJ && cert.gemstoneStone ? ([
+      ["Stone",   cert.gemstoneStone],
+      ["Origin",  cert.gemstoneOrigin],
+      ["Weight",  cert.gemstoneCaratWeight],
+      ["PCS",     cert.gemstonePcs],
+    ].filter(([, v]) => v) as [string, string][]) : [];
+
+    /* ── Section header label (left col) ──────────── */
+    const leftHdr = isG
+      ? "GEMSTONE GRADING REPORT"
+      : isJ
+      ? "JEWELLERY GRADING REPORT"
+      : `${cert.type.replace("Natural ","").replace("Lab Grown ","").toUpperCase()} GRADING REPORT`;
+
+    const hasImg  = !!(cert.imageDataUrl || cert.imageDataUrl2);
+    const has2Img = !!(cert.imageDataUrl && cert.imageDataUrl2);
+    const imgMaxH = has2Img ? 315 : 570;
 
     return (
       <div ref={ref} style={{
         width: A4_W, height: A4_H,
-        background: "#FDFBF7",
+        background: "#FFFFFF",
         fontFamily: "'Segoe UI', Arial, sans-serif",
-        position: "relative", overflow: "hidden",
-        boxSizing: "border-box",
+        boxSizing: "border-box", overflow: "hidden",
         display: "flex", flexDirection: "column",
       }}>
 
-        {/* ── Watermark ── */}
-        <img src={logo} alt="" aria-hidden style={{
-          position: "absolute", width: 380, height: 380, objectFit: "contain",
-          opacity: 0.04, left: "50%", top: "40%",
-          transform: "translate(-50%,-50%)", pointerEvents: "none", zIndex: 0,
-        }} />
-
-        {/* ── HEADER ── */}
+        {/* ══════ HEADER ══════ */}
         <div style={{
-          padding: "18px 30px 12px",
-          display: "flex", alignItems: "center", gap: 18,
-          borderBottom: "3px solid #B8922A",
-          position: "relative", zIndex: 1, flexShrink: 0,
+          height: HDR_H, flexShrink: 0,
+          background: "#FFFFFF",
+          borderBottom: `3px solid ${G}`,
+          position: "relative",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          padding: "0 24px",
         }}>
-          <img src={logo} alt="JewelsReport" style={{ height: 62, width: 62, objectFit: "contain", flexShrink: 0 }} />
+          {/* Logo — top left (like GIA badge) */}
+          <img src={logo} alt="JewelsReport" style={{
+            position: "absolute", left: 24, top: "50%",
+            transform: "translateY(-50%)",
+            height: 98, width: 98, objectFit: "contain",
+          }} />
 
-          <div style={{ flex: 1, textAlign: "center" }}>
-            <div style={{ fontFamily: "Georgia,'Times New Roman',serif", fontSize: 22, color: "#111", lineHeight: 1.1, letterSpacing: "-0.01em" }}>
-              Jewels<span style={{ color: "#B8922A" }}>Report</span>
+          {/* Centered title block */}
+          <div style={{ textAlign: "center", zIndex: 1 }}>
+            <div style={{
+              fontFamily: "Georgia,'Times New Roman',serif",
+              fontSize: 28, fontWeight: 700,
+              letterSpacing: "0.06em", color: "#111",
+              lineHeight: 1, textTransform: "uppercase",
+            }}>
+              JewelsReport
             </div>
-            <div style={{ fontSize: 8.5, letterSpacing: "0.38em", textTransform: "uppercase", color: "#555", marginTop: 2, fontWeight: 800 }}>
+            <div style={{
+              fontSize: 9, letterSpacing: "0.45em",
+              textTransform: "uppercase", color: "#666",
+              marginTop: 3, fontWeight: 600,
+            }}>
               Gemological Certification Lab
             </div>
-            <div style={{ width: 180, height: 1.5, background: "linear-gradient(90deg,transparent,#B8922A,transparent)", margin: "7px auto 6px" }} />
-            <div style={{ fontSize: 13.5, fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: "#B8922A" }}>
+            <div style={{
+              width: 200, height: 1.5,
+              background: `linear-gradient(90deg,transparent,${G},transparent)`,
+              margin: "9px auto 8px",
+            }} />
+            <div style={{
+              fontSize: 16, fontWeight: 900, letterSpacing: "0.1em",
+              textTransform: "uppercase", color: G, lineHeight: 1.2,
+            }}>
               {REPORT_TYPE_LABELS[cert.type] ?? cert.type}
             </div>
-          </div>
-
-          <div style={{ textAlign: "right", flexShrink: 0 }}>
-            <div style={{ fontSize: 8, letterSpacing: "0.2em", textTransform: "uppercase", color: "#888", fontWeight: 600 }}>Report Number</div>
-            <div style={{ fontSize: 14, fontWeight: 900, color: "#111", letterSpacing: "0.05em", marginTop: 1 }}>{cert.reportNo}</div>
-            <div style={{ fontSize: 8, color: "#AAA", marginTop: 7 }}>Issue Date</div>
-            <div style={{ fontSize: 11, fontWeight: 700, color: "#333", marginTop: 1 }}>{fmtDate(cert.issueDate)}</div>
-            <div style={{ fontSize: 8, color: "#B8922A", marginTop: 7, letterSpacing: "0.08em", fontWeight: 700 }}>
-              jewelsreport.com/verify
+            <div style={{
+              fontSize: 18, fontWeight: 900, letterSpacing: "0.06em",
+              color: "#111", marginTop: 6,
+              fontFamily: "'Courier New','Lucida Console',monospace",
+            }}>
+              {cert.reportNo}
+            </div>
+            <div style={{
+              fontSize: 9.5, color: G, marginTop: 5,
+              letterSpacing: "0.04em", textDecoration: "underline", fontWeight: 600,
+            }}>
+              Verify this report at jewelsreport.com/verify
+            </div>
+            <div style={{
+              fontFamily: "Georgia,'Times New Roman',serif",
+              fontSize: 19, fontWeight: 700, color: "#111",
+              marginTop: 6, letterSpacing: "0.02em",
+            }}>
+              {fmtDate(cert.issueDate)}
             </div>
           </div>
         </div>
 
-        {/* ── COLUMN HEADER BAR ── */}
-        <div style={{ display: "flex", flexShrink: 0, borderBottom: "2px solid #B8922A" }}>
-          <div style={{ width: 268, padding: "5px 14px", background: "#B8922A" }}>
-            <span style={{ fontSize: 8, fontWeight: 800, letterSpacing: "0.28em", textTransform: "uppercase", color: "#fff" }}>{leftHeader}</span>
+        {/* ══════ SECTION HEADER BAR ══════ */}
+        <div style={{ display: "flex", flexShrink: 0 }}>
+          <div style={{ width: CL, background: SH_L, padding: "5px 10px 5px 12px", display: "flex", alignItems: "center" }}>
+            <span style={{ fontSize: 7.5, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", lineHeight: 1 }}>
+              {leftHdr}
+            </span>
           </div>
-          <div style={{ flex: 1, padding: "5px 14px", background: "#7D6420", borderLeft: "1px solid rgba(255,255,255,0.15)" }}>
-            <span style={{ fontSize: 8, fontWeight: 800, letterSpacing: "0.28em", textTransform: "uppercase", color: "#fff" }}>Item Description</span>
+          <div style={{ width: CM, background: SH_M, padding: "5px 10px", display: "flex", alignItems: "center", borderLeft: "1px solid rgba(255,255,255,0.2)" }}>
+            <span style={{ fontSize: 7.5, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", lineHeight: 1 }}>
+              Item(s) Overall Description
+            </span>
           </div>
-          <div style={{ width: 206, padding: "5px 14px", background: "#5A4715", borderLeft: "1px solid rgba(255,255,255,0.1)" }}>
-            <span style={{ fontSize: 8, fontWeight: 800, letterSpacing: "0.28em", textTransform: "uppercase", color: "#fff" }}>{rightHeader}</span>
+          <div style={{ width: CR, background: SH_R, padding: "5px 10px", display: "flex", alignItems: "center", borderLeft: "1px solid rgba(255,255,255,0.15)" }}>
+            <span style={{ fontSize: 7.5, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", lineHeight: 1 }}>
+              Item Details
+            </span>
           </div>
+          <div style={{ width: CS, background: SH_SEC }} />
         </div>
 
-        {/* ── 3-COLUMN BODY ── */}
-        <div style={{ display: "flex", flex: 1, minHeight: 0, position: "relative", zIndex: 1 }}>
+        {/* ══════ 3-COLUMN BODY ══════ */}
+        <div style={{ display: "flex", flex: 1, minHeight: 0 }}>
 
-          {/* LEFT — Grading fields */}
+          {/* ── LEFT COLUMN ── */}
           <div style={{
-            width: 268, flexShrink: 0, overflowY: "hidden",
-            padding: "12px 14px 12px 16px",
-            borderRight: "1.5px solid #D4C9A8",
+            width: CL, flexShrink: 0,
+            borderRight: "1px solid #D8D0C0",
+            padding: "10px 10px 10px 12px",
+            display: "flex", flexDirection: "column",
+            overflowY: "hidden",
           }}>
-            <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#B8922A", marginBottom: 9 }}>
-              {isGemstone ? cert.gemstoneStone || "Gemstone" : cert.itemName || cert.type}
-            </div>
-            {mainFields.map(([label, value]) => (
-              <div key={label} style={{ display: "flex", alignItems: "flex-end", marginBottom: 5.5 }}>
-                <span style={{ fontSize: 12, color: "#555", whiteSpace: "nowrap", lineHeight: 1.4, fontWeight: 500 }}>{label}</span>
-                <span style={{ flex: 1, borderBottom: "1.5px dotted #C8C8C8", margin: "0 5px 3px", minWidth: 8 }} />
-                <span style={{ fontSize: 12, fontWeight: 800, color: "#111", whiteSpace: "nowrap", lineHeight: 1.4, textTransform: "uppercase", letterSpacing: "0.03em" }}>{value}</span>
+            {/* "Item Certified by JewelsReport" badge — like GIA's "Diamonds Graded by GIA" */}
+            <div style={{
+              display: "flex", alignItems: "center", gap: 7,
+              background: "#F5F0E8", border: "1px solid #D8C9A0",
+              borderRadius: 3, padding: "5px 8px", marginBottom: 9,
+            }}>
+              <img src={logo} alt="" style={{ height: 26, width: 26, objectFit: "contain", flexShrink: 0 }} />
+              <div>
+                <div style={{ fontSize: 8, color: "#777", lineHeight: 1.2 }}>Item Certified by</div>
+                <div style={{
+                  fontFamily: "Georgia,'Times New Roman',serif",
+                  fontSize: 11.5, fontWeight: 700, color: "#111", lineHeight: 1, marginTop: 2,
+                }}>
+                  Jewels<span style={{ color: G }}>Report</span>
+                </div>
               </div>
+            </div>
+
+            {/* Main grading fields */}
+            {mainFields.map(([label, value]) => (
+              <FR key={label} label={label} value={value as string} />
             ))}
 
+            {/* Additional Diamond Details sub-section */}
+            {diamondFields.length > 0 && (
+              <>
+                <SubHdr label="Additional Diamond Details" />
+                {cert.diamondTotalPcs && (
+                  <div style={{ fontSize: 10.5, fontWeight: 700, color: "#111", marginBottom: 4 }}>
+                    Section A: {cert.diamondTotalPcs} Diamond(s)
+                  </div>
+                )}
+                {diamondFields.map(([label, value]) => (
+                  <FR key={label} label={label} value={value} />
+                ))}
+              </>
+            )}
+
+            {/* Gemstone sub-section (jewellery) */}
+            {isJ && cert.gemstoneStone && (
+              <>
+                <SubHdr label="Gemstone Details" />
+                {([
+                  ["Stone",        cert.gemstoneStone],
+                  ["Origin",       cert.gemstoneOrigin],
+                  ["Shape",        cert.gemstoneShape],
+                  ["Carat Weight", cert.gemstoneCaratWeight],
+                  ["PCS",          cert.gemstonePcs],
+                ] as [string, string | undefined][])
+                  .filter(([, v]) => v)
+                  .map(([l, v]) => <FR key={l} label={l} value={v as string} />)
+                }
+              </>
+            )}
+
+            {/* Remarks */}
             {cert.remarks && (
-              <div style={{ marginTop: 14, padding: "8px 10px", background: "rgba(184,146,42,0.07)", borderLeft: "3px solid #B8922A", borderRadius: "0 4px 4px 0" }}>
-                <div style={{ fontSize: 8, fontWeight: 800, textTransform: "uppercase", color: "#B8922A", letterSpacing: "0.2em", marginBottom: 3 }}>Remarks</div>
-                <div style={{ fontSize: 11, color: "#333", lineHeight: 1.5 }}>{cert.remarks}</div>
+              <div style={{ marginTop: 8, padding: "5px 7px", background: "rgba(184,146,42,0.07)", borderLeft: `2.5px solid ${G}`, borderRadius: "0 3px 3px 0" }}>
+                <div style={{ fontSize: 8, fontWeight: 800, textTransform: "uppercase", color: G, marginBottom: 2, letterSpacing: "0.15em" }}>Remarks</div>
+                <div style={{ fontSize: 10, color: "#333", lineHeight: 1.5 }}>{cert.remarks}</div>
               </div>
             )}
+
+            {/* ── Signature block (bottom of left column) ── */}
+            <div style={{ marginTop: "auto", paddingTop: 10 }}>
+              <div style={{ minHeight: 44, display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 4 }}>
+                {cert.signatureDataUrl && (
+                  <img
+                    src={cert.signatureDataUrl}
+                    alt="Signature"
+                    style={{ maxHeight: 44, maxWidth: "92%", objectFit: "contain" }}
+                  />
+                )}
+              </div>
+              <div style={{ borderTop: "1px solid #888", paddingTop: 4, textAlign: "center" }}>
+                <div style={{ fontSize: 8.5, color: "#333", fontWeight: 600, letterSpacing: "0.08em" }}>
+                  Authorised Signatory
+                </div>
+                <div style={{ fontSize: 7.5, color: "#999", letterSpacing: "0.05em", marginTop: 1 }}>
+                  JewelsReport Certification Lab
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* MIDDLE — Description + images */}
+          {/* ── MIDDLE COLUMN ── */}
           <div style={{
-            flex: 1, overflowY: "hidden",
-            padding: "12px 14px",
-            borderRight: "1.5px solid #D4C9A8",
-            display: "flex", flexDirection: "column", alignItems: "center",
+            width: CM, flexShrink: 0,
+            borderRight: "1px solid #D8D0C0",
+            padding: "12px 12px",
+            display: "flex", flexDirection: "column",
+            overflowY: "hidden",
           }}>
             {cert.description && (
-              <p style={{ fontSize: 11, color: "#444", lineHeight: 1.65, marginBottom: 14, fontStyle: "italic", alignSelf: "stretch" }}>
+              <p style={{ fontSize: 11, color: "#333", lineHeight: 1.72, marginBottom: 12 }}>
                 {cert.description}
               </p>
             )}
 
-            {hasImages ? (
-              <div style={{ flex: 1, width: "100%", display: "flex", flexDirection: "column", gap: 10, alignItems: "center", justifyContent: "center" }}>
+            {hasImg ? (
+              <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 10, alignItems: "center", justifyContent: "center" }}>
                 {cert.imageDataUrl && (
                   <div style={{
                     width: "100%", maxHeight: imgMaxH,
-                    border: "2px solid rgba(184,146,42,0.4)", borderRadius: 8,
-                    overflow: "hidden", background: "#F5F1E9", flexShrink: 0,
+                    border: "1.5px solid rgba(184,146,42,0.35)",
+                    borderRadius: 3, overflow: "hidden", background: "#F8F5EF",
+                    flexShrink: 0,
                   }}>
-                    <img src={cert.imageDataUrl} alt="Item" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+                    <img src={cert.imageDataUrl} alt="Item"
+                      style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
                   </div>
                 )}
                 {cert.imageDataUrl2 && (
                   <div style={{
                     width: "100%", maxHeight: imgMaxH,
-                    border: "2px solid rgba(184,146,42,0.4)", borderRadius: 8,
-                    overflow: "hidden", background: "#F5F1E9", flexShrink: 0,
+                    border: "1.5px solid rgba(184,146,42,0.35)",
+                    borderRadius: 3, overflow: "hidden", background: "#F8F5EF",
+                    flexShrink: 0,
                   }}>
-                    <img src={cert.imageDataUrl2} alt="Item" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+                    <img src={cert.imageDataUrl2} alt="Item"
+                      style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
                   </div>
                 )}
-                <p style={{ fontSize: 8.5, color: "#AAA", textAlign: "center", marginTop: 2 }}>Image is approximate</p>
               </div>
             ) : (
-              <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#CCC" }}>
-                <img src={logo} alt="" style={{ height: 54, opacity: 0.15, marginBottom: 8 }} />
-                <div style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase" }}>No Image Provided</div>
+              <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                <img src={logo} alt="" style={{ height: 48, opacity: 0.12, marginBottom: 8 }} />
+                <div style={{ fontSize: 9, color: "#CCC", letterSpacing: "0.2em", textTransform: "uppercase" }}>No Image Provided</div>
               </div>
+            )}
+
+            {hasImg && (
+              <p style={{ fontSize: 9, color: "#999", textAlign: "center", marginTop: 6, fontStyle: "italic" }}>
+                Image is approximate
+              </p>
             )}
           </div>
 
-          {/* RIGHT — Details + QR */}
+          {/* ── RIGHT COLUMN ── */}
           <div style={{
-            width: 206, flexShrink: 0, overflowY: "hidden",
+            width: CR, flexShrink: 0,
             padding: "12px 12px",
             display: "flex", flexDirection: "column",
+            overflowY: "hidden",
           }}>
             {rightFields.length > 0 && (
-              <div style={{ marginBottom: 14 }}>
-                <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#B8922A", borderBottom: "1.5px solid #D4C9A8", paddingBottom: 4, marginBottom: 8 }}>
-                  Item Details
-                </div>
+              <div style={{ marginBottom: 8 }}>
                 {rightFields.map(([label, value]) => (
-                  <div key={label} style={{ marginBottom: 6 }}>
-                    <div style={{ fontSize: 8.5, color: "#888", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600 }}>{label}</div>
-                    <div style={{ fontSize: 12, fontWeight: 800, color: "#111", textTransform: "uppercase", marginTop: 1, letterSpacing: "0.03em" }}>{value}</div>
-                  </div>
+                  <FR key={label} label={label} value={value} />
                 ))}
               </div>
             )}
 
-            <div style={{ marginTop: "auto", textAlign: "center" }}>
-              <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#B8922A", borderBottom: "1.5px solid #D4C9A8", paddingBottom: 4, marginBottom: 12 }}>
-                Verify Online
+            {gemRightFields.length > 0 && (
+              <div style={{ marginBottom: 8 }}>
+                <SubHdr label="Gemstone Details" />
+                {gemRightFields.map(([label, value]) => (
+                  <FR key={label} label={label} value={value} />
+                ))}
               </div>
-              <div style={{ display: "inline-block", padding: 8, background: "#fff", border: "2px solid rgba(184,146,42,0.5)", borderRadius: 8 }}>
-                <QRCodeSVG value={verifyUrl} size={112} level="M" />
+            )}
+
+            {/* Marking(s) note — jewellery */}
+            {isJ && cert.metalDescription && (
+              <div style={{ marginBottom: 10 }}>
+                <div style={{ fontSize: 10, color: "#444", lineHeight: 1.55 }}>
+                  <span style={{ fontWeight: 700 }}>*Marking(s):</span> {cert.metalDescription}
+                </div>
+                <div style={{ fontSize: 8.5, color: "#888", marginTop: 3, lineHeight: 1.5, fontStyle: "italic" }}>
+                  *Marking(s) represent what is present and may not have been assessed by JewelsReport.
+                </div>
               </div>
-              <div style={{ fontSize: 8, color: "#888", marginTop: 8, letterSpacing: "0.1em" }}>Scan QR or visit:</div>
-              <div style={{ fontSize: 9, color: "#B8922A", fontWeight: 800, marginTop: 2, letterSpacing: "0.08em" }}>jewelsreport.com/verify</div>
-              <div style={{ fontSize: 8, color: "#777", marginTop: 5, padding: "4px 8px", background: "#F0EBE0", borderRadius: 4, wordBreak: "break-all" }}>
-                {cert.reportNo}
+            )}
+
+            {/* Comments */}
+            {cert.remarks && (
+              <div style={{ marginBottom: 10 }}>
+                <div style={{ fontSize: 10, color: "#444", lineHeight: 1.6 }}>
+                  <span style={{ fontWeight: 700 }}>Comments:</span> {cert.remarks}
+                </div>
               </div>
+            )}
+
+            {/* ── Security / QR / Seal — pushed to bottom ── */}
+            <div style={{ marginTop: "auto" }}>
+              {/* Disclaimer (like GIA's small text) */}
+              <p style={{ fontSize: 7.5, color: "#777", lineHeight: 1.6, marginBottom: 10 }}>
+                The results documented in this report refer only to the article described, and were obtained using the techniques and equipment used by JewelsReport at the time of examination.
+                This report is not a guarantee or valuation. For additional information please see jewelsreport.com/terms
+              </p>
+
+              {/* Seal + QR row */}
+              <div style={{ display: "flex", alignItems: "flex-end", gap: 8, marginBottom: 8 }}>
+                {/* Circular certification seal */}
+                <div style={{
+                  width: 68, height: 68, flexShrink: 0,
+                  borderRadius: "50%",
+                  border: `2.5px solid ${G}`,
+                  boxShadow: `0 0 0 1.5px rgba(184,146,42,0.2), inset 0 0 0 3px rgba(184,146,42,0.07)`,
+                  display: "flex", flexDirection: "column",
+                  alignItems: "center", justifyContent: "center",
+                  background: "#FAF6EE",
+                }}>
+                  <img src={logo} alt="" style={{ height: 34, width: 34, objectFit: "contain" }} />
+                  <div style={{ fontSize: 5.5, fontWeight: 900, letterSpacing: "0.18em", textTransform: "uppercase", color: G, marginTop: 2 }}>CERTIFIED</div>
+                </div>
+
+                {/* QR code */}
+                <div style={{
+                  padding: 5, background: "#fff",
+                  border: "1.5px solid rgba(184,146,42,0.35)",
+                  borderRadius: 3, flexShrink: 0,
+                }}>
+                  <QRCodeSVG value={verifyUrl} size={68} level="M" />
+                </div>
+
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 8, color: G, fontWeight: 700, lineHeight: 1.4, wordBreak: "break-all" }}>
+                    reportcheck.jewelsreport.com
+                  </div>
+                  <div style={{ fontSize: 7.5, color: "#888", marginTop: 3 }}>
+                    {cert.reportNo}
+                  </div>
+                </div>
+              </div>
+
+              {/* Security features box (like GIA's bottom box) */}
+              <div style={{
+                border: "1px solid #999",
+                borderRadius: 2, padding: "4px 6px",
+                background: "#F0EBE0",
+              }}>
+                <div style={{ fontSize: 6.5, fontWeight: 700, color: "#444", lineHeight: 1.55, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                  The security features in this document include the hologram, QR code, and microprint lines in addition to those not listed. These features exceed standard document security industry guidelines. Verify at jewelsreport.com/verify
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── SECURITY STRIP (far right, like GIA's "FACSIMILE" strip) ── */}
+          <div style={{
+            width: CS, flexShrink: 0,
+            background: SH_SEC,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            overflow: "hidden",
+          }}>
+            <div style={{
+              writingMode: "vertical-rl",
+              textOrientation: "mixed",
+              transform: "rotate(180deg)",
+              fontSize: 6.5, fontWeight: 800,
+              letterSpacing: "0.38em", textTransform: "uppercase",
+              color: "rgba(184,146,42,0.75)",
+              whiteSpace: "nowrap",
+            }}>
+              JEWELSREPORT · CERTIFIED · AUTHENTIC
             </div>
           </div>
         </div>
 
-        {/* ── FOOTER ── */}
+        {/* ══════ FOOTER ══════ */}
         <div style={{
-          flexShrink: 0,
-          padding: "8px 30px",
-          borderTop: "3px solid #B8922A",
+          height: FTR_H, flexShrink: 0,
+          borderTop: `3px solid ${G}`,
           background: "#F0EBE0",
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          position: "relative", zIndex: 1,
+          display: "flex", alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0 20px 0 14px",
         }}>
-          <p style={{ fontSize: 7.5, color: "#888", lineHeight: 1.55, margin: 0, maxWidth: 520 }}>
-            The results documented in this report refer only to the article described and were obtained using techniques and equipment available at the time of examination.
-            This report is not a guarantee or valuation. Results are not reproducible without the same article and conditions.
-            JewelsReport Gemological Certification Lab — Surat, Gujarat, India. Verify at jewelsreport.com/verify.
-          </p>
-          <div style={{ fontSize: 10, fontWeight: 900, color: "#B8922A", letterSpacing: "0.12em", textTransform: "uppercase", textAlign: "right", flexShrink: 0, marginLeft: 16 }}>
-            Jewels<span style={{ color: "#7D6420" }}>Report</span>
-            <br /><span style={{ fontSize: 7, fontWeight: 500, color: "#AAA", letterSpacing: "0.1em" }}>CERTIFICATION LAB</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <img src={logo} alt="" style={{ height: 20, width: 20, objectFit: "contain", opacity: 0.65 }} />
+            <span style={{
+              fontFamily: "Georgia,'Times New Roman',serif",
+              fontSize: 11, fontWeight: 700,
+              letterSpacing: "0.1em", color: G,
+            }}>
+              jewelsreport.com
+            </span>
+          </div>
+          <div style={{ fontSize: 8, color: "#888", letterSpacing: "0.05em" }}>
+            Gemological Certification Lab · Surat, Gujarat, India
           </div>
         </div>
+
       </div>
     );
   }

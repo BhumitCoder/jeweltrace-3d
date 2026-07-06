@@ -248,12 +248,20 @@ function CardPreview({ cert }: { cert: Certificate }) {
       win.document.write(`<!DOCTYPE html><html><head>
         <title>JewelsReport Certificate ${cert.reportNo}</title>
         <style>
-          @page { size: A4 landscape; margin: 0; }
+          @page { size: A4 landscape; margin: 0mm; }
           *, *::before, *::after { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
-          html, body { margin: 0; padding: 0; background: white; }
-          /* 1122px ≈ 297mm and 794px ≈ 210mm at 96 CSS px/inch — exact fit */
-          .page { width: 297mm; height: 210mm; overflow: hidden; }
-          .cert { width: ${A4_W}px; height: ${A4_H}px; display: block; }
+          html, body { margin: 0; padding: 0; background: white; overflow: hidden; }
+          /*
+           * position:fixed pins the wrapper to the physical page corners,
+           * overriding any browser-injected margin/header/footer space.
+           * 1122px = 297mm and 794px = 210mm at 96 CSS px/inch.
+           */
+          .page {
+            position: fixed; top: 0; left: 0;
+            width: 297mm; height: 210mm;
+            overflow: hidden;
+          }
+          .cert { display: block; width: ${A4_W}px; height: ${A4_H}px; }
         </style>
       </head><body>
         <div class="page"><div class="cert">${html}</div></div>

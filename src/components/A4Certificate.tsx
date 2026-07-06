@@ -144,8 +144,6 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
         display: "flex",
         flexDirection: "row",
         position: "relative",
-        border: `2px solid ${G}`,
-        boxShadow: `inset 0 0 0 1px rgba(184,146,42,0.2)`,
       }}>
 
         {/* Global faint watermark */}

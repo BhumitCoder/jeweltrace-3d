@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VerifyRouteImport } from './routes/verify'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as PreviewA4RouteImport } from './routes/preview-a4'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -37,6 +38,11 @@ const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
 const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
   id: '/privacy-policy',
   path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PreviewA4Route = PreviewA4RouteImport.update({
+  id: '/preview-a4',
+  path: '/preview-a4',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
+  '/preview-a4': typeof PreviewA4Route
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/verify': typeof VerifyRoute
@@ -115,6 +122,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/preview-a4': typeof PreviewA4Route
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/verify': typeof VerifyRoute
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
+  '/preview-a4': typeof PreviewA4Route
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/verify': typeof VerifyRoute
@@ -150,6 +159,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blog'
     | '/contact'
+    | '/preview-a4'
     | '/privacy-policy'
     | '/terms-of-service'
     | '/verify'
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/preview-a4'
     | '/privacy-policy'
     | '/terms-of-service'
     | '/verify'
@@ -180,6 +191,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blog'
     | '/contact'
+    | '/preview-a4'
     | '/privacy-policy'
     | '/terms-of-service'
     | '/verify'
@@ -197,6 +209,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   BlogRoute: typeof BlogRouteWithChildren
   ContactRoute: typeof ContactRoute
+  PreviewA4Route: typeof PreviewA4Route
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   TermsOfServiceRoute: typeof TermsOfServiceRoute
   VerifyRoute: typeof VerifyRoute
@@ -223,6 +236,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy-policy'
       fullPath: '/privacy-policy'
       preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/preview-a4': {
+      id: '/preview-a4'
+      path: '/preview-a4'
+      fullPath: '/preview-a4'
+      preLoaderRoute: typeof PreviewA4RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -339,6 +359,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   BlogRoute: BlogRouteWithChildren,
   ContactRoute: ContactRoute,
+  PreviewA4Route: PreviewA4Route,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   TermsOfServiceRoute: TermsOfServiceRoute,
   VerifyRoute: VerifyRoute,

@@ -281,73 +281,88 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
             borderRight: "1px solid #D8D0C0",
             padding: "10px 10px 10px 12px",
             display: "flex", flexDirection: "column",
-            justifyContent: "space-between",
             overflow: "hidden",
           }}>
-            {/* Top: fields section */}
-            <div>
-              {/* "Certified by JewelsReport" badge */}
-              <div style={{
-                display: "flex", alignItems: "center", gap: 7,
-                background: "#F5F0E8", border: "1px solid #D8C9A0",
-                borderRadius: 3, padding: "5px 8px", marginBottom: 10,
-              }}>
-                <img src={logo} alt="" style={{ height: 26, width: 26, objectFit: "contain", flexShrink: 0 }} />
-                <div>
-                  <div style={{ fontSize: 8, color: "#777", lineHeight: 1.2 }}>Item Certified by</div>
-                  <div style={{
-                    fontFamily: "Georgia,'Times New Roman',serif",
-                    fontSize: 11.5, fontWeight: 700, color: "#111", lineHeight: 1, marginTop: 2,
-                  }}>
-                    Jewels<span style={{ color: G }}>Report</span>
-                  </div>
+            {/* "Certified by JewelsReport" badge */}
+            <div style={{
+              display: "flex", alignItems: "center", gap: 7,
+              background: "#F5F0E8", border: "1px solid #D8C9A0",
+              borderRadius: 3, padding: "5px 8px", marginBottom: 10,
+            }}>
+              <img src={logo} alt="" style={{ height: 26, width: 26, objectFit: "contain", flexShrink: 0 }} />
+              <div>
+                <div style={{ fontSize: 8, color: "#777", lineHeight: 1.2 }}>Item Certified by</div>
+                <div style={{
+                  fontFamily: "Georgia,'Times New Roman',serif",
+                  fontSize: 11.5, fontWeight: 700, color: "#111", lineHeight: 1, marginTop: 2,
+                }}>
+                  Jewels<span style={{ color: G }}>Report</span>
                 </div>
               </div>
-
-              {mainFields.map(([label, value]) => (
-                <FR key={label} label={label} value={value as string} />
-              ))}
-
-              {diamondFields.length > 0 && (
-                <>
-                  <SubHdr label="Additional Diamond Details" />
-                  {cert.diamondTotalPcs && (
-                    <div style={{ fontSize: 10.5, fontWeight: 700, color: "#111", marginBottom: 5 }}>
-                      Section A: {cert.diamondTotalPcs} Diamond(s)
-                    </div>
-                  )}
-                  {diamondFields.map(([label, value]) => (
-                    <FR key={label} label={label} value={value} />
-                  ))}
-                </>
-              )}
-
-              {isJ && cert.gemstoneStone && (
-                <>
-                  <SubHdr label="Gemstone Details" />
-                  {([
-                    ["Stone",        cert.gemstoneStone],
-                    ["Origin",       cert.gemstoneOrigin],
-                    ["Shape",        cert.gemstoneShape],
-                    ["Carat Weight", cert.gemstoneCaratWeight],
-                    ["PCS",          cert.gemstonePcs],
-                  ] as [string, string | undefined][])
-                    .filter(([, v]) => v)
-                    .map(([l, v]) => <FR key={l} label={l} value={v as string} />)
-                  }
-                </>
-              )}
-
-              {cert.remarks && (
-                <div style={{ marginTop: 10, padding: "6px 8px", background: "rgba(184,146,42,0.07)", borderLeft: `2.5px solid ${G}`, borderRadius: "0 3px 3px 0" }}>
-                  <div style={{ fontSize: 8, fontWeight: 800, textTransform: "uppercase", color: G, marginBottom: 2, letterSpacing: "0.15em" }}>Remarks</div>
-                  <div style={{ fontSize: 10, color: "#333", lineHeight: 1.55 }}>{cert.remarks}</div>
-                </div>
-              )}
             </div>
 
-            {/* Bottom: signature (always at bottom via space-between) */}
-            <div style={{ paddingTop: 8 }}>
+            {mainFields.map(([label, value]) => (
+              <FR key={label} label={label} value={value as string} />
+            ))}
+
+            {diamondFields.length > 0 && (
+              <>
+                <SubHdr label="Additional Diamond Details" />
+                {cert.diamondTotalPcs && (
+                  <div style={{ fontSize: 10.5, fontWeight: 700, color: "#111", marginBottom: 5 }}>
+                    Section A: {cert.diamondTotalPcs} Diamond(s)
+                  </div>
+                )}
+                {diamondFields.map(([label, value]) => (
+                  <FR key={label} label={label} value={value} />
+                ))}
+              </>
+            )}
+
+            {isJ && cert.gemstoneStone && (
+              <>
+                <SubHdr label="Gemstone Details" />
+                {([
+                  ["Stone",        cert.gemstoneStone],
+                  ["Origin",       cert.gemstoneOrigin],
+                  ["Shape",        cert.gemstoneShape],
+                  ["Carat Weight", cert.gemstoneCaratWeight],
+                  ["PCS",          cert.gemstonePcs],
+                ] as [string, string | undefined][])
+                  .filter(([, v]) => v)
+                  .map(([l, v]) => <FR key={l} label={l} value={v as string} />)
+                }
+              </>
+            )}
+
+            {cert.remarks && (
+              <div style={{ marginTop: 10, padding: "6px 8px", background: "rgba(184,146,42,0.07)", borderLeft: `2.5px solid ${G}`, borderRadius: "0 3px 3px 0" }}>
+                <div style={{ fontSize: 8, fontWeight: 800, textTransform: "uppercase", color: G, marginBottom: 2, letterSpacing: "0.15em" }}>Remarks</div>
+                <div style={{ fontSize: 10, color: "#333", lineHeight: 1.55 }}>{cert.remarks}</div>
+              </div>
+            )}
+
+            {/* Decorative filler — grows to fill remaining left-column space */}
+            <div style={{
+              flex: 1, display: "flex", flexDirection: "column",
+              alignItems: "center", justifyContent: "center", padding: "12px 0",
+            }}>
+              <div style={{
+                width: 60, height: 60, borderRadius: "50%",
+                border: `1.5px solid rgba(184,146,42,0.25)`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                background: "rgba(184,146,42,0.04)",
+                marginBottom: 8,
+              }}>
+                <img src={logo} alt="" style={{ height: 32, width: 32, objectFit: "contain", opacity: 0.35 }} />
+              </div>
+              <div style={{ fontSize: 7.5, color: "rgba(184,146,42,0.45)", letterSpacing: "0.22em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.6 }}>
+                Gemological<br />Certification Lab
+              </div>
+            </div>
+
+            {/* Signature — always pinned to bottom */}
+            <div style={{ paddingTop: 8, flexShrink: 0 }}>
               <div style={{ minHeight: 44, display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 4 }}>
                 {cert.signatureDataUrl && (
                   <img src={cert.signatureDataUrl} alt="Signature"
@@ -433,53 +448,52 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
             width: CR, flexShrink: 0,
             padding: "12px 12px",
             display: "flex", flexDirection: "column",
-            justifyContent: "space-between",
             overflow: "hidden",
           }}>
-            {/* Top: item detail fields */}
-            <div>
-              {rightFields.length > 0 && (
-                <div style={{ marginBottom: 8 }}>
-                  {rightFields.map(([label, value]) => (
-                    <FR key={label} label={label} value={value} />
-                  ))}
-                </div>
-              )}
+            {/* Item detail fields */}
+            {rightFields.length > 0 && (
+              <div style={{ marginBottom: 8 }}>
+                {rightFields.map(([label, value]) => (
+                  <FR key={label} label={label} value={value} />
+                ))}
+              </div>
+            )}
 
-              {gemRightFields.length > 0 && (
-                <div style={{ marginBottom: 8 }}>
-                  <SubHdr label="Gemstone Details" />
-                  {gemRightFields.map(([label, value]) => (
-                    <FR key={label} label={label} value={value} />
-                  ))}
-                </div>
-              )}
+            {gemRightFields.length > 0 && (
+              <div style={{ marginBottom: 8 }}>
+                <SubHdr label="Gemstone Details" />
+                {gemRightFields.map(([label, value]) => (
+                  <FR key={label} label={label} value={value} />
+                ))}
+              </div>
+            )}
 
-              {isJ && cert.metalDescription && (
-                <div style={{ marginBottom: 10 }}>
-                  <div style={{ fontSize: 10, color: "#444", lineHeight: 1.55 }}>
-                    <span style={{ fontWeight: 700 }}>*Marking(s):</span> {cert.metalDescription}
-                  </div>
-                  <div style={{ fontSize: 8.5, color: "#888", marginTop: 3, lineHeight: 1.4, fontStyle: "italic" }}>
-                    *Marking(s) represent what is present and may not have been assessed by JewelsReport.
-                  </div>
+            {isJ && cert.metalDescription && (
+              <div style={{ marginBottom: 10 }}>
+                <div style={{ fontSize: 10, color: "#444", lineHeight: 1.55 }}>
+                  <span style={{ fontWeight: 700 }}>*Marking(s):</span> {cert.metalDescription}
                 </div>
-              )}
-
-              {cert.remarks && (
-                <div style={{ marginBottom: 10 }}>
-                  <div style={{ fontSize: 10, color: "#444", lineHeight: 1.6 }}>
-                    <span style={{ fontWeight: 700 }}>Comments:</span> {cert.remarks}
-                  </div>
+                <div style={{ fontSize: 8.5, color: "#888", marginTop: 3, lineHeight: 1.4, fontStyle: "italic" }}>
+                  *Marking(s) represent what is present and may not have been assessed by JewelsReport.
                 </div>
-              )}
-            </div>
+              </div>
+            )}
 
-            {/* Bottom: seal + QR + disclaimer (always at bottom) */}
-            <div>
-              <p style={{ fontSize: 7.5, color: "#777", lineHeight: 1.62, marginBottom: 10 }}>
-                The results documented in this report refer only to the article described, and were obtained using the techniques and equipment used by JewelsReport at the time of examination. This report is not a guarantee or valuation. For additional information please see jewelsreport.com/terms
-              </p>
+            {cert.remarks && (
+              <div style={{ marginBottom: 10 }}>
+                <div style={{ fontSize: 10, color: "#444", lineHeight: 1.6 }}>
+                  <span style={{ fontWeight: 700 }}>Comments:</span> {cert.remarks}
+                </div>
+              </div>
+            )}
+
+            {/* Disclaimer fills all remaining space — no dead gap */}
+            <p style={{ flex: 1, fontSize: 7.5, color: "#777", lineHeight: 1.72, marginBottom: 10, overflow: "hidden" }}>
+              The results documented in this report refer only to the article described, and were obtained using the techniques and equipment used by JewelsReport at the time of examination. This report is not a guarantee or valuation. For additional information and important limitations and disclaimers, please see jewelsreport.com/terms or contact the JewelsReport Gemological Certification Lab directly. ©{new Date().getFullYear()} JewelsReport Gemological Certification Lab. All rights reserved.
+            </p>
+
+            {/* Seal + QR — pinned to bottom */}
+            <div style={{ flexShrink: 0 }}>
 
               <div style={{ display: "flex", alignItems: "flex-end", gap: 8, marginBottom: 8 }}>
                 {/* Circular certification seal */}

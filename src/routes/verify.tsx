@@ -30,11 +30,12 @@ function useCardScale() {
 }
 
 function useA4Scale() {
-  const [scale, setScale] = useState(0.65);
+  const [scale, setScale] = useState(0.68);
   useEffect(() => {
     const update = () => {
       const vw = window.innerWidth;
-      setScale(vw < 900 ? Math.max(0.32, (vw - 48) / A4_W) : 0.65);
+      /* landscape cert is 1122px wide — scale to fit viewport with 48px padding */
+      setScale(Math.min(0.68, Math.max(0.28, (vw - 48) / A4_W)));
     };
     update();
     window.addEventListener("resize", update);

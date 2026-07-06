@@ -30,11 +30,12 @@ const DEMO_CERT: Certificate = {
 };
 
 function useScale() {
-  const [scale, setScale] = useState(0.7);
+  const [scale, setScale] = useState(0.68);
   useEffect(() => {
     const update = () => {
       const vw = window.innerWidth;
-      setScale(Math.min(0.7, (vw - 64) / A4_W));
+      /* landscape cert is 1122px wide — fit within viewport with 64px margin */
+      setScale(Math.min(0.68, Math.max(0.25, (vw - 64) / A4_W)));
     };
     update();
     window.addEventListener("resize", update);

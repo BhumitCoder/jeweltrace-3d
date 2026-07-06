@@ -247,10 +247,10 @@ function CardPreview({ cert }: { cert: Certificate }) {
       win.document.write(`<!DOCTYPE html><html><head>
         <title>JewelsReport Certificate ${cert.reportNo}</title>
         <style>
-          @page { size: 210mm 297mm; margin: 0; }
+          @page { size: 297mm 210mm landscape; margin: 0; }
           *, *::before, *::after { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
           html, body { margin: 0; padding: 0; background: white; }
-          .page { width: 210mm; height: 297mm; overflow: hidden; }
+          .page { width: 297mm; height: 210mm; overflow: hidden; }
           .cert { width: ${A4_W}px; height: ${A4_H}px; }
         </style>
       </head><body>

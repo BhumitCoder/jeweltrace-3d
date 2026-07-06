@@ -37,13 +37,12 @@ function FR({ label, value, size = 11 }: { label: string; value: string; size?: 
   );
 }
 
-/* ── Full-width amber section bar ───────────────────────────────── */
-function SectionBar({ label, shade = 0 }: { label: string; shade?: 0 | 1 | 2 }) {
-  const bg = [G, G2, G3][shade];
+/* ── Full-width amber section bar — same gold across all 3 panels ── */
+function SectionBar({ label }: { label: string }) {
   return (
     <div style={{
-      background: bg, padding: "4px 14px", flexShrink: 0,
-      borderBottom: "1px solid rgba(0,0,0,0.08)",
+      background: G, padding: "4px 14px", flexShrink: 0,
+      borderBottom: "1px solid rgba(0,0,0,0.1)",
     }}>
       <span style={{
         fontSize: 7.5, fontWeight: 800, letterSpacing: "0.22em",
@@ -273,7 +272,7 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
           </div>
 
           {/* Section header bar */}
-          <SectionBar label={panelHdr} shade={0} />
+          <SectionBar label={panelHdr} />
 
           {/* Grading content ─────────────────────────────────────── */}
           <div style={{
@@ -409,7 +408,7 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
           </div>
 
           {/* Section bar */}
-          <SectionBar label="Item(s) Overall Description" shade={1} />
+          <SectionBar label="Item(s) Overall Description" />
 
           {/* Content: description + photos */}
           <div style={{
@@ -497,7 +496,7 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
         }}>
 
           {/* Section bar */}
-          <SectionBar label="Grading Details" shade={2} />
+          <SectionBar label="Grading Details" />
 
           {/* Content */}
           <div style={{

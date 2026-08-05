@@ -51,7 +51,7 @@ function PreviewA4Page() {
     <div
       style={{
         minHeight: "100vh",
-        background: "#1a1a1a",
+        background: "#F4F0E8",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -59,7 +59,7 @@ function PreviewA4Page() {
         gap: 24,
       }}
     >
-      <div style={{ color: "#B8922A", fontFamily: "Georgia,serif", fontSize: 13, letterSpacing: "0.25em", textTransform: "uppercase", opacity: 0.8 }}>
+      <div style={{ color: "#9A7418", fontFamily: "Georgia,serif", fontSize: 13, letterSpacing: "0.25em", textTransform: "uppercase" }}>
         A4 Certificate — Design Preview
       </div>
 
@@ -69,8 +69,8 @@ function PreviewA4Page() {
           width: A4_W * scale,
           height: A4_H * scale,
           overflow: "hidden",
-          borderRadius: 6,
-          boxShadow: "0 20px 80px -10px rgba(0,0,0,0.8), 0 0 0 1px rgba(184,146,42,0.3)",
+          borderRadius: 2,
+          boxShadow: "0 8px 40px rgba(0,0,0,0.18), 0 0 0 1px rgba(184,146,42,0.25)",
           flexShrink: 0,
         }}
       >

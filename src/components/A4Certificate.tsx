@@ -364,10 +364,9 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
                   width: "100%",
                   height: has2Img ? 210 : 390,
                   flexShrink: 0,
-                  borderRadius: 10,
-                  overflow: "hidden",
+                  display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
-                  <img src={cert.imageDataUrl} alt="Item" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+                  <img src={cert.imageDataUrl} alt="Item" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", display: "block", borderRadius: 10 }} />
                 </div>
               )}
               {cert.imageDataUrl2 && (
@@ -375,10 +374,9 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
                   width: "100%",
                   height: 210,
                   flexShrink: 0,
-                  borderRadius: 10,
-                  overflow: "hidden",
+                  display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
-                  <img src={cert.imageDataUrl2} alt="Item" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+                  <img src={cert.imageDataUrl2} alt="Item" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", display: "block", borderRadius: 10 }} />
                 </div>
               )}
               {!hasImg && (

@@ -351,44 +351,44 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
                 {cert.description}
               </p>
             )}
-            {/* Image area — stacked, square, hairline border */}
+            {/* Image area — full-width, stacked, professional */}
             <div style={{
               flex: 1, minHeight: 0,
               display: "flex", flexDirection: "column",
-              alignItems: "center", justifyContent: "center",
+              alignItems: "stretch",
+              justifyContent: "center",
               gap: has2Img ? 8 : 0,
             }}>
               {cert.imageDataUrl && (
                 <div style={{
-                  width: has2Img ? 200 : 260,
-                  height: has2Img ? 200 : 260,
+                  width: "100%",
+                  height: has2Img ? 210 : 390,
                   flexShrink: 0,
-                  border: `0.5px solid rgba(184,150,12,0.18)`,
-                  borderRadius: 8,
+                  borderRadius: 6,
                   background: "transparent",
                   overflow: "hidden",
                 }}>
-                  <img src={cert.imageDataUrl} alt="Item" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", borderRadius: 8 }} />
+                  <img src={cert.imageDataUrl} alt="Item" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
                 </div>
               )}
               {cert.imageDataUrl2 && (
                 <div style={{
-                  width: 200, height: 200,
+                  width: "100%",
+                  height: 210,
                   flexShrink: 0,
-                  border: `0.5px solid rgba(184,150,12,0.18)`,
-                  borderRadius: 8,
+                  borderRadius: 6,
                   background: "transparent",
                   overflow: "hidden",
                 }}>
-                  <img src={cert.imageDataUrl2} alt="Item" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", borderRadius: 8 }} />
+                  <img src={cert.imageDataUrl2} alt="Item" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
                 </div>
               )}
               {!hasImg && (
                 <div style={{
-                  width: 260, height: 260, flexShrink: 0,
+                  width: "100%", height: 390, flexShrink: 0,
                   display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
                   background: PANEL, border: `0.5px solid rgba(184,150,12,0.15)`,
-                  borderRadius: 8,
+                  borderRadius: 6,
                   position: "relative", overflow: "hidden",
                 }}>
                   <div style={{ position: "absolute", inset: 0, backgroundImage: `repeating-linear-gradient(45deg,rgba(184,150,12,0.04) 0,rgba(184,150,12,0.04) 1px,transparent 1px,transparent 14px),repeating-linear-gradient(-45deg,rgba(184,150,12,0.04) 0,rgba(184,150,12,0.04) 1px,transparent 1px,transparent 14px)` }} />

@@ -397,10 +397,8 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
           }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg,transparent,${GOLD},transparent)` }} />
             <div style={{ fontSize: 6.5, letterSpacing: "0.36em", textTransform: "uppercase", color: TXT3, marginTop: 4 }}>Official Certification Record</div>
-            <HR my={6} />
-            {/* Report type and date summary */}
-            <div style={{ fontFamily: "Georgia,serif", fontSize: 10, fontWeight: 400, color: TXT2, letterSpacing: "0.04em" }}>{panelHdr}</div>
-            <div style={{ fontSize: 8, color: TXT3, marginTop: 3 }}>{fmtDate(cert.issueDate)}</div>
+            <HR my={6} op={0.4} />
+            <div style={{ fontSize: 7.5, color: TXT3, letterSpacing: "0.07em" }}>Gemological Certification Lab</div>
           </div>
 
           <Hdr label="Certification & Authentication" />
@@ -415,13 +413,6 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
                 by JewelsReport Gemological Certification Lab and the results documented
                 are based on standard gemological testing methods.
               </div>
-            </div>
-
-            {/* Report reference */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 10, flexShrink: 0 }}>
-              <FR label="Report Number" value={cert.reportNo} sz={9.5} />
-              <FR label="Report Type" value={reportTypeLabel} sz={9.5} />
-              <FR label="Date of Issue" value={fmtDate(cert.issueDate)} sz={9.5} />
             </div>
 
             <HR />

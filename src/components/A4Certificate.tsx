@@ -4,46 +4,44 @@ import type { Certificate } from "@/lib/store";
 import { REPORT_TYPE_LABELS } from "@/lib/store";
 import logo from "@/assets/logo.png";
 
-/* ── Landscape A4 at 96 dpi (1 CSS px = 0.2646 mm) ─────────────── */
+/* ── Landscape A4 at 96 dpi ─────────────────────────────────────── */
 export const A4_W = 1122; // 297 mm
 export const A4_H = 794;  // 210 mm
 
 /* Panel widths */
-const P1 = 310;  // Brand / Grading
-const P2 = 440;  // Image panel (wider — luxury showcase)
-const P3 = 372;  // Details / Seal
+const P1 = 308;
+const P2 = 446;
+const P3 = 368;
 
-/* Brand palette */
-const NAVY   = "#0D1B2A";
-const NAVY2  = "#162537";
-const GOLD   = "#C9A84C";
-const GOLD2  = "#A07C20";
+/* ── Palette — light luxury ─────────────────────────────────────── */
+const WHITE  = "#FFFFFF";
+const IVORY  = "#FEFCF6";
+const WARM   = "#FBF6E9";
+const GOLD   = "#B8922A";
+const GOLD2  = "#9A7418";
 const GOLD3  = "#7D5C0A";
-const CREAM  = "#FAF6ED";
-const CREAM2 = "#F2EAD3";
-const TXT    = "#1C0F00";
-const TXT2   = "#4A3818";
-const TXT3   = "#8A6F3C";
+const GOLD_L = "#E8D49A";   // light gold for backgrounds
+const TXT    = "#1A0E00";
+const TXT2   = "#3D2B08";
+const TXT3   = "#8A6D3C";
+const RULE   = "rgba(184,146,42,0.28)";
+const BAR_BG = `linear-gradient(90deg,#C9A84C 0%,#B8922A 50%,#9A7418 100%)`;
 
-const BAR = `linear-gradient(90deg,${NAVY} 0%,${NAVY2} 100%)`;
-
-/* ── Dotted-leader field row ─────────────────────────────────────── */
-function FR({ label, value, size = 10.5, bold = true }: {
-  label: string; value: string; size?: number; bold?: boolean;
-}) {
+/* ── GIA-style dotted-leader field row ──────────────────────────── */
+function FR({ label, value, size = 10.5 }: { label: string; value: string; size?: number }) {
   return (
-    <div style={{ display: "flex", alignItems: "flex-end", marginBottom: 4.5 }}>
+    <div style={{ display: "flex", alignItems: "flex-end", marginBottom: 5 }}>
       <span style={{ fontSize: size, color: TXT2, whiteSpace: "nowrap", lineHeight: 1.35, flexShrink: 0 }}>
         {label}
       </span>
       <span style={{
         flex: 1, margin: `0 5px ${size * 0.18}px`, minWidth: 8,
-        borderBottom: `1.5px dotted rgba(201,168,76,0.5)`,
+        borderBottom: `1.5px dotted rgba(184,146,42,0.45)`,
       }} />
       <span style={{
-        fontSize: size, fontWeight: bold ? 800 : 600, color: TXT,
+        fontSize: size, fontWeight: 800, color: TXT,
         lineHeight: 1.35, textTransform: "uppercase",
-        letterSpacing: "0.03em", whiteSpace: "nowrap",
+        letterSpacing: "0.025em", whiteSpace: "nowrap",
       }}>
         {value}
       </span>
@@ -51,19 +49,18 @@ function FR({ label, value, size = 10.5, bold = true }: {
   );
 }
 
-/* ── Dark navy section header bar ───────────────────────────────── */
-function SectionBar({ label, py = 5 }: { label: string; py?: number }) {
+/* ── Gold gradient section header bar ───────────────────────────── */
+function SectionBar({ label }: { label: string }) {
   return (
     <div style={{
-      background: BAR,
-      padding: `${py}px 16px`,
+      background: BAR_BG,
+      padding: "5px 16px",
       flexShrink: 0,
       display: "flex", alignItems: "center", gap: 8,
     }}>
-      <div style={{ width: 2, height: 11, background: GOLD, flexShrink: 0 }} />
       <span style={{
-        fontSize: 7, fontWeight: 800, letterSpacing: "0.28em",
-        textTransform: "uppercase", color: GOLD,
+        fontSize: 7, fontWeight: 800, letterSpacing: "0.3em",
+        textTransform: "uppercase", color: "#FFFFFF",
       }}>
         {label}
       </span>
@@ -71,45 +68,36 @@ function SectionBar({ label, py = 5 }: { label: string; py?: number }) {
   );
 }
 
-/* ── Gold sub-section header ─────────────────────────────────────── */
+/* ── Sub-section label ───────────────────────────────────────────── */
 function SubHdr({ label }: { label: string }) {
   return (
     <div style={{
-      display: "flex", alignItems: "center", gap: 6,
+      display: "flex", alignItems: "center", gap: 0,
       margin: "9px 0 5px",
+      background: WARM,
+      borderLeft: `3px solid ${GOLD}`,
+      padding: "3px 8px",
+      borderRadius: "0 2px 2px 0",
     }}>
-      <div style={{ width: 18, height: 1.5, background: GOLD, flexShrink: 0 }} />
       <span style={{
-        fontSize: 6.5, fontWeight: 800, letterSpacing: "0.25em",
+        fontSize: 6.5, fontWeight: 800, letterSpacing: "0.22em",
         textTransform: "uppercase", color: GOLD2,
       }}>
         {label}
       </span>
-      <div style={{ flex: 1, height: 1.5, background: `linear-gradient(90deg,${GOLD},transparent)`, flexShrink: 0 }} />
     </div>
   );
 }
 
 /* ── Thin ornamental divider ─────────────────────────────────────── */
-function GoldLine({ opacity = 0.4 }: { opacity?: number }) {
+function GoldLine({ my = 7 }: { my?: number }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 6, margin: "6px 0" }}>
-      <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg,transparent,rgba(201,168,76,${opacity}))` }} />
-      <div style={{ width: 4, height: 4, background: `rgba(201,168,76,${opacity})`, transform: "rotate(45deg)", flexShrink: 0 }} />
-      <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg,rgba(201,168,76,${opacity}),transparent)` }} />
+    <div style={{ display: "flex", alignItems: "center", gap: 6, margin: `${my}px 0` }}>
+      <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg,transparent,${GOLD_L})` }} />
+      <div style={{ width: 5, height: 5, background: GOLD_L, transform: "rotate(45deg)", flexShrink: 0 }} />
+      <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg,${GOLD_L},transparent)` }} />
     </div>
   );
-}
-
-/* ── Corner ornament ─────────────────────────────────────────────── */
-function Corner({ flip }: { flip?: boolean }) {
-  const s: React.CSSProperties = {
-    position: "absolute", width: 20, height: 20,
-    borderTop: `1.5px solid rgba(201,168,76,0.55)`,
-    borderLeft: `1.5px solid rgba(201,168,76,0.55)`,
-    ...(flip ? { transform: "scaleX(-1)", right: 10, top: 10 } : { left: 10, top: 10 }),
-  };
-  return <div style={s} />;
 }
 
 interface Props { cert: Certificate }
@@ -169,19 +157,22 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
     return (
       <div ref={ref} style={{
         width: A4_W, height: A4_H,
-        background: CREAM,
-        fontFamily: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+        background: WHITE,
+        fontFamily: "'Segoe UI','Helvetica Neue',Arial,sans-serif",
         boxSizing: "border-box",
         overflow: "hidden",
         display: "flex",
         flexDirection: "row",
         position: "relative",
+        /* Outer gold frame */
+        outline: `1.5px solid ${GOLD}`,
+        outlineOffset: "-1px",
       }}>
 
-        {/* Global watermark */}
+        {/* Faint logo watermark centre */}
         <img src={logo} alt="" aria-hidden style={{
-          position: "absolute", width: 600, height: 600,
-          objectFit: "contain", opacity: 0.018,
+          position: "absolute", width: 540, height: 540,
+          objectFit: "contain", opacity: 0.025,
           left: "50%", top: "50%",
           transform: "translate(-50%,-50%)",
           pointerEvents: "none", zIndex: 0,
@@ -194,57 +185,58 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
           width: P1, height: A4_H, flexShrink: 0,
           display: "flex", flexDirection: "column",
           position: "relative", zIndex: 1,
-          background: CREAM,
-          borderRight: `0.5px solid rgba(201,168,76,0.3)`,
+          background: IVORY,
+          borderRight: `1px solid ${RULE}`,
         }}>
 
-          {/* ── Brand header block (navy) ── */}
+          {/* ── Brand header ── */}
           <div style={{
-            background: NAVY,
-            padding: "20px 18px 16px",
+            padding: "18px 16px 14px",
+            borderBottom: `1px solid ${RULE}`,
             flexShrink: 0,
             display: "flex", flexDirection: "column", alignItems: "center",
-            position: "relative",
+            background: WHITE,
           }}>
-            {/* Top gold rule */}
-            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg,transparent,${GOLD},transparent)` }} />
+            {/* Top gold double rule */}
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4,
+              background: `linear-gradient(90deg,${GOLD3},${GOLD},${GOLD3})` }} />
 
-            {/* Seal ring */}
+            {/* Logo seal */}
             <div style={{
-              width: 72, height: 72, borderRadius: "50%",
+              width: 74, height: 74, borderRadius: "50%",
               border: `2px solid ${GOLD}`,
-              boxShadow: `0 0 0 4px rgba(201,168,76,0.12), 0 0 0 7px rgba(201,168,76,0.05)`,
+              boxShadow: `0 0 0 4px rgba(184,146,42,0.1), 0 0 0 7px rgba(184,146,42,0.04)`,
               display: "flex", alignItems: "center", justifyContent: "center",
-              background: `radial-gradient(circle,#1E2E40 0%,${NAVY} 100%)`,
-              marginBottom: 9, flexShrink: 0,
+              background: `radial-gradient(circle,#FFFDE8 0%,#FBF4D8 100%)`,
+              marginBottom: 9, flexShrink: 0, marginTop: 4,
             }}>
-              <img src={logo} alt="JewelsReport" style={{ height: 46, width: 46, objectFit: "contain" }} />
+              <img src={logo} alt="JewelsReport" style={{ height: 50, width: 50, objectFit: "contain" }} />
             </div>
 
             <div style={{
               fontFamily: "Georgia,'Times New Roman',serif",
-              fontSize: 19, fontWeight: 700, letterSpacing: "0.1em",
-              color: "#FFFFFF", lineHeight: 1, textTransform: "uppercase",
+              fontSize: 20, fontWeight: 700, letterSpacing: "0.09em",
+              color: TXT, lineHeight: 1, textTransform: "uppercase",
             }}>
               JewelsReport
             </div>
 
+            {/* Diamond rule */}
             <div style={{ display: "flex", alignItems: "center", gap: 5, margin: "6px 0 4px", width: "100%" }}>
               <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg,transparent,${GOLD})` }} />
               <div style={{ width: 4, height: 4, background: GOLD, transform: "rotate(45deg)" }} />
               <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg,${GOLD},transparent)` }} />
             </div>
 
-            <div style={{ fontSize: 6.5, letterSpacing: "0.38em", textTransform: "uppercase", color: GOLD, fontWeight: 600 }}>
+            <div style={{ fontSize: 6.5, letterSpacing: "0.36em", textTransform: "uppercase", color: TXT3, fontWeight: 600 }}>
               Gemological Certification Lab
             </div>
           </div>
 
-          {/* ── Section header ── */}
-          <SectionBar label={panelHdr} py={6} />
+          <SectionBar label={panelHdr} />
 
-          {/* ── Fields ── */}
-          <div style={{ flex: 1, padding: "12px 16px 0", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+          {/* Fields */}
+          <div style={{ flex: 1, padding: "11px 14px 0", display: "flex", flexDirection: "column", overflow: "hidden" }}>
             {identityFields.map(([l, v]) => <FR key={l} label={l} value={v} />)}
 
             {gradingFields.length > 0 && (<>
@@ -258,106 +250,114 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
             </>)}
 
             {cert.remarks && (
-              <div style={{ marginTop: 8, padding: "6px 9px", background: CREAM2, borderLeft: `2.5px solid ${GOLD}`, borderRadius: "0 3px 3px 0", flexShrink: 0 }}>
+              <div style={{ marginTop: 8, padding: "5px 9px", background: WARM, borderLeft: `2.5px solid ${GOLD}`, borderRadius: "0 3px 3px 0", flexShrink: 0 }}>
                 <div style={{ fontSize: 6.5, fontWeight: 800, textTransform: "uppercase", color: GOLD2, letterSpacing: "0.15em", marginBottom: 2 }}>Comments</div>
                 <div style={{ fontSize: 9.5, color: TXT, lineHeight: 1.6 }}>{cert.remarks}</div>
               </div>
             )}
 
             {/* Ornamental filler */}
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "10px 0" }}>
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "8px 0" }}>
               <GoldLine />
-              <div style={{ textAlign: "center", padding: "12px 0", position: "relative" }}>
-                <div style={{ fontSize: 28, color: `rgba(201,168,76,0.14)`, lineHeight: 1, letterSpacing: "0.08em" }}>✦</div>
-                <div style={{ fontSize: 7, letterSpacing: "0.4em", textTransform: "uppercase", color: `rgba(201,168,76,0.3)`, marginTop: 6, fontWeight: 700 }}>
+              <div style={{ textAlign: "center", padding: "10px 0" }}>
+                <div style={{ fontSize: 30, color: `rgba(184,146,42,0.18)`, lineHeight: 1 }}>✦</div>
+                <div style={{ fontSize: 7, letterSpacing: "0.4em", textTransform: "uppercase", color: `rgba(184,146,42,0.32)`, marginTop: 6, fontWeight: 700 }}>
                   Certified Authentic
                 </div>
-                <div style={{ fontSize: 6, letterSpacing: "0.25em", color: `rgba(201,168,76,0.2)`, marginTop: 3, textTransform: "uppercase" }}>
+                <div style={{ fontSize: 6, letterSpacing: "0.24em", color: `rgba(184,146,42,0.22)`, marginTop: 3, textTransform: "uppercase" }}>
                   JewelsReport · Surat, India
                 </div>
               </div>
               <GoldLine />
             </div>
 
-            {/* Signature block */}
-            <div style={{ borderTop: `1px solid rgba(201,168,76,0.25)`, paddingTop: 7, marginBottom: 0, flexShrink: 0 }}>
+            {/* Signature */}
+            <div style={{ borderTop: `1px solid ${RULE}`, paddingTop: 7, marginBottom: 0, flexShrink: 0 }}>
               <div style={{ minHeight: 40, display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 4 }}>
                 {cert.signatureDataUrl && (
                   <img src={cert.signatureDataUrl} alt="Signature" style={{ maxHeight: 40, maxWidth: "85%", objectFit: "contain" }} />
                 )}
               </div>
               <div style={{ textAlign: "center" }}>
-                <div style={{ height: 1, background: `linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent)`, marginBottom: 5 }} />
+                <div style={{ height: 1, background: `linear-gradient(90deg,transparent,${RULE},transparent)`, marginBottom: 5 }} />
                 <div style={{ fontSize: 7.5, color: TXT2, fontWeight: 700, letterSpacing: "0.1em" }}>Authorised Signatory</div>
                 <div style={{ fontSize: 6.5, color: TXT3, letterSpacing: "0.06em", marginTop: 1 }}>JewelsReport Gemological Certification Lab</div>
               </div>
             </div>
           </div>
 
-          {/* Panel 1 footer */}
+          {/* P1 footer strip */}
           <div style={{
-            borderTop: `1px solid rgba(201,168,76,0.2)`,
-            background: NAVY,
+            borderTop: `1px solid ${RULE}`,
+            background: `linear-gradient(90deg,${GOLD3},${GOLD},${GOLD3})`,
             padding: "5px 14px",
             flexShrink: 0,
             display: "flex", alignItems: "center", justifyContent: "space-between",
           }}>
-            <div style={{ fontSize: 6.5, color: `rgba(201,168,76,0.6)`, letterSpacing: "0.1em" }}>jewelsreport.com</div>
-            <div style={{ fontSize: 6.5, color: `rgba(201,168,76,0.4)`, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+            <div style={{ fontSize: 6.5, color: "rgba(255,255,255,0.85)", letterSpacing: "0.1em" }}>jewelsreport.com</div>
+            <div style={{ fontSize: 6.5, color: "rgba(255,255,255,0.65)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
               {REPORT_TYPE_LABELS[cert.type] ?? cert.type}
             </div>
           </div>
         </div>
 
         {/* ═══════════════════════════════════════════════════════
-            PANEL 2 — Report Header + Item Photos (WIDER)
+            PANEL 2 — Report Info + Item Photos
         ═══════════════════════════════════════════════════════ */}
         <div style={{
           width: P2, height: A4_H, flexShrink: 0,
           display: "flex", flexDirection: "column",
           position: "relative", zIndex: 1,
-          background: CREAM,
-          borderRight: `0.5px solid rgba(201,168,76,0.3)`,
+          background: WHITE,
+          borderRight: `1px solid ${RULE}`,
         }}>
 
           {/* Report number header */}
           <div style={{
-            padding: "14px 20px 11px",
-            borderBottom: `0.5px solid rgba(201,168,76,0.25)`,
+            padding: "14px 20px 12px",
+            borderBottom: `1px solid ${RULE}`,
             flexShrink: 0, textAlign: "center",
-            background: NAVY,
+            background: WHITE,
             position: "relative",
           }}>
-            {/* Top gold rule */}
-            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg,transparent,${GOLD},transparent)` }} />
-            <div style={{ fontSize: 7, letterSpacing: "0.28em", textTransform: "uppercase", color: GOLD, marginBottom: 4, fontWeight: 600 }}>
+            {/* Top gradient rule */}
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4,
+              background: `linear-gradient(90deg,${GOLD3},${GOLD},${GOLD3})` }} />
+
+            <div style={{ fontSize: 7, letterSpacing: "0.28em", textTransform: "uppercase", color: TXT3, marginBottom: 4, fontWeight: 600, marginTop: 4 }}>
               GRL Report Number
             </div>
             <div style={{
               fontFamily: "Georgia,'Times New Roman',serif",
-              fontSize: 22, fontWeight: 700, letterSpacing: "0.05em", color: "#FFFFFF",
+              fontSize: 22, fontWeight: 700, letterSpacing: "0.05em", color: TXT,
             }}>
               {cert.reportNo}
             </div>
-            <div style={{ fontSize: 7.5, color: `rgba(201,168,76,0.65)`, marginTop: 4, letterSpacing: "0.06em" }}>
+
+            {/* Thin gold rule */}
+            <div style={{ display: "flex", alignItems: "center", gap: 5, margin: "6px 0 4px" }}>
+              <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg,transparent,${GOLD_L})` }} />
+              <div style={{ width: 4, height: 4, background: GOLD_L, transform: "rotate(45deg)" }} />
+              <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg,${GOLD_L},transparent)` }} />
+            </div>
+
+            <div style={{ fontSize: 7.5, color: GOLD2, marginTop: 2, letterSpacing: "0.06em" }}>
               Verify this report at jewelsreport.com/verify
             </div>
-            <div style={{ fontFamily: "Georgia,serif", fontSize: 10.5, fontWeight: 600, color: `rgba(201,168,76,0.8)`, marginTop: 4 }}>
+            <div style={{ fontFamily: "Georgia,serif", fontSize: 11, fontWeight: 600, color: TXT2, marginTop: 4 }}>
               {fmtDate(cert.issueDate)}
             </div>
           </div>
 
-          <SectionBar label="Item(s) Overall Description" py={6} />
+          <SectionBar label="Item(s) Overall Description" />
 
-          {/* Photo area — fills remaining space */}
+          {/* Photo area */}
           <div style={{ flex: 1, padding: "12px 16px 10px", display: "flex", flexDirection: "column", overflow: "hidden" }}>
             {cert.description && (
               <p style={{
                 fontSize: 10.5, color: TXT2, lineHeight: 1.75,
-                marginBottom: 10, flexShrink: 0,
-                fontStyle: "italic",
-                borderLeft: `2px solid rgba(201,168,76,0.35)`,
-                paddingLeft: 8,
+                marginBottom: 10, flexShrink: 0, fontStyle: "italic",
+                borderLeft: `2px solid rgba(184,146,42,0.35)`, paddingLeft: 8,
               }}>
                 {cert.description}
               </p>
@@ -367,11 +367,9 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
               {cert.imageDataUrl && (
                 <div style={{
                   flex: 1, minHeight: 0,
-                  border: `1px solid rgba(201,168,76,0.4)`,
-                  borderRadius: 3, overflow: "hidden",
-                  background: CREAM2,
-                  boxShadow: `0 2px 12px rgba(13,27,42,0.08)`,
-                  position: "relative",
+                  border: `1px solid rgba(184,146,42,0.3)`,
+                  borderRadius: 3, overflow: "hidden", background: IVORY,
+                  boxShadow: `0 2px 10px rgba(0,0,0,0.06)`,
                 }}>
                   <img src={cert.imageDataUrl} alt="Item" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
                 </div>
@@ -379,10 +377,9 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
               {cert.imageDataUrl2 && (
                 <div style={{
                   flex: 1, minHeight: 0,
-                  border: `1px solid rgba(201,168,76,0.4)`,
-                  borderRadius: 3, overflow: "hidden",
-                  background: CREAM2,
-                  boxShadow: `0 2px 12px rgba(13,27,42,0.08)`,
+                  border: `1px solid rgba(184,146,42,0.3)`,
+                  borderRadius: 3, overflow: "hidden", background: IVORY,
+                  boxShadow: `0 2px 10px rgba(0,0,0,0.06)`,
                 }}>
                   <img src={cert.imageDataUrl2} alt="Item" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
                 </div>
@@ -392,17 +389,16 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
                   flex: 1, minHeight: 0,
                   display: "flex", flexDirection: "column",
                   alignItems: "center", justifyContent: "center",
-                  background: CREAM2,
-                  border: `1px solid rgba(201,168,76,0.35)`,
-                  borderRadius: 3,
-                  position: "relative", overflow: "hidden",
+                  background: WARM,
+                  border: `1px solid rgba(184,146,42,0.25)`,
+                  borderRadius: 3, position: "relative", overflow: "hidden",
                 }}>
                   <div style={{
                     position: "absolute", inset: 0,
-                    backgroundImage: `repeating-linear-gradient(45deg,rgba(201,168,76,0.035) 0px,rgba(201,168,76,0.035) 1px,transparent 1px,transparent 12px),repeating-linear-gradient(-45deg,rgba(201,168,76,0.035) 0px,rgba(201,168,76,0.035) 1px,transparent 1px,transparent 12px)`,
+                    backgroundImage: `repeating-linear-gradient(45deg,rgba(184,146,42,0.04) 0px,rgba(184,146,42,0.04) 1px,transparent 1px,transparent 12px),repeating-linear-gradient(-45deg,rgba(184,146,42,0.04) 0px,rgba(184,146,42,0.04) 1px,transparent 1px,transparent 12px)`,
                   }} />
-                  <img src={logo} alt="" style={{ height: 72, opacity: 0.11, marginBottom: 12, position: "relative" }} />
-                  <div style={{ fontSize: 8.5, color: "rgba(201,168,76,0.38)", letterSpacing: "0.28em", textTransform: "uppercase", position: "relative" }}>
+                  <img src={logo} alt="" style={{ height: 72, opacity: 0.12, marginBottom: 12, position: "relative" }} />
+                  <div style={{ fontSize: 8.5, color: "rgba(184,146,42,0.35)", letterSpacing: "0.28em", textTransform: "uppercase", position: "relative" }}>
                     No Image Provided
                   </div>
                 </div>
@@ -410,20 +406,20 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
             </div>
 
             {hasImg && (
-              <p style={{ fontSize: 8, color: TXT3, textAlign: "center", marginTop: 6, fontStyle: "italic", flexShrink: 0 }}>
+              <p style={{ fontSize: 7.5, color: TXT3, textAlign: "center", marginTop: 6, fontStyle: "italic", flexShrink: 0 }}>
                 Image is approximate
               </p>
             )}
           </div>
 
-          {/* Panel 2 footer */}
+          {/* P2 footer */}
           <div style={{
-            background: NAVY,
+            background: `linear-gradient(90deg,${GOLD3},${GOLD},${GOLD3})`,
             padding: "5px 16px",
             flexShrink: 0,
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
-            <div style={{ fontSize: 6.5, color: `rgba(201,168,76,0.45)`, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+            <div style={{ fontSize: 6.5, color: "rgba(255,255,255,0.75)", letterSpacing: "0.14em", textTransform: "uppercase" }}>
               Gemological Certification Lab · Surat, Gujarat, India
             </div>
           </div>
@@ -436,29 +432,32 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
           width: P3, height: A4_H, flexShrink: 0,
           display: "flex", flexDirection: "column",
           position: "relative", zIndex: 1,
-          background: CREAM,
+          background: IVORY,
         }}>
 
-          {/* Top navy bar matching other panels */}
+          {/* P3 header — matches report number header style */}
           <div style={{
-            background: NAVY, padding: "14px 16px 11px", flexShrink: 0,
+            padding: "14px 16px 12px",
+            borderBottom: `1px solid ${RULE}`,
+            flexShrink: 0, textAlign: "center",
+            background: WHITE,
             position: "relative",
           }}>
-            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg,transparent,${GOLD},transparent)` }} />
-            <div style={{ fontSize: 7, letterSpacing: "0.28em", textTransform: "uppercase", color: GOLD, fontWeight: 600, textAlign: "center" }}>
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4,
+              background: `linear-gradient(90deg,${GOLD3},${GOLD},${GOLD3})` }} />
+            <div style={{ fontSize: 7, letterSpacing: "0.28em", textTransform: "uppercase", color: TXT3, fontWeight: 600, marginTop: 4 }}>
               Official Certification Record
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 6 }}>
-              <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg,transparent,rgba(201,168,76,0.3))` }} />
-              <div style={{ width: 3, height: 3, background: `rgba(201,168,76,0.5)`, transform: "rotate(45deg)" }} />
-              <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg,rgba(201,168,76,0.3),transparent)` }} />
+            <div style={{ display: "flex", alignItems: "center", gap: 5, margin: "6px 0 0" }}>
+              <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg,transparent,${GOLD_L})` }} />
+              <div style={{ width: 4, height: 4, background: GOLD_L, transform: "rotate(45deg)" }} />
+              <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg,${GOLD_L},transparent)` }} />
             </div>
           </div>
 
-          <SectionBar label="Grading Details" py={6} />
+          <SectionBar label="Grading Details" />
 
-          <div style={{ flex: 1, padding: "12px 14px 10px", display: "flex", flexDirection: "column", overflow: "hidden" }}>
-
+          <div style={{ flex: 1, padding: "11px 14px 10px", display: "flex", flexDirection: "column", overflow: "hidden" }}>
             {p3Fields.map(([l, v]) => <FR key={l} label={l} value={v} />)}
 
             {gemP3.length > 0 && (<>
@@ -486,8 +485,8 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
             )}
 
             {/* Disclaimer fills gap */}
-            <div style={{ flex: 1, marginTop: 10, minHeight: 0, overflow: "hidden" }}>
-              <GoldLine />
+            <div style={{ flex: 1, marginTop: 8, minHeight: 0, overflow: "hidden" }}>
+              <GoldLine my={6} />
               <p style={{ fontSize: 7.5, color: TXT3, lineHeight: 1.85, marginTop: 8 }}>
                 The results documented in this report refer only to the article described,
                 and were obtained using the techniques and equipment used by JewelsReport
@@ -499,31 +498,31 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
               </p>
             </div>
 
-            {/* Seal + QR block */}
+            {/* Seal + QR */}
             <div style={{ flexShrink: 0 }}>
-              <GoldLine opacity={0.25} />
+              <GoldLine my={5} />
               <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "8px 0" }}>
                 {/* Seal */}
                 <div style={{
                   width: 74, height: 74, flexShrink: 0, borderRadius: "50%",
                   border: `2px solid ${GOLD}`,
-                  boxShadow: `0 0 0 3px rgba(201,168,76,0.12), 0 0 0 6px rgba(201,168,76,0.05), inset 0 0 0 2px rgba(201,168,76,0.1)`,
+                  boxShadow: `0 0 0 3px rgba(184,146,42,0.12), 0 0 0 6px rgba(184,146,42,0.05)`,
                   display: "flex", flexDirection: "column",
                   alignItems: "center", justifyContent: "center",
-                  background: `radial-gradient(circle,#1E2E40 0%,${NAVY} 100%)`,
+                  background: `radial-gradient(circle,#FFFDE8 0%,#FBF4D8 100%)`,
                 }}>
-                  <img src={logo} alt="" style={{ height: 38, width: 38, objectFit: "contain" }} />
-                  <div style={{ fontSize: 5, fontWeight: 900, letterSpacing: "0.22em", textTransform: "uppercase", color: GOLD, marginTop: 3 }}>
+                  <img src={logo} alt="" style={{ height: 40, width: 40, objectFit: "contain" }} />
+                  <div style={{ fontSize: 5.5, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: GOLD2, marginTop: 3 }}>
                     CERTIFIED
                   </div>
                 </div>
 
                 {/* QR */}
                 <div style={{
-                  padding: 5, background: "#FFFFFF",
-                  border: `1px solid rgba(201,168,76,0.4)`,
+                  padding: 5, background: WHITE,
+                  border: `1px solid rgba(184,146,42,0.3)`,
                   borderRadius: 3, flexShrink: 0,
-                  boxShadow: `0 1px 6px rgba(13,27,42,0.08)`,
+                  boxShadow: `0 1px 5px rgba(0,0,0,0.06)`,
                 }}>
                   <QRCodeSVG value={verifyUrl} size={68} level="M" />
                 </div>
@@ -536,20 +535,33 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
                 </div>
               </div>
 
-              {/* Security features box */}
+              {/* Security features */}
               <div style={{
-                border: `1px solid rgba(201,168,76,0.35)`,
-                borderRadius: 3, padding: "5px 9px",
-                background: NAVY,
+                border: `1px solid rgba(184,146,42,0.3)`,
+                borderRadius: 2, padding: "5px 9px",
+                background: WARM,
               }}>
-                <div style={{ fontSize: 6, fontWeight: 700, color: GOLD, lineHeight: 1.8, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                <div style={{ fontSize: 6, fontWeight: 700, color: TXT2, lineHeight: 1.8, textTransform: "uppercase", letterSpacing: "0.05em" }}>
                   Security Features: Holographic Foil · Guilloché Pattern · Embossed Seal · UV Reactive Ink
                 </div>
-                <div style={{ fontSize: 6, color: `rgba(201,168,76,0.5)`, marginTop: 2, lineHeight: 1.6 }}>
+                <div style={{ fontSize: 6, color: TXT3, marginTop: 2, lineHeight: 1.5 }}>
                   This document is protected. Unauthorised reproduction or alteration is prohibited.
                   Verify authenticity at jewelsreport.com/verify
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* P3 footer */}
+          <div style={{
+            background: `linear-gradient(90deg,${GOLD3},${GOLD},${GOLD3})`,
+            padding: "5px 14px",
+            flexShrink: 0,
+            display: "flex", alignItems: "center", justifyContent: "space-between",
+          }}>
+            <div style={{ fontSize: 6.5, color: "rgba(255,255,255,0.75)", letterSpacing: "0.1em" }}>jewelsreport.com/verify</div>
+            <div style={{ fontSize: 6.5, color: "rgba(255,255,255,0.55)", letterSpacing: "0.06em" }}>
+              {cert.reportNo}
             </div>
           </div>
         </div>

@@ -13,19 +13,20 @@ const P2 = 446;   // Centre — Report header + Photos
 const P3 = 362;   // Right  — Authentication only
 const HDR_H = 164; // Fixed height shared by all three panel top headers
 
-/* ─── Theme-matched luxury: brand ivory · warm navy · gold ─────── */
-const BG      = "#FAF6EE";          // exact brand background (warm ivory)
-const PANEL   = "#EEE3C8";          // warm champagne — side panels
-const NAVY    = "#1B2B4B";          // warm deep navy — headers & key text
+/* ─── Striking luxury: gold gradient headers · white · deep navy ── */
+const BG      = "#FFFFFF";          // pure white — crisp, premium
+const PANEL   = "#FAF6EE";          // warm ivory side panels
+const NAVY    = "#1B2B4B";          // deep navy — text & details
 const NAVY2   = "#0D1A30";          // darkest navy
-const GOLD    = "#C9963A";          // brand 18k gold
-const GOLD2   = "#9B7018";          // deep amber gold
-const GOLD3   = "#E8C96A";          // bright gold highlight
-const GOLD4   = "rgba(201,150,58,0.14)";
-const TXT     = "#1B2B4B";          // navy for all body text (brand consistent)
-const TXT2    = "#2D4270";          // mid navy secondary text
-const TXT3    = "#8A7A55";          // warm muted captions
-const RULE    = "rgba(201,150,58,0.28)";
+const GOLD    = "#C9963A";          // 18k gold
+const GOLD2   = "#9B7018";          // deep amber
+const GOLD3   = "#E8C96A";          // bright gold
+const GOLD4   = "rgba(201,150,58,0.15)";
+const HDR_GRD = "linear-gradient(135deg,#E8C96A 0%,#C9963A 45%,#9B7018 100%)"; // gold gradient for headers
+const TXT     = "#1B2B4B";
+const TXT2    = "#2D4270";
+const TXT3    = "#7A6A45";
+const RULE    = "rgba(201,150,58,0.30)";
 
 /* ─── Field row ─────────────────────────────────────────────────── */
 function FR({ label, value, sz = 10.5 }: { label: string; value: string; sz?: number }) {
@@ -38,17 +39,15 @@ function FR({ label, value, sz = 10.5 }: { label: string; value: string; sz?: nu
   );
 }
 
-/* ─── Section header — navy bar with white text ──────────────────── */
+/* ─── Section header — gold gradient bar with navy text ─────────── */
 function Hdr({ label }: { label: string }) {
   return (
     <div style={{
-      background: NAVY,
+      background: HDR_GRD,
       padding: "5px 15px",
       flexShrink: 0,
-      borderTop: `1px solid ${NAVY2}`,
-      borderBottom: `2px solid ${GOLD}`,
     }}>
-      <span style={{ fontSize: 6.5, fontWeight: 700, letterSpacing: "0.32em", textTransform: "uppercase", color: GOLD3 }}>{label}</span>
+      <span style={{ fontSize: 6.5, fontWeight: 800, letterSpacing: "0.32em", textTransform: "uppercase", color: "#0D1A30" }}>{label}</span>
     </div>
   );
 }
@@ -208,33 +207,31 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
           position: "relative",
         }}>
 
-          {/* Brand header — navy top bar with gold rule */}
+          {/* Brand header — gold gradient */}
           <div style={{
             height: HDR_H, boxSizing: "border-box",
             padding: "0 16px", flexShrink: 0,
-            background: NAVY,
-            borderBottom: `2px solid ${GOLD}`,
+            background: HDR_GRD,
+            borderBottom: `1px solid ${GOLD2}`,
             display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
             position: "relative",
           }}>
-            {/* Top gold accent line */}
-            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2.5, background: `linear-gradient(90deg,transparent,${GOLD},transparent)` }} />
             {/* Logo circle */}
             <div style={{
               width: 68, height: 68, borderRadius: "50%",
-              border: `1.5px solid ${GOLD}`,
-              boxShadow: `0 0 0 4px ${GOLD4}`,
+              border: `2px solid rgba(255,255,255,0.7)`,
+              boxShadow: `0 2px 12px rgba(0,0,0,0.18)`,
               display: "flex", alignItems: "center", justifyContent: "center",
               background: BG,
               marginBottom: 9, flexShrink: 0, marginTop: 2,
             }}>
               <img src={logo} alt="JewelsReport" style={{ height: 44, width: 44, objectFit: "contain" }} />
             </div>
-            <div style={{ fontFamily: "Georgia,'Times New Roman',serif", fontSize: 18, fontWeight: 400, letterSpacing: "0.18em", color: BG, lineHeight: 1, textTransform: "uppercase" }}>
+            <div style={{ fontFamily: "Georgia,'Times New Roman',serif", fontSize: 18, fontWeight: 700, letterSpacing: "0.18em", color: NAVY2, lineHeight: 1, textTransform: "uppercase" }}>
               JewelsReport
             </div>
-            <HR my={5} op={0.6} />
-            <div style={{ fontSize: 6, letterSpacing: "0.4em", textTransform: "uppercase", color: GOLD3 }}>
+            <HR my={5} op={0.5} />
+            <div style={{ fontSize: 6, letterSpacing: "0.4em", textTransform: "uppercase", color: NAVY2, opacity: 0.75 }}>
               Gemological Certification Lab
             </div>
           </div>
@@ -304,9 +301,9 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
           </div>
 
           {/* P1 footer */}
-          <div style={{ borderTop: `1px solid rgba(26,39,68,0.12)`, padding: "4px 14px", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between", background: NAVY }}>
-            <span style={{ fontSize: 6, color: GOLD3, letterSpacing: "0.1em" }}>jewelsreport.com</span>
-            <span style={{ fontSize: 6, color: GOLD3, letterSpacing: "0.07em", textTransform: "uppercase" }}>{reportTypeLabel}</span>
+          <div style={{ borderTop: `1px solid ${RULE}`, padding: "4px 14px", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between", background: HDR_GRD }}>
+            <span style={{ fontSize: 6, color: NAVY2, letterSpacing: "0.1em", fontWeight: 600 }}>jewelsreport.com</span>
+            <span style={{ fontSize: 6, color: NAVY2, letterSpacing: "0.07em", textTransform: "uppercase", fontWeight: 600 }}>{reportTypeLabel}</span>
           </div>
         </div>
 
@@ -321,25 +318,24 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
           position: "relative",
         }}>
 
-          {/* Report number header — navy */}
+          {/* Report number header — gold gradient */}
           <div style={{
             height: HDR_H, boxSizing: "border-box",
             padding: "0 22px",
             flexShrink: 0, textAlign: "center",
-            background: NAVY,
-            borderBottom: `2px solid ${GOLD}`,
+            background: HDR_GRD,
+            borderBottom: `1px solid ${GOLD2}`,
             display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
             overflow: "hidden",
             position: "relative",
           }}>
-            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2.5, background: `linear-gradient(90deg,transparent,${GOLD},transparent)` }} />
-            <div style={{ fontSize: 6.5, letterSpacing: "0.36em", textTransform: "uppercase", color: GOLD3, marginBottom: 6 }}>GRL Report Number</div>
-            <div style={{ fontFamily: "Georgia,'Times New Roman',serif", fontSize: 26, fontWeight: 400, letterSpacing: "0.06em", color: BG, lineHeight: 1 }}>
+            <div style={{ fontSize: 6.5, letterSpacing: "0.36em", textTransform: "uppercase", color: NAVY2, opacity: 0.7, marginBottom: 6 }}>GRL Report Number</div>
+            <div style={{ fontFamily: "Georgia,'Times New Roman',serif", fontSize: 26, fontWeight: 700, letterSpacing: "0.06em", color: NAVY2, lineHeight: 1 }}>
               {cert.reportNo}
             </div>
-            <HR my={7} op={0.5} />
-            <div style={{ fontSize: 7, color: "rgba(255,255,255,0.65)", letterSpacing: "0.07em" }}>Verify this report at jewelsreport.com/verify</div>
-            <div style={{ fontFamily: "Georgia,serif", fontSize: 10.5, fontWeight: 400, color: GOLD3, marginTop: 5, letterSpacing: "0.04em" }}>{fmtDate(cert.issueDate)}</div>
+            <HR my={7} op={0.4} />
+            <div style={{ fontSize: 7, color: NAVY2, opacity: 0.65, letterSpacing: "0.07em" }}>Verify this report at jewelsreport.com/verify</div>
+            <div style={{ fontFamily: "Georgia,serif", fontSize: 10.5, fontWeight: 600, color: NAVY2, marginTop: 5, letterSpacing: "0.04em" }}>{fmtDate(cert.issueDate)}</div>
           </div>
 
           <Hdr label="Item(s) Overall Description" />
@@ -401,8 +397,8 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
           </div>
 
           {/* P2 footer */}
-          <div style={{ borderTop: `1px solid rgba(26,39,68,0.12)`, padding: "4px 16px", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", background: NAVY }}>
-            <span style={{ fontSize: 6, color: GOLD3, letterSpacing: "0.13em", textTransform: "uppercase" }}>Gemological Certification Lab · Surat, Gujarat, India</span>
+          <div style={{ borderTop: `1px solid ${RULE}`, padding: "4px 16px", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", background: HDR_GRD }}>
+            <span style={{ fontSize: 6, color: NAVY2, letterSpacing: "0.13em", textTransform: "uppercase", fontWeight: 600 }}>Gemological Certification Lab · Surat, Gujarat, India</span>
           </div>
         </div>
 
@@ -416,21 +412,20 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
           position: "relative",
         }}>
 
-          {/* P3 header — navy */}
+          {/* P3 header — gold gradient */}
           <div style={{
             height: HDR_H, boxSizing: "border-box",
             padding: "0 16px",
             flexShrink: 0, textAlign: "center",
-            background: NAVY,
-            borderBottom: `2px solid ${GOLD}`,
+            background: HDR_GRD,
+            borderBottom: `1px solid ${GOLD2}`,
             display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
             position: "relative",
           }}>
-            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2.5, background: `linear-gradient(90deg,transparent,${GOLD},transparent)` }} />
-            <div style={{ fontSize: 6.5, letterSpacing: "0.36em", textTransform: "uppercase", color: GOLD3 }}>Official Certification Record</div>
-            <HR my={8} op={0.4} />
-            <div style={{ fontSize: 7.5, color: "rgba(255,255,255,0.75)", letterSpacing: "0.07em" }}>Gemological Certification Lab</div>
-            <div style={{ fontSize: 6.5, color: GOLD3, marginTop: 4, letterSpacing: "0.05em", fontStyle: "italic", fontFamily: "Georgia,serif" }}>
+            <div style={{ fontSize: 6.5, letterSpacing: "0.36em", textTransform: "uppercase", color: NAVY2, opacity: 0.7 }}>Official Certification Record</div>
+            <HR my={8} op={0.35} />
+            <div style={{ fontSize: 7.5, color: NAVY2, opacity: 0.75, letterSpacing: "0.07em" }}>Gemological Certification Lab</div>
+            <div style={{ fontSize: 6.5, color: NAVY2, marginTop: 4, letterSpacing: "0.05em", fontStyle: "italic", fontFamily: "Georgia,serif", opacity: 0.6 }}>
               jewelsreport.com
             </div>
           </div>
@@ -505,9 +500,9 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
           </div>
 
           {/* P3 footer */}
-          <div style={{ borderTop: `1px solid rgba(26,39,68,0.12)`, padding: "4px 14px", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between", background: NAVY }}>
-            <span style={{ fontSize: 6, color: GOLD3, letterSpacing: "0.1em" }}>jewelsreport.com/verify</span>
-            <span style={{ fontSize: 6, color: GOLD3, letterSpacing: "0.06em" }}>{cert.reportNo}</span>
+          <div style={{ borderTop: `1px solid ${RULE}`, padding: "4px 14px", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between", background: HDR_GRD }}>
+            <span style={{ fontSize: 6, color: NAVY2, letterSpacing: "0.1em", fontWeight: 600 }}>jewelsreport.com/verify</span>
+            <span style={{ fontSize: 6, color: NAVY2, letterSpacing: "0.06em", fontWeight: 600 }}>{cert.reportNo}</span>
           </div>
         </div>
 

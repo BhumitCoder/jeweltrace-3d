@@ -374,6 +374,7 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
                   width: "100%",
                   height: 210,
                   flexShrink: 0,
+                  marginBottom: 4,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
                   <img src={cert.imageDataUrl2} alt="Item" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", display: "block", borderRadius: 10 }} />

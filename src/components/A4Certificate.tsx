@@ -13,19 +13,19 @@ const P2 = 446;   // Centre — Report header + Photos
 const P3 = 362;   // Right  — Authentication only
 const HDR_H = 164; // Fixed height shared by all three panel top headers
 
-/* ─── Luxury palette: deep navy · crisp white · true gold ─────── */
-const BG      = "#FFFFFF";          // pure white body
-const PANEL   = "#F5F4F1";          // very light warm white for panel bg
-const NAVY    = "#1A2744";          // deep navy — headers, accents
-const NAVY2   = "#0F1A30";          // darker navy for key moments
-const GOLD    = "#B8960C";          // true 18k gold
-const GOLD2   = "#9A7C08";          // deeper gold for text
-const GOLD3   = "#D4AF37";          // brighter gold for ornaments
-const GOLD4   = "rgba(184,150,12,0.10)";
-const TXT     = "#111827";          // near-black for primary text
-const TXT2    = "#374151";          // dark charcoal for secondary text
-const TXT3    = "#6B7280";          // medium gray for tertiary/captions
-const RULE    = "rgba(184,150,12,0.22)";
+/* ─── Brand-matched palette: warm ivory · deep navy · brand gold ── */
+const BG      = "#FAF6EE";          // brand warm ivory (--background oklch 0.975)
+const PANEL   = "#EDE0C4";          // brand champagne (--section-warm)
+const NAVY    = "#0F1829";          // brand navy-deep (--navy-deep oklch 0.18)
+const NAVY2   = "#1C2E4A";          // brand navy mid (--navy oklch 0.28)
+const GOLD    = "#C9963A";          // brand gold (--gold oklch 0.68 0.14 75)
+const GOLD2   = "#9B7018";          // brand gold dark (gradient end)
+const GOLD3   = "#E5C96A";          // brand gold light (gradient start)
+const GOLD4   = "rgba(201,150,58,0.12)";
+const TXT     = "#0F1829";          // brand foreground navy (--foreground)
+const TXT2    = "#1C2E4A";          // brand navy secondary
+const TXT3    = "#596070";          // brand muted (--muted-foreground)
+const RULE    = "rgba(201,150,58,0.22)";
 
 /* ─── Field row ─────────────────────────────────────────────────── */
 function FR({ label, value, sz = 10.5 }: { label: string; value: string; sz?: number }) {

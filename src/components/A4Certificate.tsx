@@ -351,12 +351,21 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
                 {cert.description}
               </p>
             )}
-            {/* Image area — capped at 70% of remaining height, thin border */}
-            <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", gap: has2Img ? 7 : 0, maxHeight: has2Img ? 420 : 330 }}>
+            {/* Image area — square tiles, side-by-side for 2, centred for 1 */}
+            <div style={{
+              flex: 1, minHeight: 0,
+              display: "flex",
+              flexDirection: has2Img ? "row" : "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: has2Img ? 8 : 0,
+            }}>
               {cert.imageDataUrl && (
                 <div style={{
-                  flex: 1, minHeight: 0,
-                  border: `0.75px solid rgba(184,150,12,0.3)`,
+                  width: has2Img ? 196 : 250,
+                  height: has2Img ? 196 : 250,
+                  flexShrink: 0,
+                  border: `0.5px solid rgba(184,150,12,0.22)`,
                   background: "#FAFAFA",
                   overflow: "hidden",
                 }}>
@@ -365,8 +374,10 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
               )}
               {cert.imageDataUrl2 && (
                 <div style={{
-                  flex: 1, minHeight: 0,
-                  border: `0.75px solid rgba(184,150,12,0.3)`,
+                  width: 196,
+                  height: 196,
+                  flexShrink: 0,
+                  border: `0.5px solid rgba(184,150,12,0.22)`,
                   background: "#FAFAFA",
                   overflow: "hidden",
                 }}>
@@ -375,9 +386,9 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
               )}
               {!hasImg && (
                 <div style={{
-                  flex: 1, minHeight: 0,
+                  width: 250, height: 250, flexShrink: 0,
                   display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                  background: PANEL, border: `0.75px solid rgba(184,150,12,0.2)`,
+                  background: PANEL, border: `0.5px solid rgba(184,150,12,0.18)`,
                   position: "relative", overflow: "hidden",
                 }}>
                   <div style={{ position: "absolute", inset: 0, backgroundImage: `repeating-linear-gradient(45deg,rgba(184,150,12,0.04) 0,rgba(184,150,12,0.04) 1px,transparent 1px,transparent 14px),repeating-linear-gradient(-45deg,rgba(184,150,12,0.04) 0,rgba(184,150,12,0.04) 1px,transparent 1px,transparent 14px)` }} />

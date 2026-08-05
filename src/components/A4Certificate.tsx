@@ -11,6 +11,7 @@ export const A4_H = 794;
 const P1 = 314;   // Left  — Brand + ALL grading fields
 const P2 = 446;   // Centre — Report header + Photos
 const P3 = 362;   // Right  — Authentication only (no duplicate fields)
+const HDR_H = 164; // Fixed height shared by all three panel top headers
 
 /* ─── All-light luxury palette ──────────────────────────────────── */
 const BG     = "#FFFEF9";
@@ -206,9 +207,10 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
 
           {/* Brand header */}
           <div style={{
+            height: HDR_H, boxSizing: "border-box",
             padding: "18px 16px 13px", borderBottom: `1px solid ${RULE}`,
             flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "center",
-            background: BG, position: "relative",
+            background: BG, position: "relative", overflow: "hidden",
           }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg,transparent,${GOLD},transparent)` }} />
             <div style={{
@@ -319,18 +321,21 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
 
           {/* Report number header */}
           <div style={{
-            padding: "18px 22px 13px", borderBottom: `1px solid ${RULE}`,
+            height: HDR_H, boxSizing: "border-box",
+            padding: "0 22px", borderBottom: `1px solid ${RULE}`,
             flexShrink: 0, textAlign: "center",
             background: BG, position: "relative",
+            display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+            overflow: "hidden",
           }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg,transparent,${GOLD},transparent)` }} />
-            <div style={{ fontSize: 6.5, letterSpacing: "0.36em", textTransform: "uppercase", color: TXT3, marginBottom: 4, marginTop: 4 }}>GRL Report Number</div>
+            <div style={{ fontSize: 6.5, letterSpacing: "0.36em", textTransform: "uppercase", color: TXT3, marginBottom: 5 }}>GRL Report Number</div>
             <div style={{ fontFamily: "Georgia,'Times New Roman',serif", fontSize: 23, fontWeight: 400, letterSpacing: "0.06em", color: TXT }}>
               {cert.reportNo}
             </div>
             <HR my={6} />
             <div style={{ fontSize: 7.5, color: TXT3, letterSpacing: "0.07em" }}>Verify this report at jewelsreport.com/verify</div>
-            <div style={{ fontFamily: "Georgia,serif", fontSize: 11, fontWeight: 400, color: TXT2, marginTop: 4, letterSpacing: "0.04em" }}>{fmtDate(cert.issueDate)}</div>
+            <div style={{ fontFamily: "Georgia,serif", fontSize: 11, fontWeight: 400, color: TXT2, marginTop: 5, letterSpacing: "0.04em" }}>{fmtDate(cert.issueDate)}</div>
           </div>
 
           <Hdr label="Item(s) Overall Description" />
@@ -391,14 +396,20 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
 
           {/* P3 header */}
           <div style={{
-            padding: "18px 16px 13px", borderBottom: `1px solid ${RULE}`,
+            height: HDR_H, boxSizing: "border-box",
+            padding: "0 16px", borderBottom: `1px solid ${RULE}`,
             flexShrink: 0, textAlign: "center",
             background: BG, position: "relative",
+            display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+            overflow: "hidden",
           }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg,transparent,${GOLD},transparent)` }} />
-            <div style={{ fontSize: 6.5, letterSpacing: "0.36em", textTransform: "uppercase", color: TXT3, marginTop: 4 }}>Official Certification Record</div>
-            <HR my={6} op={0.4} />
+            <div style={{ fontSize: 6.5, letterSpacing: "0.36em", textTransform: "uppercase", color: TXT3 }}>Official Certification Record</div>
+            <HR my={8} op={0.35} />
             <div style={{ fontSize: 7.5, color: TXT3, letterSpacing: "0.07em" }}>Gemological Certification Lab</div>
+            <div style={{ fontSize: 6.5, color: TXT3, marginTop: 4, letterSpacing: "0.05em", fontStyle: "italic", fontFamily: "Georgia,serif" }}>
+              jewelsreport.com
+            </div>
           </div>
 
           <Hdr label="Certification & Authentication" />

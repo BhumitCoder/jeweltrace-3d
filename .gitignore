@@ -19,6 +19,10 @@ dist-ssr
 # Vercel
 .vercel
 
+# Bun lockfile contains Replit-internal proxy URLs — exclude so Vercel installs from public npm
+bun.lock
+bun.lockb
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars

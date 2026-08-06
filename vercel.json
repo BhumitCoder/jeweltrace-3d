@@ -1,5 +1,5 @@
 {
-  "installCommand": "bun install",
+  "installCommand": "bun install --registry https://registry.npmjs.org",
   "buildCommand": "bun run build",
   "outputDirectory": "dist"
 }

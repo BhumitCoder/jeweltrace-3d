@@ -43,104 +43,140 @@ function SL({ label }: { label: string }) {
 
 /* ─── Proportion diagram SVG ──────────────────── */
 function ProportionDiagram() {
+  // Diamond cross-section centered at x=108, spans from y=14 to y=106
+  // Girdle: x=60..156, y=50..53  Table: x=74..142, y=14
+  const cx = 108, tL = 74, tR = 142, gL = 60, gR = 156, culet = 106;
+  const gT = 50, gB = 53;
+
+  // Top-view circle center
+  const vc = 218, vy = 60, vr = 38;
+
   return (
-    <svg width="196" height="104" viewBox="0 0 196 104" style={{ display: "block" }}>
-      {/* Side profile of round brilliant */}
-      {/* Crown (trapezoid) */}
-      <polygon points="58,52 138,52 128,28 68,28" fill="none" stroke={TEXT} strokeWidth="1" />
-      {/* Table line */}
-      <line x1="68" y1="28" x2="128" y2="28" stroke={TEXT} strokeWidth="1.2" />
-      {/* Girdle */}
-      <rect x="56" y="52" width="84" height="3" fill={TEXT} opacity="0.12" stroke={TEXT} strokeWidth="0.5" />
-      {/* Pavilion (inverted triangle) */}
-      <polygon points="56,55 140,55 98,95" fill="none" stroke={TEXT} strokeWidth="1" />
+    <svg width="270" height="116" viewBox="0 0 270 116" style={{ display:"block" }}>
 
-      {/* 62% arrow at top */}
-      <line x1="68" y1="22" x2="128" y2="22" stroke={TEXT} strokeWidth="0.6" markerEnd="url(#arr)" />
-      <line x1="68" y1="19" x2="68" y2="25" stroke={TEXT} strokeWidth="0.6" />
-      <line x1="128" y1="19" x2="128" y2="25" stroke={TEXT} strokeWidth="0.6" />
-      <text x="98" y="20" textAnchor="middle" fontSize="8" fill={TEXT} fontWeight="600">62%</text>
+      {/* ── Crown (trapezoid) ── */}
+      <polygon points={`${tL},14 ${tR},14 ${gR},${gT} ${gL},${gT}`}
+        fill="none" stroke={TEXT} strokeWidth="1.1" />
+      {/* Table (bold top line) */}
+      <line x1={tL} y1="14" x2={tR} y2="14" stroke={TEXT} strokeWidth="1.4" />
+      {/* Girdle (thin filled band) */}
+      <rect x={gL} y={gT} width={gR-gL} height={gB-gT}
+        fill={TEXT} opacity="0.15" stroke={TEXT} strokeWidth="0.5" />
+      {/* Pavilion */}
+      <polygon points={`${gL},${gB} ${gR},${gB} ${cx},${culet}`}
+        fill="none" stroke={TEXT} strokeWidth="1.1" />
 
-      {/* 14.0% height label (crown) */}
-      <line x1="48" y1="28" x2="48" y2="52" stroke={TEXT} strokeWidth="0.5" strokeDasharray="2,1" />
-      <text x="46" y="41" textAnchor="end" fontSize="7.5" fill={TEXT}>14.0%</text>
+      {/* ── 62% table width arrow ── */}
+      <line x1={tL} y1="8" x2={tR} y2="8" stroke={TEXT} strokeWidth="0.7" />
+      <line x1={tL} y1="5" x2={tL} y2="11" stroke={TEXT} strokeWidth="0.7" />
+      <line x1={tR} y1="5" x2={tR} y2="11" stroke={TEXT} strokeWidth="0.7" />
+      <text x={cx} y="7" textAnchor="middle" fontSize="8" fill={TEXT} fontWeight="700">62%</text>
 
-      {/* 43.0% height label (pavilion) */}
-      <line x1="42" y1="55" x2="42" y2="95" stroke={TEXT} strokeWidth="0.5" strokeDasharray="2,1" />
-      <text x="40" y="76" textAnchor="end" fontSize="7.5" fill={TEXT}>43.0%</text>
+      {/* ── Left labels ── */}
+      {/* 14.0% crown height */}
+      <line x1={gL-4} y1="14" x2={gL-4} y2={gT} stroke={TEXT} strokeWidth="0.5" strokeDasharray="2,1.5" />
+      <line x1={gL-8} y1="14" x2={gL-1} y2="14" stroke={TEXT} strokeWidth="0.5" />
+      <line x1={gL-8} y1={gT} x2={gL-1} y2={gT} stroke={TEXT} strokeWidth="0.5" />
+      <text x={gL-6} y="33" textAnchor="end" fontSize="8" fill={TEXT}>14.0%</text>
 
+      {/* 43.0% pavilion depth */}
+      <line x1={gL-4} y1={gB} x2={gL-4} y2={culet} stroke={TEXT} strokeWidth="0.5" strokeDasharray="2,1.5" />
+      <line x1={gL-8} y1={gB} x2={gL-1} y2={gB} stroke={TEXT} strokeWidth="0.5" />
+      <line x1={gL-8} y1={culet} x2={gL-1} y2={culet} stroke={TEXT} strokeWidth="0.5" />
+      <text x={gL-6} y="82" textAnchor="end" fontSize="8" fill={TEXT}>43.0%</text>
+
+      {/* ── Right labels ── */}
       {/* 80% total depth */}
-      <line x1="148" y1="28" x2="148" y2="95" stroke={TEXT} strokeWidth="0.5" strokeDasharray="2,1" />
-      <text x="150" y="64" textAnchor="start" fontSize="7.5" fill={TEXT}>80%</text>
+      <line x1={gR+10} y1="14" x2={gR+10} y2={culet} stroke={TEXT} strokeWidth="0.5" strokeDasharray="2,1.5" />
+      <line x1={gR+6} y1="14" x2={gR+14} y2="14" stroke={TEXT} strokeWidth="0.5" />
+      <line x1={gR+6} y1={culet} x2={gR+14} y2={culet} stroke={TEXT} strokeWidth="0.5" />
+      <text x={gR+16} y="62" textAnchor="start" fontSize="8" fill={TEXT} fontWeight="700">80%</text>
 
       {/* 33.5° crown angle */}
-      <text x="130" y="38" fontSize="7.5" fill={TEXT}>33.5°</text>
-      {/* 41.0° pavilion angle */}
-      <text x="130" y="66" fontSize="7.5" fill={TEXT}>41.0°</text>
-      {/* 61.5° pavilion */}
-      <text x="130" y="80" fontSize="7.5" fill={TEXT}>61.5°</text>
+      <text x={gR+2} y="32" textAnchor="start" fontSize="7.5" fill={TEXT}>33.5°</text>
+      {/* 41.0° pavilion upper */}
+      <text x={gR+2} y="70" textAnchor="start" fontSize="7.5" fill={TEXT}>41.0°</text>
+      {/* 61.5° pavilion lower */}
+      <text x={gR+2} y="84" textAnchor="start" fontSize="7.5" fill={TEXT}>61.5°</text>
 
-      {/* "Profile to actual proportions" label */}
-      <text x="98" y="103" textAnchor="middle" fontSize="7" fill={MUTED} fontStyle="italic">Profile to actual proportions</text>
+      {/* "Profile to actual proportions" */}
+      <text x={cx} y="114" textAnchor="middle" fontSize="7" fill={MUTED} fontStyle="italic">Profile to actual proportions</text>
 
-      {/* Top-view facet diagram (right side) */}
+      {/* ── Top-view facet diagram ── */}
       {/* Outer circle */}
-      <circle cx="163" cy="60" r="32" fill="none" stroke={TEXT} strokeWidth="1" />
+      <circle cx={vc} cy={vy} r={vr} fill="none" stroke={TEXT} strokeWidth="1" />
       {/* Table octagon */}
-      <polygon points="163,36 175,44 175,76 163,84 151,76 151,44" fill="none" stroke={TEXT} strokeWidth="0.7" />
-      {/* Star facets */}
-      {[0,45,90,135,180,225,270,315].map(a => {
-        const r1 = 20, r2 = 32;
-        const x1 = 163 + r1*Math.cos(a*Math.PI/180);
-        const y1 = 60 + r1*Math.sin(a*Math.PI/180);
-        const x2 = 163 + r2*Math.cos(a*Math.PI/180);
-        const y2 = 60 + r2*Math.sin(a*Math.PI/180);
-        return <line key={a} x1={x1} y1={y1} x2={x2} y2={y2} stroke={TEXT} strokeWidth="0.6" />;
+      {(() => {
+        const pts = Array.from({length:8},(_,i)=>{
+          const a=(i*45-22.5)*Math.PI/180;
+          return `${vc+24*Math.cos(a)},${vy+24*Math.sin(a)}`;
+        }).join(" ");
+        return <polygon points={pts} fill="none" stroke={TEXT} strokeWidth="0.8" />;
+      })()}
+      {/* 8 kite facets crown */}
+      {[0,45,90,135,180,225,270,315].map(deg=>{
+        const a=deg*Math.PI/180, a2=(deg+22.5)*Math.PI/180, a3=(deg-22.5)*Math.PI/180;
+        const x1=vc+24*Math.cos(a), y1=vy+24*Math.sin(a);
+        const x2=vc+vr*Math.cos(a2), y2=vy+vr*Math.sin(a2);
+        const x3=vc+vr*Math.cos(a3), y3=vy+vr*Math.sin(a3);
+        return <polyline key={deg} points={`${x2},${y2} ${x1},${y1} ${x3},${y3}`}
+          fill="none" stroke={TEXT} strokeWidth="0.6" />;
       })}
-      {/* Center point */}
-      <circle cx="163" cy="60" r="1.5" fill={TEXT} opacity="0.4" />
+      {/* 8 star facets to center */}
+      {[22.5,67.5,112.5,157.5,202.5,247.5,292.5,337.5].map(deg=>{
+        const a=deg*Math.PI/180;
+        return <line key={deg}
+          x1={vc+24*Math.cos(a)} y1={vy+24*Math.sin(a)}
+          x2={vc} y2={vy} stroke={TEXT} strokeWidth="0.5" strokeDasharray="1,1" />;
+      })}
+      <circle cx={vc} cy={vy} r="2" fill={TEXT} opacity="0.3" />
     </svg>
   );
 }
 
 /* ─── Circular Seal SVG ───────────────────────── */
 function CircularSeal({ logoSrc }: { logoSrc: string }) {
-  const R = 60, CX = 65, CY = 65;
-  const textR = 55;
-  const topText = "JEWELSREPORT";
-  const btmText = "GEMOLOGICAL CERTIFICATION LAB";
-  return (
-    <svg width="130" height="130" viewBox="0 0 130 130" style={{ display: "block" }}>
-      {/* Outer ring */}
-      <circle cx={CX} cy={CY} r={R} fill={WHITE} stroke={GOLD} strokeWidth="1.5" />
-      <circle cx={CX} cy={CY} r={R - 4} fill="none" stroke={GOLD} strokeWidth="0.5" />
+  // 160×160 viewBox, center (80,80), outer radius 74
+  const CX = 80, CY = 80, OR = 74, TR = 66;
+  // Top arc path for "JEWELSREPORT" — left to right along top half
+  const topPath = `M ${CX - TR},${CY} A ${TR},${TR} 0 0,1 ${CX + TR},${CY}`;
+  // Bottom arc path for "GEMOLOGICAL CERTIFICATION LAB"
+  // Goes right→left along bottom so text reads correctly
+  const btmPath = `M ${CX + TR},${CY} A ${TR},${TR} 0 0,1 ${CX - TR},${CY}`;
 
-      {/* Dashed pattern ring */}
-      <circle cx={CX} cy={CY} r={R - 7} fill="none" stroke={GOLD} strokeWidth="0.4" strokeDasharray="2,2" />
+  return (
+    <svg width="160" height="160" viewBox="0 0 160 160" style={{ display:"block" }}>
+      <defs>
+        <path id="sealTop" d={topPath} />
+        <path id="sealBtm" d={btmPath} />
+      </defs>
+
+      {/* Outer gold ring */}
+      <circle cx={CX} cy={CY} r={OR}   fill={WHITE} stroke={GOLD} strokeWidth="1.8" />
+      <circle cx={CX} cy={CY} r={OR-4} fill="none"  stroke={GOLD} strokeWidth="0.6" />
+      {/* Dashed decorative ring */}
+      <circle cx={CX} cy={CY} r={OR-8} fill="none"  stroke={GOLD} strokeWidth="0.5" strokeDasharray="2.5,2" />
 
       {/* Top curved text: JEWELSREPORT */}
-      <defs>
-        <path id="topArc" d={`M ${CX - textR},${CY} A ${textR},${textR} 0 0,1 ${CX + textR},${CY}`} />
-        <path id="btmArc" d={`M ${CX - textR + 6},${CY + 4} A ${textR - 6},${textR - 6} 0 0,0 ${CX + textR - 6},${CY + 4}`} />
-      </defs>
-      <text fontSize="7.5" fontWeight="800" letterSpacing="3" fill={NAVY} textAnchor="middle">
-        <textPath href="#topArc" startOffset="50%">{topText}</textPath>
-      </text>
-      <text fontSize="5.5" fontWeight="600" letterSpacing="1.5" fill={NAVY} textAnchor="middle">
-        <textPath href="#btmArc" startOffset="50%">{btmText}</textPath>
+      <text fontSize="8.5" fontWeight="800" letterSpacing="3.5" fill={NAVY} textAnchor="middle">
+        <textPath href="#sealTop" startOffset="50%">JEWELSREPORT</textPath>
       </text>
 
-      {/* Stars at left and right */}
-      <text x={CX - textR + 2} y={CY + 2} fontSize="7" fill={GOLD} textAnchor="middle">★</text>
-      <text x={CX + textR - 2} y={CY + 2} fontSize="7" fill={GOLD} textAnchor="middle">★</text>
+      {/* Bottom curved text: GEMOLOGICAL CERTIFICATION LAB */}
+      <text fontSize="6" fontWeight="700" letterSpacing="1.8" fill={NAVY} textAnchor="middle" dy="-3">
+        <textPath href="#sealBtm" startOffset="50%">GEMOLOGICAL CERTIFICATION LAB</textPath>
+      </text>
 
-      {/* Logo image */}
-      <image href={logoSrc} x={CX - 22} y={CY - 30} width="44" height="44" />
+      {/* Star separators at 9 o'clock and 3 o'clock */}
+      <text x={CX - TR + 2} y={CY + 3.5} textAnchor="middle" fontSize="8" fill={GOLD}>★</text>
+      <text x={CX + TR - 2} y={CY + 3.5} textAnchor="middle" fontSize="8" fill={GOLD}>★</text>
 
-      {/* CERTIFIED text */}
-      <text x={CX} y={CY + 22} textAnchor="middle" fontSize="6" fontWeight="800" letterSpacing="2" fill={GOLD}>CERTIFIED</text>
-      {/* Thin divider */}
-      <line x1={CX - 18} y1={CY + 26} x2={CX + 18} y2={CY + 26} stroke={GOLD} strokeWidth="0.5" opacity="0.6" />
+      {/* Logo */}
+      <image href={logoSrc} x={CX - 26} y={CY - 32} width="52" height="52" />
+
+      {/* CERTIFIED label */}
+      <text x={CX} y={CY + 28} textAnchor="middle" fontSize="7" fontWeight="800" letterSpacing="2.5" fill={GOLD}>CERTIFIED</text>
+      <line x1={CX-20} y1={CY+32} x2={CX+20} y2={CY+32} stroke={GOLD} strokeWidth="0.6" opacity="0.7" />
     </svg>
   );
 }
@@ -432,38 +468,37 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
               </p>
             </div>
 
-            {/* Circular seal — centered */}
-            <div style={{ flexShrink:0, display:"flex", justifyContent:"center" }}>
+            {/* Circular seal — centered, large */}
+            <div style={{ flexShrink:0, display:"flex", justifyContent:"center", margin:"2px 0" }}>
               <CircularSeal logoSrc={logo} />
             </div>
 
             {/* QR + contact */}
-            <div style={{ flexShrink:0, display:"flex", gap:10, alignItems:"flex-start" }}>
-              <div style={{ padding:4, background:WHITE, border:`1px solid ${RULE}`, flexShrink:0 }}>
-                <QRCodeSVG value={verifyUrl} size={64} level="M" fgColor={NAVY} />
+            <div style={{ flexShrink:0, display:"flex", gap:10, alignItems:"center", border:`1px solid ${RULE}`, background:WHITE, padding:"6px 8px" }}>
+              <div style={{ padding:3, background:WHITE, border:`1px solid ${RULE}`, flexShrink:0 }}>
+                <QRCodeSVG value={verifyUrl} size={58} level="M" fgColor={NAVY} />
               </div>
               <div style={{ flex:1, minWidth:0 }}>
-                <div style={{ fontSize:8, color:TEXT, fontWeight:600, lineHeight:1.7 }}>jewelsreport.com/verify</div>
-                <div style={{ fontSize:8, color:GOLD, lineHeight:1.7 }}>reportcheck@jewelsreport.com</div>
-                <div style={{ fontSize:8, color:GOLD, lineHeight:1.7 }}>+91 98765 43210</div>
+                <div style={{ fontSize:8, color:TEXT, fontWeight:600, lineHeight:1.8 }}>jewelsreport.com/verify</div>
+                <div style={{ fontSize:8, color:GOLD, fontWeight:500, lineHeight:1.8 }}>reportcheck@jewelsreport.com</div>
+                <div style={{ fontSize:8, color:GOLD, fontWeight:500, lineHeight:1.8 }}>+91 98765 43210</div>
               </div>
             </div>
 
             {/* Security features box */}
-            <div style={{ flexShrink:0, border:`1px solid ${RULE}`, background:WHITE, padding:"7px 10px" }}>
-              <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:4 }}>
-                {/* lock icon */}
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <div style={{ flexShrink:0, border:`1px solid ${RULE}`, background:WHITE, padding:"6px 10px" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:3 }}>
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
                   <rect x="2" y="6" width="10" height="7" rx="1.5" stroke={NAVY} strokeWidth="1.2" />
                   <path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2" stroke={NAVY} strokeWidth="1.2" />
                   <circle cx="7" cy="9.5" r="1" fill={NAVY} />
                 </svg>
                 <span style={{ fontSize:7.5, fontWeight:800, letterSpacing:"0.18em", textTransform:"uppercase", color:NAVY }}>Security Features</span>
               </div>
-              <div style={{ fontSize:7.5, fontWeight:700, color:TEXT, letterSpacing:"0.04em", lineHeight:1.8 }}>
+              <div style={{ fontSize:7.5, fontWeight:700, color:TEXT, letterSpacing:"0.04em", lineHeight:1.85 }}>
                 HOLOGRAPHIC FOIL • GUILLOCHE PATTERN<br />EMBOSSED SEAL • UV REACTIVE INK
               </div>
-              <div style={{ fontSize:7, color:MUTED, marginTop:3, lineHeight:1.6 }}>
+              <div style={{ fontSize:7, color:MUTED, marginTop:2, lineHeight:1.6 }}>
                 This document is protected. Verify authenticity at jewelsreport.com/verify
               </div>
             </div>

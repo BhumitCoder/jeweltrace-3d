@@ -349,7 +349,7 @@ function CardPreview({ cert }: { cert: Certificate }) {
             border: "1.5px solid rgba(201,168,76,0.45)",
             boxShadow: "0 8px 40px -8px rgba(0,0,0,0.5), 0 0 0 3px rgba(201,168,76,0.1)",
           }}>
-            <div style={{ transform: `scale(${a4Scale})`, transformOrigin: "top left", width: A4_W, height: A4_H }}>
+            <div style={{ zoom: a4Scale, width: A4_W, height: A4_H }}>
               <A4Certificate cert={cert} />
             </div>
           </div>
@@ -377,7 +377,7 @@ function CardPreview({ cert }: { cert: Certificate }) {
         {(["front", "back"] as const).map((side) => (
           <div key={side} className="flex flex-col items-center gap-3">
             <div style={{ width: CARD_W * pvcScale, height: CARD_H * pvcScale, overflow: "hidden", borderRadius: 10, border: "1.5px solid rgba(201,168,76,0.45)", boxShadow: "0 8px 40px -8px rgba(0,0,0,0.5), 0 0 0 3px rgba(201,168,76,0.1)" }}>
-              <div style={{ transform: `scale(${pvcScale})`, transformOrigin: "top left", width: CARD_W, height: CARD_H }}>
+              <div style={{ zoom: pvcScale, width: CARD_W, height: CARD_H }}>
                 <CertificateCard cert={cert} side={side} />
               </div>
             </div>

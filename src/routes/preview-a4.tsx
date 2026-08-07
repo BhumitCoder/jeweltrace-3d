@@ -76,8 +76,7 @@ function PreviewA4Page() {
       >
         <div
           style={{
-            transform: `scale(${scale})`,
-            transformOrigin: "top left",
+            zoom: scale,
             width: A4_W,
             height: A4_H,
           }}

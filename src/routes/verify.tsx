@@ -30,12 +30,12 @@ function useCardScale() {
 }
 
 function useA4Scale() {
-  const [scale, setScale] = useState(0.68);
+  const [scale, setScale] = useState(0.86);
   useEffect(() => {
     const update = () => {
       const vw = window.innerWidth;
-      /* landscape cert is 1122px wide — scale to fit viewport with 48px padding */
-      setScale(Math.min(0.68, Math.max(0.28, (vw - 48) / A4_W)));
+      /* portrait cert is 794px wide — scale to fit viewport with 48px padding */
+      setScale(Math.min(0.86, Math.max(0.3, (vw - 48) / A4_W)));
     };
     update();
     window.addEventListener("resize", update);
@@ -249,7 +249,7 @@ function CardPreview({ cert }: { cert: Certificate }) {
         <title>JewelsReport Certificate ${cert.reportNo}</title>
         <style>
           @page {
-            size: A4 landscape;
+            size: A4 portrait;
             margin: 0;
           }
           *, *::before, *::after {
@@ -260,18 +260,18 @@ function CardPreview({ cert }: { cert: Certificate }) {
           }
           html {
             margin: 0; padding: 0;
-            width: 297mm; height: 210mm;
+            width: 210mm; height: 297mm;
             overflow: hidden;
           }
           body {
             margin: 0; padding: 0;
-            width: 297mm; height: 210mm;
+            width: 210mm; height: 297mm;
             overflow: hidden;
-            background: #FAF6ED;
+            background: #FFFFFF;
           }
           /*
-           * 1 CSS px = 25.4/96 mm, so 1122 px = 297 mm and 794 px = 210 mm.
-           * The cert already matches A4 landscape exactly — no scaling needed.
+           * 1 CSS px = 25.4/96 mm, so 794 px = 210 mm and 1123 px = 297 mm.
+           * The cert already matches A4 portrait exactly — no scaling needed.
            * Removing transform avoids any sub-pixel gaps at page edges.
            */
           .cert {

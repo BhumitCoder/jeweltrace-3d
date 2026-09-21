@@ -11,6 +11,8 @@ const DEMO_CERT: Certificate = {
   id: "demo",
   reportNo: "GRL-2026-004821",
   type: "Natural Diamond",
+  itemName: "Natural Diamond",
+  clientName: "Gavin Joel Hetrick",
   shape: "Round Brilliant",
   measurements: "6.97 - 7.00 × 4.36 mm",
   caratWeight: "1.30",
@@ -30,12 +32,12 @@ const DEMO_CERT: Certificate = {
 };
 
 function useScale() {
-  const [scale, setScale] = useState(0.68);
+  const [scale, setScale] = useState(0.86);
   useEffect(() => {
     const update = () => {
       const vw = window.innerWidth;
-      /* landscape cert is 1122px wide — fit within viewport with 64px margin */
-      setScale(Math.min(0.68, Math.max(0.25, (vw - 64) / A4_W)));
+      /* portrait cert is 794px wide — fit within viewport with 64px margin */
+      setScale(Math.min(0.86, Math.max(0.28, (vw - 64) / A4_W)));
     };
     update();
     window.addEventListener("resize", update);

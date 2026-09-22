@@ -4,179 +4,141 @@ import type { Certificate } from "@/lib/store";
 import { REPORT_TYPE_LABELS } from "@/lib/store";
 import logo from "@/assets/logo.png";
 
+/* A4 LANDSCAPE @ 96dpi — 297mm × 210mm */
 export const A4_W = 1122;
 export const A4_H = 794;
 
-/* ─── Palette ─────────────────────────────────── */
-const NAVY   = "#1B2A4A";
-const NAVY2  = "#0E1A2E";
-const GOLD   = "#C9963A";
-const GOLD_L = "#E8C870";
-const GOLD_D = "#9B7018";
-const GRD    = `linear-gradient(90deg,${GOLD_L},${GOLD},${GOLD_D})`;
-const CREAM  = "#FDFAF4";
+/* ─── Palette ─────────────────────────────────────────────────────────────
+   Dark ink + white + a single gold accent. No frames, no filled bars —
+   structure comes from whitespace, hairlines and one soft surface tone.  */
+const INK    = "#0B1220";
+const INK_2  = "#475467";
+const MICRO  = "#98A2B3";
+const LINE   = "#E7EAEF";
+const SURF   = "#F8F9FB";
+const GOLD   = "#B08D3F";
+const GOLD_L = "#E3C87F";
 const WHITE  = "#FFFFFF";
-const MUTED  = "#6B7A8D";
-const RULE   = "rgba(201,150,58,0.22)";
-const TEXT   = "#1B2A4A";
 
-/* ─── Left-panel field row (label … dotted … VALUE) ── */
-function FR({ label, value }: { label: string; value?: string }) {
+const SANS = "'Inter','Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif";
+
+/* ─── Section heading: micro label followed by a hairline ─────────────── */
+function Head({ label }: { label: string }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 9 }}>
+      <span style={{ fontSize: 7.5, fontWeight: 700, letterSpacing: "0.26em", color: MICRO, whiteSpace: "nowrap" }}>
+        {label}
+      </span>
+      <span style={{ flex: 1, height: 1, background: LINE }} />
+    </div>
+  );
+}
+
+/* ─── Headline stat tile ──────────────────────────────────────────────── */
+function Tile({ label, value }: { label: string; value?: string }) {
+  if (!value) return null;
+  const n = value.length;
+  const size = n > 12 ? 12 : n > 8 ? 14.5 : n > 5 ? 17 : 21;
+  return (
+    <div style={{ background: SURF, border: `1px solid ${LINE}`, borderRadius: 12, padding: "9px 12px 11px" }}>
+      <div style={{ fontSize: 6.8, fontWeight: 700, letterSpacing: "0.24em", color: MICRO }}>{label}</div>
+      <div style={{ fontSize: size, fontWeight: 700, color: INK, lineHeight: 1.15, marginTop: 5, letterSpacing: "-0.01em", fontVariantNumeric: "tabular-nums" }}>
+        {value}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Spec row ────────────────────────────────────────────────────────── */
+function Row({ label, value, last }: { label: string; value?: string; last?: boolean }) {
   if (!value) return null;
   return (
-    <div style={{ display: "flex", alignItems: "flex-end", padding: "3px 14px" }}>
-      <span style={{ fontSize: 9, color: TEXT, lineHeight: 1.5, whiteSpace: "nowrap", flexShrink: 0 }}>{label}</span>
-      <span style={{ flex: 1, borderBottom: "1px dotted rgba(27,42,74,0.25)", margin: "0 6px 2px", minWidth: 8 }} />
-      <span style={{ fontSize: 9.5, fontWeight: 700, color: TEXT, lineHeight: 1.5, whiteSpace: "nowrap", textAlign: "right", textTransform: "uppercase" }}>{value}</span>
+    <div style={{
+      display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 14,
+      padding: "6px 0", borderBottom: last ? "none" : `1px solid ${LINE}`,
+    }}>
+      <span style={{ fontSize: 8.5, color: INK_2, whiteSpace: "nowrap" }}>{label}</span>
+      <span style={{ fontSize: 9.5, fontWeight: 600, color: INK, textAlign: "right", letterSpacing: "0.01em" }}>{value}</span>
     </div>
   );
 }
 
-/* ─── Gold section label ──────────────────────── */
-function SL({ label }: { label: string }) {
+/* ─── Security pill ───────────────────────────────────────────────────── */
+function Pill({ children }: { children: string }) {
   return (
-    <div style={{ padding: "6px 14px 3px" }}>
-      <span style={{ fontSize: 7, fontWeight: 800, letterSpacing: "0.24em", textTransform: "uppercase", color: GOLD }}>{label}</span>
-    </div>
+    <span style={{
+      background: SURF, border: `1px solid ${LINE}`, borderRadius: 999,
+      padding: "3.5px 9px", fontSize: 6.6, fontWeight: 700, letterSpacing: "0.16em", color: INK_2,
+      whiteSpace: "nowrap",
+    }}>{children}</span>
   );
 }
 
-/* ─── Proportion diagram SVG ──────────────────── */
+/* ─── Proportion diagram ──────────────────────────────────────────────── */
 function ProportionDiagram() {
-  // Diamond cross-section centered at x=108, spans from y=14 to y=106
-  // Girdle: x=60..156, y=50..53  Table: x=74..142, y=14
-  const cx = 108, tL = 74, tR = 142, gL = 60, gR = 156, culet = 106;
-  const gT = 50, gB = 53;
-
-  // Top-view circle center
-  const vc = 218, vy = 60, vr = 38;
+  const cx = 86, tL = 56, tR = 116, gL = 42, gR = 130, culet = 88;
+  const gT = 42, gB = 45;
+  const vc = 196, vy = 50, vr = 33;
 
   return (
-    <svg width="270" height="116" viewBox="0 0 270 116" style={{ display:"block" }}>
+    <svg width="248" height="100" viewBox="0 0 248 100" style={{ display: "block", margin: "0 auto" }}>
+      <polygon points={`${tL},12 ${tR},12 ${gR},${gT} ${gL},${gT}`} fill="none" stroke={INK_2} strokeWidth="1" />
+      <line x1={tL} y1="12" x2={tR} y2="12" stroke={INK} strokeWidth="1.4" />
+      <rect x={gL} y={gT} width={gR - gL} height={gB - gT} fill={GOLD} opacity="0.35" />
+      <polygon points={`${gL},${gB} ${gR},${gB} ${cx},${culet}`} fill="none" stroke={INK_2} strokeWidth="1" />
 
-      {/* ── Crown (trapezoid) ── */}
-      <polygon points={`${tL},14 ${tR},14 ${gR},${gT} ${gL},${gT}`}
-        fill="none" stroke={TEXT} strokeWidth="1.1" />
-      {/* Table (bold top line) */}
-      <line x1={tL} y1="14" x2={tR} y2="14" stroke={TEXT} strokeWidth="1.4" />
-      {/* Girdle (thin filled band) */}
-      <rect x={gL} y={gT} width={gR-gL} height={gB-gT}
-        fill={TEXT} opacity="0.15" stroke={TEXT} strokeWidth="0.5" />
-      {/* Pavilion */}
-      <polygon points={`${gL},${gB} ${gR},${gB} ${cx},${culet}`}
-        fill="none" stroke={TEXT} strokeWidth="1.1" />
+      <line x1={tL} y1="6" x2={tR} y2="6" stroke={MICRO} strokeWidth="0.6" />
+      <text x={cx} y="4.5" textAnchor="middle" fontSize="7" fill={INK_2} fontWeight="700" fontFamily={SANS}>62%</text>
 
-      {/* ── 62% table width arrow ── */}
-      <line x1={tL} y1="8" x2={tR} y2="8" stroke={TEXT} strokeWidth="0.7" />
-      <line x1={tL} y1="5" x2={tL} y2="11" stroke={TEXT} strokeWidth="0.7" />
-      <line x1={tR} y1="5" x2={tR} y2="11" stroke={TEXT} strokeWidth="0.7" />
-      <text x={cx} y="7" textAnchor="middle" fontSize="8" fill={TEXT} fontWeight="700">62%</text>
+      <text x={gL - 6} y="30" textAnchor="end" fontSize="7" fill={MICRO} fontFamily={SANS}>14.0%</text>
+      <text x={gL - 6} y="70" textAnchor="end" fontSize="7" fill={MICRO} fontFamily={SANS}>43.0%</text>
+      <line x1={gR + 9} y1="12" x2={gR + 9} y2={culet} stroke={LINE} strokeWidth="1" />
+      <text x={gR + 13} y="52" textAnchor="start" fontSize="7" fill={INK_2} fontWeight="700" fontFamily={SANS}>80%</text>
+      <text x={gR + 2} y="28" textAnchor="start" fontSize="6.5" fill={MICRO} fontFamily={SANS}>33.5°</text>
+      <text x={gR + 2} y="66" textAnchor="start" fontSize="6.5" fill={MICRO} fontFamily={SANS}>41.0°</text>
 
-      {/* ── Left labels ── */}
-      {/* 14.0% crown height */}
-      <line x1={gL-4} y1="14" x2={gL-4} y2={gT} stroke={TEXT} strokeWidth="0.5" strokeDasharray="2,1.5" />
-      <line x1={gL-8} y1="14" x2={gL-1} y2="14" stroke={TEXT} strokeWidth="0.5" />
-      <line x1={gL-8} y1={gT} x2={gL-1} y2={gT} stroke={TEXT} strokeWidth="0.5" />
-      <text x={gL-6} y="33" textAnchor="end" fontSize="8" fill={TEXT}>14.0%</text>
-
-      {/* 43.0% pavilion depth */}
-      <line x1={gL-4} y1={gB} x2={gL-4} y2={culet} stroke={TEXT} strokeWidth="0.5" strokeDasharray="2,1.5" />
-      <line x1={gL-8} y1={gB} x2={gL-1} y2={gB} stroke={TEXT} strokeWidth="0.5" />
-      <line x1={gL-8} y1={culet} x2={gL-1} y2={culet} stroke={TEXT} strokeWidth="0.5" />
-      <text x={gL-6} y="82" textAnchor="end" fontSize="8" fill={TEXT}>43.0%</text>
-
-      {/* ── Right labels ── */}
-      {/* 80% total depth */}
-      <line x1={gR+10} y1="14" x2={gR+10} y2={culet} stroke={TEXT} strokeWidth="0.5" strokeDasharray="2,1.5" />
-      <line x1={gR+6} y1="14" x2={gR+14} y2="14" stroke={TEXT} strokeWidth="0.5" />
-      <line x1={gR+6} y1={culet} x2={gR+14} y2={culet} stroke={TEXT} strokeWidth="0.5" />
-      <text x={gR+16} y="62" textAnchor="start" fontSize="8" fill={TEXT} fontWeight="700">80%</text>
-
-      {/* 33.5° crown angle */}
-      <text x={gR+2} y="32" textAnchor="start" fontSize="7.5" fill={TEXT}>33.5°</text>
-      {/* 41.0° pavilion upper */}
-      <text x={gR+2} y="70" textAnchor="start" fontSize="7.5" fill={TEXT}>41.0°</text>
-      {/* 61.5° pavilion lower */}
-      <text x={gR+2} y="84" textAnchor="start" fontSize="7.5" fill={TEXT}>61.5°</text>
-
-      {/* "Profile to actual proportions" */}
-      <text x={cx} y="114" textAnchor="middle" fontSize="7" fill={MUTED} fontStyle="italic">Profile to actual proportions</text>
-
-      {/* ── Top-view facet diagram ── */}
-      {/* Outer circle */}
-      <circle cx={vc} cy={vy} r={vr} fill="none" stroke={TEXT} strokeWidth="1" />
-      {/* Table octagon */}
+      <circle cx={vc} cy={vy} r={vr} fill="none" stroke={INK_2} strokeWidth="0.9" />
       {(() => {
-        const pts = Array.from({length:8},(_,i)=>{
-          const a=(i*45-22.5)*Math.PI/180;
-          return `${vc+24*Math.cos(a)},${vy+24*Math.sin(a)}`;
+        const pts = Array.from({ length: 8 }, (_, i) => {
+          const a = (i * 45 - 22.5) * Math.PI / 180;
+          return `${vc + 20 * Math.cos(a)},${vy + 20 * Math.sin(a)}`;
         }).join(" ");
-        return <polygon points={pts} fill="none" stroke={TEXT} strokeWidth="0.8" />;
+        return <polygon points={pts} fill="none" stroke={INK_2} strokeWidth="0.7" />;
       })()}
-      {/* 8 kite facets crown */}
-      {[0,45,90,135,180,225,270,315].map(deg=>{
-        const a=deg*Math.PI/180, a2=(deg+22.5)*Math.PI/180, a3=(deg-22.5)*Math.PI/180;
-        const x1=vc+24*Math.cos(a), y1=vy+24*Math.sin(a);
-        const x2=vc+vr*Math.cos(a2), y2=vy+vr*Math.sin(a2);
-        const x3=vc+vr*Math.cos(a3), y3=vy+vr*Math.sin(a3);
-        return <polyline key={deg} points={`${x2},${y2} ${x1},${y1} ${x3},${y3}`}
-          fill="none" stroke={TEXT} strokeWidth="0.6" />;
+      {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => {
+        const a = deg * Math.PI / 180, a2 = (deg + 22.5) * Math.PI / 180, a3 = (deg - 22.5) * Math.PI / 180;
+        return <polyline key={deg}
+          points={`${vc + vr * Math.cos(a2)},${vy + vr * Math.sin(a2)} ${vc + 20 * Math.cos(a)},${vy + 20 * Math.sin(a)} ${vc + vr * Math.cos(a3)},${vy + vr * Math.sin(a3)}`}
+          fill="none" stroke={MICRO} strokeWidth="0.55" />;
       })}
-      {/* 8 star facets to center */}
-      {[22.5,67.5,112.5,157.5,202.5,247.5,292.5,337.5].map(deg=>{
-        const a=deg*Math.PI/180;
-        return <line key={deg}
-          x1={vc+24*Math.cos(a)} y1={vy+24*Math.sin(a)}
-          x2={vc} y2={vy} stroke={TEXT} strokeWidth="0.5" strokeDasharray="1,1" />;
+      {[22.5, 112.5, 202.5, 292.5].map((deg) => {
+        const a = deg * Math.PI / 180;
+        return <line key={deg} x1={vc + 20 * Math.cos(a)} y1={vy + 20 * Math.sin(a)} x2={vc} y2={vy}
+          stroke={MICRO} strokeWidth="0.45" />;
       })}
-      <circle cx={vc} cy={vy} r="2" fill={TEXT} opacity="0.3" />
     </svg>
   );
 }
 
-/* ─── Circular Seal SVG ───────────────────────── */
-function CircularSeal({ logoSrc }: { logoSrc: string }) {
-  // 160×160 viewBox, center (80,80), outer radius 74
-  const CX = 80, CY = 80, OR = 74, TR = 66;
-  // Top arc path for "JEWELSREPORT" — left to right along top half
-  const topPath = `M ${CX - TR},${CY} A ${TR},${TR} 0 0,1 ${CX + TR},${CY}`;
-  // Bottom arc path for "GEMOLOGICAL CERTIFICATION LAB"
-  // Goes right→left along bottom so text reads correctly
-  const btmPath = `M ${CX + TR},${CY} A ${TR},${TR} 0 0,1 ${CX - TR},${CY}`;
-
+/* ─── Certification seal ──────────────────────────────────────────────── */
+function Seal({ size, logoSrc }: { size: number; logoSrc: string }) {
+  const CX = 80, CY = 80, OR = 76, TR = 66;
   return (
-    <svg width="160" height="160" viewBox="0 0 160 160" style={{ display:"block" }}>
+    <svg width={size} height={size} viewBox="0 0 160 160" style={{ display: "block" }}>
       <defs>
-        <path id="sealTop" d={topPath} />
-        <path id="sealBtm" d={btmPath} />
+        <path id="sealArcTop" d={`M ${CX - TR},${CY} A ${TR},${TR} 0 0,1 ${CX + TR},${CY}`} />
+        <path id="sealArcBtm" d={`M ${CX - TR},${CY} A ${TR},${TR} 0 0,0 ${CX + TR},${CY}`} />
       </defs>
-
-      {/* Outer gold ring */}
-      <circle cx={CX} cy={CY} r={OR}   fill={WHITE} stroke={GOLD} strokeWidth="1.8" />
-      <circle cx={CX} cy={CY} r={OR-4} fill="none"  stroke={GOLD} strokeWidth="0.6" />
-      {/* Dashed decorative ring */}
-      <circle cx={CX} cy={CY} r={OR-8} fill="none"  stroke={GOLD} strokeWidth="0.5" strokeDasharray="2.5,2" />
-
-      {/* Top curved text: JEWELSREPORT */}
-      <text fontSize="8.5" fontWeight="800" letterSpacing="3.5" fill={NAVY} textAnchor="middle">
-        <textPath href="#sealTop" startOffset="50%">JEWELSREPORT</textPath>
+      <circle cx={CX} cy={CY} r={OR} fill={WHITE} stroke={GOLD} strokeWidth="1.2" />
+      <circle cx={CX} cy={CY} r={OR - 7} fill="none" stroke={GOLD_L} strokeWidth="0.7" strokeDasharray="1.5,3" />
+      <text fontSize="9" fontWeight="700" letterSpacing="3" fill={INK} textAnchor="middle" fontFamily={SANS}>
+        <textPath href="#sealArcTop" startOffset="50%">JEWELSREPORT</textPath>
       </text>
-
-      {/* Bottom curved text: GEMOLOGICAL CERTIFICATION LAB */}
-      <text fontSize="6" fontWeight="700" letterSpacing="1.8" fill={NAVY} textAnchor="middle" dy="-3">
-        <textPath href="#sealBtm" startOffset="50%">GEMOLOGICAL CERTIFICATION LAB</textPath>
+      <text fontSize="6.4" fontWeight="700" letterSpacing="2" fill={MICRO} textAnchor="middle" dy="8" fontFamily={SANS}>
+        <textPath href="#sealArcBtm" startOffset="50%">GEMOLOGICAL CERTIFICATION LAB</textPath>
       </text>
-
-      {/* Star separators at 9 o'clock and 3 o'clock */}
-      <text x={CX - TR + 2} y={CY + 3.5} textAnchor="middle" fontSize="8" fill={GOLD}>★</text>
-      <text x={CX + TR - 2} y={CY + 3.5} textAnchor="middle" fontSize="8" fill={GOLD}>★</text>
-
-      {/* Logo */}
-      <image href={logoSrc} x={CX - 26} y={CY - 32} width="52" height="52" />
-
-      {/* CERTIFIED label */}
-      <text x={CX} y={CY + 28} textAnchor="middle" fontSize="7" fontWeight="800" letterSpacing="2.5" fill={GOLD}>CERTIFIED</text>
-      <line x1={CX-20} y1={CY+32} x2={CX+20} y2={CY+32} stroke={GOLD} strokeWidth="0.6" opacity="0.7" />
+      <image href={logoSrc} x={CX - 27} y={CY - 32} width="54" height="54" />
+      <text x={CX} y={CY + 30} textAnchor="middle" fontSize="6.8" fontWeight="700" letterSpacing="2.6" fill={GOLD} fontFamily={SANS}>CERTIFIED</text>
     </svg>
   );
 }
@@ -195,322 +157,248 @@ export const A4Certificate = forwardRef<HTMLDivElement, Props>(
     const isDiamond = !isJ && !isG;
 
     const fmtDate = (d: string) => {
-      try { return new Date(d).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }).toUpperCase(); }
+      try { return new Date(d).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }).toUpperCase(); }
       catch { return d; }
     };
 
-    const reportTypeLabel = REPORT_TYPE_LABELS[cert.type] ?? cert.type;
-
-    const certTitle = isG ? "GEMSTONE GRADING REPORT"
-      : isJ ? "JEWELLERY GRADING REPORT"
-      : `${cert.type.replace("Natural ", "").replace("Lab Grown ", "").toUpperCase()} GRADING REPORT`;
-
-    const hasImg  = !!(cert.imageDataUrl || cert.imageDataUrl2);
-    const has2Img = !!(cert.imageDataUrl && cert.imageDataUrl2);
+    const images = [cert.imageDataUrl, cert.imageDataUrl2].filter(Boolean) as string[];
 
     return (
       <div ref={ref} style={{
         width: A4_W, height: A4_H,
-        fontFamily: "'Segoe UI','Helvetica Neue',Arial,sans-serif",
-        boxSizing: "border-box", overflow: "hidden",
-        display: "flex", flexDirection: "row",
-        background: WHITE,
-        border: `2px solid ${GOLD}`,
-        position: "relative",
+        boxSizing: "border-box", overflow: "hidden", position: "relative",
+        background: WHITE, color: INK, fontFamily: SANS,
+        display: "flex", flexDirection: "column",
+        padding: "34px 36px 22px",
       }}>
-        {/* Inner pinstripe */}
-        <div style={{ position:"absolute", inset:5, border:`0.5px solid rgba(201,150,58,0.30)`, pointerEvents:"none", zIndex:10 }} />
+        {/* Top accent edge */}
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 5, display: "flex" }}>
+          <div style={{ width: 232, background: `linear-gradient(90deg,${GOLD},${GOLD_L})` }} />
+          <div style={{ flex: 1, background: INK }} />
+        </div>
 
-        {/* ════════════════════════════════════
-            LEFT PANEL — 318px
-        ════════════════════════════════════ */}
-        <div style={{
-          width: 318, flexShrink:0,
-          display:"flex", flexDirection:"column",
-          borderRight:`1.5px solid ${GOLD}`,
-          background: WHITE,
-          overflow:"hidden",
-        }}>
-          {/* Brand header */}
-          <div style={{
-            padding:"14px 14px 12px",
-            display:"flex", alignItems:"center", gap:12,
-            borderBottom:`1px solid ${RULE}`,
-            flexShrink:0,
-          }}>
+        {/* ═══ HEADER ═══ */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0, paddingBottom: 16 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 13 }}>
             <div style={{
-              width:62, height:62, flexShrink:0, borderRadius:"50%",
-              border:`1.5px solid ${GOLD}`,
-              boxShadow:`0 0 0 4px rgba(201,150,58,0.09)`,
-              background: WHITE,
-              display:"flex", alignItems:"center", justifyContent:"center",
+              width: 50, height: 50, borderRadius: 13, border: `1px solid ${LINE}`, background: WHITE,
+              display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
             }}>
-              <img src={logo} alt="" style={{ height:40, width:40, objectFit:"contain" }} />
+              <img src={logo} alt="" style={{ width: 32, height: 32, objectFit: "contain" }} />
             </div>
             <div>
-              <div style={{ fontFamily:"Georgia,'Times New Roman',serif", fontSize:18, fontWeight:700, color:NAVY, letterSpacing:"0.12em", textTransform:"uppercase", lineHeight:1 }}>JewelsReport</div>
-              <div style={{ fontSize:7, letterSpacing:"0.20em", textTransform:"uppercase", color:MUTED, marginTop:4, lineHeight:1 }}>Gemological Certification Lab</div>
-            </div>
-          </div>
-
-          {/* Section title bar */}
-          <div style={{ background:NAVY2, padding:"6px 14px", flexShrink:0, textAlign:"center" }}>
-            <span style={{ fontSize:8, fontWeight:800, letterSpacing:"0.28em", textTransform:"uppercase", color:GOLD_L }}>{certTitle}</span>
-          </div>
-
-          {/* Grading fields */}
-          <div style={{ flex:1, display:"flex", flexDirection:"column", overflow:"hidden", paddingTop:4 }}>
-            {/* Identification */}
-            {isG && (<>
-              <FR label="GRL Report Number"      value={cert.reportNo} />
-              <FR label="Variety"                value={cert.gemstoneStone} />
-              <FR label="Shape & Cutting Style"  value={cert.gemstoneShape} />
-              <FR label="Measurements"           value={cert.gemstoneMeasurements} />
-              <FR label="Pieces (PCS)"           value={cert.gemstonePcs} />
-              <FR label="Origin"                 value={cert.gemstoneOrigin} />
-              <SL label="Gemological Results" />
-              <FR label="Carat Weight"           value={cert.gemstoneCaratWeight} />
-              <FR label="Color & Transparency"   value={cert.gemstoneColorTransparency} />
-              <FR label="Characteristics"        value={cert.gemstoneCharacteristics} />
-            </>)}
-
-            {isJ && (<>
-              <FR label="GRL Report Number"    value={cert.reportNo} />
-              <FR label="Item Description"     value={cert.itemName} />
-              <FR label="Shape"                value={cert.shape} />
-              <FR label="Metal Tested As"      value={cert.metal} />
-              <FR label="Gross Weight"         value={cert.grossWeight ? `${cert.grossWeight} GRM` : undefined} />
-              <FR label="Net Weight"           value={cert.netWeight ? `${cert.netWeight} GRM` : undefined} />
-              <FR label="Origin"               value={cert.origin} />
-              {cert.metalDescription && <FR label="Marking(s)"    value={cert.metalDescription} />}
-              {(cert.diamondShape || cert.diamondWeight || cert.diamondColor || cert.diamondClarity) && (<>
-                <SL label="Diamond Details" />
-                <FR label="Diamond Shape"      value={cert.diamondShape} />
-                <FR label="Diamond Weight"     value={cert.diamondWeight ? `${cert.diamondWeight} CT` : undefined} />
-                <FR label="Total PCS"          value={cert.diamondTotalPcs} />
-                <FR label="Color"              value={cert.diamondColor} />
-                <FR label="Clarity"            value={cert.diamondClarity} />
-              </>)}
-              {(cert.gemstoneStone || cert.gemstoneOrigin) && (<>
-                <SL label="Gemstone Details" />
-                <FR label="Gemstone"           value={cert.gemstoneStone} />
-                <FR label="Origin"             value={cert.gemstoneOrigin} />
-                <FR label="Weight"             value={cert.gemstoneCaratWeight} />
-                <FR label="PCS"                value={cert.gemstonePcs} />
-              </>)}
-            </>)}
-
-            {isDiamond && (<>
-              <FR label="GRL Report Number"      value={cert.reportNo} />
-              <FR label="Shape & Cutting Style"  value={cert.shape} />
-              <FR label="Measurements"           value={cert.measurements} />
-              <SL label="Grading Results" />
-              <FR label="Carat Weight"           value={cert.caratWeight ? `${cert.caratWeight} CARAT` : undefined} />
-              <FR label="Color Grade"            value={cert.color} />
-              <FR label="Clarity Grade"          value={cert.clarity} />
-              <FR label="Cut Grade"              value={cert.cut} />
-              <SL label="Additional Grading Information" />
-              <FR label="Polish Grade"           value={cert.polish} />
-              <FR label="Symmetry Grade"         value={cert.symmetry} />
-              <FR label="Fluorescence"           value={cert.fluorescence} />
-              <FR label="Origin"                 value={cert.origin} />
-            </>)}
-
-            {cert.remarks && (<>
-              <SL label="Comments" />
-              <div style={{ padding:"2px 14px 6px" }}>
-                <span style={{ fontSize:9.5, color:TEXT, lineHeight:1.6 }}>{cert.remarks}</span>
+              <div style={{ fontSize: 19, fontWeight: 700, letterSpacing: "0.16em", color: INK, lineHeight: 1 }}>JEWELSREPORT</div>
+              <div style={{ fontSize: 7, fontWeight: 600, letterSpacing: "0.3em", color: MICRO, marginTop: 5 }}>
+                GEMOLOGICAL CERTIFICATION LAB
               </div>
-            </>)}
-
-            {/* Spacer + certified authentic */}
-            <div style={{ flex:1 }} />
-            <div style={{ textAlign:"center", padding:"6px 0", flexShrink:0 }}>
-              <span style={{ fontSize:7, letterSpacing:"0.28em", color:GOLD, textTransform:"uppercase" }}>• Certified Authentic •</span>
-            </div>
-
-            {/* Signature */}
-            <div style={{ borderTop:`1px solid ${RULE}`, padding:"8px 14px 10px", flexShrink:0, textAlign:"center" }}>
-              <div style={{ height:36, display:"flex", alignItems:"flex-end", justifyContent:"center", marginBottom:4 }}>
-                {cert.signatureDataUrl
-                  ? <img src={cert.signatureDataUrl} alt="Signature" style={{ maxHeight:36, maxWidth:"80%", objectFit:"contain" }} />
-                  : <div style={{ width:"60%", borderBottom:`1px solid rgba(27,42,74,0.3)` }} />
-                }
-              </div>
-              <div style={{ fontSize:8.5, fontWeight:600, color:TEXT }}>Authorised Signatory</div>
-              <div style={{ fontSize:7.5, color:MUTED, marginTop:1 }}>JewelsReport Gemological Certification Lab</div>
             </div>
           </div>
 
-          {/* Left footer */}
-          <div style={{ background:GRD, padding:"4px 14px", flexShrink:0, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-            <span style={{ fontSize:6.5, fontWeight:700, color:NAVY2, letterSpacing:"0.06em" }}>jewelsreport.com</span>
-            <span style={{ fontSize:6.5, fontWeight:700, color:NAVY2, letterSpacing:"0.05em", textTransform:"uppercase" }}>
-              {cert.reportNo.split("-")[0]}-GEM {certTitle}
+          <div style={{ textAlign: "right" }}>
+            <div style={{ fontSize: 7, fontWeight: 700, letterSpacing: "0.3em", color: MICRO }}>REPORT NUMBER</div>
+            <div style={{ fontSize: 25, fontWeight: 700, letterSpacing: "-0.015em", color: INK, lineHeight: 1.15, marginTop: 3, fontVariantNumeric: "tabular-nums" }}>
+              {cert.reportNo}
+            </div>
+            <div style={{ fontSize: 8, fontWeight: 600, letterSpacing: "0.14em", color: MICRO, marginTop: 3 }}>
+              ISSUED {fmtDate(cert.issueDate)}
+            </div>
+          </div>
+        </div>
+
+        <div style={{ height: 1, background: LINE, flexShrink: 0 }} />
+
+        {/* ═══ TITLE STRIP ═══ */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0, padding: "13px 0 16px" }}>
+          <span style={{
+            background: INK, color: WHITE, borderRadius: 999, padding: "6px 14px",
+            fontSize: 8, fontWeight: 700, letterSpacing: "0.26em",
+          }}>
+            {REPORT_TYPE_LABELS[cert.type] ?? cert.type}
+          </span>
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <span style={{ fontSize: 8.5, color: INK_2, letterSpacing: "0.04em" }}>jewelsreport.com/verify</span>
+            <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <span style={{ width: 5, height: 5, borderRadius: "50%", background: GOLD, display: "inline-block" }} />
+              <span style={{ fontSize: 7.5, fontWeight: 700, letterSpacing: "0.22em", color: GOLD }}>CERTIFIED AUTHENTIC</span>
             </span>
           </div>
         </div>
 
-        {/* ════════════════════════════════════
-            CENTER PANEL — 448px
-        ════════════════════════════════════ */}
-        <div style={{
-          width:448, flexShrink:0,
-          display:"flex", flexDirection:"column",
-          borderRight:`1.5px solid ${GOLD}`,
-          background: WHITE,
-          overflow:"hidden",
-        }}>
-          {/* Report number hero */}
-          <div style={{ flexShrink:0, textAlign:"center", padding:"12px 16px 10px", borderBottom:`1.5px solid ${GOLD}` }}>
-            <div style={{ fontSize:7, letterSpacing:"0.38em", textTransform:"uppercase", color:MUTED, marginBottom:4 }}>GRL Report Number</div>
-            <div style={{ fontFamily:"Georgia,'Times New Roman',serif", fontSize:38, fontWeight:700, color:NAVY, letterSpacing:"0.04em", lineHeight:1 }}>
-              {cert.reportNo}
+        {/* ═══ MAIN ═══ */}
+        <div style={{ flex: 1, minHeight: 0, display: "flex", gap: 22, overflow: "hidden" }}>
+
+          {/* ── Column A — grading ── */}
+          <div style={{ width: 336, flexShrink: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <Head label={isJ ? "ITEM SUMMARY" : "GRADING RESULTS"} />
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+              {isDiamond && (<>
+                <Tile label="CARAT WEIGHT" value={cert.caratWeight ? `${cert.caratWeight} ct` : undefined} />
+                <Tile label="COLOUR GRADE" value={cert.color} />
+                <Tile label="CLARITY GRADE" value={cert.clarity} />
+                <Tile label="CUT GRADE"     value={cert.cut} />
+              </>)}
+              {isG && (<>
+                <Tile label="CARAT WEIGHT" value={cert.gemstoneCaratWeight} />
+                <Tile label="VARIETY"      value={cert.gemstoneStone} />
+                <Tile label="COLOUR"       value={cert.gemstoneColorTransparency} />
+                <Tile label="ORIGIN"       value={cert.gemstoneOrigin} />
+              </>)}
+              {isJ && (<>
+                <Tile label="GROSS WEIGHT"   value={cert.grossWeight ? `${cert.grossWeight} g` : undefined} />
+                <Tile label="METAL"          value={cert.metal} />
+                <Tile label="DIAMOND WEIGHT" value={cert.diamondWeight ? `${cert.diamondWeight} ct` : undefined} />
+                <Tile label="DIAMOND GRADE"  value={[cert.diamondColor, cert.diamondClarity].filter(Boolean).join(" / ") || undefined} />
+              </>)}
             </div>
-            <div style={{ fontSize:8, color:MUTED, marginTop:5 }}>Verify at jewelsreport.com/verify</div>
-            <div style={{ fontFamily:"Georgia,serif", fontSize:12, fontWeight:600, color:GOLD, marginTop:4, letterSpacing:"0.06em" }}>
-              {fmtDate(cert.issueDate)}
-            </div>
+
+            <div style={{ height: 16 }} />
+            <Head label="IDENTIFICATION" />
+
+            {isDiamond && (<>
+              <Row label="Shape & Cutting Style" value={cert.shape} />
+              <Row label="Measurements"          value={cert.measurements} />
+              <Row label="Polish"                value={cert.polish} />
+              <Row label="Symmetry"              value={cert.symmetry} />
+              <Row label="Fluorescence"          value={cert.fluorescence} />
+              <Row label="Origin"                value={cert.origin} last />
+            </>)}
+
+            {isG && (<>
+              <Row label="Shape & Cutting Style" value={cert.gemstoneShape} />
+              <Row label="Measurements"          value={cert.gemstoneMeasurements} />
+              <Row label="Pieces"                value={cert.gemstonePcs} />
+              <Row label="Transparency"          value={cert.gemstoneColorTransparency} />
+              <Row label="Characteristics"       value={cert.gemstoneCharacteristics} last />
+            </>)}
+
+            {isJ && (<>
+              <Row label="Item"           value={cert.itemName} />
+              <Row label="Shape"          value={cert.shape} />
+              <Row label="Net Weight"     value={cert.netWeight ? `${cert.netWeight} g` : undefined} />
+              <Row label="Marking(s)"     value={cert.metalDescription} />
+              <Row label="Diamond Shape"  value={cert.diamondShape} />
+              <Row label="Total Pieces"   value={cert.diamondTotalPcs} />
+              <Row label="Gemstone"       value={cert.gemstoneStone} />
+              <Row label="Origin"         value={cert.origin} last />
+            </>)}
+
+            {cert.remarks && (
+              <div style={{ marginTop: 14 }}>
+                <Head label="COMMENTS" />
+                <p style={{ fontSize: 8.5, color: INK_2, lineHeight: 1.65, margin: 0 }}>{cert.remarks}</p>
+              </div>
+            )}
+
+            <div style={{ flex: 1, minHeight: 10 }} />
+
+            {isDiamond && (
+              <div style={{ background: SURF, border: `1px solid ${LINE}`, borderRadius: 14, padding: "9px 12px 7px" }}>
+                <div style={{ fontSize: 6.8, fontWeight: 700, letterSpacing: "0.24em", color: MICRO }}>PROPORTIONS</div>
+                <ProportionDiagram />
+                <div style={{ fontSize: 6.8, color: MICRO, textAlign: "center", marginTop: -3 }}>
+                  Profile drawn to actual proportions
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Description */}
-          <div style={{ flexShrink:0, borderBottom:`1px solid ${RULE}` }}>
-            <div style={{ padding:"5px 14px 0" }}>
-              <span style={{ fontSize:7, fontWeight:800, letterSpacing:"0.24em", textTransform:"uppercase", color:GOLD }}>Item(s) Overall Description</span>
+          {/* ── Column B — imagery ── */}
+          <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <Head label="ITEM PHOTOGRAPHY" />
+
+            <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: images.length > 1 ? "column" : "row", gap: 10 }}>
+              {images.length > 0 ? images.map((src, i) => (
+                <div key={i} style={{
+                  flex: 1, minWidth: 0, borderRadius: 14, overflow: "hidden",
+                  border: `1px solid ${LINE}`, background: SURF,
+                  boxShadow: "0 1px 2px rgba(11,18,32,0.04), 0 8px 24px -12px rgba(11,18,32,0.18)",
+                }}>
+                  <img src={src} alt="Item" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+                </div>
+              )) : (
+                <div style={{
+                  flex: 1, borderRadius: 14, border: `1px dashed ${LINE}`, background: SURF,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}>
+                  <span style={{ fontSize: 7.5, fontWeight: 700, letterSpacing: "0.28em", color: MICRO }}>NO PHOTOGRAPH</span>
+                </div>
+              )}
             </div>
+
             {cert.description && (
-              <div style={{ padding:"3px 14px 6px" }}>
-                <span style={{ fontSize:9, color:TEXT, lineHeight:1.6 }}>{cert.description}</span>
-              </div>
+              <p style={{ fontSize: 8.5, color: INK_2, lineHeight: 1.65, margin: "12px 0 0" }}>{cert.description}</p>
             )}
+
           </div>
 
-          {/* Images */}
-          <div style={{ flex:1, minHeight:0, padding:"8px 14px", display:"flex", flexDirection:"column", gap:6, overflow:"hidden" }}>
-            {cert.imageDataUrl && (
-              <div style={{ width:"100%", flex: has2Img ? "1 1 0" : "1 1 0", minHeight:0, maxHeight: has2Img ? 195 : 370, borderRadius:6, overflow:"hidden", border:`1px solid ${RULE}` }}>
-                <img src={cert.imageDataUrl} alt="Item" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />
-              </div>
-            )}
-            {cert.imageDataUrl2 && (
-              <div style={{ width:"100%", flex:"1 1 0", minHeight:0, maxHeight:195, borderRadius:6, overflow:"hidden", border:`1px solid ${RULE}` }}>
-                <img src={cert.imageDataUrl2} alt="Item" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />
-              </div>
-            )}
-            {!hasImg && (
-              <div style={{ width:"100%", flex:"1 1 0", minHeight:0, borderRadius:6, border:`1px dashed rgba(201,150,58,0.25)`, display:"flex", alignItems:"center", justifyContent:"center" }}>
-                <span style={{ fontSize:8, color:MUTED, letterSpacing:"0.28em", textTransform:"uppercase", opacity:0.5 }}>No Image Provided</span>
-              </div>
-            )}
-          </div>
+          {/* ── Column C — verification ── */}
+          <div style={{ width: 288, flexShrink: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <Head label="VERIFICATION" />
 
-          {/* Proportion Diagram — only for diamond reports */}
-          {isDiamond && (
-            <div style={{ flexShrink:0, borderTop:`1px solid ${RULE}`, padding:"6px 14px 4px" }}>
-              <div style={{ marginBottom:3 }}>
-                <span style={{ fontSize:7, fontWeight:800, letterSpacing:"0.24em", textTransform:"uppercase", color:GOLD }}>Proportion Diagram</span>
+            <div style={{ border: `1px solid ${LINE}`, borderRadius: 14, padding: 12, display: "flex", gap: 12, alignItems: "center" }}>
+              <QRCodeSVG value={verifyUrl} size={78} level="M" fgColor={INK} />
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontSize: 6.8, fontWeight: 700, letterSpacing: "0.24em", color: MICRO }}>SCAN TO VERIFY</div>
+                <div style={{ fontSize: 9, fontWeight: 600, color: INK, marginTop: 5 }}>jewelsreport.com/verify</div>
+                <div style={{ fontSize: 8, color: INK_2, marginTop: 4, lineHeight: 1.6 }}>
+                  reportcheck@jewelsreport.com<br />+91 99673 81180
+                </div>
               </div>
-              <ProportionDiagram />
             </div>
-          )}
 
-          {/* Important Limitations */}
-          <div style={{ flexShrink:0, borderTop:`1px solid ${RULE}`, padding:"5px 14px 6px" }}>
-            <div style={{ marginBottom:2 }}>
-              <span style={{ fontSize:7, fontWeight:800, letterSpacing:"0.22em", textTransform:"uppercase", color:GOLD }}>Important Limitations</span>
-            </div>
-            <p style={{ fontSize:7.5, color:MUTED, lineHeight:1.65, margin:0 }}>
-              This report is generated using advanced gemological instruments and procedures. The results reflect the characteristics of the diamond at the time of examination. This report is not a guarantee or valuation. For additional information and important limitations please see jewelsreport.com/terms or contact the JewelsReport Gemological Certification Lab directly.
-            </p>
-          </div>
-
-          {/* Center footer */}
-          <div style={{ background:GRD, padding:"4px 14px", flexShrink:0, textAlign:"center" }}>
-            <span style={{ fontSize:6.5, fontWeight:700, color:NAVY2, letterSpacing:"0.10em", textTransform:"uppercase" }}>Gemological Certification Lab · Surat, Gujarat, India</span>
-          </div>
-        </div>
-
-        {/* ════════════════════════════════════
-            RIGHT PANEL — 356px
-        ════════════════════════════════════ */}
-        <div style={{
-          flex:1,
-          display:"flex", flexDirection:"column",
-          background: CREAM,
-          overflow:"hidden",
-        }}>
-          {/* Official record header */}
-          <div style={{ flexShrink:0, textAlign:"center", padding:"14px 16px 12px", borderBottom:`1.5px solid ${GOLD}` }}>
-            <div style={{ fontSize:7, letterSpacing:"0.34em", textTransform:"uppercase", color:MUTED, marginBottom:6 }}>Official Certification Record</div>
-            <div style={{ fontFamily:"Georgia,serif", fontSize:14, fontWeight:700, color:NAVY, letterSpacing:"0.06em" }}>Gemological Certification Lab</div>
-            <div style={{ fontSize:8.5, color:GOLD, marginTop:3, letterSpacing:"0.06em" }}>jewelsreport.com</div>
-          </div>
-
-          {/* Section label */}
-          <div style={{ flexShrink:0, padding:"7px 16px 2px", borderBottom:`1px solid ${RULE}` }}>
-            <span style={{ fontSize:7, fontWeight:800, letterSpacing:"0.24em", textTransform:"uppercase", color:GOLD }}>Certification &amp; Authentication</span>
-          </div>
-
-          <div style={{ flex:1, padding:"10px 14px", display:"flex", flexDirection:"column", gap:9, overflow:"hidden" }}>
-            {/* Certification Statement */}
-            <div style={{ flexShrink:0, border:`1px solid rgba(201,150,58,0.35)`, borderLeft:`2.5px solid ${GOLD}`, background:WHITE, padding:"8px 10px" }}>
-              <div style={{ fontSize:7, fontWeight:700, letterSpacing:"0.22em", textTransform:"uppercase", color:NAVY, marginBottom:5 }}>Certification Statement</div>
-              <p style={{ fontFamily:"Georgia,serif", fontStyle:"italic", fontSize:9, color:TEXT, lineHeight:1.75, margin:0 }}>
-                This is to certify that the article described herein has been examined by JewelsReport Gemological Certification Lab and the results documented are based on standard gemological testing methods.
+            <div style={{ marginTop: 10, border: `1px solid ${LINE}`, borderLeft: `2.5px solid ${GOLD}`, borderRadius: 14, padding: "10px 13px" }}>
+              <div style={{ fontSize: 6.8, fontWeight: 700, letterSpacing: "0.24em", color: MICRO }}>CERTIFICATION STATEMENT</div>
+              <p style={{ fontSize: 8.2, color: INK_2, lineHeight: 1.75, margin: "6px 0 0" }}>
+                The article described herein has been examined by JewelsReport Gemological Certification Lab. The results documented
+                are based on standard gemological testing methods and apply only to the article at the time of examination.
               </p>
             </div>
 
-            {/* Disclaimer italic */}
-            <div style={{ flexShrink:0, flex:"0 1 auto", overflow:"hidden" }}>
-              <p style={{ fontFamily:"Georgia,serif", fontStyle:"italic", fontSize:7.5, color:MUTED, lineHeight:1.8, margin:0 }}>
-                The results documented in this report apply only to the article described, and were obtained using the techniques and equipment used by JewelsReport at the time of examination. This report is not a guarantee or valuation. For additional information and important limitations please see jewelsreport.com/terms or contact the JewelsReport Gemological Certification Lab directly.<br /><br />
-                ©{new Date().getFullYear()} JewelsReport Gemological Certification Lab. All rights reserved.
-              </p>
+            <div style={{ flex: 1, minHeight: 8 }} />
+
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Seal size={132} logoSrc={logo} />
             </div>
 
-            {/* Circular seal — centered, large */}
-            <div style={{ flexShrink:0, display:"flex", justifyContent:"center", margin:"2px 0" }}>
-              <CircularSeal logoSrc={logo} />
+            <div style={{ flex: 1, minHeight: 8 }} />
+
+            {/* Signature */}
+            <div style={{ textAlign: "center" }}>
+              <div style={{ height: 34, display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
+                {cert.signatureDataUrl && (
+                  <img src={cert.signatureDataUrl} alt="Signature" style={{ maxHeight: 34, maxWidth: "70%", objectFit: "contain" }} />
+                )}
+              </div>
+              <div style={{ height: 1, background: LINE, margin: "6px 34px 7px" }} />
+              <div style={{ fontSize: 9, fontWeight: 600, color: INK }}>Authorised Signatory</div>
+              <div style={{ fontSize: 7.5, color: MICRO, marginTop: 2 }}>JewelsReport Gemological Certification Lab</div>
             </div>
 
-            {/* QR + contact */}
-            <div style={{ flexShrink:0, display:"flex", gap:10, alignItems:"center", border:`1px solid ${RULE}`, background:WHITE, padding:"6px 8px" }}>
-              <div style={{ padding:3, background:WHITE, border:`1px solid ${RULE}`, flexShrink:0 }}>
-                <QRCodeSVG value={verifyUrl} size={58} level="M" fgColor={NAVY} />
-              </div>
-              <div style={{ flex:1, minWidth:0 }}>
-                <div style={{ fontSize:8, color:TEXT, fontWeight:600, lineHeight:1.8 }}>jewelsreport.com/verify</div>
-                <div style={{ fontSize:8, color:GOLD, fontWeight:500, lineHeight:1.8 }}>reportcheck@jewelsreport.com</div>
-                <div style={{ fontSize:8, color:GOLD, fontWeight:500, lineHeight:1.8 }}>+91 98765 43210</div>
-              </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "center", marginTop: 11 }}>
+              <Pill>HOLOGRAM</Pill>
+              <Pill>GUILLOCHÉ</Pill>
+              <Pill>EMBOSSED SEAL</Pill>
+              <Pill>UV INK</Pill>
             </div>
-
-            {/* Security features box */}
-            <div style={{ flexShrink:0, border:`1px solid ${RULE}`, background:WHITE, padding:"6px 10px" }}>
-              <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:3 }}>
-                <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
-                  <rect x="2" y="6" width="10" height="7" rx="1.5" stroke={NAVY} strokeWidth="1.2" />
-                  <path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2" stroke={NAVY} strokeWidth="1.2" />
-                  <circle cx="7" cy="9.5" r="1" fill={NAVY} />
-                </svg>
-                <span style={{ fontSize:7.5, fontWeight:800, letterSpacing:"0.18em", textTransform:"uppercase", color:NAVY }}>Security Features</span>
-              </div>
-              <div style={{ fontSize:7.5, fontWeight:700, color:TEXT, letterSpacing:"0.04em", lineHeight:1.85 }}>
-                HOLOGRAPHIC FOIL • GUILLOCHE PATTERN<br />EMBOSSED SEAL • UV REACTIVE INK
-              </div>
-              <div style={{ fontSize:7, color:MUTED, marginTop:2, lineHeight:1.6 }}>
-                This document is protected. Verify authenticity at jewelsreport.com/verify
-              </div>
-            </div>
-          </div>
-
-          {/* Right footer */}
-          <div style={{ background:GRD, padding:"4px 14px", flexShrink:0, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-            <span style={{ fontSize:6.5, fontWeight:700, color:NAVY2, letterSpacing:"0.06em" }}>jewelsreport.com/verify</span>
-            <span style={{ fontSize:6.5, fontWeight:700, color:NAVY2, letterSpacing:"0.05em" }}>{cert.reportNo}</span>
           </div>
         </div>
 
+        {/* ═══ FINE PRINT + FOOTER ═══ */}
+        <p style={{ fontSize: 7, color: "#6B7684", lineHeight: 1.6, margin: "14px 0 10px", flexShrink: 0 }}>
+          This report documents the characteristics of the article described at the time of examination, obtained using the techniques and
+          equipment of JewelsReport Gemological Certification Lab. It is not a guarantee, valuation or appraisal of value. For additional
+          information and important limitations see jewelsreport.com/terms-of-service, or contact the laboratory directly.
+        </p>
+
+        <div style={{ height: 1, background: LINE, flexShrink: 0 }} />
+
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0, paddingTop: 9 }}>
+          <span style={{ fontSize: 7, color: MICRO, letterSpacing: "0.08em" }}>
+            © {new Date().getFullYear()} JewelsReport Gemological Certification Lab · Surat, Gujarat, India
+          </span>
+          <span style={{ fontSize: 7, fontWeight: 700, color: INK_2, letterSpacing: "0.14em" }}>{cert.reportNo}</span>
+        </div>
       </div>
     );
   }

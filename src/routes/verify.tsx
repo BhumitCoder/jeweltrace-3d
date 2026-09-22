@@ -272,7 +272,7 @@ function CardPreview({ cert }: { cert: Certificate }) {
             margin: 0; padding: 0;
             width: ${isReport ? "210mm" : "297mm"}; height: ${isReport ? "297mm" : "210mm"};
             overflow: hidden;
-            background: ${isReport ? "#FFFFFF" : "#FAF6ED"};
+            background: #FFFFFF;
           }
           /*
            * 1 CSS px = 25.4/96 mm, so 1122 px = 297 mm and 794 px = 210 mm.

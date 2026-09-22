@@ -4,6 +4,7 @@ import { Layout } from "@/components/Layout";
 import { useSEO, breadcrumb, webAppSchema, howToVerify, SITE_URL } from "@/lib/seo";
 import { CertificateCard, CARD_W, CARD_H } from "@/components/CertificateCard";
 import { A4Certificate, A4_W, A4_H } from "@/components/A4Certificate";
+import { A4ReportCertificate, A4R_W, A4R_H } from "@/components/A4ReportCertificate";
 import { getCertificate } from "@/lib/db";
 import type { Certificate } from "@/lib/store";
 import { isAdminAuthed } from "@/lib/store";
@@ -29,18 +30,18 @@ function useCardScale() {
   return scale;
 }
 
-function useA4Scale() {
-  const [scale, setScale] = useState(0.86);
+function useA4Scale(pageW: number, max: number) {
+  const [scale, setScale] = useState(max);
   useEffect(() => {
     const update = () => {
       const vw = window.innerWidth;
-      /* portrait cert is 794px wide — scale to fit viewport with 48px padding */
-      setScale(Math.min(0.86, Math.max(0.3, (vw - 48) / A4_W)));
+      /* scale the page to fit the viewport with 48px padding */
+      setScale(Math.min(max, Math.max(0.28, (vw - 48) / pageW)));
     };
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
-  }, []);
+  }, [pageW, max]);
   return scale;
 }
 
@@ -196,10 +197,14 @@ function VerifyPage() {
 
 /* ─── Card preview + download ────────────────────────────────────────────────── */
 function CardPreview({ cert }: { cert: Certificate }) {
-  const isA4    = cert.cardStyle === "a4";
-  const isAdmin = isAdminAuthed();
+  const isA4     = cert.cardStyle === "a4";
+  const isReport = cert.cardStyle === "a4report";
+  const isPage   = isA4 || isReport;                 // any full-page format
+  const pageW    = isReport ? A4R_W : A4_W;
+  const pageH    = isReport ? A4R_H : A4_H;
+  const isAdmin  = isAdminAuthed();
   const pvcScale = useCardScale();
-  const a4Scale  = useA4Scale();
+  const a4Scale  = useA4Scale(pageW, isReport ? 0.86 : 0.68);
 
   const frontRef = useRef<HTMLDivElement>(null);
   const backRef  = useRef<HTMLDivElement>(null);
@@ -249,7 +254,7 @@ function CardPreview({ cert }: { cert: Certificate }) {
         <title>JewelsReport Certificate ${cert.reportNo}</title>
         <style>
           @page {
-            size: A4 portrait;
+            size: A4 ${isReport ? "portrait" : "landscape"};
             margin: 0;
           }
           *, *::before, *::after {
@@ -260,24 +265,24 @@ function CardPreview({ cert }: { cert: Certificate }) {
           }
           html {
             margin: 0; padding: 0;
-            width: 210mm; height: 297mm;
+            width: ${isReport ? "210mm" : "297mm"}; height: ${isReport ? "297mm" : "210mm"};
             overflow: hidden;
           }
           body {
             margin: 0; padding: 0;
-            width: 210mm; height: 297mm;
+            width: ${isReport ? "210mm" : "297mm"}; height: ${isReport ? "297mm" : "210mm"};
             overflow: hidden;
-            background: #FFFFFF;
+            background: ${isReport ? "#FFFFFF" : "#FAF6ED"};
           }
           /*
-           * 1 CSS px = 25.4/96 mm, so 794 px = 210 mm and 1123 px = 297 mm.
-           * The cert already matches A4 portrait exactly — no scaling needed.
-           * Removing transform avoids any sub-pixel gaps at page edges.
+           * 1 CSS px = 25.4/96 mm, so 1122 px = 297 mm and 794 px = 210 mm.
+           * Each cert already matches its A4 orientation exactly — no scaling
+           * needed. Avoiding a transform keeps sub-pixel gaps off the edges.
            */
           .cert {
             display: block;
-            width: ${A4_W}px;
-            height: ${A4_H}px;
+            width: ${pageW}px;
+            height: ${pageH}px;
           }
         </style>
       </head><body>
@@ -294,7 +299,7 @@ function CardPreview({ cert }: { cert: Certificate }) {
   async function handleDownloadJpg() {
     setDownloading(true);
     try {
-      if (isA4) {
+      if (isPage) {
         if (!a4Ref.current) return;
         await downloadJpg(a4Ref.current, `JewelsReport-${cert.reportNo}-Certificate`);
       } else {
@@ -312,12 +317,12 @@ function CardPreview({ cert }: { cert: Certificate }) {
   const DownloadButtons = (
     <div className="mt-8 flex flex-wrap justify-center gap-3">
       <button
-        onClick={isA4 ? handlePrintA4 : handlePrintPvc}
+        onClick={isPage ? handlePrintA4 : handlePrintPvc}
         disabled={printing}
         className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full bg-gradient-gold text-gold-foreground font-semibold shadow-gold hover:scale-105 transition-transform text-sm sm:text-base disabled:opacity-60 disabled:cursor-not-allowed"
       >
         <Printer className="w-4 h-4" />
-        {printing ? "Preparing…" : isA4 ? "Print / Save PDF" : "Print Card (Front + Back)"}
+        {printing ? "Preparing…" : isPage ? "Print / Save PDF" : "Print Card (Front + Back)"}
       </button>
       {isAdmin && (
         <button
@@ -332,25 +337,26 @@ function CardPreview({ cert }: { cert: Certificate }) {
     </div>
   );
 
-  /* ── A4 layout ── */
-  if (isA4) {
+  /* ── Full-page layouts (landscape A4 certificate / portrait A4 report) ── */
+  if (isPage) {
+    const Page = isReport ? A4ReportCertificate : A4Certificate;
     return (
       <div>
         {/* Hidden full-res for download/print */}
         <div style={{ position: "fixed", left: -9999, top: -9999, pointerEvents: "none", zIndex: -1 }}>
-          <div ref={a4Ref}><A4Certificate cert={cert} /></div>
+          <div ref={a4Ref}><Page cert={cert} /></div>
         </div>
 
         {/* On-screen scaled preview */}
         <div className="flex justify-center">
           <div style={{
-            width: A4_W * a4Scale, height: A4_H * a4Scale,
+            width: pageW * a4Scale, height: pageH * a4Scale,
             overflow: "hidden", borderRadius: 8,
             border: "1.5px solid rgba(201,168,76,0.45)",
             boxShadow: "0 8px 40px -8px rgba(0,0,0,0.5), 0 0 0 3px rgba(201,168,76,0.1)",
           }}>
-            <div style={{ zoom: a4Scale, width: A4_W, height: A4_H }}>
-              <A4Certificate cert={cert} />
+            <div style={{ zoom: a4Scale, width: pageW, height: pageH }}>
+              <Page cert={cert} />
             </div>
           </div>
         </div>

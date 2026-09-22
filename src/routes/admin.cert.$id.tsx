@@ -8,7 +8,7 @@ import {
   REPORT_TYPE_LABELS,
   type Certificate, type ReportType, type Client,
 } from "@/lib/store";
-import { ArrowLeft, Save, Upload, RefreshCw, Loader2, Users, Search, ChevronDown, X, Check, CreditCard, FileText } from "lucide-react";
+import { ArrowLeft, Save, Upload, RefreshCw, Loader2, Users, Search, ChevronDown, X, Check, CreditCard, FileText, FileSpreadsheet } from "lucide-react";
 
 export const Route = createFileRoute("/admin/cert/$id")({
   component: CertEditor,
@@ -142,6 +142,8 @@ function CertEditor() {
 
   const isJewellery = cert.type === "Lab Grown Jewellery" || cert.type === "Natural Jewellery";
   const isGemstone = cert.type === "Gemstone";
+  /* Both A4 formats take two photos; the PVC card takes one. */
+  const isPageStyle = cert.cardStyle === "a4" || cert.cardStyle === "a4report";
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-8">
@@ -207,16 +209,17 @@ function CertEditor() {
         </Card>
 
         {/* Card Style */}
-        <Card title="Card Style" sub="Choose the certificate format — PVC wallet card or A4 paper report">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <Card title="Card Style" sub="Choose the certificate format — PVC wallet card, landscape A4 certificate or portrait A4 lab report">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {([
-              { key: "pvc" as const, label: "PVC Wallet Card", desc: "CR80 format (85.6 × 54 mm) — printed 2-sided, fits a wallet", Icon: CreditCard },
-              { key: "a4"  as const, label: "A4 Paper Certificate", desc: "GIA-style full-page report — up to 2 item photos, A4 printout", Icon: FileText },
+              { key: "pvc"      as const, label: "PVC Wallet Card",     desc: "CR80 format (85.6 × 54 mm) — printed 2-sided, fits a wallet",   Icon: CreditCard },
+              { key: "a4"       as const, label: "A4 Certificate",      desc: "Landscape three-panel design — up to 2 item photos",            Icon: FileText },
+              { key: "a4report" as const, label: "A4 Lab Report",       desc: "Portrait appraisal-style page — up to 2 item photos",           Icon: FileSpreadsheet },
             ]).map(({ key, label, desc, Icon }) => {
-              const active = key === "a4" ? cert.cardStyle === "a4" : cert.cardStyle !== "a4";
+              const active = key === "pvc" ? (cert.cardStyle !== "a4" && cert.cardStyle !== "a4report") : cert.cardStyle === key;
               return (
                 <button key={key} type="button"
-                  onClick={() => set("cardStyle", key === "a4" ? "a4" : undefined)}
+                  onClick={() => set("cardStyle", key === "pvc" ? undefined : key)}
                   className={`flex items-start gap-3 px-4 py-4 rounded-xl border text-left transition-all ${
                     active ? "border-primary bg-primary/10" : "border-border hover:border-primary/50 text-muted-foreground"
                   }`}>
@@ -348,10 +351,10 @@ function CertEditor() {
         {/* Media */}
         <Card
           title="Media & Notes"
-          sub={cert.cardStyle === "a4" ? "Up to 2 item photos for the A4 certificate, plus remarks" : "Item photo and any additional remarks"}
+          sub={isPageStyle ? "Up to 2 item photos for the A4 page, plus remarks" : "Item photo and any additional remarks"}
         >
           <div className="grid sm:grid-cols-2 gap-5">
-            <F label={cert.cardStyle === "a4" ? "Item Image 1" : "Item Image"}>
+            <F label={isPageStyle ? "Item Image 1" : "Item Image"}>
               <div className="flex items-center gap-4">
                 <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border hover:border-primary cursor-pointer text-sm transition-colors">
                   <Upload className="w-4 h-4" /> Upload Image
@@ -367,7 +370,7 @@ function CertEditor() {
               </div>
             </F>
 
-            {cert.cardStyle === "a4" ? (
+            {isPageStyle ? (
               <>
                 <F label="Item Image 2 (optional)">
                   <div className="flex items-center gap-4">
@@ -412,7 +415,7 @@ function CertEditor() {
               <textarea value={cert.remarks || ""} onChange={(e) => set("remarks", e.target.value)} rows={3} className={ic} placeholder="Any additional notes for this report…" />
             </F>
 
-            {cert.cardStyle === "a4" && (
+            {isPageStyle && (
               <F label="Item Description">
                 <textarea value={cert.description || ""} onChange={(e) => set("description", e.target.value)} rows={3} className={ic} placeholder="Brief description shown in the centre column of the A4 certificate…" />
               </F>
